@@ -163,11 +163,6 @@ class Account extends Cosmetic
                 "status"=>"locked",
             ]);
             if ($result) {
-                $courseids = model("account")->with("course")->where($where)->column("course.id");
-                model("course")->where("id", "in", $courseids)->setField([
-                    'emolument_state'=>2,
-                    'emolumenttime'=>time()
-                ]);
                 model("account")->where("id", "in", $ids)->setField(['status'=>"locked"]);
                 Db::commit();
             }

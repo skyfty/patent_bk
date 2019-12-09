@@ -77,68 +77,27 @@ class Customer extends Cosmetic
                 }
             }
         });
-        self::afterUpdate(function($row){
-            if (isset($row['deletetime'])) {
-                $obtains = \app\common\model\Genre::getObtainList();
-                foreach($obtains as $k=>$o) {
-                    model("LoreGenre.CustomerAmount".$k)->where('customer_model_id', $row['id'])->delete();
-                }
-                \app\common\library\Aip::faceDelete($row['face_token'],$row['id']);
-                \app\common\model\LoreAcquire::destroy(['customer_model_id'=>$row->id]);
-            }
-        });
+
 
         self::beforeInsert(function($row){
             $maxid = self::withTrashed()->max("id") + 1;
             $row['idcode'] = sprintf("KH%06d", $maxid);
         });
 
-        self::afterInsert(function($row){
-            $break_appointment_count = Fields::get(['name'=>'break_appointment_count', 'model_table'=>'customer'],[],true)->defaultvalue;
-            $leave_off_count = Fields::get(['name'=>'leave_off_count', 'model_table'=>'customer'],[],true)->defaultvalue;
-            $list = [
-                [
-                    'amount'=>$leave_off_count,
-                    'customer_model_id'=>$row['id'],
-                    'type'=>1,
-                    'status'=>1
-                ],
-                [
-                    'amount'=>$break_appointment_count,
-                    'customer_model_id'=>$row['id'],
-                    'type'=>2,
-                    'status'=>1
-                ]
-            ];
-            model("largess")->saveAll($list);
-        });
+
     }
 
-    public function adviser() {
-        return $this->hasOne('staff','id', 'adviser_model_id')->setEagerlyType(0);
-    }
 
     public function amount() {
 
     }
 
-    protected static function formatParent($row) {
-        $membership = Fields::get(['name'=>'membership', 'model_table'=>'customer'],[],true);
-        $partner = [
-            'name'=>$row['name'],
-            'idcode'=>$row['idcode'],
-            'membership_id'=>$row['membership'],
-            'membership'=>$membership['content_list'][$row['membership']]
-        ];
-        return json_encode($partner, JSON_UNESCAPED_UNICODE);
-    }
     public function genearch() {
         return $this->hasOne('genearch','id','genearch_model_id',[],'LEFT')->setEagerlyType(0);
     }
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->setEagerlyType(0);
     }
-
 
     public function getSexTextAttr($value, $data) {
         $value = $value ? $value : $data['sex'];

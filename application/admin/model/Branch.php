@@ -54,19 +54,5 @@ class Branch extends \app\common\model\Branch
             model("AuthGroup")->where("branch_id", $row->id)->delete();
             model("ModelGroup")->where("branch_model_id", $row->id)->delete();
         });
-
-        self::afterUpdate(function($row){
-            $changeData = $row->readonly("updatetime")->getChangedData();
-            if (isset($changeData['name'])) {
-                $row->visible(['name','idcode']);
-                $kks[] = $row->toJson();;
-                $kks = json_encode($kks, JSON_UNESCAPED_UNICODE);
-                foreach(['customer','business','classroom','equipment', 'genearch','presell', 'promotion','provider','staff'] as $m) {
-                    model($m)->where("branch_model_id", $row->id)->setField("branch_model_keyword", $kks);
-                }
-                model("account")->where("reckon_type", "branch")->where("reckon_model_id", $row->id)->setField("reckon_model_keyword", $kks);
-                model("account")->where("inflow_type", "branch")->where("inflow_model_id", $row->id)->setField("inflow_model_keyword", $kks);
-            }
-        });
     }
 }

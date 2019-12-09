@@ -68,14 +68,7 @@ class Business extends Cosmetic
             $this->settle_state =918;
             $this->settle_date =time();
             $data = $this->getData();
-            $package_model_id = $this->presell->package_model_id;
-            $result = model("sellotape")->create([
-                'branch_model_id'=>$data['branch_model_id'],
-                'customer_model_id'=>$data['customer_model_id'],
-                'package_model_id'=>$package_model_id,
-                'amount'=>$data['amount'],
-                'status'=>1,
-            ]);
+
             if ($result) {
                 $result = $this->isUpdate(true)->save();
                 if ($result) {
@@ -114,9 +107,5 @@ class Business extends Cosmetic
     }
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->setEagerlyType(0);
-    }
-
-    public function presell() {
-        return $this->hasOne('presell','id','presell_model_id')->setEagerlyType(0);
     }
 }

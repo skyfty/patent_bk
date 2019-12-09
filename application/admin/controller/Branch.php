@@ -40,7 +40,6 @@ class Branch extends Cosmetic
             $result = $this->model->validate("branch.add")->allowField(true)->save($params);
             if ($result !== false) {
                 model("AuthGroup")->get(2)->migrate($this->model->id);
-                \app\common\library\Aip::groupAdd("customer_branch_".$this->model->id);
 
                 $db->commit();
                 $this->success();
@@ -55,21 +54,6 @@ class Branch extends Cosmetic
 
     }
 
-    public function account($ids = null) {
-        $row = $this->model->with($this->relationSearch)->find($ids);
-        if (!$row)
-            $this->error(__('No Results were found'));
-        $this->view->assign("row", $row);
-
-        $scenery = Scenery::get(['model_table' => 'account', 'name'=>"branch"],[],true);
-        $where =array(
-            'scenery_id'=>$scenery['id'],
-            "fields.name"=>array("not in", array("weigh","branch",'reckon','type'))
-        );
-        $fields =  Sight::with('fields')->where($where)->order("weigh", "DESC")->cache(true)->select();;
-        $content = $this->view->fetch();
-        return array("content"=>$content, "fields"=>$fields);
-    }
 
     public function select() {
         $rows = $this->model->select();

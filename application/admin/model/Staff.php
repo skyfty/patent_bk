@@ -42,28 +42,7 @@ class Staff extends \app\common\model\Staff
         });
 
         $beforeupdate = function($row){
-            if (isset($row['quarters'])) {
-                $quarters = $row['quarters'];
-                if (is_string($quarters)) {
-                    $quarters = explode(",", $quarters);
-                }
 
-                $groupName = [];
-                $quartersKeyword = [];
-                foreach(\app\admin\model\AuthGroup::all($quarters) as $v) {
-                    if (isset($v['department']) && $v->department) {
-                        $departmentName = $v->department->name;
-                        $quartersKeyword[] = $v['name']." - ".$departmentName;
-                    } else {
-                        $quartersKeyword[] = $v['name'];
-                    }
-                    $groupName[] = $v['name'];
-                }
-                $row['technician'] = (in_array('全职教师', $groupName) || in_array('兼职教师', $groupName))?1:0;
-                $row['adviser'] = in_array('课程顾问', $groupName)?1:0;
-                $row['leading'] = in_array('校区负责人', $groupName)?1:0;
-                $row['quarters_keywords'] = implode("\r\n", $quartersKeyword);
-            }
         };
         self::beforeInsert($beforeupdate);self::beforeUpdate($beforeupdate);
 

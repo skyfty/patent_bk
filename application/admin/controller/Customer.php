@@ -20,7 +20,6 @@ class Customer extends Cosmetic
     {
         parent::_initialize();
         $this->model = model("customer");
-        $this->relationSearch = array_merge($this->relationSearch, ["genearch"]);
     }
 
     public function account($ids) {
@@ -39,32 +38,6 @@ class Customer extends Cosmetic
         return array("content"=>$content, "fields"=>$fields);
     }
 
-    public function recognition($ids) {
-        $row = $this->model->with($this->relationSearch)->find($ids);
-        if (!$row)
-            $this->error(__('No Results were found'));
-
-        if ($this->request->isPost()) {
-            $params = $this->request->post("row/a");
-            if (!$params || !$params['face_token']) {
-                $this->error(__('Parameter %s can not be empty', ''));
-            }
-
-            $group = ($row['branch_model_id']?"customer_branch_".$row['branch_model_id']:"customer");
-            $result = \app\common\library\Aip::addUser($params['face_token'], $row['id'], $group);
-            if (!$result || $result['error_code'] != 0) {
-                $this->error(__("更新人脸库失败: %s", $result['error_msg']));
-            }
-            $result = $row->allowField(true)->save($params);
-            if ($result !== false) {
-                $this->result($this->model->get($ids),1);
-            } else {
-                $this->error($row->getError());
-            }
-        }
-        $this->view->assign("row", $row);
-        return $this->view->fetch();
-    }
 
     public function syncavatar($ids) {
         $row = $this->model->find($ids);
@@ -77,25 +50,6 @@ class Customer extends Cosmetic
             $this->error($row->getError());
         }
     }
-
-    public function delface($ids) {
-        $row = $this->model->find($ids);
-        if (!$row)
-            $this->error(__('No Results were found'));
-
-        $group = ($row['branch_model_id']?"customer_branch_".$row['branch_model_id']:"customer");
-        $result = \app\common\library\Aip::faceDelete($row['face_token'], $row['id'], $group);
-        if (!$result || ($result['error_code'] != 0 && $result['error_code'] != '223106')) {
-            $this->error(__("更新人脸库失败: %s(%d)", $result['error_msg'], $result['error_code']));
-        }
-        $result = $row->save(['face_token'=>'', 'faceimage'=>'']);
-        if ($result !== false) {
-            $this->result($this->model->get($ids),1);
-        } else {
-            $this->error($row->getError());
-        }
-    }
-
 
 
     protected function spectacle($model) {
