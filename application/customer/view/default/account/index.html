@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>{$title|default=''}</title>
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <link rel="shortcut icon" href="__CDN__/assets/img/favicon.ico" />
+
+    <!--[if lt IE 9]>
+    <script src="__CDN__/assets/js/html5shiv.js"></script>
+    <script src="__CDN__/assets/js/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        var require = {
+            config:  {$config|json_encode}
+        };
+    </script>
+
+    <link href="__CDN__/assets/css/customer/arclist.css?v={$site.version}" rel="stylesheet">
+</head>
+<body ontouchstart>
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="/" target="_self" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <a href="/" target="_self"><span class="aui-center-title">收支明细</span></a>
+        </div>
+        <a href="javascript:;" class="aui-navBar-item">
+            <i class="icon icon-sys"></i>
+        </a>
+    </header>
+    <section class="aui-scrollView">
+        <div class="aui-tab" data-ydui-tab>
+            <div class="tab-panel">
+                <div class="tab-panel-item tab-active">
+                    {cms:accountlist id="row"}
+                    <div class="weui-panel__bd">
+                        <div class="weui-media-box weui-media-box_text">
+                            <h4 class="weui-media-box__title">{eq name='row.cheque.mold' value='1'}+{else/}-{/eq}￥<em class="num">{$row.money}</em></h4>
+                            {if condition="$row.payway"}
+                            <p class="weui-media-box__desc">支付方式：{$row.payway_text}</p>
+                            {/if}
+                            {if condition="$row.related_model_id"}
+                            <p class="weui-media-box__desc">订单：{$row.provider.promotion.name}</p>
+                            {/if}
+                            <ul class="weui-media-box__info">
+                                <li class="weui-media-box__info__meta">时间：<em class="num">{$row.paymenttime_text}</em></li>
+                            </ul>
+                        </div>
+                    </div>
+                    {/cms:accountlist}
+                </div>
+            </div>
+            <!-- S 分页栏 -->
+            <div class="text-center">
+                {cms:pageinfo type="full" /}
+            </div>
+            <!-- E 分页栏 -->
+        </div>
+    </section>
+</section>
+{include file="common/script" /}
+
+</body>
+</html>

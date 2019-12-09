@@ -1,0 +1,14 @@
+{
+  "name": "x-editable",
+  "homepage": "https://github.com/vitalets/x-editable",
+  "version": "1.1.1",
+  "_release": "1.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.1.1",
+    "commit": "b2009d7c45fef2f5ccae0a9f82b3c58bc1f93812"
+  },
+  "_source": "https://github.com/vitalets/x-editable.git",
+  "_target": "~1.1.1",
+  "_originalSource": "x-editable"
+}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {include file="common/meta" /}
+</head>
+<body>
+<div class="container">
+
+    <form class="form-horizontal" role="form" >
+        <div class="panel-body">
+            <div class="tab-content">
+                {:Form::daterange("datarange", $Request.param.scope)}
+            </div>
+        </div>
+    </form>
+</div>
+{include file="common/script" /}
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>{$row->customer->nickname}同学的授课报告</title>
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <link rel="shortcut icon" href="__CDN__/assets/img/favicon.ico" />
+    <!-- Loading Bootstrap -->
+    <link href="__CDN__/assets/libs/jquery-weui/dist/lib/weui{$Think.config.app_debug?'':'.min'}.css" rel="stylesheet">
+    <link href="__CDN__/assets/libs/jquery-weui/dist/css/jquery-weui{$Think.config.app_debug?'':'.min'}.css" rel="stylesheet">
+    <link href="__CDN__/assets/css/customer{$Think.config.app_debug?'':'.min'}.css?v={$site.version}" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+    <script src="__CDN__/assets/js/html5shiv.js"></script>
+    <script src="__CDN__/assets/js/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        var require = {
+            config:  {$config|json_encode}
+        };
+    </script>
+
+    <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.2/skins/default/aliplayer-min.css" />
+    <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://player.alicdn.com/aliplayer/presentation/js/aliplayercomponents.min.js"></script>
+
+    <link href="__CDN__/assets/css/customer/provider.css?v={$site.version}" rel="stylesheet">
+
+    <style>
+        .aui-scrollView{
+            padding: 5px;
+        }
+        .evaluate-title {
+            margin-bottom: 10px;
+            margin-top: 10px;
+            border-top-width: thin;
+            text-align: center;
+            border-top-style: outset;
+        }
+        .lore-label {
+            float: left;
+            padding-top: 2px;
+            padding-right: 4px;
+        }
+        .aui-list-theme {
+            overflow: hidden;
+            position: relative;
+            padding: 0px 0px 0;
+        }
+        .aui-list-theme-item {
+            padding: 2px;
+            margin: 0 1% 1% 1%;
+        }
+        .aui-list-theme-item {
+            width: 98%;
+        }
+        .background-state-1 {
+        }
+        .aui-list-theme-item {
+            width: 48%;
+            float: left;
+            padding: 10px;
+            margin: 0 1% 2% 1%;
+            background: #fff;
+            border-radius: 5px;
+        }
+        .aui-list-img {
+            padding: 3px 0;
+        }
+
+        .aui-list-img {
+            height: auto;
+            width: 100%;
+            overflow: hidden;
+            background-image: -webkit-gradient(linear,left top,bottom top,from(#f8b591),to(#fb8a78));
+            background-image: -webkit-linear-gradient(left,#f8b591,#fb8a78);
+            background-image: -moz-linear-gradient(left,#f8b591,#fb8a78);
+            background-image: linear-gradient(to bottom,#f8b591,#fb8a78);
+            background-color: #fb8a78;
+            text-align: center;
+            color: #fff;
+            padding: 1rem 0;
+            border-radius: 5px;
+        }
+        .background-state-0 {
+            background-image: linear-gradient(to bottom,#dbdbdb,#7c7a7a);
+            color: #fff;
+        }
+        .aui-list-img.state-0 {
+            background-image: linear-gradient(to bottom,#d5d0ce,#5f5d5c);
+            background-color: #ecdfdd;
+        }
+        .aui-list-theme-item {
+            width: 98%;
+        }
+        .aui-list-img {
+            padding: 3px 0;
+        }
+        .aui-list-theme-item {
+            padding: 5px;
+            margin: 0 1% 1% 1%;
+        }
+    </style>
+    <script>var row = {$row|json_encode}</script>
+
+</head>
+<body ontouchstart>
+
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="javascript:void(0);" onclick="window.history.go(-1)" target="_self" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <a href="/" target="_self"><span class="aui-center-title">{$row->customer->nickname}同学的授课报告</span></a>
+        </div>
+        <a href="javascript:;" class="aui-navBar-item" id="btn-share">
+            <i class="icon  icon-share"></i>
+        </a>
+    </header>
+    <section class="aui-scrollView" style="    margin-bottom: 50px;">
+        <div class="aui-tab" data-ydui-tab>
+            <section class="zyw-container">
+                <div class="wy-media-box weui-media-box_text">
+                    <div class="weui-media-box__bd">
+                        <div class="weui-media-box_appmsg ord-pro-list">
+                            <div class="weui-media-box__bd">
+                                <h1 class="weui-media-box__desc">
+                                    <h5 class="order-item-title" style="text-align: center; padding: 20px; font-size: 30px;">{$row->promotion->name}</h5>
+                                    <div style="text-align: center; font-size: 10px;">{$row->staff->nickname}</div>
+                                </h1>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="wy-media-box weui-media-box_text">
+                    <div class="weui-media-box__bd">
+                        <div class="weui-media-box_appmsg ord-pro-list">
+                            <div class="weui-media-box__bd">
+                                <div class="evaluate-label evaluate-title">知识点</div>
+                                <div class="aui-list-theme">
+                                    {volist name="row['promotion']['lores']" id="lore"}
+                                    <a href="javascript:;" class="aui-list-theme-item  background-state-1 lore-item">
+                                        <div class="aui-list-img state-1">
+                                            <div style="width: 40%;float: left;text-align: left;padding-left: 5px">{$lore['knowledge']['lorerange_name'][1]}</div>
+                                            <div style="width: 30%;float: left">{$lore['knowledge']['name']}</div>
+                                            <div style="width: 30%;float: left">LV{$lore['grade']['name']}</div>
+                                        </div>
+                                        <div class="lore-description" style="padding-top: 6px;display: none;">{$lore['grade']['description']}</div>
+                                    </a>
+                                    {/volist}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wy-media-box weui-media-box_text">
+                    <div class="weui-media-box__bd">
+                        <div class="evaluate-label evaluate-title">学习评价</div>
+                        <div>
+                            <div class="evaluate-label lore-label" style="float: left;padding-top: 2px; padding-right: 4px;"> 知识掌握</div><div class="raty" data-score="{$row->evaluate_lore}"></div>
+
+                        </div>
+                        <div>
+                            <div class="evaluate-label" style="float: left;padding-top: 2px; padding-right: 4px;">思路开阔</div><div class="raty" data-score="{$row->evaluate_mentality}"></div>
+                        </div>
+                        <div>
+                            <div class="evaluate-label" style="float: left;padding-top: 2px; padding-right: 4px;"> 课堂秩序</div><div class="raty" data-score="{$row->evaluate_order}"></div>
+                        </div>
+
+                        <div class="evaluate-label  evaluate-title"> 记录单</div>
+                        <div>
+                            <img class="campaign"  style="width: 30%;padding: 10px;" data-full="{$row->record_sheet}" src="{$row->record_sheet|thumbnail=###, 176, 132}">
+                        </div>
+                        <div class="evaluate-label  evaluate-title"> 美好瞬间</div>
+                        <div id="campaign-photos" >
+                            {volist name='row.campaign_list' id='campaign'}
+                            <img class="campaign" style="width: 30%;padding: 4px"  data-full="{$campaign}" src="{$campaign|thumbnail=###, 176, 132}">
+                            {/volist}
+                        </div>
+                        <div class="evaluate-label   evaluate-title" > 成果分享</div>
+                        <div>
+                            <div id="player-con"></div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</section>
+{include file="common/script" /}
+<script>
+    var player = new Aliplayer({
+        id: "player-con",
+        source: "{$row->achievement}",
+        width: "100%",
+        height: "300px",
+        autoplay: true,
+        preload: true,
+
+        isLive: false
+    }, function (player) {
+    });
+</script>
+</body>
+</html>

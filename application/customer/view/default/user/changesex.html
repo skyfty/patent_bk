@@ -1,0 +1,39 @@
+<header class="aui-navBar aui-navBar-fixed b-line">
+    <a href="/user/person" target="_self" class="aui-navBar-item">
+        <i class="icon icon-return"></i>
+    </a>
+    <div class="aui-center">
+        <span class="aui-center-title" >性别</span>
+    </div>
+</header>
+<section class="aui-scrollView">
+<form action="{:url('user/edit')}" method="post" id="form">
+
+    <div id="errtips" class="hide" style="display: none"></div>
+    <div class="weui-cells__title">修改个人信息</div>
+    <div class="weui-cells weui-cells_radio">
+        <label class="weui-cell weui-check__label" for="x11">
+            <div class="weui-cell__bd">
+                <p>男</p>
+            </div>
+            <div class="weui-cell__ft">
+                <input type="radio" class="weui-check" name="row[sex]" id="x11" value="1" {eq name="user.genearch.sex" value="1"} checked="checked"{/eq}>
+                <span class="weui-icon-checked"></span>
+            </div>
+        </label>
+        <label class="weui-cell weui-check__label" for="x12">
+            <div class="weui-cell__bd">
+                <p>女</p>
+            </div>
+            <div class="weui-cell__ft">
+                <input type="radio" name="row[sex]" class="weui-check" id="x12" value="2" {eq name="user.genearch.sex" value="2"} checked="checked"{/eq}>
+                <span class="weui-icon-checked"></span>
+            </div>
+        </label>
+    </div>
+    <div class="weui-btn-area">
+        <button type="submit" class="weui-btn weui-btn_primary">确定</button>
+    </div>
+</form>
+
+</section>

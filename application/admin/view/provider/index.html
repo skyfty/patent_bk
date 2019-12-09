@@ -1,0 +1,106 @@
+<div class="panel panel-default panel-intro" ng-controller="index"  ng-init="sceneryInit()">
+<div class="panel-heading">
+        {:build_heading(null,FALSE)}
+        <ul id="landscape-tab"  class="nav nav-tabs">
+            {foreach name="config.sceneryList['index']" item="vo"}
+            <li data-toggle='poshytip'  class="{:$auth->check('provider/index/'.$vo['name'])?'':'hide'}" id="landscape-tab-{$vo['name']}" title="{{scenerys[{$vo['name']}]['tabstate']['groupName']}}">
+                <a href="#tab-{$vo['name']}"  data-scenery-index="{$vo['name']}" data-table="table-{$vo['name']}" data-url="catering/{$vo['name']}"  data-toolbar="toolbar-{$vo['name']}" data-toggle="tab">
+                    {$vo['title']}
+                    <i class="fa fa-group" style="cursor: pointer" ng-show="scenerys[{$vo['name']}]['tabstate']['group']" ng-click="refurbishSearch({$vo['name']}, 'group')"></i>
+                    <i class="fa fa-search-minus" style="cursor: pointer"  ng-show="scenerys[{$vo['name']}]['tabstate']['complex']" ng-click="refurbishSearch({$vo['name']}, 'complex')"></i>
+                </a>
+            </li>
+            {/foreach}
+        </ul>
+
+    </div>
+    <div class="panel-body">
+        <div  class="tab-content">
+            {foreach name="config.sceneryList['index']" item="vo"}
+            <div class="tab-pane fade in {:$auth->check('provider/index/'.$vo['name'])?'':'hide'}" id="tab-{$vo['name']}" ng-controller="landscape-{$vo['name']}" ng-init="sceneryInit('{$vo['name']}')">
+                {eq name="vo.type" value="default"}
+                <div class="widget-body no-padding  table-cosmetic">
+                    <div class="filter-toolbar">
+                        <div  class="input-group"  style="float: left">
+                            <select  title="快捷筛选..."  class="selectpicker form-control" multiple filter-condition="table-{$vo['name']}" data-condition-model="filterCondition">
+                                <optgroup label="{:__('Create time')}"  data-max-options="1">
+                                    <option title="今日新建" value='["createtime","between time",["today","tomorrow"]]'>今日</option>
+                                    <option title="本月新建" value='["createtime","between time",["first Day of this month 00:00:00", "first Day of next month 00:00:00"]]'>本月</option>
+                                    <option title="上月新建" value='["createtime","between time",["first Day of last month 00:00:00", "first Day of this month 00:00:00"]]'>上月</option>
+                                </optgroup>
+                                <optgroup label="预约时间"  data-max-options="1">
+                                    <option title="今日预约" value='["starttime","between time",["today","tomorrow"]]'>今日</option>
+                                    <option title="昨日预约" value='["starttime","between time",["yesterday","today"]]'>昨日</option>
+                                    <option title="本月预约" value='["starttime","between time",["first Day of this month 00:00:00", "first Day of next month 00:00:00"]]'>本月</option>
+                                    <option title="上月预约" value='["starttime","between time",["first Day of last month 00:00:00", "first Day of this month 00:00:00"]]'>上月</option>
+                                </optgroup>
+                                <optgroup label="所有者"  data-max-options="1">
+                                    <option title="我创建的" value='["creator_model_id","in",[{$admin.id}]]'>我创建的</option>
+                                </optgroup>
+
+                            </select>
+                            <a href="javascript:void(0);" title="清除筛选" class="input-group-addon" ng-click="cleanSearch('{$vo['name']}');">
+                                <span class="fa fa-history"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="toolbar-{$vo['name']}" class="toolbar">
+                        <classify-tree data-config="genre/classtree" data-change="classChanged"></classify-tree>
+                        {:build_toolbar(['refresh', 'add', 'del'],['add'=>[url('provider/add'), 'btn btn-success btn-dialog', 'fa fa-plus',  __(''), __('添加授课')]])}
+                        <a class="btn btn-success btn-disabled btn-signin  {:$auth->check('provider/singin')?'':'hide'}" ng-click="signin();" title="签到" href="javascript:;">
+                            <i class="fa fa-flag-checkered"></i>
+                        </a>
+                        <a class="btn btn-success btn-disabled btn-accomplish  {:$auth->check('provider/accomplish')?'':'hide'}" ng-click="accomplish();" title="完成授课" href="javascript:;">
+                            <i class="fa fa-calendar-check-o"></i>
+                        </a>
+                        <div class="dropdown btn-group">
+                            <a class="btn btn-primary btn-more dropdown-toggle btn-disabled disabled" data-toggle="dropdown"><i class="fa fa-cog"></i> {:__('More')}</a>
+                            <ul class="dropdown-menu text-left" role="menu">
+                                <li>
+                                    <a class="btn btn-link btn-disabled btn-recover  {:$auth->check('provider/recover')?'':'hide'}" ng-click="recover();" title="回退" href="javascript:;">
+                                        <i class="fa fa-recycle"></i> 回退
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-link btn-disabled btn-reproduce  {:$auth->check('provider/reproduce')?'':'hide'}" ng-click="reproduce();" title="克隆" href="javascript:;">
+                                        <i class="fa fa-clone"></i> 克隆
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-link btn-disabled btn-change-staff  {:$auth->check('provider/changestaff')?'':'hide'}" ng-click="changestaff();" title="修改老师" href="javascript:;">
+                                        <i class="fa fa-adjust"></i> 修改老师
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-link btn-disabled btn-change-appoint-time  {:$auth->check('provider/changeappointtime')?'':'hide'}" ng-click="changeappointtime();" title="调整时间" href="javascript:;">
+                                        <i class="fa fa-calendar-minus-o"></i> 时间调整
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+
+
+                        <div style="display: inline-block;" class="hidden-xs {notempty name='config.staff'}hide{/notempty}" id="div_branch_select">{:build_branch_select('branch_select')}</div>
+
+                    </div>
+                    <table id="table-{$vo['name']}"  ui-formidable="fields"
+                           data-fields="fields"
+                           data-url="provider/{$vo['name']}"
+                           data-search-fields="allFields"
+                           data-toolbar="toolbar-{$vo['name']}"
+                           data-query-params="searchFieldsParams"
+                           data-buttons="tableExtendButtons"
+                           data-operate-view="{:$auth->check('provider/view')}"
+                           data-operate-del="{:$auth->check('provider/del')}"
+                           class="table table-striped table-bordered table-hover  text-nowrap" width="100%">
+                    </table>
+                </div>
+                {/eq}
+
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</div>
+{include file="common/tmpl" /}

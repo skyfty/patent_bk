@@ -1,0 +1,49 @@
+
+<div class="row animated fadeInRight"  ng-controller="hinder"  ng-init="sceneryInit()">
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="panel panel-default panel-intro">
+
+                <div class="box-body box-profile">
+                    <div class="profile-avatar-container">
+                        <img class="profile-user-img img-responsive img-circle plupload" src="{{row.avatar}}" alt="">
+                    </div>
+                    <h3 class="profile-username text-center">{{row.name}}</h3>
+                    <p class="text-muted text-center">{{row.idcode}}</p>
+                </div>
+
+                <div class="panel-heading">
+                    {:build_heading(null,FALSE)}
+                    <ul id="scenery-tab"  class="nav nav-tabs ">
+                        {foreach name="config.sceneryList['hinder']" item="vo"}
+                        <li><a href="#tab-{$vo['name']}" data-scenery-index="{$vo['name']}" data-toggle="tab">{$vo['title']}</a></li>
+                        {/foreach}
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        {foreach name="config.sceneryList['hinder']" item="vo"}
+                        <div class="tab-pane fade in" id="tab-{$vo['name']}"  ng-controller="scenery-{$vo['name']}" ng-init="sceneryInit('{$vo['name']}')">
+                            {eq name="vo.type" value="default"}
+                            <div class="box-header with-border">
+                            </div>
+                            <div class="box-body no-padding">
+                                <div class="mailbox-messages" id="data-view-{$vo['name']}">
+                                </div>
+                            </div>
+                            {/eq}
+                        </div>
+                        {/foreach}
+                    </div>
+                </div>
+                <div class="layer-footer">
+                    <div class="col-xs-12 col-sm-8  text-center">
+                        <a class="btn btn-success btn-embossed btn-addtabs addtabsit {:$auth->check('staff/view')?'':'hide'}" href="{:url('staff/view',['ids'=>$row.id])}" title="{:__('%s,%s', $row.name, $row.idcode)}">详情</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">var row ={$row|json_encode};</script>
+{include file="common/tmpl" /}

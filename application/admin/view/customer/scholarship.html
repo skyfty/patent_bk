@@ -1,0 +1,15 @@
+{__NOLAYOUT__}
+<div class="panel panel-default panel-intro">
+    <div class="panel-heading">
+    </div>
+    <div class="panel-body">
+        <div class="widget-body no-padding  table-cosmetic">
+            <div id="toolbar-scholarship" class="toolbar">
+                {:build_toolbar('refresh')}
+                <a href="javascript:;" class="btn btn-success btn-reset {:$auth->check('scholarship/reset')?'':'hide'}" title="重置知识点" ><i class="fa fa-bullseye"></i> </a>
+            </div>
+            <table id="table" class="table table-striped table-bordered table-hover" width="100%">
+            </table>
+        </div>
+    </div>
+</div>

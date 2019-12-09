@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="__CDN__/assets/libs/fullcalendar/dist/fullcalendar.css">
+<style>
+    .fc-toolbar.fc-header-toolbar .fc-center h2{
+        font-size: 16px;
+    }
+    .fc-toolbar.fc-header-toolbar> div{
+        padding-top: 5px;
+    }
+    .fc-toolbar.fc-header-toolbar> div.fc-center{
+        padding-top: 9px;
+    }
+    .fc-view.fc-month-view .fc-unused {
+        display: none;
+    }
+    .fc-view.fc-agendaWeek-view.fc-agenda-view .fc-unused{
+        display: none;
+    }
+</style>
+<section class="">
+    <div class="row">
+        <!-- /.col -->
+        <div class="col-md-12">
+            <div class="box box-solid">
+                <div class="box-body no-padding">
+                    <div id="calendar"></div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+
+<script id="branch-select-tmpl" type="text/html">
+    <form class="form-inline" id="form_branch">
+        <select id="branch_model_id" name="branch_model_id" class="form-control">
+            {volist name='branchs' id='vo'}
+            <option value="{$vo->id}">{$vo->name}</option>
+            {/volist}
+        </select>
+    </form>
+</script>

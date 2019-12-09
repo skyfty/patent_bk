@@ -1,0 +1,261 @@
+
+<script id="complex-tmpl" type="text/html">
+    <div class="complex-form">
+        <table class="table table-striped">
+            <tr ng-repeat="(k,complex_value) in <%=model%>">
+                <td>
+                    <spotfields class="form-inline spot-search" fields="<%=sfields%>" ng-model="complex_value" ></spotfields>
+                    <span class="btn btn-sm btn-danger btn-remove" ng-click="removeComplex(k)">
+                    <i class="fa fa-times"></i>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="javascript:;" class="btn btn-sm btn-success btn-append" ng-click="appendComplex()" style="width: 100%"><i class="fa fa-plus"></i> {:__('Append')}</a>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</script>
+
+<script id="spotfields-tmpl" type="text/html">
+    <div class="form-group spotfields">
+        <select class="form-control spotfields-select"  ng-model="<%=d%>.field" onchange="angular.element(this).scope().onFieldChange(this)" ng-options="(f.title + '&nbsp;&nbsp;') for f in fields">
+        </select>
+    </div>
+    <spotcircus class="form-group"  data-field="<%=d%>.field" data-field-model="<%=d%>"></spotcircus>
+</script>
+
+
+<script id="spotcircus-tmpl" type="text/html">
+    <div  class="form-inline" >
+        <%if(f.type=="datetime" || f.type == "date" || f.type=="time"){%>
+        <div class="form-group">
+            <select class="form-control" ng-model="<%=d%>.condition">
+                <option value="between time">在之间&nbsp;&nbsp;</option>
+                <option value="not between time">不在之间&nbsp;&nbsp;</option>
+                <option value="ltb">早于起始&nbsp;&nbsp;</option>
+                <option value="gtb">晚于起始&nbsp;&nbsp;</option>
+                <option value="lte">早于结束&nbsp;&nbsp;</option>
+                <option value="gte">晚于结束&nbsp;&nbsp;</option>
+            </select>
+            <div class="input-group date datetimepicker" style="position: relative;">
+                <input type="search" class="form-control datetimerange" datetimerange ng-model="<%=d%>.value">
+                <a href="javascript:void(0);" title="清除内容"  class="input-group-addon" ng-click="<%=d%>.value = '';searchTable();">
+                    <span class="fa fa-calendar"></span>
+                </a>
+            </div>
+        </div>
+        <%}else if(f.type=="checkbox"||f.type=="radio"||f.type=="select"||f.type=="selects"){%>
+        <div class="form-group">
+            <div style="float: left">
+                <select class="form-control" ng-model="<%=d%>.condition">
+                    <option value="IN(...)">是&nbsp;&nbsp;</option>
+                    <option value="NOT IN(...)">不是&nbsp;&nbsp;</option>
+                </select>
+            </div>
+            <div  class="input-group"  style="float: left">
+                <select class="form-control selectpicker" multiple  ng-model="<%=d%>.value" >
+                    <%for (var i in f.content_list) {%>
+                    <option value="<%=i%>"><%=f.content_list[i]%></option>
+                    <%}%>
+                </select>
+                <a href="javascript:void(0);" title="清除内容" class="input-group-addon" ng-click="deselectAll();">
+                    <span class="fa fa-list-ul"></span>
+                </a>
+            </div>
+        </div>
+        <%}else if(f.type=="number"){%>
+        <div class="form-group">
+            <select class="form-control" ng-model="<%=d%>.condition">
+                <option value="=">等于&nbsp;&nbsp;</option>
+                <option value=">">大于&nbsp;&nbsp;</option>
+                <option value="<">小于&nbsp;&nbsp;</option>
+                <option value="!=">不等于&nbsp;&nbsp;</option>
+                <option value=">=">大于等于&nbsp;&nbsp;</option>
+                <option value="<=">小于等于&nbsp;&nbsp;</option>
+            </select>
+            <div class="input-group" style="position: relative;">
+                <input type="number"  class="form-control"  ng-model="<%=d%>.value" />
+                <a href="javascript:void(0);" title="清除内容"  class="input-group-addon" ng-click="<%=d%>.value = '';searchTable();">
+                    <span class="fa fa-cc"></span>
+                </a>
+            </div>
+        </div>
+        <%}else if(f.type=="model"){%>
+        <div class="form-group">
+            <select class="form-control" ng-model="<%=d%>.condition">
+                <option value="QJSON">关键字&nbsp;&nbsp;</option>
+            </select>
+            <div class="input-group" style="position: relative;">
+                <input type="search"  class="form-control"  ng-model="<%=d%>.value" />
+                <a href="javascript:void(0);" title="清除内容"  class="input-group-addon" ng-click="<%=d%>.value = '';searchTable();">
+                    <span class="fa fa-cubes"></span>
+                </a>
+            </div>
+        </div>
+        <%}else if(f.type=="address"){%>
+        <div class="form-group">
+            <select class="form-control" ng-model="<%=d%>.condition">
+                <option value="LIKE %...%">是&nbsp;&nbsp;</option>
+                <option value="NOT LIKE %...%">不是&nbsp;&nbsp;</option>
+                <option value="IS NULL">为空&nbsp;&nbsp;</option>
+                <option value="IS NOT NULL">不为空&nbsp;&nbsp;</option>
+            </select>
+            <div class="input-group" style="position: relative;">
+                <input type="search"  class="form-control"  ng-model="<%=d%>.value" />
+                <a href="javascript:void(0);" title="清除内容"  class="input-group-addon" ng-click="<%=d%>.value = '';searchTable();">
+                    <span class="fa fa-trello"></span>
+                </a>
+            </div>
+        </div>
+        <%}else{%>
+        <div class="form-group">
+            <select class="form-control" ng-model="<%=d%>.condition">
+                <option value="LIKE %...%">包含&nbsp;&nbsp;</option>
+                <option value="NOT LIKE %...%">不包含&nbsp;&nbsp;</option>
+                <option value="=">是&nbsp;&nbsp;</option>
+                <option value="!=">不是&nbsp;&nbsp;</option>
+                <option value="IS NULL">为空&nbsp;&nbsp;</option>
+                <option value="IS NOT NULL">不为空&nbsp;&nbsp;</option>
+            </select>
+            <div class="input-group" style="position: relative;">
+                <input type="search"  class="form-control"  ng-model="<%=d%>.value" />
+                <a href="javascript:void(0);" title="清除内容"  class="input-group-addon" ng-click="<%=d%>.value = '';searchTable();">
+                    <span class="fa fa-file-word-o"></span>
+                </a>
+            </div>
+        </div>
+        <%}%>
+    </div>
+</script>
+
+
+<script id="commonsearchbtn-tmpl" type="text/html">
+    <div class="columns-right pull-right" style="margin-top:10px;margin-bottom:10px;">
+        <spotfields class="form-inline spot-search" fields="searchFields" ng-model="commonSearch" ></spotfields>
+        <div class="btn-group commonsearch-btn">
+            <button type="button" class="btn btn-default btn-flat" onclick="angular.element(this).scope().searchTable()"><i class="glyphicon glyphicon-search"></i></button>
+            <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown" >
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li id="btn-complicate">
+                    <a class="complicate-search" href="#"  onclick="angular.element(this).scope().complicateSearch()">
+                        <i class="fa fa-search-minus"></i>
+                        {:__('Complicated search')}
+                    </a>
+                </li>
+                <li id="btn-group">
+                    <a class="complicate-search" href="#"  onclick="angular.element(this).scope().groupSearch()">
+                        <i class="fa fa-group"></i>{:__('Group search')}
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <%if(customs != ""){%>
+                <%include(customs)%>
+                <%}%>
+            </ul>
+        </div>
+    </div>
+</script>
+
+
+<script id="view-tmpl" type="text/html">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr  ng-repeat="f in fields"  data-field-name="{{f.name}}">
+                <td width="30%"><div class="row"><div class="col-xs-12 text-right">{{f.title}}</div></div></td>
+                <td>
+                    <div class="row">
+                        <div class="col-sm-8 col-xs-12" formatter data-field="f" data-model="row">
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</script>
+
+
+<script id="edit-tmpl" type="text/html">
+    <div class="form-group" data-field-id="{{f.id}}" data-field-name="{{f.name}}" validator-observe="f" ng-repeat="f in <%=fields%>|availableFields:'<%=state%>'" ng-show="f|visibleField:'<%=state%>'" >
+        <div class="control-label col-xs-12 col-sm-2">{{f.title}}</div>
+        <div class="col-xs-12 col-sm-8">
+            <magicfield data-field="f" data-model="row" data-scene="<%=state%>" ></magicfield>
+        </div>
+    </div>
+</script>
+
+
+<script id="classifytree-tmpl" type="text/html">
+<div class="dropdown btn-group">
+    <a href="javascript:;" class="btn btn-default btn-classify hidden-xs hidden-sm  dropdown-toggle"  data-toggle="dropdown"><i class="fa fa-bars"></i><span class="spot"></span></a>
+    <ul class="dropdown-menu" style="box-shadow: 2px 2px 5px #888888;border:1px dotted #008888;;">
+        <li class="user-header">
+            <div class="panel-body">
+                <span class="text-muted"><input type="checkbox" name="" class="classifytree-checkall" /> <label for="checkall"><small>{:__('Check all')}</small></label></span>
+                <span class="text-muted"><input type="checkbox" name="" class="classifytree-expandall" checked="" /> <label for="expandall"><small>{:__('Expand all')}</small></label></span>
+                <div class="classifytree"></div>
+            </div>
+        </li>
+        <li class="user-footer">
+
+        </li>
+    </ul>
+</div>
+</script>
+
+<script id="echarts-tmpl" type="text/html">
+    <div>
+        <div style="margin: 10px 0;">
+            <form action="" role="form" novalidate class="form-inline">
+
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <a href="javascript:;" class="btn-refresh">
+                            <i class="fa fa-calendar"></i>
+                        </a>
+                    </span>
+                    <input type="text" class="form-control input-inline datetimerange" placeholder="指定日期" style="width:270px;"/>
+                </div>
+            </form>
+        </div>
+        <div class="echarts" style="height:400px;width:100%;"></div>
+    </div>
+</script>
+
+<script id="stafftree-tmpl" type="text/html">
+    <div class="panel panel-default panel-intro">
+        <form action="" method="get"  onsubmit="return false;">
+            <div class="input-group">
+                <input type="text" class="form-control search-content" placeholder="搜索员工...">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-flat search-btn"><i class="fa fa-search"></i> </button>
+                </span>
+            </div>
+        </form>
+        <div class="panel-body">
+            <span class="text-muted"><input type="checkbox" name="" class="checkall" /> <label><small>{:__('Check all')}</small></label></span>
+            <div class="channeltree"> </div>
+        </div>
+    </div>
+</script>
+
+
+<script id="event-tmpl" type="text/html">
+    <li>
+        <a href="/customer/hinder/ids/<%=customer_model_id%>" class="dialogit" title="<%=customer_model_keyword.name%>">
+            <span><%=customer_model_keyword.name%></span>
+        </a>
+        <a href="/promotion/hinder/ids/<%=appoint_promotion_model_id%>" class="dialogit" title="<%=appoint_promotion_model_keyword.name%>">
+            <span><%=appoint_promotion_model_keyword.name%></span>
+        </a>
+        <span style="float: right"><%=starttime%></span>
+    </li>
+</script>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    {include file="common/meta" /}
+    <link href="__CDN__/assets/css/customer/arclist.css?v={$site.version}" rel="stylesheet">
+</head>
+<body ontouchstart>
+{include file="common/footer" /}
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line" style="    height: 4px;
+    background-color: blue;">
+
+    </header>
+    <section class="aui-scrollView">
+        <div class="aui-tab" data-ydui-tab>
+            <ul class="tab-nav">
+                {cms:channellist id="channel" type="top" model="1" }
+                <li class="tab-nav-item {eq name='Request.param.id' value='$channel.id'}tab-active{/eq}">
+                    <a href="javascript:;">
+                        <span>{$channel.textlink}</span>
+                    </a>
+                </li>
+                {/cms:channellist}
+            </ul>
+            <div class="tab-panel">
+                <div class="tab-panel-item tab-active">
+                    {cms:pagelist id="row" imgwidth='100px' imgheight='100px'}
+                    <a href="{$row.url}" title="{$row.title}" class="aui-flex b-line">
+                        <div class="aui-grind-img">
+                            {if $row.hasimage}
+                            {$row.img}
+                            {/if}
+                        </div>
+                        <div class="aui-flex-box">
+                            <span style="font-size: 15px;">{$row.title}</span>
+                            <div class="aui-grind-title">
+                                <span>{$row.channel.name} {$row.createtime|date='m-d',###}</span>
+                            </div>
+                        </div>
+                    </a>
+                    {/cms:pagelist}
+                </div>
+            </div>
+            <!-- S 分页栏 -->
+            <div class="text-center" style="margin: 0px 0 50px 0;">
+                {cms:pageinfo type="full" /}
+            </div>
+            <!-- E 分页栏 -->
+        </div>
+    </section>
+</section>
+{include file="common/script" /}
+
+</body>
+</html>

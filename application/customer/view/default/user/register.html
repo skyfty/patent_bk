@@ -1,0 +1,38 @@
+<header class="aui-navBar aui-navBar-fixed b-line">
+    <a href="/user/index" target="_self" class="aui-navBar-item">
+        <i class="icon icon-return"></i>
+    </a>
+    <div class="aui-center">
+        <span class="aui-center-title" >认证</span>
+    </div>
+</header>
+<form action="{:url('user/register')}" method="post" id="form">
+    <div id="errtips" class="hide" style="display: none"></div>
+    <div class="weui-cells__title">绑定手机号</div>
+    <div class="weui-cells weui-cells_form wy-address-edit">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label wy-lab">手机号</label></div>
+            <div class="weui-cell__hd"><input class="weui-input" type="tel" name="telephone" id="telephone" placeholder="请输入手机号" value="{$user->genearch->telephone}" data-rule="手机号:required:mobile"></div>
+            <!--<div class="weui-cell__ft">-->
+            <!--<button type="button" class="weui-vcode-btn btn-captcha" data-url="/index/sendsms" data-event="bind" data-mobile="mobile" data-input-id="telephone">-->
+            <!--获取验证码-->
+            <!--</button>-->
+            <!--</div>-->
+        </div>
+        <!--<div class="weui-cell">-->
+        <!--<div class="weui-cell__hd"><label class="weui-label wy-lab">验证码</label></div>-->
+        <!--<div class="weui-cell__hd"><input class="weui-input" type="number" placeholder="请输入验证码" value="" name="captcha"  data-rule="验证码:required"></div>-->
+        <!--</div>-->
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label wy-lab">姓名</label></div>
+            <div class="weui-cell__hd">
+                <input class="weui-input" type="text" data-target="#errtips" placeholder="请输入姓名"  name="row[name]" value="{$user.genearch.name}" data-rule="姓名:required">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cells__tips"></div>
+
+    <div class="weui-btn-area">
+        <button type="submit" class="weui-btn weui-btn_primary">绑定</button>
+    </div>
+</form>

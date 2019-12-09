@@ -1,0 +1,48 @@
+
+<div class="panel panel-default panel-intro" ng-controller="chart">
+    <div class="panel-heading">
+        {:build_heading(null,FALSE)}
+    </div>
+    <div class="panel-body">
+        <div class="tab-pane fade active in" id="one">
+            <div class="widget-body no-padding">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                <h3>{{stat.quantity.value}}</h3>
+                                <p>员工总数</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-navicon"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h3>{{stat.quantity.value}}</h3>
+                                <p>今日订单数</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-rmb"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ui-echarts data-url="staff/graph"  data-type="line"  data-title="新增员工"></ui-echarts>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="common/tmpl" /}

@@ -1,0 +1,29 @@
+<header class="aui-navBar aui-navBar-fixed b-line">
+    <a href="/user/index" target="_self" class="aui-navBar-item">
+        <i class="icon icon-return"></i>
+    </a>
+    <div class="aui-center">
+        <span class="aui-center-title" >服务协议</span>
+    </div>
+</header>
+<form action="{:url('user/edit')}" method="post" id="form">
+    <input type="hidden" name="row[agreement]" value="1">
+    <div id="errtips" class="hide" style="display: none"></div>
+    <div class="weui-cells weui-cells_form wy-address-edit" style="    padding: 10px;">
+        {$content}
+    </div>
+    <div class="weui-cells__tips"></div>
+
+    <div class="weui-btn-area">
+        {eq name='user->genearch->agreement' value='1'}
+        <button type="button" class="weui-btn weui-btn_disabled">
+            已签署
+        </button>
+        {else/}
+        <button type="submit" class="weui-btn weui-btn_primary">
+            签署
+        </button>
+        {/eq}
+
+    </div>
+</form>

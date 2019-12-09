@@ -1,0 +1,22 @@
+<div class="panel panel-default panel-intro">
+    {:build_heading()}
+    <div class="panel-body">
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="one">
+                <div class="widget-body no-padding">
+                    <div id="toolbar" class="toolbar">
+                        {:build_toolbar('refresh')}
+                        <a href="unsafe:javascript:;" class="btn btn-success btn-add {:$auth->check('log/add/model_type/'.$config.modelType)?'':'hide'}" title="添加"><i class="fa fa-plus"></i> 添加</a>
+                        <a href="unsafe:javascript:;" class="btn btn-danger btn-del btn-disabled disabled {:$auth->check('log/del/model_type/'.$config.modelType)?'':'hide'}" title="删除"><i class="fa fa-trash"></i> 删除</a>
+                    </div>
+                    <table id="table" class="table table-striped table-bordered table-hover"
+                           data-operate-del="{:$auth->check('log/del/model_type/'.$config.modelType)}"
+                           data-operate-view="{:$auth->check('log/view/model_type/'.$config.modelType)}"
+                           width="100%">
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

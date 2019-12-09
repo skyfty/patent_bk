@@ -1,0 +1,54 @@
+<header class="aui-navBar aui-navBar-fixed b-line">
+    <a href="/user/index" target="_self" class="aui-navBar-item">
+        <i class="icon icon-return"></i>
+    </a>
+    <div class="aui-center">
+        <span class="aui-center-title" >家庭住址</span>
+    </div>
+</header>
+<section class="aui-scrollView">
+    <form action="{:url('user/edit')}" method="post" id="form">
+
+        <div id="errtips" class="hide" style="display: none"></div>
+        <div class="weui-cells__title">修改个人信息</div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label for="address" class="weui-label wy-lab">地区</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" id="address" type="text"   readonly=""  data-target="#errtips" autocomplete="off"  placeholder="请输入所在地区"  name="row[address]" value="{$user.genearch.address}"   data-rule="所在地区:required">
+
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label wy-lab">地址</label></div>
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder=""  data-target="#errtips" name="row[area]">{$user.genearch.area}</textarea>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label wy-lab">小区</label></div>
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder=""  data-target="#errtips" name="row[village]">{$user.genearch.village}</textarea>
+                </div>
+            </div>
+
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label wy-lab">楼号</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-textarea" placeholder=""  data-target="#errtips" name="row[building]" value="{$user.genearch.building}"/>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label wy-lab">房间</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-textarea" placeholder=""  data-target="#errtips" name="row[room]" value="{$user.genearch.room}"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="weui-cells__tips"></div>
+        <div class="weui-btn-area">
+            <button type="submit" class="weui-btn weui-btn_primary">确定</button>
+        </div>
+    </form>
+</section>

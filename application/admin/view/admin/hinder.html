@@ -1,0 +1,18 @@
+<div class="row animated fadeInRight">
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="panel-heading"></div>
+            <div class="panel-body">
+                <div class="box-body box-profile">
+                    <h3 class="profile-username text-center">{$row.nickname}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="layer-footer">
+            <div class="col-xs-12 col-sm-8  text-center">
+                <a class="btn btn-success btn-embossed btn-addtabs addtabsit {:$auth->check('staff/view')?'':'hide'}" href="{:url('staff/view',['ids'=>$row.staff_id])}" title="{:__('%s', $row.nickname)}">详情</a>
+            </div>
+        </div>
+    </div>
+
+</div>

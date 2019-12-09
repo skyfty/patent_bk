@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    {include file="common/meta" /}
+    <script type="text/javascript">
+        var customer = {$user->genearch|json_encode};
+    </script>
+
+    <style>
+        #plupload-avatar{
+            position:absolute;
+            top:0;left:0;opacity: 0;
+        }
+    </style>
+    <link href="__CDN__/assets/css/customer/home.css?v={$site.version}" rel="stylesheet">
+</head>
+<body ontouchstart>
+
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed">
+        <a href="/" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <span class="aui-center-title">个人中心</span>
+        </div>
+    </header>
+    <section class="aui-scrollView">
+        <div class="aui-panel">
+            <a href="javascript:void(0);" class="aui-panel-cell">
+                <div class="aui-panel-cell-hd">
+                    <form id="update-form-myavatar" class="form-horizontal"  method="POST" action="user/edit">
+                        <input type="hidden" name="row[id]" value="{$user.genearch.id}" />
+                        <input type="hidden" id="c-avatar" name="row[avatar]" value="{$user.genearch.avatar}" />
+                    <img class="profile-user-img" src="{$user.genearch.avatar|default_avatar}" alt="">
+                        <button id="plupload-avatar" type="button"><i class="fa fa-upload"></i> {:__('Upload')}</button>
+
+                    </form>
+                </div>
+                <div class="aui-panel-cell-bd">
+                    <h4>{$user.nickname}</h4>
+                    <p>{$user.telephone}</p>
+                </div>
+                <div class="aui-panel-cell-fr">
+                    {eq name='user.genearch.telephone' value=''}未绑定{else/}已绑定{/eq}
+                </div>
+            </a>
+        </div>
+        <div class="aui-card-list">
+            <a href="{:url('trade/index')}" class="aui-panel-cell aui-clear-border">
+                 <div class="aui-panel-cell-bd">
+                    <h4>我的订单</h4>
+                </div>
+                <div class="aui-panel-cell-fr">
+                </div>
+            </a>
+        </div>
+        <div class="aui-layout">
+            <a href="{:url('trade/index',['state'=>'unpay'])}" class="aui-layout-item">
+                <div class="aui-layout-icon">
+                    <img src="__CDN__/assets/img/icon-item-001.png" alt="">
+                </div>
+                <div class="aui-layout-text">待付款</div>
+            </a>
+            <a href="{:url('trade/index',['state'=>'unused'])}" class="aui-layout-item">
+                <div class="aui-layout-icon">
+                    <img src="__CDN__/assets/img/icon-item-002.png" alt="">
+                </div>
+                <div class="aui-layout-text">未使用</div>
+            </a>
+            <a href="{:url('trade/index',['state'=>'refund'])}" class="aui-layout-item">
+                <div class="aui-layout-icon">
+                    <img src="__CDN__/assets/img/icon-item-003.png" alt="">
+                </div>
+                <div class="aui-layout-text">已退款</div>
+            </a>
+        </div>
+        <div class="divHeight"></div>
+        <div class="aui-card-list">
+            <a href="javascript:void(0);" class="aui-panel-cell aui-clear-border">
+                <div class="aui-panel-cell-bd">
+                    <h4>会员积分</h4>
+                </div>
+                <div class="aui-panel-cell-fr">0分
+                </div>
+            </a>
+            <a href="{:url('user/agreement')}" class="aui-panel-cell">
+                <div class="aui-panel-cell-bd">
+                    <h4>服务协议</h4>
+                </div>
+                <div class="aui-panel-cell-fr">
+                </div>
+            </a>
+            <div class="divHeight"></div>
+            <a href="{:url('user/register')}" class="aui-panel-cell">
+                <div class="aui-panel-cell-bd">
+                    <h4>认证信息</h4>
+                </div>
+                <div class="aui-panel-cell-fr"></div>
+            </a>
+            <a href="{:url('user/person')}" class="aui-panel-cell">
+                <div class="aui-panel-cell-bd">
+                    <h4>个人信息</h4>
+                </div>
+                <div class="aui-panel-cell-fr"></div>
+            </a>
+            <a href="javascript:void(0);" class="aui-panel-cell aui-clear-border">
+                <div class="aui-panel-cell-bd">
+                    <h4>优惠券</h4>
+                </div>
+                <div class="aui-panel-cell-fr"></div>
+            </a>
+            <div class="divHeight"></div>
+            <a href="/user/address" class="aui-panel-cell">
+                <div class="aui-panel-cell-bd">
+                    <h4>地址管理</h4>
+                </div>
+                <div class="aui-panel-cell-fr"></div>
+            </a>
+            <a href="/user/bank" class="aui-panel-cell aui-clear-border">
+                <div class="aui-panel-cell-bd">
+                    <h4>银行卡</h4>
+                </div>
+                <div class="aui-panel-cell-fr"></div>
+            </a>
+        </div>
+    </section>
+</section>
+{include file="common/script" /}
+
+</body>
+</html>

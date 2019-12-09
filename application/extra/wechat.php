@@ -1,0 +1,26 @@
+<?php
+
+return array (
+  'app_id' => 'wx1b527bc3b88ff341',
+  'secret' => 'a9a3afd98b11ab320f56adbf19634480',
+  'token' => '5Xn7u6J1tICX8trpr0NfMLcLMTam3Dep',
+  'aes_key' => 'kY6IU3Qrsrx2ZkUgwUfaCn9mqX3Mxk3yXKjWF7oDkoH',
+  'authurl' => 'c.touchmagic.cn',
+  'title' => '极客思迪',
+  'notify' => '1',
+  'prenotify' => '60',
+  'agreement' => '0',
+  'newprovider_template_id' => 'bS80pxt76jFgse7PWfC99GXPPb-mZ_lfjmvCiJ5MitM',
+  'accomplish_template_id' => '40qyFabitS_-dIAhAhQmv-fSH5RKPv6NojpovbM6c2Y',
+  'evaluate_template_id' => 'UCaIgHP29aKTSVeSRcc_KnRxrSHLvzDLB9YAiJ82PDQ',
+  'mch_id' => '1559428901',
+  'mch_key' => '7Z9dbRpifP4RXMyRda6cw6K08BUk69N5',
+  'notify_url' => 'http://c.touchmagic.cn/index/wxpay',
+  'joinbuying_template_id' => 'NQbVBLbtygyxvnCTsYPkv5swhn6FYjYK78NNnNTOuI0',
+  'openbuying_template_id' => 'J8cH_QYPrcETuVhVvsTxIXOYbqo-0pIurULnfKouzjE',
+  'tradedone_template_id' => 'mAg1grptZxm1uFG6z_uvYzvlbEMQvIkd2tOz82lzQm8',
+  'buyingfailed_template_id' => 'uvKLUCfs96LFaK7cwsO5l6Y55zh8XLDbE9Sh5gZQRdY',
+  'refund_template_id' => 'Nhf2aRYflWr_hJpEv4pTNqO-41YqDYX2ckET72qHUL4',
+  'cert_path' => '/extend/cert/apiclient_cert.pem',
+  'key_path' => '/extend/cert/apiclient_key.pem',
+);

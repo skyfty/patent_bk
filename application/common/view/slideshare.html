@@ -1,0 +1,176 @@
+
+<!doctype html>
+{__NOLAYOUT__}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>{$row->name}</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="__CDN__/assets/libs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__CDN__/assets/css/animate.css">
+
+    <style>
+        body {
+            padding-bottom: 70px;
+        }
+
+        .page {
+            display: none;
+            padding: 10px;
+        }
+        .page.active {
+            display: block;
+        }
+        .presets {
+            padding-top: 130px;
+
+        }
+
+        .state {
+            padding-bottom: 10px;
+            padding-top: 10px;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        .page-center {
+            position: absolute;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="__CDN__/assets/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div style="
+    position: fixed;
+    color: red;
+    z-index: 1400;
+    right: 0.5rem;
+    top: 0.5rem;
+"><a href="javascript:void(0);" class="btn-close">关闭</a></div>
+
+<div>
+
+    <!-- Any div element inside of this container is displayed as a slide -->
+    <div class="page first active">
+        <div  class=" active page-center" style="width: 100%">
+            <h1 class="text-center">{$row->name}</h1>
+        </div>
+    </div>
+    <div class="  page">
+        <div>
+            <h2 class="text-center ">介绍</h2>
+            <p>
+                {$row->description}
+            </p>
+        </div>
+    </div>
+    <div class="  page">
+        <div>
+            <h2 class="text-center ">知识点</h2>
+            <p>
+                {volist name="row['lores']" id="vo"}
+            <p>类别：{$vo['lorerange']['name']} 知识：{$vo['knowledge']['name']} 等级：{$vo['grade']['name']} 解释：{$vo['grade']['description']}</p>
+            {/volist}
+            </p>
+        </div>
+    </div>
+    <div class="  page">
+        <div>
+            <h2 class="text-center ">物料使用</h2>
+            <p>
+                {volist name="row['datums']" id="vo"}
+            <p>类别：{$vo['material']['type_text']} 物料：{$vo['name']} 数量：{$vo['amount']}</p>
+            {/volist}
+            </p>
+        </div>
+    </div>
+    {volist name="exlectures" id="exlecture"}
+    <div class="page">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="">
+                    <div class="text-left col-md-12 state">
+                        <div>序列: {$key + 1} / {:count($exlectures)}</div>
+                        <div>耗时: {$exlecture->duration} 分钟</div>
+                        <div>阶段: {$exlecture->phase_text}</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="presets">
+            {volist name="exlecture.expounds" id="vo"}
+            <div class="{$vo.animation.content}">
+                <p>{$vo.detail_text}</p>
+            </div>
+            {/volist}
+        </div>
+    </div>
+    {/volist}
+
+    <div class="  page last">
+        <div class="page-center" style="width: 100%">
+            <h1 class="text-center">
+                <a href="javascript:void(0);" id="complate">完成</a>
+            </h1>
+        </div>
+    </div>
+
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <div class="row  text-center ">
+            <a href="javascript:void(0);" class="col-md-6 prerpage" style="font-size: 30px">上页</a>
+            <a href="javascript:void(0);" class=" col-md-6 nextpage" style="font-size: 30px">下页</a>
+        </div>
+    </div>
+</nav>
+
+<script src="__CDN__/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="__CDN__/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="__CDN__/assets/libs/fastadmin-layer/dist/layer.js"></script>
+
+<script>
+
+    function closelayer() {
+        var index=parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+    $(".btn-close").click(closelayer);
+
+    $(".prerpage").click(function(){
+        var ele = $("div.page.active");
+        if (ele.hasClass("first"))
+            return;
+        $("div.page").removeClass("active");
+        ele.prev().addClass("active");
+    });
+    $(".nextpage").click(function(){
+        var ele = $("div.page.active");
+        if (ele.hasClass("last"))
+            return;
+        var hidediv = $("div.page.active div.presets div.hide:first");
+        if (hidediv.length == 0) {
+            $("div.page").removeClass("active");
+            ele.next().addClass("active");
+        } else {
+            hidediv.removeClass("hide").addClass("animated");
+        }
+    });
+</script>
+
+</body>
+</html>

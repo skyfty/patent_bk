@@ -1,0 +1,17 @@
+<div ng-controller="cond">
+    <div class="complex-form">
+        <spotgroup ng-model='condContent' data-fields='searchFields'/>
+    </div>
+
+    <div class="form-group layer-footer">
+        <div class="row">
+            <div class="col-xs-5 col-xs-offset-3">
+                <button type="button"  class="btn btn-success" style="width: 100%" ng-click="submit({$config['row']['id']})">{:__('Ok')}</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{include file="common/tmpl" /}

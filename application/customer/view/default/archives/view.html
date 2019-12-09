@@ -1,0 +1,25 @@
+{layout name="archives/layout" /}
+
+<div class="divHeight"></div>
+<div class="aui-flex">
+    <div class="aui-flex-box">
+        <h4 id="shared-desc">{cms:archives name="title" /}</h4>
+        {if condition="($Request.param.channel == 43)"}
+        <a class="btn-mall" href="/mall/index">
+            <img src="__CDN__/assets/img/cjfl.png" style="    width: 23px;" alt=""> 商城
+        </a>
+        {/if}
+        <span>{cms:channel name="name" /} {cms:archives name="createtime|date='m-d',###" /}</span>
+        <span style="float: right"><i class="fa fa-eye"></i> {cms:archives name="views" /}</span>
+
+    </div>
+</div>
+<div class="aui-flex b-line" style="    padding-top: 0px;
+    padding-bottom: 0px;">
+</div>
+<div class="aui-flex">
+    <div class="aui-flex-box">
+        {cms:archives name="content" /}
+    </div>
+</div>
+<div style="height:60px;"></div>

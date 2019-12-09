@@ -1,0 +1,61 @@
+
+<section class="zyw-container" style="border-top:0px">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {cms:blocklist id="block" name="focus" row="5"}
+            <div class="swiper-slide">
+                <a href="{$block.url}">
+                    <img src="{$block.image}" alt="">
+                </a>
+            </div>
+            {/cms:blocklist}
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <section class="aui-scrollView" style="    margin-bottom: 40px;">
+        <div class="aui-find-body">
+            <div class="aui-find-head">
+                <div class="aui-find-head-box">
+                    <a href="{:url('archives/index',['id'=>44])}" class="aui-find-head-one">
+                        <h3>品牌介绍</h3>
+                        <p></p>
+                    </a>
+                    <a href="{:url('archives/index',['id'=>43])}" class="aui-find-head-two">
+                        <h3>精品课程</h3>
+                        <p></p>
+                    </a>
+                    <a href="{:url('archives/index',['id'=>42])}" class="aui-find-head-three">
+                        <h3>最新活动</h3>
+                        <p></p>
+                    </a>
+                    <a href="{:url('archives/index',['id'=>1])}" class="aui-find-head-four">
+                        <h3>科技趋势</h3>
+                        <p></p>
+                    </a>
+                </div>
+            </div>
+            {cms:channellist id="channel" type="top" model="1" }
+            <div class="aui-find-news">
+                <h2>{$channel.textlink}</h2>
+                {cms:arclist id="row" channel="$channel.id"  orderby="weigh" orderway="desc" row="4" flag="recommend"}
+                <a  href="{$row.url}" title="{$row.title}" class="aui-find-list aui-flex">
+                    <div class="aui-find-img">
+                        {if $row.hasimage}
+                        {$row.img}
+                        {/if}
+                    </div>
+                    <div class="aui-flex-box">
+                        <h3>{$row.title}</h3>
+                        <p>{$row.channel.name} {$row.createtime|date='m-d',###}</p>
+                    </div>
+                </a>
+                {/cms:arclist}
+            </div>
+            {/cms:channellist}
+
+        </div>
+    </section>
+
+</section>

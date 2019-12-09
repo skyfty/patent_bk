@@ -1,0 +1,16 @@
+{__NOLAYOUT__}
+<div class="panel panel-default panel-intro">
+
+    <div class="panel-body">
+        <div class="widget-body no-padding  table-cosmetic">
+            <div id="toolbar-group" class="toolbar">
+                <a href="javascript:;" class="btn btn-primary btn-refresh" title="刷新"><i class="fa fa-refresh"></i> </a>
+                <a href="/group/infix?model_type=staff&model_id={$row.id}" class="btn btn-success btn-dialog {:$auth->check('group/infix/model_type/staff')?'':'hide'}" title="加入组"><i class="fa fa-plus"></i> </a>
+                <a href="javascript:;" class="btn btn-danger btn-del btn-disabled disabled {:$auth->check('group/uninfix/model_type/staff')?'':'hide'}" title="删除"><i class="fa fa-trash"></i> </a>
+            </div>
+
+            <table id="table" class="table table-striped table-bordered table-hover" width="100%">
+            </table>
+        </div>
+    </div>
+</div>
