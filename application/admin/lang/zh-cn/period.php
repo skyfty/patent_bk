@@ -13,8 +13,8 @@ return [
     'Owners_model_keyword'  =>  '所有者',
     'Group_model_id'  =>  '分组',
     'Group_model_keyword'  =>  '分组',
-    'Branch_model_id'  =>  '校区',
-    'Branch_model_keyword'  =>  '校区',
+    'Branch_model_id'  =>  '机构',
+    'Branch_model_keyword'  =>  '机构',
     'Interval_begin'  =>  '开始时间',
     'Interval_end'  =>  '结束时间'
 ];

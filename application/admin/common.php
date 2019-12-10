@@ -256,7 +256,7 @@ if (!function_exists('build_branch_select')) {
             'class' => 'form-control selectpicker',
             'data-selected-text-format'=>'count > 2',
             'live-search'=>'true',
-            'title'=>'选择校区'
+            'title'=>'选择机构'
 
         ],$attr);
         $selected = is_array($selected) ? $selected : explode(',', $selected);

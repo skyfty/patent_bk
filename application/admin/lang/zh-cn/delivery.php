@@ -19,6 +19,6 @@ return [
     'Ordernumber'  =>  '运单号',
     'Address'  =>  '邮寄地址',
     'Telephone'  =>  '联系电话',
-    'Branch_model_id'  =>  '校区',
-    'Branch_model_keyword'  =>  '校区'
+    'Branch_model_id'  =>  '机构',
+    'Branch_model_keyword'  =>  '机构'
 ];

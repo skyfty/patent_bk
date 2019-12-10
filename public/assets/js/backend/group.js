@@ -47,7 +47,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                             }
                         },
                         {
-                            field: 'branch_name', title: "校区", align: 'left',
+                            field: 'branch_name', title: "机构", align: 'left',
                         },
                         {
                             field: 'createtime',
@@ -270,7 +270,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                             }
                         },
                         {
-                            field: 'branch_name', title: "校区", align: 'left',
+                            field: 'branch_name', title: "机构", align: 'left',
                         },
                         {field: 'createtime', title: __('Createtime'), formatter: Table.api.formatter.datetime, operate: 'RANGE', addclass: 'datetimerange', sortable: true},
                         {

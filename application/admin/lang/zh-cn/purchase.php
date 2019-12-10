@@ -16,6 +16,6 @@ return [
     'Merchandise_model_id'  =>  '材料',
     'Merchandise_model_keyword'  =>  '材料',
     'Amount'  =>  '存量',
-    'Branch_model_id'  =>  '校区',
-    'Branch_model_keyword'  =>  '校区'
+    'Branch_model_id'  =>  '机构',
+    'Branch_model_keyword'  =>  '机构'
 ];
