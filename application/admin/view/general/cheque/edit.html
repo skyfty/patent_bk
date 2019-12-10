@@ -1,0 +1,53 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Model_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-model_id" data-rule="required"  data-source="model/modelx/index"  class="form-control selectpage" name="row[model_id]" type="text" value="{$row.model_id}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Name')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-name" class="form-control" name="row[name]" type="text" value="{$row.name}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Description')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-description" class="form-control" name="row[description]" type="text" value="{$row.description}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Mold')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_select('row[mold]', $molddata, $row['mold'], ['class'=>'form-control', 'data-rule'=>'required'])}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Inflow_model')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-inflow_model" data-rule="required" data-source="model/modelx/index" class="form-control selectpage" name="row[inflow_id]" type="text" value="{$row.inflow_id}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Inflow_model_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-inflow_model_id" data-rule="required" data-source="general/cheque/index" class="form-control selectpage" name="row[inflow_cheque_id]" type="text" value="{$row.inflow_cheque_id}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Related_model')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-related_model" data-rule="required" data-source="model/modelx/index" class="form-control selectpage" name="row[related_id]" type="text" value="{$row.related_id}">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

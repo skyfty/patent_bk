@@ -20,7 +20,10 @@ class Promotion extends Cosmetic
     }
 
     public function branch() {
-        return $this->hasOne('branch','id','branch_model_id')->setEagerlyType(0);
+        return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
+    public function genre() {
+        return $this->hasOne('genre','id','genre_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
 }

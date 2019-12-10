@@ -10,6 +10,7 @@ use app\admin\model\Sight;
 use app\admin\model\Staff;
 use app\common\model\Statistics;
 
+use think\App;
 use think\Session;
 
 /**
@@ -72,29 +73,42 @@ class Cosmetic extends Backend
 
     public function _empty($name)
     {
-        $cosmeticModel = Modelx::get(['table' => strtolower($this->model->raw_name)],[],true);
+        $cosmeticModel = Modelx::get(['table' => strtolower($this->model->raw_name)],[],!App::$debug);
         if (!$cosmeticModel) {
             $this->error('未找到对应模型');
         }
-        $scenery = Scenery::get(['model_id' => $cosmeticModel->id, 'name' =>$name],[],true);
+        $scenery = Scenery::get(['model_id' => $cosmeticModel->id, 'name' =>$name],[],!App::$debug);
         if ($scenery) {
             return call_user_func([$this, $scenery['pos']]);
         }
     }
 
+    protected function getRelationSearch($cosmeticModel) {
+        $relationFields = [];
+        $modelFields = model("fields")->where(array("model_id"=>$cosmeticModel['id']))->where("type","in", ["model","cascader"] )->where("name", "not in",['group'])->cache(!App::$debug)->order("id", "ASC")->select();
+        foreach($modelFields as $v) {
+            if ($v['relevance']) {
+                $relationFields[] = $v['relevance'].".".$v['name'];
+            } else {
+                $relationFields[] = $v['name'];
+            }
+        }
+        return array_unique(array_merge($this->relationSearch, $relationFields));
+    }
+
     protected function assignScenery($model_id, $pos, $sceneryWhere = array()) {
         $sceneryList = [];
         $sceneryWhere = array_merge(['model_id' => $model_id, 'pos' => array("in", $pos)],$sceneryWhere);
-        foreach (Scenery::where($sceneryWhere)->cache(true)->order("weigh", "ASC")->select() as $k=>$v) {
+        foreach (Scenery::where($sceneryWhere)->cache(!App::$debug)->order("weigh", "ASC")->select() as $k=>$v) {
             $where =array(
                 'scenery_id'=>$v['id']
             );
-            $v['fields'] = Sight::with('fields')->cache(true)->where($where)->order("weigh", "asc")->select();
+            $v['fields'] = Sight::with('fields')->cache(!App::$debug)->where($where)->order("weigh", "asc")->select();
             $sceneryList[$v['pos']][] = $v;
         }
 
         $allfields = [];
-        foreach (Fields::where(array("model_id"=>$model_id))->cache(true)->field('createtime,updatetime',true)->order("id", "ASC")->select() as $k=>$v) {
+        foreach (Fields::where(array("model_id"=>$model_id))->cache(!App::$debug)->field('createtime,updatetime',true)->order("id", "ASC")->select() as $k=>$v) {
             $allfields[$v['id']] = $v;
         }
 
@@ -122,28 +136,31 @@ class Cosmetic extends Backend
 
     public function index() {
         $this->request->filter(['strip_tags']);
+
+        $cosmeticModel = Modelx::get(['table' => strtolower($this->model->raw_name)],[],!App::$debug);
+        if (!$cosmeticModel) {
+            $this->error('未找到对应模型');
+        }
         if ($this->request->isAjax()) {
             if ($this->request->request('keyField')) {
                 return $this->selectpage($this->searchFields);
             }
             $name = \think\Loader::parseName(basename(str_replace('\\', '/', get_class($this->model))));
 
+            $relationSearch = $this->getRelationSearch($cosmeticModel);;
+
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
-            $this->model->alias($name)->where($where)->with($this->relationSearch);
+            $this->model->alias($name)->where($where)->with($relationSearch);
             $this->spectacle($this->model);
             $total = $this->model->count();
 
-            $this->model->alias($name)->where($where)->with($this->relationSearch)->order($sort, $order)->limit($offset, $limit);
+            $this->model->alias($name)->where($where)->with($relationSearch)->order($sort, $order)->limit($offset, $limit);
             $this->spectacle($this->model);
             $list = $this->model->select();
 
             return json(array("total" => $total, "rows" => collection($list)->toArray()));
         }
 
-        $cosmeticModel = Modelx::get(['table' => strtolower($this->model->raw_name)],[],true);
-        if (!$cosmeticModel) {
-            $this->error('未找到对应模型');
-        }
         $this->assignScenery($cosmeticModel->id, ['index']);
         if ($this->view->engine->exists("")) {
             return $this->view->fetch();
@@ -159,15 +176,15 @@ class Cosmetic extends Backend
             return parent::add();
         }
 
-        $cosmeticModel = Modelx::get(['table' => strtolower($this->model->raw_name)],[],true);
+        $cosmeticModel = Modelx::get(['table' => strtolower($this->model->raw_name)],[],!App::$debug);
         if (!$cosmeticModel) {
             $this->error('未找到对应模型');
         }
-        $scenery = Scenery::get(['model_id' => $cosmeticModel->id, 'pos' => "view",'main'=>1],[],true);
+        $scenery = Scenery::get(['model_id' => $cosmeticModel->id, 'pos' => "view",'main'=>1],[],!App::$debug);
         $where =array(
             'scenery_id'=>$scenery['id']
         );
-        $scenery['fields'] = Sight::with('fields')->where($where)->order("weigh", "asc")->cache(true)->select();
+        $scenery['fields'] = Sight::with('fields')->where($where)->order("weigh", "asc")->cache(!App::$debug)->select();
 
         $this->assignconfig('scenery',$scenery);
         return $this->view->fetch();
@@ -178,7 +195,12 @@ class Cosmetic extends Backend
         if ($ids === null)
             $this->error(__('Params error!'));
 
-        $row = $this->model->with($this->relationSearch)->find($ids);
+        $cosmeticModel = Modelx::get(['table' => $this->model->raw_name],[],!App::$debug);
+        if (!$cosmeticModel) {
+            $this->error('未找到对应模型');
+        }
+
+        $row = $this->model->with($this->getRelationSearch($cosmeticModel))->find($ids);
         if (!$row)
             $this->error(__('No Results were found'));
         $adminIds = $this->getDataLimitAdminIds();
@@ -192,21 +214,18 @@ class Cosmetic extends Backend
         if ($this->request->isAjax()) {
             if ($this->request->has("scenery_id")) {
                 $scenery_id = $this->request->param("scenery_id");
-                $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery_id])->order("weigh", "asc")->cache(true)->select();;
+                $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery_id])->order("weigh", "asc")->cache(!App::$debug)->select();;
             }else {
-                $scenery = Scenery::get(['model_table' => $this->model->raw_name,'name'=>$this->request->action(),'pos'=>'view'],[],true);
+                $scenery = Scenery::get(['model_table' => $this->model->raw_name,'name'=>$this->request->action(),'pos'=>'view'],[],!App::$debug);
                 $where =array(
                     'scenery_id'=>$scenery['id']
                 );
-                $fields =  Sight::with('fields')->where($where)->order("weigh", "asc")->cache(true)->select();;
+                $fields =  Sight::with('fields')->where($where)->order("weigh", "asc")->cache(!App::$debug)->select();;
             }
             $content = $this->view->fetch();
             return array("content"=>$content, "fields"=>$fields);
         } else {
-            $cosmeticModel = Modelx::get(['table' => $this->model->raw_name],[],true);
-            if (!$cosmeticModel) {
-                $this->error('未找到对应模型');
-            }
+
             $this->assignScenery($cosmeticModel->id, $this->viewScenerys);
             return $this->view->fetch();
         }
@@ -262,15 +281,16 @@ class Cosmetic extends Backend
     }
 
     public function hinder($ids) {
-        $row = $this->model->with($this->relationSearch)->find($ids);
+
+        $cosmeticModel = Modelx::get(['table' => strtolower($this->model->raw_name)],[],!App::$debug);
+        if (!$cosmeticModel) {
+            $this->error('未找到对应模型');
+        }
+        $row = $this->model->with($this->getRelationSearch($cosmeticModel))->find($ids);
         if (!$row)
             $this->error(__('No Results were found'));
         $this->view->assign("row", $row);
 
-        $cosmeticModel = Modelx::get(['table' => strtolower($this->model->raw_name)],[],true);
-        if (!$cosmeticModel) {
-            $this->error('未找到对应模型');
-        }
         $this->assignScenery($cosmeticModel->id, ['hinder']);
         return $this->view->fetch();
     }

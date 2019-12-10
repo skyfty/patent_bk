@@ -96,7 +96,7 @@ class Customer extends Cosmetic
         return $this->hasOne('genearch','id','genearch_model_id',[],'LEFT')->setEagerlyType(0);
     }
     public function branch() {
-        return $this->hasOne('branch','id','branch_model_id')->setEagerlyType(0);
+        return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
     public function getSexTextAttr($value, $data) {

@@ -77,7 +77,6 @@ class Staff extends \app\common\model\Staff
                 $params['telephone'] = $row['telephone'];
                 $params['idcode'] = $row['idcode'];
                 $params['password'] = md5(md5("123456") . $params['salt']);
-                $params['qrcodeimg'] = $row['qrcodeimg'];
 
                 $admin = $row->admin()->save($params);
                 if ($admin) {

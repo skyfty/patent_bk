@@ -91,7 +91,7 @@ class Provider extends Cosmetic
     }
 
     public function promotion() {
-        return $this->hasOne('promotion','id','appoint_promotion_model_id')->joinType("LEFT")->field('id,idcode,name,genre_cascader_id')->setEagerlyType(0);
+        return $this->hasOne('promotion','id','promotion_model_id')->joinType("LEFT")->field('id,idcode,name')->setEagerlyType(0);
     }
 
 

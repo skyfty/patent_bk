@@ -153,11 +153,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
                 return defer;
             };
             $(".btn-ajax").data("success", $scope.refreshRow);
-
-            $scope.overstate = function() {
-                var ret = $.inArray($scope.row.state, ["0","5","6"]) != -1;
-                return ret;
-            };
         },
         scenery: {
 
@@ -165,8 +160,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
         initParam:[
             'customer_model_id',
             'branch_model_id',
-            'appoint_promotion_model_id',
-            'appoint_time','appoint_course','staff_model_id'],
+            'promotion_model_id',
+            'staff_model_id'],
 
         addController:function($scope,$sce, $compile,$timeout) {
             var self = this;

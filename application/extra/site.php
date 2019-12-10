@@ -1,16 +1,15 @@
 <?php
 
 return array (
-  'name' => '极客思迪教学管理系统',
-  'beian' => '',
+  'name' => '科技管理平台',
+  'beian' => '京ICP备11016091号-1',
   'cdnurl' => '',
-  'version' => '2.0.0.95',
+  'version' => '2.0.1.155',
   'timezone' => 'Asia/Shanghai',
   'forbiddenip' => '',
   'fixedpage' => 'dashboard',
   'configgroup' => 
   array (
-    'agenda' => 'agenda',
     'basic' => 'basic',
     'email' => 'email',
     'shared' => 'shared',

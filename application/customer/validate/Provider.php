@@ -12,7 +12,7 @@ class Provider extends Validate
     protected $rule = [
         'branch_model_id' => 'require',
         'appoint_time' => 'require',
-        'appoint_promotion_model_id' => 'require',
+        'promotion_model_id' => 'require',
     ];
 
     /**
@@ -25,16 +25,16 @@ class Provider extends Validate
      * 字段描述
      */
     protected $field = [
-        'branch_model_id' => '预约门店',
+        'branch_model_id' => '预约机构',
         'appoint_time' => '预约时间',
-        'appoint_promotion_model_id' => '预约项目',
+        'promotion_model_id' => '预约项目',
     ];
 
     /**
      * 验证场景
      */
     protected $scene = [
-        'add' => ['branch_model_id', 'appoint_time', 'appoint_promotion_model_id'],
+        'add' => ['branch_model_id', 'appoint_time', 'promotion_model_id'],
     ];
 
     public function __construct(array $rules = [], $message = [], $field = [])

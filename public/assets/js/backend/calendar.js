@@ -56,23 +56,18 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template','fullcalen
                                 Backend.api.open("/provider/listevaluate?course_model_id=" + data['id'], "授课报告");
                                 return;
                             } else {
-                                params += "&package_model_id=" + data['package_model_id'];
-                                params += "&appoint_promotion_model_id=" + data['appoint_promotion_model_id'];
+                                params += "&promotion_model_id=" + data['promotion_model_id'];
                                 params += "&appoint_time=" + data['appoint_time'];
                                 params += "&appoint_course=" + data['appoint_course'];
-                                params += "&classroom_model_id=" + data['classroom_model_id'];
                                 params += "&branch_model_id=" + data['branch_model_id'];
                                 params += "&staff_model_id=" + data['staff_model_id'];
-                                params += "&period_model_id=" + data['period_model_id'];
                             }
                         } else {
                             params += "&branch_model_id=" + branch_model_id;
                             params += "&appoint_time=" + calEvent['appoint_time'];
                             params += "&appoint_course=" + calEvent['appoint_course'];
-                            params += "&classroom_model_id=" + calEvent['classroom_model_id'];
-                            params += "&period_model_id=" + calEvent['period_model_id'];
                         }
-                        Backend.api.open("/provider/add?" + params, "新授课订单", {
+                        Backend.api.open("/provider/add?" + params, "新订单", {
                             callback: function (res) {
                                 $('#calendar').fullCalendar('refetchEvents');
                             }

@@ -15,7 +15,7 @@ class Staff extends Cosmetic
     ];
 
     protected $scene = [
-        'add'  => ['admin_name', 'name'=>'require|token'],
+        'add'  => ['admin_name', 'name'=>'require'],
     ];
 
     public function checkAdminName($value,$rule,$data, $field, $title) {

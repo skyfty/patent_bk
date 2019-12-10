@@ -47,23 +47,15 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     if (field.relevance) {
                         data = data[field.relevance];
                     }
-                    var modelKeyword = data[field.name + "_model_keyword"];
+                    var modelKeyword = data[field.name];
                     if (modelKeyword) {
                         var showData = [];
-                        modelKeyword = $.parseJSON(modelKeyword);
-                        if ($.isArray(modelKeyword)) {
-                            $.each(modelKeyword, function(k, v){
-                                showData.push(self.formatModelKeyword(field, data, $.parseJSON(v)));
-                            });
-                        } else {
-                            showData.push(self.formatModelKeyword(field, data, modelKeyword));
-                        }
+                        showData.push(self.formatModelKeyword(field, data, modelKeyword));
                         if (showData.length == 1) {
                             data = showData[0];
                         } else {
                             data = showData.join("<br/>");
                         }
-
                     } else {
                         data = "-";
                     }

@@ -94,13 +94,7 @@ class Fields extends \app\common\model\Fields
                     }
                     db()->query($alter->getAddSql());
 
-                    if ($row['type'] == 'model') {
-                        $alter->setType("editor");
-                        db()->query($alter->getAddSql());
-                    }else if ($row['type'] == 'cascader') {
-                        $alter->setType("editor");
-                        db()->query($alter->getAddSql());
-                    }elseif($row['type'] == 'location') {
+                    if($row['type'] == 'location') {
                         $alter->setType("number");
                         $alter->setDecimals(6);
                         $alter->setLength(20);

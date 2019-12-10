@@ -29,7 +29,6 @@ class Provider extends Cosmetic
         'name', 'idcode', 'id', 'state',
         'branch_model_id',
         'customer_model_id',
-        'appoint_promotion_model_id'
     ];
     protected $selectpageShowFields = ['idcode'];
 
@@ -38,7 +37,6 @@ class Provider extends Cosmetic
         $this->noNeedRight = array_merge($this->noNeedRight, []);
         parent::_initialize();
         $this->model = model("provider");
-        $this->relationSearch = array_merge($this->relationSearch, ["promotion"]);
     }
 
 

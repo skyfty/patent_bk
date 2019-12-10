@@ -39,8 +39,6 @@ class Branch extends Cosmetic
         try {
             $result = $this->model->validate("branch.add")->allowField(true)->save($params);
             if ($result !== false) {
-                model("AuthGroup")->get(2)->migrate($this->model->id);
-
                 $db->commit();
                 $this->success();
             } else {

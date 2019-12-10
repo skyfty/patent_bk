@@ -34,6 +34,29 @@ class Staff extends Cosmetic
             }
         });
 
+        $beforeupdate = function($row){
+            if (isset($row['quarters'])) {
+                $quarters = $row['quarters'];
+                if (is_string($quarters)) {
+                    $quarters = explode(",", $quarters);
+                }
+
+                $groupName = [];
+                $quartersKeyword = [];
+                foreach(\app\admin\model\AuthGroup::all($quarters) as $v) {
+                    if (isset($v['department']) && $v->department) {
+                        $departmentName = $v->department->name;
+                        $quartersKeyword[] = $v['name']." - ".$departmentName;
+                    } else {
+                        $quartersKeyword[] = $v['name'];
+                    }
+                    $groupName[] = $v['name'];
+                }
+                $row['leading'] = in_array('校区负责人', $groupName)?1:0;
+                $row['quarters_keywords'] = implode("\r\n", $quartersKeyword);
+            }
+        };
+        self::beforeInsert($beforeupdate);self::beforeUpdate($beforeupdate);
     }
 
     public function admin() {
@@ -46,7 +69,7 @@ class Staff extends Cosmetic
         return $value?explode(",", $value):[];
     }
     public function branch() {
-        return $this->hasOne('branch','id','branch_model_id')->setEagerlyType(0);
+        return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
     public function getGroupKeywordsAttr($value)

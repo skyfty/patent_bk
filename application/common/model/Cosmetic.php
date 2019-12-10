@@ -125,5 +125,10 @@ class Cosmetic extends Model
     {
         return $this->morphMany('ModelLog', 'model');
     }
-
+    public function creator() {
+        return $this->hasOne('admin','id','creator_model_id')->joinType("LEFT")->field('id,name,idcode')->setEagerlyType(0);
+    }
+    public function owners() {
+        return $this->hasOne('admin','id','owners_model_id')->joinType("LEFT")->field('id,name,idcode')->setEagerlyType(0);
+    }
 }

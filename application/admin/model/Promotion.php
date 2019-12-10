@@ -33,7 +33,7 @@ class Promotion extends  \app\common\model\Promotion
         });
 
         self::afterDelete(function($row){
-            Provider::destroy(['appoint_promotion_model_id'=>$row['id']]);
+            Provider::destroy(['promotion_model_id'=>$row['id']]);
         });
 
 

@@ -19,7 +19,7 @@ class Branch extends Cosmetic
      */
     protected $scene = [
         'add'  => [
-            'name'=>'require|unique:branch,name|token'
+            'name'=>'require|unique:branch'
         ],
         'view.edit' => []
     ];
