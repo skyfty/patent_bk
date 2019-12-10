@@ -15,7 +15,7 @@ class Branch extends Cosmetic
 {
     use \app\admin\library\traits\GroupData;
     protected $selectpageShowFields = ['name'];
-    protected $selectpageFields = ['name', 'idcode', 'id', 'status','mailing_model_id'];
+    protected $selectpageFields = ['name', 'idcode', 'id', 'status'];
 
     public function _initialize()
     {

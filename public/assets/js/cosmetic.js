@@ -97,48 +97,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 };
                 $.ajax(options);
             },
-            giftIdcode: function(options, callback){
-                var index = Layer.load();
-                $.ajax({
-                    url: 'ajax/giftidcode',
-                    dataType: 'json',
-                    data: options,
-                    cache: false,
-                    success: function (ret) {
-                        if (ret.hasOwnProperty("code")) {
-                            var msg = ret.hasOwnProperty("msg") && ret.msg != "" ? ret.msg : "";
-                            if (ret.code === 1) {
-                                callback(ret);
-                            } else {
-                                Toastr.error(msg ? msg : __('Wipe cache failed'));
-                            }
-                        } else {
-                            Toastr.error(__('Unknown data format'));
-                        }
-                    }, error: function () {
-                        Toastr.error(__('Network error'));
-                    },
-                    complete:function(){
-                        Layer.close(index);
-                    }
-                });
-            },
-
-            checkProviderAmount:function(staff_id, starttime, endtime) {
-                var params = {
-                    url: "schedule/summation",
-                    dataType: 'json',
-                    cache: false,
-                    data:{
-                        field:"amount",
-                        custom:{
-                            starttime:['BETWEEN TIME',[starttime,endtime]],
-                            staff_id:staff_id
-                        }
-                    }
-                };
-                return $.ajax(params)
-            },
 
             showFieldTip:function(field, text, hi) {
                 if (angular.isString(field)) {

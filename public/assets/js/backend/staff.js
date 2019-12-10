@@ -119,41 +119,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 Table.api.bindevent(table);
 
             },
-            lessons:function($scope, $compile,$timeout, data){
-                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
 
-                // 初始化表格参数配置
-                Table.api.init({
-                    extend: {
-                        add_url: 'lessonstate/add',
-                        index_url: 'lessonstate/index',
-                        table: 'lessonstate',
-                    }
-                });
-                var table = $("#table");
-
-                var tableOptions = {
-                    toolbar: "#toolbar-lesson",
-                    url: $.fn.bootstrapTable.defaults.extend.index_url,
-                    pk: 'id',
-                    columns: [
-                        [
-                            {field: 'promotion.name', title: '课程', align: 'left'},
-                            {field: 'amount', title: "次数"},
-                        ]
-                    ],
-                    queryParams: function (params) {
-                        params.custom = {
-                            'staff_model_id':$scope.row.id
-                        };
-                        return params;
-                    }
-                };
-                // 初始化表格
-                table.bootstrapTable(tableOptions);
-                // 为表格绑定事件
-                Table.api.bindevent(table);
-            },
             account: function($scope, $compile,$timeout, data){
                 $scope.reckonIds = [];
 
@@ -270,95 +236,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
                 $scope.$broadcast("shownTable");
             },
-            course: function($scope, $compile,$timeout, data){
-                $scope.searchFieldsParams = function(param) {
-                    param.custom = {staff_model_id:$scope.row.id};
-                    return param;
-                };
 
-                Table.api.init({
-                    extend: {
-                        index_url: 'course/index',
-                        summation_url: 'course/summation',
-                        table: 'course',
-                    },
-                    buttons : [
-                        {
-                            name: 'view',
-                            title: function(row, j){
-                                return __('%s', row.name);
-                            },
-                            classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
-                            icon: 'fa fa-folder-o',
-                            url: 'course/view'
-                        }
-                    ]
-                });
-                $scope.fields = data.fields;
-                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
-                $scope.$broadcast("shownTable");
-
-                var table = $("#table-course");
-
-                $scope.settle = function() {
-                    var ids = Table.api.selectedids(table);
-                    Layer.confirm("确实要结课吗？", {icon: 3, title: __('Warning'), offset: 0, shadeClose: true},
-                        function () {
-                            Fast.api.ajax({
-                                url: "course/settle/ids/" + ids,
-                                data: {params: "status=finished"}
-                            }, function(){
-                                $scope.$broadcast("refurbish");
-                            });
-                            Layer.closeAll();
-                        }
-                    );
-                };
-
-            },
-            according: function($scope, $compile,$timeout, data){
-                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
-
-                require(['jquery-ui.min', 'fullcalendar', 'fullcalendar-lang'], function () {
-                    var events = {
-                        url: "according/index",
-                        data: function () {
-                            return {
-                                staff_id: $scope.row.id
-                            };
-                        }
-                    };
-
-                    $('#calendar').fullCalendar({
-                        header: {
-                            left: 'prev,next today',
-                            center: 'title',
-                            right: 'month,agendaDay, listMonth'
-                        },
-                        eventRender: function(event, element) {
-                            var starttime = event.start.format("YYYY-MM-DD");
-                            if ($.inArray("agenda-event", event.className)!=-1) {
-                                var bktd = $("div.fc-view-container table td[data-date='"+starttime+"']");
-                                bktd.addClass(event.row.status);
-                            }
-                            if (event['row']['provider']) {
-                                element.attr('title', event.row.provider.idcode);
-                            }
-                        },
-                        eventAfterAllRender: function (view) {
-                            $("a.agenda-event").remove();
-                            $("div.fc-list-view table.fc-list-table  tr.agenda-event").remove();
-                            $("a.fc-event.schedule").addClass("btn-dialog");
-                            $("div.fc-list-view table.fc-list-table tr.provider td.fc-list-item-title a").addClass("btn-dialog");
-
-                        },
-                        events: events,
-                        navLinks: true,
-                    });
-                    $("a.fc-event[href]").attr("target", "_blank");
-                });
-                $scope.$broadcast("shownTable");
-            }
         },
 
         refeshQuarters:function($scope, branch_id){

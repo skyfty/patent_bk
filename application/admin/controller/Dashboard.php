@@ -27,8 +27,6 @@ class Dashboard extends Backend
         $stat = [
             'customer'=>0,
             'provider'=>0,
-            'business'=>0,
-            'genearch'=>0,
         ];
         $branchwhere = [];
         if ($branch_info) {
@@ -39,47 +37,8 @@ class Dashboard extends Backend
         }
         $this->view->assign($stat);
 
-        $seventtime = \fast\Date::unixtime('day', -7);
-        $businessdata = $customerlist = [];
-        for ($i = 0; $i < 7; $i++)
-        {
-            $day = date("Y-m-d", $seventtime + ($i * 86400));
-            $bt = strtotime($day." 0:0:0");
-            $et = strtotime($day." 23:59:59");
-            $customerlist[$day] = model("customer")->where($branchwhere)->where("createtime","between time", [$bt, $et])->count();
-            $businessdata[$day] = model("business")->where($branchwhere)->where("createtime","between time", [$bt, $et])->count();
-        }
-
-        $accountData = [];
-        for ($i = 0; $i < 7; $i++)
-        {
-            $day = date("Y-m-d", $seventtime + ($i * 86400));
-            $bt = strtotime($day." 0:0:0");
-            $et = strtotime($day." 23:59:59");
-            $accountData[$day] = model("account")->where(function($query)use($branch_info){
-                if ($branch_info) {
-                    $query->where("reckon_branch_model_id",$branch_info->id);
-                }
-            })->where('cheque_model_id',33)->where("createtime","between time", [$bt, $et])->sum("money");
-        }
-
-        $genreData = [];
-        $genres = model("genre")->cache(true)->where("pid", 0)->select();
-        foreach($genres as $genre) {
-            $genreData[$genre['name']] = model("provider")->where($branchwhere)->where("genre_cascader_id", "in", $genre['children_ids'])->count();
-        }
 
 
-        $this->view->assign([
-            'todaycustomer'       => model("customer")->where($branchwhere)->whereTime("createtime","today")->count(),
-            'todaybusiness'       => model("business")->where($branchwhere)->whereTime("createtime","today")->count(),
-            'todayprovider'       => model("provider")->where($branchwhere)->whereTime("createtime","today")->count(),
-            'todaygenearch'       => model("genearch")->where($branchwhere)->whereTime("createtime","today")->count(),
-            'businessdata'          => $businessdata,
-            'customerlist'       => $customerlist,
-            'genredata'       => $genreData,
-            'accountdata'       => $accountData,
-        ]);
         return $this->view->fetch();
     }
 

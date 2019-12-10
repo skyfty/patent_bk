@@ -95,54 +95,6 @@ class Provider extends Cosmetic
     }
 
 
-
-    public function getShareUrlAttr($value, $data) {
-        $branch = $this->branch;
-        $authurl = $branch->authurl;
-        $authurl = $authurl?$authurl:\think\Config::get("wechat.authurl");
-        return url("provider/evaluate", ['id'=>$this['id']], true, $authurl);
-    }
-
-    public function getSharedAttr($value, $data) {
-        $branch = $this->branch;
-        $authurl = $branch->authurl;
-        $authurl = $authurl?$authurl:\think\Config::get("wechat.authurl");
-        $imgUrl = \think\Config::get("shared.imgUrl");
-        $imgUrl = url($imgUrl, [], false, $authurl);
-        $title = $this->customer->nickname . "同学" . $this->promotion->name . "授课报告";
-        $shareddesc = $this->customer->nickname."完成了极客思迪的STEAM课程《".$this->promotion->name."》，快来看看我的优秀表现吧。";
-        $shareParams = [
-            'title'=> $title,
-            'imgUrl'=>$imgUrl,
-            'desc'=>$shareddesc,
-            'link'=>$this->share_url
-        ];
-        return $shareParams;
-    }
-
-    public function qrcode() {
-        $url = $this->share_url;
-        $datepath = date("Ymd");
-        $md5filename = $datepath.'/'.md5($url).'.png';
-        $md5path = ROOT_PATH . '/public/uploads/'.$md5filename;
-        if (!file_exists($md5path)) {
-            $workpath = ROOT_PATH . '/public/uploads/' . $datepath;
-            if (!file_exists($workpath)) {
-                mkdir($workpath);
-            }
-            $qrCode = new QrCode();
-            $qrCode
-                ->setText($url)
-                ->setSize(250)
-                ->setPadding(15)
-                ->setLogoSize(50)
-                ->setImageType(QrCode::IMAGE_TYPE_PNG);
-            $qrCode->setLogo(ROOT_PATH . 'public/assets/img/adminlogo.png');
-            $qrCode->save($md5path);
-        }
-        return ["/uploads/".$md5filename,$url];
-    }
-
     public function amount() {
 
     }

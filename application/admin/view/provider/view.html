@@ -68,20 +68,6 @@
                                                 <button type="button" class="btn btn-default btn-sm" ng-click="refreshRow()" data-toggle="tooltip" data-container="body" title="刷新">
                                                     <i class="fa  fa-refresh"></i>
                                                 </button>
-                                                <div class="btn-group" role="group" aria-label="...">
-                                                    <a  class="btn btn-default btn-sm  btn-ajax  {:$auth->check('provider/accomplish')?'':'hide'}" ng-hide="overstate() || row.checkwork == 0" href="/provider/accomplish/ids/{$row.id}" data-id="{$row.id}"  data-confirm="确实要完成授课吗"  data-toggle="tooltip" data-container="body" title="完成授课">
-                                                        <i class="fa  fa-calendar-check-o"></i>
-                                                    </a>
-                                                    <a  class="btn btn-default btn-sm  btn-ajax{:$auth->check('provider/signin')?'':'hide'}" ng-hide="overstate() || row.checkwork == 0 ||  row.checkwork == 2 " href="/provider/signin/ids/{$row.id}" data-id="{$row.id}"  data-confirm="确实要签到吗"  data-toggle="tooltip" data-container="body" title="签到">
-                                                        <i class="fa  fa-flag-checkered"></i>
-                                                    </a>
-                                                    <a  class="btn btn-default btn-sm btn-ajax {:$auth->check('provider/leave')?'':'hide'}" ng-hide="overstate() || row.checkwork == 0 ||  row.checkwork == 4 " href="/provider/leave/ids/{$row.id}" data-id="{$row.id}" data-confirm="确实标记请假吗"  data-toggle="tooltip" data-container="body" title="请假">
-                                                        <i class="fa fa-bed"></i>
-                                                    </a>
-                                                    <a  class="btn btn-default btn-sm btn-ajax {:$auth->check('provider/recover')?'':'hide'}" href="/provider/recover/ids/{$row.id}" data-id="{$row.id}" data-confirm="确实恢复状态吗"  data-toggle="tooltip" data-container="body" title="恢复">
-                                                        <i class="fa  fa-recycle"></i>
-                                                    </a>
-                                                </div>
                                             </div>
                                             <div  ng-show="viewstate.editing">
                                                 <button type="submit" class="btn btn-success btn-sm"   data-toggle="tooltip" data-container="body" title="{:__('Submit')}">

@@ -28,24 +28,6 @@ class Staff extends \app\common\model\Staff
             $row['avatar'] = "/assets/img/avatar.png";
         });
 
-        self::afterInsert(function($row){
-            $branch = $row->branch;
-            $app = new Application($branch && $branch['app_id']? $branch->wechat:Config::get('wechat'));
-            $sceneValue = "SID_".$row['id'];
-            $result = $app->qrcode->forever($sceneValue);
-            if ($result) {
-                $qrcodeimg = $app->qrcode->url($result->ticket);
-                if ($qrcodeimg) {
-                    $row->save(['qrcodeimg' => $qrcodeimg]);
-                }
-            }
-        });
-
-        $beforeupdate = function($row){
-
-        };
-        self::beforeInsert($beforeupdate);self::beforeUpdate($beforeupdate);
-
 
         $upstat = function($row){
             $quantity = self::where(['branch_model_id'=>$row->branch_model_id])->count();

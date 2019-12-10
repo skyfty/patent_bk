@@ -20,7 +20,7 @@ class Promotion extends Cosmetic
      * @var \app\admin\model\Promotion
      */
     protected $model = null;
-    protected $selectpageFields = ['idcode','name', 'id', 'status','class_number'];
+    protected $selectpageFields = ['idcode','name', 'id', 'status'];
     protected $searchFields = ['name', 'idcode','slug'];
 
     public function _initialize()
@@ -28,18 +28,7 @@ class Promotion extends Cosmetic
         $this->noNeedRight = array_merge($this->noNeedRight, []);
         parent::_initialize();
         $this->model = model("promotion");
-        $this->assignconfig("animations", model("animation")->cache(true)->select());
 
     }
 
-
-    public function slideshare($ids) {
-        $row = $this->model->get($ids);
-        if (!$row)
-            $this->error(__('No Results were found'));
-
-        $this->view->assign("exlectures", $row->allexlecture());
-        $this->view->assign("row", $row);
-        return $this->view->fetch("../../common/view/slideshare");
-    }
 }

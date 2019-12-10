@@ -169,49 +169,6 @@
                             </div>
                         </div>
                     </div>
-                    {if condition="$branch_info != null"}
-                    <div class="col-md-6">
-                        <div class="box box-danger">
-                            <div class="box-header">
-                                <h3 class="box-title">签约信息</h3>
-                                <div class="box-tools pull-right">
-                                </div>
-                            </div>
-                            <div class="box-body">
-                                <table class="table table-striped">
-                                    <tbody>
-                                    <tr>
-                                        <td width="140">校区</td>
-                                        <td>{$branch_info->name}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>签约</td>
-                                        <td>{$branch_info->sign_text}</td>
-                                    </tr>
-                                    {if condition="$branch_info['starttime']"}
-                                    <tr>
-                                        <td>签约周期</td>
-                                        <td>{$branch_info->starttime_text}至{$branch_info->endtime_text}</td>
-                                    </tr>
-                                    {/if}
-                                    <tr>
-                                        <td>缴费</td>
-                                        <td>{$branch_info->payment_text}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>支付课程包</td>
-                                        <td>{$branch_info->package_paied}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>免费试听课材料包</td>
-                                        <td>50</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    {/if}
                 </div>
             </div>
         </div>

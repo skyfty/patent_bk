@@ -32,10 +32,6 @@ class Staff extends Cosmetic
             if (isset($changeData['provider_ids'])) {
                 $row['provider_amount'] = count(explode(",", $changeData['provider_ids']));
             }
-
-            if (isset($changeData['uncertain_ids'])) {
-                $row['ncertain_amount'] = count(explode(",", $changeData['uncertain_ids']));
-            }
         });
 
     }

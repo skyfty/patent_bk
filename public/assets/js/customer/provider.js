@@ -5,23 +5,7 @@ define(['jquery', 'bootstrap', 'fast', 'customer', 'form','layer'], function ($,
         },
 
         index: function () {
-            $(".btn-pre-signin").on("click", function(){
-                var self = $(this);
-                Controller.api.presign(self.data("id")).then(function(){
-                    window.location.reload();
-                });
-            });
 
-            $(".btn-leave").on("click", function(){
-                var self = $(this);
-                Controller.api.leave(self.data("id"), self.data("leave-off-count")).then(function(){
-                    window.location.reload();
-                });
-            });
-
-            $(".btn-unstate").on("click", function(){
-                $.alert("教师还未结课");
-            });
         },
 
 

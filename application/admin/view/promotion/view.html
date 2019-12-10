@@ -65,9 +65,6 @@
                                                 <button type="button" class="btn btn-default btn-inline-edit btn-sm {:check_adscription($row, $config.staff)?'':'hide'}  {:$auth->check('promotion/edit')?'':'hide'}" ng-click="edit()" data-toggle="tooltip" data-container="body" title="{:__('Edit')}">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-info {:$auth->check('promotion/slideshare')?'':'hide'}"  ng-click="openLesson()" data-toggle="tooltip" data-container="body">
-                                                    <i class="fa  fa-slideshare"></i>
-                                                </button>
 
                                                 <button type="button" class="btn btn-default btn-sm" ng-click="refreshRow()" data-toggle="tooltip" data-container="body" title="刷新">
                                                     <i class="fa  fa-refresh"></i>

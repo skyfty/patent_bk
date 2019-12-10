@@ -29,27 +29,6 @@ class Branch extends \app\common\model\Branch
                 }
             }
         });
-        self::afterInsert(function($row){
-            $persist_group = model("ModelGroup")->where("branch_model_id", 2)->where("persist", 1)->select();
-            foreach($persist_group as $group) {
-                ModelGroup::create([
-                    "type"=>$group['type'],
-                    "title"=>$group['title'],
-                    "model_type"=>$group['model_type'],
-                    "status"=>$group['status'],
-                    "branch_model_id"=>$row['id'],
-                    "persist"=>$group['persist'],
-                    "warrant"=>$group['warrant'],
-                ]);
-            }
-
-            $app = new Application(Config::get('wechat'));
-            $sceneValue = "BID_".$row['id'];
-            $result = $app->qrcode->forever($sceneValue);
-            if ($result) {
-                $row->save(['qrcodeimg'=>$app->qrcode->url($result->ticket)]);
-            }
-        });
         self::afterDelete(function($row){
             model("AuthGroup")->where("branch_id", $row->id)->delete();
             model("ModelGroup")->where("branch_model_id", $row->id)->delete();

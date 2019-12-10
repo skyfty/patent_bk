@@ -5,12 +5,6 @@
             <div id="toolbar-provider" class="toolbar">
                 <classify-tree data-config="genre/classtree" data-change="classChanged"></classify-tree>
                 {:build_toolbar('refresh')}
-                <a class="btn btn-success btn-disabled btn-signin  {:$auth->check('provider/singin')?'':'hide'}" ng-click="signin();" title="签到" href="javascript:;">
-                    <i class="fa fa-flag-checkered"></i>
-                </a>
-                <a class="btn btn-success btn-disabled btn-accomplish  {:$auth->check('provider/accomplish')?'':'hide'}" ng-click="accomplish();" title="完成授课" href="javascript:;">
-                    <i class="fa fa-calendar-check-o"></i>
-                </a>
             </div>
             <table id="table-provider"  ui-formidable="fields"
                    data-fields='fields'
@@ -22,8 +16,6 @@
                    data-search-button-hide-group="true"
                    data-operate-view="{:$auth->check('provider/view')}"
                    data-operate-del="{:$auth->check('provider/del')}"
-                   data-operate-singin="{:$auth->check('provider/singin')}"
-                   data-operate-accomplish="{:$auth->check('provider/accomplish')}"
                    class="table table-striped table-bordered table-hover  text-nowrap" width="100%">
             </table>
         </div>

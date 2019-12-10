@@ -80,53 +80,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 };
                 $(".btn-add-account").data("callback", refresh);$(".btn-refresh").click(refresh)
             },
-            according :function($scope, $compile,$timeout, data){
-                $scope.staffChange = function(ids){
-                    selected = ids;
-                    $('#calendar').fullCalendar('refetchEvents');
-                };
-                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
-
-                var selected = [];
-                require(['jquery-ui.min', 'fullcalendar', 'fullcalendar-lang'], function () {
-                    var events = {
-                        url: "calendar/index",
-                        data: function () {
-                            var staffIds = [];
-                            if (selected.length > 0) {
-                                $.each(selected, function(i, v){
-                                    staffIds.push(v.data.id);
-                                });
-                            }
-                            return staffIds.length > 0 ? {'staff_id': staffIds}:{'branch_id':[$scope.row.id]};
-                        }
-                    };
-                    $('#calendar').fullCalendar({
-                        header: {
-                            left: 'prev,next today',
-                            center: 'title',
-                            right: 'month,agendaWeek,agendaDay, listMonth'
-                        },
-                        navLinks: true, // can click day/week names to navigate views
-                        events: events,
-                        eventAfterAllRender: function (view) {
-                            $("a.fc-event[href]").attr("target", "_blank");
-                        },
-                        eventClick: function (calEvent, jsEvent, view) {
-                            var that = this;
-                            var status = $(this).hasClass("fc-completed") ? "normal" : "completed";
-
-                        },
-                        dayClick: function (date, jsEvent, view) {
-                        },
-                    });
-
-
-                });
-                Form.api.bindevent($("form[role=form]"));
-
-                $scope.$broadcast("shownTable");
-            },
             provider: function($scope, $compile,$timeout, data){
                 $scope.varietyModelIds = [];
                 $scope.classChanged = function(data) {
@@ -184,58 +137,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                             classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
                             icon: 'fa fa-folder-o',
                             url: 'staff/hinder'
-                        }
-                    ]
-                });
-                $scope.fields = data.fields;
-                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
-                $scope.$broadcast("shownTable");
-            },
-            mailing: function($scope, $compile,$timeout, data){
-                $scope.searchFieldsParams = function(param) {
-                    param.custom = {
-                        "branch_model_id":$scope.row.id,
-                    };
-                    return param;
-                };
-
-                Table.api.init({
-                    buttons : [
-                        {
-                            name: 'view',
-                            title: function(row, j){
-                                return __(' %s', row.id);
-                            },
-                            classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
-                            icon: 'fa fa-folder-o',
-                            url: 'mailing/hinder'
-                        }
-                    ]
-                });
-                $scope.fields = data.fields;
-                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
-                $scope.$broadcast("shownTable");
-            },
-            distribute: function($scope, $compile,$timeout, data){
-                $scope.searchFieldsParams = function(param) {
-                    param.branch_model_id = $scope.row.id;
-                    param.custom = {
-                    };
-                    return param;
-                };
-
-                Table.api.init({
-                    buttons : [
-                        {
-                            name: 'view',
-                            title: function(row, j){
-                                return __(' %s', row.id);
-                            },
-                            classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
-                            icon: 'fa fa-folder-o',
-                            url: function(row){
-                                return "/promotion/hinder?id=" + row.promotion_model_id;
-                            }
                         }
                     ]
                 });

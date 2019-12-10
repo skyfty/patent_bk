@@ -95,11 +95,9 @@ class Fields extends \app\common\model\Fields
                     db()->query($alter->getAddSql());
 
                     if ($row['type'] == 'model') {
-                        $alter->setName($row['name'] . "_model_keyword");
                         $alter->setType("editor");
                         db()->query($alter->getAddSql());
                     }else if ($row['type'] == 'cascader') {
-                        $alter->setName($row['name'] . "_cascader_keyword");
                         $alter->setType("editor");
                         db()->query($alter->getAddSql());
                     }elseif($row['type'] == 'location') {
@@ -201,12 +199,8 @@ class Fields extends \app\common\model\Fields
                     if ($row['type'] == 'model') {
                         $sql = Alter::instance()->setTable($model['table'])->setName($row['name'] . "_model_id")->getDropSql();
                         db()->query($sql);
-                        $sql = Alter::instance()->setTable($model['table'])->setName($row['name'] . "_model_keyword")->getDropSql();
-                        db()->query($sql);
                     }elseif ($row['type'] == 'cascader') {
                         $sql = Alter::instance()->setTable($model['table'])->setName($row['name'] . "_cascader_id")->getDropSql();
-                        db()->query($sql);
-                        $sql = Alter::instance()->setTable($model['table'])->setName($row['name'] . "_cascader_keyword")->getDropSql();
                         db()->query($sql);
                     }elseif($row['type'] == 'location'){
                         $sql = Alter::instance()->setTable($model['table'])->setName($row['name'] . "_lat")->getDropSql();

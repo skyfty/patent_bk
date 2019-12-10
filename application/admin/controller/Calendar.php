@@ -32,10 +32,6 @@ class Calendar extends Cosmetic
         $this->request->filter(['strip_tags']);
     }
 
-    public function rooms($branch_model_id) {
-        $classrooms = model("classroom")->where("branch_model_id", $branch_model_id)->field("id,name as title")->cache(true)->select();
-        return $classrooms?$classrooms:[];
-    }
 
     public function index() {
         if (!$this->request->isAjax()) {
@@ -52,7 +48,7 @@ class Calendar extends Cosmetic
             if (!$ids) {
                 $this->error(__('Parameter %s can not be empty', ''));
             }
-            $result = $this->model->with("course")->where("calendar.id", "in", explode(",",$ids))->select();
+            $result = $this->model->where("calendar.id", "in", explode(",",$ids))->select();
         }
         return json($result);
     }

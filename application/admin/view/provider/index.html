@@ -47,38 +47,17 @@
                     <div id="toolbar-{$vo['name']}" class="toolbar">
                         <classify-tree data-config="genre/classtree" data-change="classChanged"></classify-tree>
                         {:build_toolbar(['refresh', 'add', 'del'],['add'=>[url('provider/add'), 'btn btn-success btn-dialog', 'fa fa-plus',  __(''), __('添加授课')]])}
-                        <a class="btn btn-success btn-disabled btn-signin  {:$auth->check('provider/singin')?'':'hide'}" ng-click="signin();" title="签到" href="javascript:;">
-                            <i class="fa fa-flag-checkered"></i>
-                        </a>
-                        <a class="btn btn-success btn-disabled btn-accomplish  {:$auth->check('provider/accomplish')?'':'hide'}" ng-click="accomplish();" title="完成授课" href="javascript:;">
-                            <i class="fa fa-calendar-check-o"></i>
-                        </a>
+
                         <div class="dropdown btn-group">
                             <a class="btn btn-primary btn-more dropdown-toggle btn-disabled disabled" data-toggle="dropdown"><i class="fa fa-cog"></i> {:__('More')}</a>
                             <ul class="dropdown-menu text-left" role="menu">
-                                <li>
-                                    <a class="btn btn-link btn-disabled btn-recover  {:$auth->check('provider/recover')?'':'hide'}" ng-click="recover();" title="回退" href="javascript:;">
-                                        <i class="fa fa-recycle"></i> 回退
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="btn btn-link btn-disabled btn-reproduce  {:$auth->check('provider/reproduce')?'':'hide'}" ng-click="reproduce();" title="克隆" href="javascript:;">
-                                        <i class="fa fa-clone"></i> 克隆
-                                    </a>
-                                </li>
                                 <li>
                                     <a class="btn btn-link btn-disabled btn-change-staff  {:$auth->check('provider/changestaff')?'':'hide'}" ng-click="changestaff();" title="修改老师" href="javascript:;">
                                         <i class="fa fa-adjust"></i> 修改老师
                                     </a>
                                 </li>
-                                <li>
-                                    <a class="btn btn-link btn-disabled btn-change-appoint-time  {:$auth->check('provider/changeappointtime')?'':'hide'}" ng-click="changeappointtime();" title="调整时间" href="javascript:;">
-                                        <i class="fa fa-calendar-minus-o"></i> 时间调整
-                                    </a>
-                                </li>
                             </ul>
                         </div>
-
 
 
                         <div style="display: inline-block;" class="hidden-xs {notempty name='config.staff'}hide{/notempty}" id="div_branch_select">{:build_branch_select('branch_select')}</div>

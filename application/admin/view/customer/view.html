@@ -70,18 +70,6 @@
                                                 <button  type="button" class="btn btn-danger  {$vo['name'] == 'face'?' btn-face-del':' btn-del'} btn-sm {:$auth->check('customer/del')?'':'hide'}"   href="customer/del" data-toggle="tooltip" data-container="body" title="{:__('Delete')}">
                                                     <i class="fa fa-trash-o"></i>
                                                 </button>
-                                                {switch name="vo.name"}
-                                                {case value="face"}
-                                                <button type="button" class="btn btn-default btn-inline-edit btn-sm {:$auth->check('customer/recognition')?'':'hide'}" ng-click="recognition()" data-toggle="tooltip" data-container="body" title="人脸识别">
-                                                    <i class="fa  fa-video-camera"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-default btn-inline-edit btn-sm {:$auth->check('customer/edit')?'':'hide'}" ng-click="syncAvatar()" data-toggle="tooltip" data-container="body" title="保存为头像">
-                                                    <i class="fa  fa-registered"></i>
-                                                </button>
-                                                {/case}
-
-                                                {default /}
-                                                {/switch}
 
                                                 <button type="button" class="btn btn-default btn-inline-edit btn-sm {:$auth->check('customer/edit')?'':'hide'}" ng-click="edit()" data-toggle="tooltip" data-container="body" title="{:__('Edit')}">
                                                     <i class="fa fa-edit"></i>

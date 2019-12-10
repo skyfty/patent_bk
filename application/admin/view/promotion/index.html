@@ -41,19 +41,9 @@
                         <classify-tree data-config="genre/classtree" data-change="classChanged"></classify-tree>
                         {:build_toolbar(['refresh'])}
                         <a href="unsafe:javascript:;" class="btn btn-danger btn-del btn-disabled {:$auth->check('promotion/del')?'':'hide'}" data-url="/promotion/del/ids/{ids}" title="删除"><i class="fa fa-trash"></i> </a>
-                        {if condition="$auth->check('promotion/add?type=default')"}
                         <a href="{:url('promotion/add?type=default')}" class="btn btn-success btn-dialog" title="添加课程">
                             <i class="fa fa-plus"></i>
                         </a>
-                        {elseif condition="$auth->checka('promotion/add?type=exclusive')"/}
-                        <a href="{:url('promotion/add?type=exclusive')}" class="btn btn-success btn-dialog" title="添加课程">
-                            <i class="fa fa-plus"></i>
-                        </a>
-                        {/if}
-                        <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default btn-disabled hidden-xs  {:$auth->check('promotion/distribute')?'':'hide'}"  ng-click="distribute()" title="授权校区"><i class="fa fa-fw fa-object-group"></i></button>
-                        <button type="button" class="btn btn-default btn-disabled hidden-xs {:$auth->check('warrant/add')?'':'hide'}" id="warrant"  ng-click="warrant()"  title="授权员工组"><i class="fa fa-fw fa-share-alt-square"></i></button>
-                        </div>
                     </div>
                     <table id="table-{$vo['name']}"  ui-formidable="fields"
                            data-fields="fields"

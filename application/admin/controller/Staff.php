@@ -58,17 +58,6 @@ class Staff extends Cosmetic
         }
     }
 
-    public function according($ids = null) {
-        $row = $this->model->with($this->relationSearch)->find($ids);
-        if (!$row)
-            $this->error(__('No Results were found'));
-        $this->view->assign("row", $row);
-
-        $eventList = CalendarEvent::where('admin_id', $row->admin_id)->order('id desc')->select();
-        $this->view->assign("eventList", $eventList);
-        $content = $this->view->fetch();
-        return array("content"=>$content);
-    }
 
     public function account($ids = null) {
         $row = $this->model->with($this->relationSearch)->find($ids);

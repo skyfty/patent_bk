@@ -66,56 +66,6 @@ class Cosmetic extends Model
         });
 
         $prepareModelField = function($row){
-            $fields = Modelx::get(array("table"=>$row->name),[], true)->fields()->where(array("type"=>"model"))->select();
-            foreach($fields as $v) {
-                $fd = $v->getData();
-                $fieldName = $fd['name'];
-                $modelId = $fieldName . "_model_id";
-                if (isset($row[$modelId]) && $fd['defaultvalue']) {
-                    $modelName = $fd['defaultvalue'];
-                    $modelPaths = [];
-                    foreach(explode(".", $modelName) as $v) {
-                        $modelPaths[] = ucfirst($v);
-                    }
-                    $modelName = implode("", $modelPaths);
-                    if ($fd['content'] != "") {
-                        $content = json_decode($fd['content'], true);
-                        if ($content) {
-                            $fd['content'] = $content;
-                            if (isset($content['model'])) {
-                                $modelName =  $content['model'];
-                            }
-                        }
-                    }
-                    $rmodel = model($modelName);
-
-                    if ($rmodel) {
-                        $modelIds = explode(",", $row[$modelId]);
-                        $rmodel->where("id",'in',$modelIds);
-
-                        $keywordFields = ['name','idcode'];
-                        if (isset($rmodel->keywordsFields)) {
-                            $keywordFields = array_unique(array_merge($rmodel->keywordsFields, $keywordFields));
-                        }
-                        if (count($keywordFields) > 0) {
-                            $rmodel->append($keywordFields);
-                        }
-
-                        $data = $rmodel->select();
-                        if ($data) {
-                            $kks = [];
-                            foreach($data as $v2) {
-                                $v2->visible($keywordFields);
-                                $kks[] = $v2->toJson();;
-                            }
-                            $row[$fieldName."_model_keyword"] = json_encode($kks, JSON_UNESCAPED_UNICODE);;
-                        }else {
-                            $row[$fieldName."_model_keyword"] = "";
-                        }
-                    }
-                }
-            }
-
             $fields = Modelx::get(array("table"=>$row->name),[], true)->fields()->where(array("type"=>"location"))->select();
             foreach($fields as $v) {
                 $fd = $v->getData();
