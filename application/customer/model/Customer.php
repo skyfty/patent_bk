@@ -52,7 +52,5 @@ class Customer extends \app\common\model\Customer
         return $this->getSelectField('rank', $value);
     }
 
-    use \app\common\library\traits\Recentcourse;
-
 }
 
