@@ -127,6 +127,9 @@ class Customer extends Cosmetic
 
 
     }
+    public function user() {
+        return $this->hasOne('user','customer_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
 
 
     public function amount() {
