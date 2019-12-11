@@ -47,8 +47,13 @@ class Customer extends Controller
     {
         parent::__construct();
 
-        $hostname = $this->request->server('SERVER_NAME');
-        $this->app = new Application(Config::get('wechat'));
+        $wechat_config = Config::get('wechat');
+        $wechat_config['debug'] = \think\Config::get('app_debug');
+        $appconfig['log'] = [
+            'level' => 'debug',
+            'file'  => 'easywechat.log',
+        ];
+        $this->app = new Application($wechat_config);
 
         //移除HTML标签
         $this->request->filter('strip_tags');
