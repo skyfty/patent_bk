@@ -34,53 +34,37 @@ class Index extends Customer
     private function wxsubscribe($message) {
         $openid = $message->FromUserName;
         $eventkey = $message->EventKey ? $message->EventKey : $message->Event;
-        $genearch = model("genearch")->where("wxopenid",$openid)->find();
+        $customer = model("customer")->where("wxopenid",$openid)->find();
 
-        if ($genearch) {
-            $genearch->deletetime = null;
+        if ($customer) {
+            $customer->deletetime = null;
         } else {
-            $genearch = model("genearch");
+            $customer = model("customer");
             $wxuser = $this->app->user->get($openid);
             if ($wxuser) {
-                $genearch->name = $wxuser->nickname;
-                $genearch->sex = $wxuser->sex;
-                $genearch->avatar = $this->downloadheadimgurl($wxuser->headimgurl);
+                $customer->name = $wxuser->nickname;
+                $customer->sex = $wxuser->sex;
+                $customer->avatar = $this->downloadheadimgurl($wxuser->headimgurl);
             } else {
-                $genearch->name = "匿名";
+                $customer->name = "匿名";
             }
-            $genearch->wxopenid = $openid;
+            $customer->wxopenid = $openid;
         }
-        $genearch->subscribe = "yes";
+        $customer->subscribe = "yes";
 
         $subparam = explode("_", $eventkey);
         if ($subparam && count($subparam) == 3) {
-            if ($subparam[1] == "CID") {
-                $claim_genearch = model("genearch")->get($subparam[2]);
-                if ($claim_genearch) {
-                    $genearch = $claim_genearch;
-                    $genearch->wxopenid = $openid;
-                }
-            } else if ($subparam[1] == "UID") {
-                $genearch->owners_model_id = $genearch->creator_model_id = 2;
-            } else if ($subparam[1] == "SID") {
-                $staff = model("staff")->get($subparam[2]);
-                $genearch->branch_model_id = ($staff?$staff->branch_model_id:0);
-                $genearch->owners_model_id =$genearch->creator_model_id = ($staff?$staff->admin_id:2);
-            } else if ($subparam[1] == "BID") {
-                $branch = model("branch")->get($subparam[2]);
-                $genearch->branch_model_id = ($branch?$branch->id:0);
-                $genearch->owners_model_id =$genearch->creator_model_id = 2;
-            }
+
         } else {
-            $genearch->branch_model_id = 0;
-            $genearch->owners_model_id =$genearch->creator_model_id = 2;
+            $customer->branch_model_id = 0;
+            $customer->owners_model_id =$customer->creator_model_id = 2;
         }
-        $genearch->save();
+        $customer->save();
     }
 
     private function wxunsubscribe($message) {
         $openid = $message->FromUserName;
-        $genearch = model("genearch")->where("wxopenid",$openid )->find();
+        $genearch = model("customer")->where("wxopenid",$openid )->find();
         if ($genearch) {
             $genearch->save(["subscribe"=>'no']);
         }

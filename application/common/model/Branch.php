@@ -42,42 +42,6 @@ class Branch extends Cosmetic
     }
 
 
-    public function getWechatAttr($value, $data) {
-        return [
-            'app_id'=>$data['app_id'],
-            'secret'=>$data['secret'],
-            'token'=>$data['token'],
-            'aes_key'=>$data['aes_key'],
-            'authurl'=>$data['authurl'],
-            'domain'=>$data['domain'],
-            'mch_id'=>isset($data['mch_id'])?$data['mch_id']:"",
-            'mch_key'=>isset($data['mch_key'])?$data['mch_key']:"",
-            'notify_url'=>isset($data['notify_url'])?$data['notify_url']:"",
-            'cert_path'=>isset($data['cert_path'])?$data['cert_path']:"",
-            'key_path'=>isset($data['key_path'])?$data['key_path']:"",
-
-        ];
-    }
-
-    static public function getWechatApp($branch) {
-        $appconfig = $branch && $branch['app_id'] && $branch['authurl']?$branch->wechat: Config::get('wechat');
-        $appconfig['debug'] = \think\Config::get('app_debug');
-        $appconfig['log'] = [
-            'level' => 'debug',
-            'file'  => 'easywechat.log',
-        ];
-        if ($appconfig['mch_id']) {
-            $appconfig['payment'] = [
-                'mch_id'=>$appconfig['mch_id'],
-                'mch_key'=>$appconfig['mch_key'],
-                'notify_url'=>$appconfig['notify_url'],
-                'cert_path'=>$appconfig['cert_path'],
-                'key_path'=>$appconfig['key_path'],
-            ];
-        }
-        return new Application($appconfig);
-    }
-
     public function getSelectField($name, $value) {
         $list= Fields::get(['name'=>$name,'model_table'=>$this->name],[],true)->content_list;
         return isset($list[$value]) ? $list[$value] : '';
