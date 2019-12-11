@@ -40,12 +40,12 @@ class User Extends Model
         });
 
         self::afterUpdate(function ($row){
-            if (isset($row['genearch_model_id'])) {
+            if (isset($row['customer_model_id'])) {
                 if (isset($row['avatar'])) {
                     $params['avatar'] = $row['avatar'];
                 }
                 $params['telephone'] = $row['telephone'];
-                db('genearch')->where('id', $row->genearch_model_id)->update($params);
+                db('customer')->where('id', $row->customer_model_id)->update($params);
             }
         });
     }
@@ -98,8 +98,8 @@ class User Extends Model
         return $this->belongsTo('UserGroup', 'group_id', 'id', [], 'LEFT')->setEagerlyType(0);
     }
 
-    public function genearch() {
-        return $this->hasOne('genearch','id','genearch_model_id')->setEagerlyType(0);
+    public function customer() {
+        return $this->hasOne('customer','id','customer_model_id')->setEagerlyType(0);
     }
 
 }

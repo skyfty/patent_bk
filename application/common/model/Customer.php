@@ -78,10 +78,50 @@ class Customer extends Cosmetic
             }
         });
 
+        self::afterUpdate(function ($row){
+            $params = [];
+            if (isset($row['avatar'])) {
+                $params['avatar'] = $row['avatar'];
+            }
+            if (isset($row['telephone'])) {
+                $params['telephone'] = $params['username'] = $row['telephone'];
+            }
+            if (isset($row['user_id'])) {
+                db('user')->where('id', $row->user_id)->update($params);
+            }
+        });
+
 
         self::beforeInsert(function($row){
             $maxid = self::withTrashed()->max("id") + 1;
             $row['idcode'] = sprintf("KH%06d", $maxid);
+            if (!isset($row['avatar']) || !$row['avatar']) {
+                $row['avatar'] = "/assets/img/avatar.png";
+            }
+        });
+
+        self::afterInsert(function ($row) {
+            if (isset($row['telephone'])) {
+                $params['telephone'] = $params['username'] = $row['telephone'];
+            }
+            if (isset($row['avatar'])) {
+                $params['avatar'] = $row['avatar'];
+            }
+            $params['salt'] = Random::alnum();
+            $params['status'] = "normal";
+            $params['jointime'] = $row['createtime'];
+            $params['joinip'] = request()->ip();
+            $params['password'] = md5(md5("123456") . $params['salt']);
+            $user = $row->user()->save($params);
+            if ($user) {
+                db('customer')->update(['user_id' => $user->id,'id'=>$row->id]);
+            }
+        });
+
+        self::afterDelete(function ($row){
+            if (isset($row['user_id'])) {
+                db('user')->where('id',$row->user_id)->delete();
+            }
         });
 
 
@@ -92,9 +132,6 @@ class Customer extends Cosmetic
 
     }
 
-    public function genearch() {
-        return $this->hasOne('genearch','id','genearch_model_id',[],'LEFT')->setEagerlyType(0);
-    }
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
