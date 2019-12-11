@@ -9,6 +9,7 @@ class Customer extends Cosmetic
 {
     use \traits\model\SoftDelete;
 
+
     // 表名
     protected $name = 'customer';
     public $keywordsFields = ["name", "idcode"];
