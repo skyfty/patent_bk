@@ -72,8 +72,6 @@ class Index extends Customer
 
     private function wxscan($message) {
         $this->wxsubscribe($message);
-
-
     }
     public function wxhandle($message) {
         $event = $message->Event;
