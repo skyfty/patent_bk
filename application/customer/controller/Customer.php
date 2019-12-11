@@ -48,8 +48,7 @@ class Customer extends Controller
         parent::__construct();
 
         $hostname = $this->request->server('SERVER_NAME');
-        $branch = model("branch")->where("authurl", $hostname)->find();
-        $this->app = \app\admin\model\Branch::getWechatApp($branch);
+        $this->app = new Application(Config::get('wechat'));
 
         //移除HTML标签
         $this->request->filter('strip_tags');
@@ -82,9 +81,6 @@ class Customer extends Controller
                     $uid = $this->request->param("uid",'');
                     if ($uid) {
                         $params['uid'] = $uid;
-                    }
-                    if ($branch) {
-                        $params['bid'] = $branch->id;
                     }
 
                     $sharedUrl = url("/index/shared", $params);
