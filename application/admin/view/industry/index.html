@@ -19,28 +19,8 @@
             <div class="tab-pane fade in {:$auth->check('industry/index/'.$vo['name'])?'':'hide'}" id="tab-{$vo['name']}" ng-controller="landscape-{$vo['name']}" ng-init="sceneryInit('{$vo['name']}')">
                 {eq name="vo.type" value="default"}
                 <div class="widget-body no-padding  table-cosmetic">
-                    <div class="filter-toolbar">
-                        <div  class="input-group"  style="float: left">
-
-                            <select title="快捷筛选..." class="selectpicker form-control" multiple filter-condition="table-{$vo['name']}" data-condition-model="filterCondition">
-                                <optgroup label="{:__('Create time')}"  data-max-options="1">
-                                    <option title="今日新建" value='["createtime","between time",["today","tomorrow"]]'>今日</option>
-                                    <option title="本月新建" value='["createtime","between time",["first Day of this month 00:00:00", "first Day of next month 00:00:00"]]'>本月</option>
-                                    <option title="上月新建" value='["createtime","between time",["first Day of last month 00:00:00", "first Day of this month 00:00:00"]]'>上月</option>
-                                </optgroup>
-                                <optgroup label="所有者"  data-max-options="1">
-                                    <option title="我创建的" value='["creator_model_id","in",[{$admin.id}]]'>我创建的</option>
-                                </optgroup>
-                            </select>
-                            <a href="javascript:void(0);" title="清除筛选" class="input-group-addon" ng-click="cleanSearch('{$vo['name']}');">
-                                <span class="fa fa-history"></span>
-                            </a>
-                        </div>
-                    </div>
                     <div id="toolbar-{$vo['name']}" class="toolbar">
                         {:build_toolbar(['refresh', 'add', 'del'],['add'=>[url('industry/add'), 'btn btn-default btn-dialog', 'fa fa-plus',  __(''), __('添加新行业')]])}
-                        <div style="display: inline-block;" class="hidden-xs {notempty name='config.staff'}hide{/notempty}" id="div_branch_select">{:build_branch_select('branch_select')}</div>
-
                     </div>
                     <table id="table-{$vo['name']}" ui-formidable="fields"
                            data-fields="fields"

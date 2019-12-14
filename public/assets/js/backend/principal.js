@@ -8,13 +8,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         indexscape:function($scope, $compile,$timeout){
             $scope.searchFieldsParams = function(param) {
                 param.custom = {};
-                var branchSelect = $('[name="branch_select"]');
-                if (branchSelect.data("selectpicker")) {
-                    var branchIds = branchSelect.selectpicker('val');
-                    if (branchIds && branchIds.length > 0) {
-                        param.custom['branch_model_id'] = ["in", branchIds];
-                    }
-                }
                 return param;
             };
             var options = {
@@ -41,6 +34,21 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             Table.api.init(options);
             Form.api.bindevent($("div[ng-controller='index']"));
         },
+
+        add: function () {
+            var self = this;
+            AngularApp.controller("add", function($scope,$sce, $compile,$timeout) {
+                $scope.fields = Config.scenery.fields;
+                $scope.row = {};
+                $scope.row['creator_model_id'] = $scope.row['owners_model_id'] = Config.admin_id;
+
+                var html = Template("edit-tmpl",{state:"add",'fields':"fields"});
+                $timeout(function(){
+                    $("#data-view").html($compile(html)($scope)); $timeout(function(){ self.bindevent($scope, $timeout);  });
+                });
+            });
+        },
+
         viewscape:function($scope, $compile,$parse, $timeout){
             $scope.refreshRow = function(){
                 $.ajax({url: "principal/index",dataType: 'json',
@@ -63,7 +71,11 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         },
 
         bindevent:function($scope){
-            if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
+            var customer_model_id = Fast.api.query("customer_model_id");
+            if (customer_model_id) {
+                $('[name="row[customer_model_id]"]').attr("disabled","disabled").val($scope.row['customer_model_id'] = customer_model_id);
+            }
+
             Form.api.bindevent($("form[role=form]"), $scope.submit);
         },
 

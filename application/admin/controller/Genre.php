@@ -13,6 +13,7 @@ use fast\Tree;
 class Genre extends Backend
 {
     use \app\admin\library\traits\Cascader;
+
     
     /**
      * Genre模型对象
