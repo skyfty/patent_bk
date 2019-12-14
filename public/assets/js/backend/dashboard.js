@@ -163,7 +163,6 @@ define(['jquery', 'bootstrap', 'backend', 'addtabs', 'table', 'echarts', 'echart
                         data : [],
                         axisLabel: {
                             formatter: function (value) {
-                                console.log(value);
                                 return value;
                             }
                         }
