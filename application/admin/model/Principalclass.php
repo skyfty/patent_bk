@@ -4,9 +4,8 @@ namespace app\admin\model;
 use app\admin\library\Auth;
 
 use think\Model;
-use traits\model\SoftDelete;
 
-class Principalclass extends Model
+class Principalclass extends  \app\common\model\Principalclass
 {
     // 追加属性
 

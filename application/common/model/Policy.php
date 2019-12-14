@@ -28,5 +28,16 @@ class Policy extends  Cosmetic
             $row['idcode'] = sprintf("PO%06d", $maxid);
         });
     }
+
+
+    public function branch() {
+        return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
+
+
+
+    public function industry() {
+        return $this->hasOne('industry','id','industry_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
 }
 

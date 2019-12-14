@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div id="toolbar-{$vo['name']}" class="toolbar">
-                        {:build_toolbar(['refresh', 'add', 'del'],['add'=>[url('principal/add'), 'btn btn-default btn-dialog', 'fa fa-plus',  __(''), __('添加新学员')]])}
+                        {:build_toolbar(['refresh', 'add', 'del'],['add'=>[url('principal/add'), 'btn btn-default btn-dialog', 'fa fa-plus',  __(''), __('添加用户主体')]])}
                         <div style="display: inline-block;" class="hidden-xs {notempty name='config.staff'}hide{/notempty}" id="div_branch_select">{:build_branch_select('branch_select')}</div>
 
                     </div>
