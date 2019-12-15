@@ -41,6 +41,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 $scope.fields = Config.scenery.fields;
                 $scope.row = {};
                 $scope.row['creator_model_id'] = $scope.row['owners_model_id'] = Config.admin_id;
+                $scope.row['branch_model_id'] = Config.admin_branch_model_id!= null?Config.admin_branch_model_id:0;
 
                 var html = Template("edit-tmpl",{state:"add",'fields':"fields"});
                 $timeout(function(){
@@ -71,12 +72,20 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         },
 
         bindevent:function($scope){
+
+            $('[name="row[customer_model_id]"]').data("e-params",function(){
+                var param = {};
+                param.custom = {"branch_model_id":$scope.row.branch_model_id};
+                return param;
+            });
+
             var customer_model_id = Fast.api.query("customer_model_id");
             if (customer_model_id) {
                 $('[name="row[customer_model_id]"]').attr("disabled","disabled").val($scope.row['customer_model_id'] = customer_model_id);
             }
 
             Form.api.bindevent($("form[role=form]"), $scope.submit);
+            if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },
 
         chart:function() {
