@@ -28,25 +28,13 @@ class Claim extends  Cosmetic
             ]);
         };
         self::afterInsert($updateCustomer);self::afterDelete($updateCustomer);
-
-        self::afterInsert(function($row){
-            if (!$row->customer->claim_model_id) {
-                $row->customer->save(['claim_model_id'=>$row['id']]);
-            }
-        });
-
-        self::afterDelete(function($row){
-            if ($row->customer->claim_model_id == $row['id']) {
-                $row->customer->save(['claim_model_id'=>0]);
-            }
-        });
     }
 
     public function customer() {
         return $this->hasOne('customer','id','customer_model_id')->joinType("LEFT")->field('*')->setEagerlyType(0);
     }
 
-    public function genearch() {
+    public function principal() {
         return $this->hasOne('principal','id','principal_model_id')->joinType("LEFT")->field('*')->setEagerlyType(0);
     }
 

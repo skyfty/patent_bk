@@ -45,15 +45,15 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             });
         },
         bindevent:function($scope) {
-            if (customer) {
+            if (principal) {
                 $('[name="row[principal_model_id]"]').data("e-params",function(){
-                    var param = {"branch_model_id":customer.branch_model_id};
+                    var param = {"branch_model_id":principal.branch_model_id};
                     return param;
                 });
             }
-            if (genearch) {
+            if (customer) {
                 $('[name="row[customer_model_id]"]').data("e-params", function () {
-                    var param = {"branch_model_id":genearch.branch_model_id};
+                    var param = {"branch_model_id":customer.branch_model_id};
                     return param;
                 });
             }

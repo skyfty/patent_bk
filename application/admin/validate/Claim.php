@@ -10,7 +10,7 @@ class Claim extends Cosmetic
     protected $name = "claim";
 
     protected $rule = [
-        'genearch_model_id'       => 'require|checkexist',
+        'principal_model_id'       => 'require|checkexist',
         'customer_model_id'       => 'require|checkexist',
     ];
 
@@ -19,7 +19,7 @@ class Claim extends Cosmetic
      */
     protected $scene = [
         'add'  => [
-            'genearch_model_id',
+            'principal_model_id',
             'customer_model_id',
 
         ],
@@ -29,7 +29,7 @@ class Claim extends Cosmetic
     // 自定义验证规则
     protected function checkexist($value,$rule,$data) {
         $where = [
-            'genearch_model_id'=>$data['genearch_model_id'],
+            'principal_model_id'=>$data['principal_model_id'],
             'customer_model_id'=>$data['customer_model_id'],
         ];
         $amount = model("claim")->where($where)->count();
