@@ -27,6 +27,10 @@ class Principal extends  Cosmetic
         });
     }
 
+    public function branch() {
+        return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
+
     public function principalclass() {
         return $this->hasOne('principalclass','id','principalclass_model_id')->joinType("LEFT")->setEagerlyType(0);
     }

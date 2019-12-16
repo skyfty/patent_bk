@@ -20,14 +20,14 @@ class Claim extends  Cosmetic
             $row['idcode'] = sprintf("CL%06d", $maxid);
         });
 
-        $updateGenearch = function($row){
-            $customer_model_ids = self::where("genearch_model_id", $row->genearch_model_id)->column("customer_model_id");
-            $customer_model_ids = array_unique($customer_model_ids);
-            model("genearch")->where("id", $row->genearch_model_id)->update([
-                'customer_ids'=>implode(",", $customer_model_ids)
+        $updateCustomer = function($row){
+            $principal_model_ids = self::where("customer_model_id", $row->customer_model_id)->column("principal_model_id");
+            $principal_model_ids = array_unique($principal_model_ids);
+            model("customer")->where("id", $row->customer_model_id)->update([
+                'principal_model_ids'=>implode(",", $principal_model_ids)
             ]);
         };
-        self::afterInsert($updateGenearch);self::afterDelete($updateGenearch);
+        self::afterInsert($updateCustomer);self::afterDelete($updateCustomer);
 
         self::afterInsert(function($row){
             if (!$row->customer->claim_model_id) {
@@ -40,7 +40,6 @@ class Claim extends  Cosmetic
                 $row->customer->save(['claim_model_id'=>0]);
             }
         });
-
     }
 
     public function customer() {
