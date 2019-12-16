@@ -25,8 +25,8 @@ class Claim extends Cosmetic
 
     public function add() {
         if (!$this->request->isPost()) {
-            $genearch_model_id = $this->request->param("genearch_model_id");
-            $this->view->assign("genearch", $genearch_model_id?model("genearch")->field("id, name, branch_model_id")->where("id",$genearch_model_id)->find():null);
+            $principal_model_id = $this->request->param("principal_model_id");
+            $this->view->assign("principal", $principal_model_id?model("principal")->field("id, name, branch_model_id")->where("id",$principal_model_id)->find():null);
             $customer_model_id = $this->request->param("customer_model_id");
             $this->view->assign("customer", $customer_model_id?model("customer")->field("id, name, branch_model_id")->where("id",$customer_model_id)->find():null);
         }

@@ -27,12 +27,6 @@ class Principal extends  Cosmetic
         });
     }
 
-
-    public function customer() {
-        return $this->hasOne('customer','id','customer_model_id')->joinType("LEFT")->setEagerlyType(0);
-    }
-
-
     public function principalclass() {
         return $this->hasOne('principalclass','id','principalclass_model_id')->joinType("LEFT")->setEagerlyType(0);
     }

@@ -31,9 +31,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 $timeout(function(){
                     $("#data-view").html($compile(html)($scope));
                     $timeout(function(){
-                        var genearch_model_id = Fast.api.query("genearch_model_id");
-                        if (genearch_model_id) {
-                            $('[name="row[genearch_model_id]"]').attr("disabled","disabled").val($scope.row['genearch_model_id'] = genearch_model_id);
+                        var principal_model_id = Fast.api.query("principal_model_id");
+                        if (principal_model_id) {
+                            $('[name="row[principal_model_id]"]').attr("disabled","disabled").val($scope.row['principal_model_id'] = principal_model_id);
                         }
                         var customer_model_id = Fast.api.query("customer_model_id");
                         if (customer_model_id) {
@@ -46,7 +46,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         },
         bindevent:function($scope) {
             if (customer) {
-                $('[name="row[genearch_model_id]"]').data("e-params",function(){
+                $('[name="row[principal_model_id]"]').data("e-params",function(){
                     var param = {"branch_model_id":customer.branch_model_id};
                     return param;
                 });

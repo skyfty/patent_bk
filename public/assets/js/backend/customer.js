@@ -196,51 +196,24 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
 
                 $scope.$broadcast("shownTable");
             },
-            principal:function($scope, $compile,$timeout, data){
-                $scope.principalclassModelIds = [];
-                $scope.classChanged = function(data) {
-                    var typeIds = [];
-                    angular.forEach(data.selected, function(id){
-                        if ($.isNumeric(id))
-                            typeIds.push(id);
-                    });
-                    $scope.principalclassModelIds = typeIds;
-                    $scope.$broadcast("refurbish");
-                };
 
+            claim:function($scope, $compile,$timeout, data){
                 $scope.searchFieldsParams = function(params) {
                     params.custom = {
                         'customer_model_id':$scope.row.id
                     };
-                    if ($scope.principalclassModelIds.length > 0) {
-                        params.custom['principalclass_model_id'] = ["in",$scope.principalclassModelIds];
-                    }
                     return params;
                 };
 
                 Table.api.init({
                     extend: {
-                        summation_url: 'principal/summation',
-                        add_url: 'principal/add',
-                        del_url: 'principal/del',
-                        table: 'principal',
-                    },
-                    buttons : [
-                        {
-                            name: 'view',
-                            title: function(row, j){
-                                return __(' %s', row.name);
-                            },
-                            classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
-                            icon: 'fa fa-folder-o',
-                            url: 'principal/hinder'
-                        }
-                    ]
+                        del_url: 'claim/del',
+                        add_url: 'claim/add?customer_model_id=' + $scope.row.id,
+                        table: 'claim',
+                    }
                 });
                 $scope.fields = data.fields;
                 angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
-                var dataTable = $("#table-principal");
-
                 $scope.$broadcast("shownTable");
             },
         },

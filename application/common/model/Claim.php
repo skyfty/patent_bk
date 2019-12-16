@@ -48,7 +48,7 @@ class Claim extends  Cosmetic
     }
 
     public function genearch() {
-        return $this->hasOne('genearch','id','genearch_model_id')->joinType("LEFT")->field('*')->setEagerlyType(0);
+        return $this->hasOne('principal','id','principal_model_id')->joinType("LEFT")->field('*')->setEagerlyType(0);
     }
 
 }
