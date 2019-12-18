@@ -1,0 +1,41 @@
+
+<style>
+
+    .wrapper-scroller {position:relative;height: 1rem;width: 100%;overflow: hidden;margin:0 auto;border-bottom:1px solid #ccc;margin: 15px 0px;}
+    .wrapper-scroller .scroller {position:absolute}
+    .wrapper-scroller .scroller li {height: 1rem;color:#333;float: left;line-height: 1rem;font-size: 12px;text-align: center}
+    .wrapper-scroller .scroller li a{color:#333;display:block;margin:0 .3rem}
+    .wrapper-scroller .scroller li.cur a{color:#1cbb9b;}
+
+</style>
+<div class="aui-tab" data-ydui-tab>
+    <ul class="tab-nav {eq name='list|count' value='1'} hide {/eq}">
+        {volist name="list" id="vo"}
+        <li class="tab-nav-item  {eq name='id' value='$vo.id'}tab-active{/eq} tab-nav-item-nobar">
+            <a href="/principal/index?id={$vo.id}">
+                <span>{$vo.name}</span>
+            </a>
+        </li>
+        {/volist}
+    </ul>
+    <div class="tab-panel">
+        <div class="tab-panel-item tab-active">
+            <section class="aui-scrollView">
+                <div class="aui-header-bj">
+                    <div class="aui-head-user">
+                        <div class="aui-head-user-hd">
+                            <form id="update-form-myavatar" class="form-horizontal"  method="POST" action="principal/avatar/ids/{$row.id}" data-id="{$row.id}">
+                                <img  class="profile-user-img" src="{$row.avatar|default_avatar}" alt="" style="width: 90px;height: 90px">
+                            </form>
+                        </div>
+                        <div class="aui-head-user-bd">
+                            <h2>{$row.name}</h2>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+        </div>
+    </div>
+</div>
