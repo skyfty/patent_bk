@@ -21,7 +21,7 @@ class Principal extends Customer
     }
 
     public function index() {
-        $list = $this->model->with($this->relationSearch)->field("id,name")->where("id","in", function($query){
+        $list = $this->model->with($this->relationSearch)->where("id","in", function($query){
             $query->table("__CLAIM__")->where("customer_model_id", $this->user->customer->id)->field("principal_model_id");
         })->select();
         if (count($list) <= 0) {
@@ -30,10 +30,20 @@ class Principal extends Customer
         }
         $this->view->assign("list", $list);
 
-        $id = $this->request->param("id", $list[0]['id']);
+        $default_id = $list[0]['id'];
+        foreach($list as $li) {
+            if ($li['principalclass_model_id'] == 1) {
+                $default_id = $li->id;
+                break;
+            }
+        }
+
+        $id = $this->request->param("id", $default_id);
+
+
         $this->view->assign("id", $id);
-        $customer = $this->model->with($this->relationSearch)->find($id);
-        $this->view->assign("row", $customer);
+        $principal= $this->model->find($id);
+        $this->view->assign("row", $principal);
 
         return $this->view->fetch();
     }
