@@ -123,7 +123,7 @@ class Customer extends Cosmetic
             if (isset($row['user_id'])) {
                 db('user')->where('id',$row->user_id)->delete();
             }
-            model("principal")->where("customer_model_id", $row['id'])->delete();
+            model("claim")->where("customer_model_id", $row['id'])->delete();
         });
 
 
