@@ -26,5 +26,16 @@ class Principalclass extends Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("PR%06d", $maxid);
         });
+
+        self::afterInsert(function($row){
+            $data = [];
+            foreach(self::all() as $r) {
+
+            }
+        });
+
+        self::afterDelete(function($row){
+
+        });
     }
 }
