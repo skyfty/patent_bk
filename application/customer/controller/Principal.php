@@ -21,7 +21,7 @@ class Principal extends Customer
     }
 
     public function index() {
-        $list = $this->model->with($this->relationSearch)->field("id,principalclass_model_id")->where("id","in", function($query){
+        $list = $this->model->with($this->relationSearch)->where("id","in", function($query){
             $query->table("__CLAIM__")->where("customer_model_id", $this->user->customer->id)->field("principal_model_id");
         })->order("principalclass_model_id asc")->select();
         if (count($list) <= 0) {
