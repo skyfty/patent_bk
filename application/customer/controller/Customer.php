@@ -357,7 +357,7 @@ class Customer extends Controller
             if ($result !== false) {
                 $this->success();
             } else {
-                $this->error($this->user->genearch->getError());
+                $this->error($this->model->getError());
             }
         } catch (\think\exception\PDOException $e) {
             $this->error($e->getMessage());

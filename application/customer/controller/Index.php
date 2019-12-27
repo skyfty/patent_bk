@@ -64,9 +64,9 @@ class Index extends Customer
 
     private function wxunsubscribe($message) {
         $openid = $message->FromUserName;
-        $genearch = model("customer")->where("wxopenid",$openid )->find();
-        if ($genearch) {
-            $genearch->save(["subscribe"=>'no']);
+        $customer = model("customer")->where("wxopenid",$openid )->find();
+        if ($customer) {
+            $customer->save(["subscribe"=>'no']);
         }
     }
 

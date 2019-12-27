@@ -18,7 +18,7 @@ class Account extends Customer
 
     public function index() {
         $provider = model("account")
-            ->where(['reckon_type'=>'customer','reckon_model_id'=>$this->user->genearch_model_id])
+            ->where(['reckon_type'=>'customer','reckon_model_id'=>$this->user->customer_model_id])
             ->order("createtime", "desc");
         $list = $provider->paginate(10, false, ['type' => '\\app\\common\\library\\Bootstrap']);;
         $this->view->assign("__PAGELIST__", $list);

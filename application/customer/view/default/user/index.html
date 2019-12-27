@@ -4,7 +4,7 @@
 <head>
     {include file="common/meta" /}
     <script type="text/javascript">
-        var customer = {$user->genearch|json_encode};
+        var customer = {$user->customer|json_encode};
     </script>
 
     <style>
@@ -33,7 +33,7 @@
                     <form id="update-form-myavatar" class="form-horizontal"  method="POST" action="user/edit">
                         <input type="hidden" name="row[id]" value="{$user.genearch.id}" />
                         <input type="hidden" id="c-avatar" name="row[avatar]" value="{$user.genearch.avatar}" />
-                    <img class="profile-user-img" src="{$user.genearch.avatar|default_avatar}" alt="">
+                    <img class="profile-user-img" src="{$user.customer.avatar|default_avatar}" alt="">
                         <button id="plupload-avatar" type="button"><i class="fa fa-upload"></i> {:__('Upload')}</button>
 
                     </form>
@@ -43,7 +43,7 @@
                     <p>{$user.telephone}</p>
                 </div>
                 <div class="aui-panel-cell-fr">
-                    {eq name='user.genearch.telephone' value=''}未绑定{else/}已绑定{/eq}
+                    {eq name='user.customer.telephone' value=''}未绑定{else/}已绑定{/eq}
                 </div>
             </a>
         </div>

@@ -3,7 +3,7 @@
 <head>
     {include file="common/meta" /}
     <script type="text/javascript">
-        var customer = {$user->genearch|json_encode};
+        var customer = {$user->customer|json_encode};
     </script>
     <link href="__CDN__/assets/css/customer/user.css?v={$site.version}" rel="stylesheet">
 </head>
