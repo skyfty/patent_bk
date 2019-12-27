@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    {include file="common/meta" /}
+</head>
+<body ontouchstart>
+<section class="zyw-container">
+    <div class="index-wares">
+        <div class="wares-title">我的专属顾问</div>
+        <div class="wares-cont" style="    text-align: center;">
+            <img src="{$adviser->persionalqrcode}" style="width: 200px"/>
+            <div>{$adviser->branch->name}</div>
+            <div>{$adviser->nickname}</div>
+            <div>请长按二维码图片，识别图中的二维码，添加助理微信以便为您提供详细服务。</div>
+
+        </div>
+    </div>
+</section>
+{include file="common/script" /}
+</body>
+</html>

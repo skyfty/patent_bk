@@ -21,29 +21,17 @@ class Principal extends Customer
     }
 
     public function index() {
-        $list = $this->model->with($this->relationSearch)->where("id","in", function($query){
+        $list = $this->model->with($this->relationSearch)->field("id,principalclass_model_id")->where("id","in", function($query){
             $query->table("__CLAIM__")->where("customer_model_id", $this->user->customer->id)->field("principal_model_id");
-        })->select();
+        })->order("principalclass_model_id asc")->select();
         if (count($list) <= 0) {
-            $this->view->assign("jumpurl", "/customer/adviser");
-            return $this->view->fetch("nostudent");
+            $this->view->assign("jumpurl", "/user/adviser");
+            return $this->view->fetch("noprincipal");
         }
         $this->view->assign("list", $list);
-
-        $default_id = $list[0]['id'];
-        foreach($list as $li) {
-            if ($li['principalclass_model_id'] == 1) {
-                $default_id = $li->id;
-                break;
-            }
-        }
-
-        $id = $this->request->param("id", $default_id);
-
-
+        $id = $this->request->param("id", $list[0]['id']);
         $this->view->assign("id", $id);
-        $principal= $this->model->find($id);
-        $this->view->assign("row", $principal);
+        $this->view->assign("row", $this->model->find($id));
 
         return $this->view->fetch();
     }
