@@ -27,15 +27,15 @@ class Principalclass extends Cosmetic
             $row['idcode'] = sprintf("PR%06d", $maxid);
         });
 
-        self::afterInsert(function($row){
+        $updateprincipalclass = function($row){
             $data = [];
             foreach(self::all() as $r) {
-
+                $data[] = $r['id']."|".$r['name'];
             }
-        });
+            $content = implode("\r\n", $data);
+            model("fields")->where("name","principalclass")->where("model_table","policy")->setField("content", $content);
 
-        self::afterDelete(function($row){
-
-        });
+        };
+        self::afterInsert($updateprincipalclass); self::afterDelete($updateprincipalclass);
     }
 }
