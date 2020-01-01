@@ -26,7 +26,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
                         {field: 'name', title: __('Name'), align: 'left'},
-                        {field: 'rank', title: "级别", formatter: Table.api.formatter.normal},
+                        {field: 'rank_text', title: "级别", formatter: Table.api.formatter.normal},
 
                         {
                             field: 'operate',
