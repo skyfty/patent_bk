@@ -491,6 +491,23 @@ class Auth extends \fast\Auth
         return $childrenGroupIds;
     }
 
+
+    public function getChildrenCommissionIds($id, $pid) {
+        // 取出所有分组
+        $commissionList = \app\admin\model\Commission::all();
+        $objList = [];
+
+        // 取出包含自己的所有子节点
+        $childrenList = Tree::instance()->init($commissionList)->getChildren($id, true);
+        $obj = Tree::instance()->init($childrenList)->getTreeArray($pid);
+        $objList = array_merge($objList, Tree::instance()->getTreeList($obj));
+
+        $childrenGroupIds = [];
+        foreach ($objList as $k => $v) {
+            $childrenGroupIds[] = $v['id'];
+        }
+        return $childrenGroupIds;
+    }
     /**
      * 设置错误信息
      *
