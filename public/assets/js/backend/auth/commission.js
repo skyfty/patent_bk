@@ -25,12 +25,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
                     [
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
-                        {field: 'pid', title: __('Pid')},
                         {field: 'name', title: __('Name'), align: 'left'},
-                        {field: 'rank', title: "级别", formatter: Table.api.formatter.label},
+                        {field: 'rank', title: "级别", formatter: Table.api.formatter.normal},
 
-                        {field: 'updatetime', title: __('Updatetime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime},
-                        {field: 'status', title: __('Status'), formatter: Table.api.formatter.status},
                         {
                             field: 'operate',
                             title: __('Operate'),
