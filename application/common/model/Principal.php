@@ -2,6 +2,7 @@
 
 namespace app\common\model;
 
+use think\App;
 use think\Model;
 
 class Principal extends  Cosmetic
@@ -9,6 +10,8 @@ class Principal extends  Cosmetic
     // 表名
     protected $name = 'principal';
     public $keywordsFields = ["name", "idcode"];
+    public $append = ["substance"];
+
 
     protected static function init()
     {
@@ -25,13 +28,26 @@ class Principal extends  Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("PR%06d", $maxid);
         });
-    }
 
-    public function branch() {
-        return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
+        self::afterInsert(function($row){
+            $row['substance_type'] = $row['principalclass']['model_type'];
+            $substance = model($row['substance_type'])->create(['principal_model_id'=>$row['id']]);
+            $row['substance_id'] = $substance['id'];
+            $row->save();
+        });
+        self::afterDelete(function($row){
+            model($row['principalclass']['model_type'])->where(['principal_model_id'=>$row['id']])->delete();
+        });
     }
 
     public function principalclass() {
         return $this->hasOne('principalclass','id','principalclass_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
+    public function branch() {
+        return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
+    public function substance()
+    {
+        return $this->morphTo();
     }
 }

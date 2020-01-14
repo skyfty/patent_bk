@@ -25,7 +25,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                         title: function(row, j){
                             return __(' %s', row.name);
                         },
-                        classname: 'btn btn-xs  btn-success btn-magic btn-dialog btn-view',
+                        classname: 'btn btn-xs  btn-success btn-magic btn-addtabs btn-view',
                         icon: 'fa fa-folder-o',
                         url: 'principal/view'
                     }
@@ -67,8 +67,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             };
         },
         scenery: {
+            substance:function($scope, $compile,$timeout, data) {
 
-
+            }
         },
 
         bindevent:function($scope){
