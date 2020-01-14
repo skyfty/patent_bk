@@ -29,6 +29,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','bootstrap-treegrid'],
                         {
                             field: 'name', title: __('Name'), align: 'left'
                         },
+                        {
+                            field: 'model_type', title: '模型', align: 'left'
+                        },
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ],
