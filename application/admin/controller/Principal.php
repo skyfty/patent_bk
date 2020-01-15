@@ -29,6 +29,54 @@ class Principal extends Cosmetic
         $this->model = new \app\admin\model\Principal;
     }
 
+    protected function mergerow(&$row) {
+        $scenery = Scenery::where(["model_table"=>$row['substance_type'],"pos"=>'view'])->cache(!App::$debug)->find();
+        $fields = Sight::with('fields')->cache(!App::$debug)->where(['scenery_id'=>$scenery['id']])->column("fields.name");
+        foreach($row->substance->getData() as $k=>$v) {
+            if (in_array($k, $fields)) {
+                $row[$k] = $v;
+            }
+        }
+    }
+
+    public function index() {
+        $this->request->filter(['strip_tags']);
+
+        $cosmeticModel = Modelx::get(['table' => strtolower($this->model->raw_name)],[],!App::$debug);
+        if (!$cosmeticModel) {
+            $this->error('未找到对应模型');
+        }
+        if ($this->request->isAjax()) {
+            if ($this->request->request('keyField')) {
+                return $this->selectpage($this->searchFields);
+            }
+            $name = \think\Loader::parseName(basename(str_replace('\\', '/', get_class($this->model))));
+
+            $relationSearch = $this->getRelationSearch($cosmeticModel);;
+
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams();
+            $this->model->alias($name)->where($where)->with($relationSearch);
+            $this->spectacle($this->model);
+            $total = $this->model->count();
+
+            $this->model->alias($name)->where($where)->with($relationSearch)->order($sort, $order)->limit($offset, $limit);
+            $this->spectacle($this->model);
+            $list = $this->model->select();
+            foreach($list as $k=>$row) {
+                $scenery = Scenery::where(["model_table"=>$row['substance_type'],"pos"=>'view'])->cache(!App::$debug)->find();
+                $fields = Sight::with('fields')->cache(!App::$debug)->where(['scenery_id'=>$scenery['id']])->select();
+                $list[$k]['substance_fields'] = $fields;
+            }
+            return json(array("total" => $total, "rows" => collection($list)->toArray()));
+        }
+
+        $this->assignScenery($cosmeticModel->id, ['index']);
+        if ($this->view->engine->exists("")) {
+            return $this->view->fetch();
+        }
+        return $this->view->fetch("index");
+    }
+
     public function view() {
         $ids =$this->request->param("ids", null);
         if ($ids === null)
@@ -43,6 +91,7 @@ class Principal extends Cosmetic
         if (!$row)
             $this->error(__('No Results were found'));
 
+        $this->mergerow($row);
         $this->view->assign("row", $row);
 
         if ($this->request->isAjax()) {
@@ -50,10 +99,20 @@ class Principal extends Cosmetic
                 $scenery_id = $this->request->param("scenery_id");
                 $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery_id])->order("weigh", "asc")->cache(!App::$debug)->select();;
             }else {
-                $scenery = Scenery::get(['model_table' => $this->model->raw_name,'name'=>$this->request->action(),'pos'=>'view'],[],!App::$debug);
-                $where =array(
-                    'scenery_id'=>$scenery['id']
-                );
+
+                $action = $this->request->action();
+                if ($action == "substance") {
+                    $principal_type = $row['principalclass']['model_type'];
+                    $principal_type_scenery = Scenery::where(["model_table"=>$principal_type,"pos"=>'view'])->cache(!App::$debug)->order("weigh", "ASC")->find();
+                    $where =array(
+                        'scenery_id'=>$principal_type_scenery['id']
+                    );
+                } else {
+                    $scenery = Scenery::get(['model_table' => $this->model->raw_name,'name'=>$this->request->action(),'pos'=>'view'],[],!App::$debug);
+                    $where =array(
+                        'scenery_id'=>$scenery['id']
+                    );
+                }
                 $fields =  Sight::with('fields')->where($where)->order("weigh", "asc")->cache(!App::$debug)->select();;
             }
             $content = $this->view->fetch();
@@ -78,6 +137,44 @@ class Principal extends Cosmetic
             }
             $this->assignconfig('sceneryList', $sceneryList);
             return $this->view->fetch();
+        }
+    }
+
+
+    /**
+     * 编辑
+     */
+    public function edit($ids = NULL)  {
+        $row = $this->model->get($ids);
+        if (!$row)
+            $this->error(__('No Results were found'));
+        if (!$this->request->isPost()) {
+            $this->error(__('An unexpected error occurred'));
+        }
+        $params = $this->request->post("row/a");
+        if (!$params) {
+            $this->error(__('Parameter %s can not be empty', ''));
+        }
+
+        $db = $this->model->getQuery();
+        $db->startTrans();
+        try {
+            $result = $row->allowField(true)->save($params);
+            if ($result !== false) {
+                $db->commit();
+                $row = $this->model->get($ids);
+                $this->mergerow($row);
+                $this->result($row,1);
+            } else {
+                $db->rollback();
+                $this->error($row->getError());
+            }
+        } catch (\think\exception\PDOException $e) {
+            $db->rollback();
+            $this->error($e->getMessage());
+        }catch(\think\Exception $e) {
+            $db->rollback();
+            $this->error($e->getMessage());
         }
     }
 

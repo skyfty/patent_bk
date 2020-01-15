@@ -3,6 +3,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         //for index
         lands:{
             index:function($scope, $compile,$timeout, data) {
+
             }
         },
         indexscape:function($scope, $compile,$timeout){

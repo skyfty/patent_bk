@@ -22,8 +22,12 @@ class Cosmetic extends Model
     protected function initialize()
     {
         parent::initialize();
+        $this->assignTimestampFieldConvert($this->name);
+    }
+
+    protected function assignTimestampFieldConvert($model_table) {
         $fields = model("fields")
-            ->where("model_table", $this->name)
+            ->where("model_table", $model_table)
             ->where("type", "in",['datetime','date','time'] )
             ->where("name", "not in",['createtime','updatetime','deletetime'])->field("name,type")->cache(true)->select();
         foreach($fields as $v) {

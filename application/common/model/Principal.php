@@ -12,6 +12,13 @@ class Principal extends  Cosmetic
     public $keywordsFields = ["name", "idcode"];
     public $append = ["substance"];
 
+    protected function initialize()
+    {
+        parent::initialize();
+        if (isset($this['principalclass']) &&  $this['principalclass']) {
+            $this->assignTimestampFieldConvert($this['principalclass']['model_type']);
+        }
+    }
 
     protected static function init()
     {
