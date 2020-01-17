@@ -10,7 +10,7 @@ class Principal extends  Cosmetic
     // 表名
     protected $name = 'principal';
     public $keywordsFields = ["name", "idcode"];
-    public $append = ["substance"];
+    public $append = [];
 
     protected function initialize()
     {
