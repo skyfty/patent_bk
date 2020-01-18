@@ -2,6 +2,7 @@
 
 namespace app\common\model;
 
+use think\App;
 use think\exception\ClassNotFoundException;
 use think\Model;
 use traits\model\SoftDelete;
@@ -29,7 +30,7 @@ class Cosmetic extends Model
         $fields = model("fields")
             ->where("model_table", $model_table)
             ->where("type", "in",['datetime','date','time'] )
-            ->where("name", "not in",['createtime','updatetime','deletetime'])->field("name,type")->cache(true)->select();
+            ->where("name", "not in",['createtime','updatetime','deletetime'])->field("name,type")->cache(!App::$debug)->select();
         foreach($fields as $v) {
             $fmt = $this->dateFormat;
             if ($v['type'] == 'date') {

@@ -43,6 +43,7 @@ require.config({
         'fullcalendar-lang': '../libs/fullcalendar/dist/locale/zh-cn',
         'scheduler': '../libs/fullcalendar-scheduler/dist/scheduler',
         'jquery-weui': '../libs/jquery-weui/dist/js/jquery-weui',
+        'jquery-weui-city-picker': '../libs/jquery-weui/dist/js/city-picker',
         'fastclick': '../libs/jquery-weui/dist/lib/fastclick',
         'swiper': '../libs/jquery-weui/dist/js/swiper.min',
         'citypicker': '../libs/jquery-weui/dist/js/city-picker',

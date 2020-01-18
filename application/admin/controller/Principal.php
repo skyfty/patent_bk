@@ -100,7 +100,12 @@ class Principal extends Cosmetic
                 $fields = Sight::with('fields')->cache(!App::$debug)->where(['scenery_id'=>$scenery['id']])->select();
                 $list[$k]['substance_fields'] = $fields;
             }
-            return json(array("total" => $total, "rows" => collection($list)->append(["substance"])->toArray()));
+            if ($total > 0) {
+                $rows = collection($list)->append(["substance"])->toArray();
+            } else {
+                $rows = [];
+            }
+            return json(array("total" => $total, "rows" =>$rows ));
         }
 
         $this->assignScenery($cosmeticModel->id, ['index']);

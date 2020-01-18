@@ -8,15 +8,17 @@
     <link href="__CDN__/assets/css/customer/principal.css?v={$site.version}" rel="stylesheet">
 </head>
 <body ontouchstart>
-{include file="common/footer" /}
 <section class="aui-flexView" style="background-color: white">
     <header class="aui-navBar aui-navBar-fixed b-line">
         <a href="/principal/index" target="_self" class="aui-navBar-item">
             <i class="icon icon-return"></i>
         </a>
         <div class="aui-center">
-            <span class="aui-center-title" >{$row.name}</span>
+            <span class="aui-center-title" >您的主体</span>
         </div>
+        <a href="javascript:void(0);" target="_self" id="add-principal" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
     </header>
     <section class="aui-scrollView" style="    margin-bottom: 40px;">
         {__CONTENT__}

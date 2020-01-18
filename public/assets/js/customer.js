@@ -28,46 +28,6 @@ define(['wechat', 'template', 'moment', 'fast'], function (Wechat, Template, Mom
                     '</div>';
                 $("body").append(sharetpl);
             },
-            presign:function(id) {
-                var deferred = $.Deferred();
-                $.modal({
-                    title: "预签到！",
-                    text: "宝宝进行预签到后，无论宝宝是否正常参加授课，均会扣除课次。进行预签到将会增加宝宝的智慧点2点。您确认吗？",
-                    buttons: [
-                        { text: "是", onClick: function(){
-                            Customer.api.ajax({url:"/provider/presignin",data:{
-                                id:id
-                            }}, function(data, ret){
-                                if (ret.code == 1) {
-                                    deferred.resolve(ret);
-                                }
-                            });
-                        } },
-                        { text: "否", className: "default"},
-                    ]
-                });
-                return deferred.promise();
-            },
-            leave:function(id, cnt) {
-                var deferred = $.Deferred();
-                $.modal({
-                    title: "请假",
-                    text: "当前您剩余"+cnt+"次“可请假次数”，进行请假需要1次“可请假次数”，您是否确认请假？",
-                    buttons: [
-                        { text: "是", onClick: function(){
-                            Customer.api.ajax({url:"/provider/leave",data:{
-                                id:id
-                            }}, function(data, ret){
-                                if (ret.code == 1) {
-                                    deferred.resolve(ret);
-                                }
-                            });
-                        } },
-                        { text: "否", className: "default"},
-                    ]
-                });
-                return deferred.promise();
-            },
 
             wxReady: function(wx){
                 var shareddesc = $("#shared-desc").html();

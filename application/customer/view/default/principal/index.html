@@ -1,38 +1,129 @@
 
 <style>
 
-    .wrapper-scroller {position:relative;height: 1rem;width: 100%;overflow: hidden;margin:0 auto;border-bottom:1px solid #ccc;margin: 15px 0px;}
+    .wrapper-scroller {position:relative;height: 1rem;width: 100%;overflow: hidden;margin:0 auto;margin: 9px 0px;}
     .wrapper-scroller .scroller {position:absolute}
     .wrapper-scroller .scroller li {height: 1rem;color:#333;float: left;line-height: 1rem;font-size: 12px;text-align: center}
-    .wrapper-scroller .scroller li a{color:#333;display:block;margin:0 .3rem}
+    .wrapper-scroller .scroller li a{color:#333;display:block;margin:0 .6rem}
     .wrapper-scroller .scroller li.cur a{color:#1cbb9b;}
 
 </style>
 <div class="aui-tab" data-ydui-tab>
-    <ul class="tab-nav {eq name='list|count' value='1'} hide {/eq}">
-        {volist name="list" id="vo"}
-        <li class="tab-nav-item  {eq name='id' value='$vo.id'}tab-active{/eq} tab-nav-item-nobar">
-            <a href="/principal/index?id={$vo.id}">
-                <span>{$vo.name}</span>
-            </a>
-        </li>
-        {/volist}
-    </ul>
+    <div class="wrapper-scroller" id="retr">
+        <div class="scroller">
+            <ul class="clearfix">
+                {volist name="list" id="vo"}
+                <li>
+                    <a href="javascript:void(0)"  class="btn-scroller" data-id="{$vo.id}" data-type="{$vo.substance_type}">
+                        <span>{$vo.name}</span>
+                    </a>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+    </div>
     <div class="tab-panel">
         <div class="tab-panel-item tab-active">
             <section class="aui-scrollView">
-                <div class="aui-header-bj">
                     <div class="aui-head-user">
-                        <div class="aui-head-user-hd">
-                            <form id="update-form-myavatar" class="form-horizontal"  method="POST" action="principal/avatar/ids/{$row.id}" data-id="{$row.id}">
-                            </form>
-                        </div>
-                        <div class="aui-head-user-bd">
-                            <h2>{$row.name}</h2>
+                        <div class="aui-head-user-bd" id="principal-body">
                         </div>
                     </div>
-                </div>
             </section>
         </div>
     </div>
 </div>
+<div id="principal-class" class="weui-popup__container popup-bottom">
+    <div class="weui-popup__overlay"></div>
+    <div class="weui-popup__modal">
+        <div class="weui-cells__title">选择主体类型</div>
+        <div class="weui-cells">
+            {volist name='principal_class' id='cls'}
+            <a class="weui-cell weui-cell_access" href="{:url('principal/add',['principalclass_model_id'=>$cls.id])}">
+                <div class="weui-cell__bd">
+                    <p>{$cls.name}</p>
+                </div>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+            {/volist}
+        </div>
+    </div>
+</div>
+
+
+<script id="principal-tmpl-persion" type="text/html">
+    <div class="page__bd">
+        <div class="weui-form-preview">
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">姓名</label>
+                    <em class="weui-form-preview__value"><%=substance.name%></em>
+                </div>
+            </div>
+            <div class="weui-form-preview__bd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">生日</label>
+                    <span class="weui-form-preview__value"><%=substance.birthday_text%></span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">身份证</label>
+                    <span class="weui-form-preview__value"><%=substance.idcard%></span>
+                </div>
+
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">性别</label>
+                    <span class="weui-form-preview__value"><%=substance.sex_text%></span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">学历</label>
+                    <span class="weui-form-preview__value"><%=substance.educational_text%></span>
+                </div>
+            </div>
+            <div class="weui-form-preview__ft">
+                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="/principal/edit/ids/<%=id%>">编辑</a>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+
+<script id="principal-tmpl-company" type="text/html">
+    <div class="page__bd">
+        <div class="weui-form-preview">
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">名称</label>
+                    <em class="weui-form-preview__value"><%=substance.name%></em>
+                </div>
+            </div>
+            <div class="weui-form-preview__bd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">注册日期</label>
+                    <span class="weui-form-preview__value"><%=substance.registerdate_text%></span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">注册资金</label>
+                    <span class="weui-form-preview__value"><%=substance.registerfund%></span>
+                </div>
+
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">信用代码</label>
+                    <span class="weui-form-preview__value"><%=substance.credit_code%></span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">类型</label>
+                    <span class="weui-form-preview__value"><%=substance.type_text%></span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">注册地址</label>
+                    <span class="weui-form-preview__value"><%=substance.registeraddress%></span>
+                </div>
+            </div>
+            <div class="weui-form-preview__ft">
+                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="/principal/edit/ids/<%=id%>">编辑</a>
+            </div>
+        </div>
+    </div>
+</script>

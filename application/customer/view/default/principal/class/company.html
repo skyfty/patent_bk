@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    {include file="common/meta" /}
+    <link href="__CDN__/assets/css/customer/principal.css?v={$site.version}" rel="stylesheet">
+
+</head>
+<body ontouchstart>
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="javascript:void(0);" onclick="window.history.go(-1)" target="_self" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <a href="/" target="_self"><span class="aui-center-title">增加新的主体</span></a>
+        </div>
+    </header>
+    <section class="aui-scrollView" style="    margin-bottom: 50px;">
+        <div class="aui-tab" data-ydui-tab>
+            <form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="name" class="weui-label">姓名</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" id="name"  name="row[name]" value="{$row['name']|default=''}" placeholder="请输入姓名">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="registerdate" class="weui-label">注册日期</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" id="registerdate" name="row[registerdate]" type="date" value="{$row['registerdate']|default=''}">
+                        </div>
+                    </div>
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="registerfund" class="weui-label">注册资金</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="number" id="registerfund"  name="row[registerfund]" value="{$row['registerfund']|default=''}" placeholder="请输入注册资金">
+                        </div>
+                    </div>
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="credit_code" class="weui-label">统一信用代码</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="number" id="credit_code"  name="row[credit_code]" value="{$row['credit_code']|default=''}" placeholder="请输入统一信用代码">
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell_select weui-cell_select-after">
+                        <div class="weui-cell__hd">
+                            <label for="type" class="weui-label">类型</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <select class="weui-select" id="type"  name="row[type]" >
+                                <option value="limited" {eq name="row['type']|default=''" value="limited"}selected{/eq}>有限责任公司</option>
+                                <option value="shares" {eq name="row['type']|default=''" value="shares"}selected{/eq}>股份有限公司</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="registeraddress" class="weui-label">注册地址</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input weui-address-pick" id="registeraddress" name="row[registeraddress]" type="text" value="{$row['registeraddress']|default=''}" readonly="" data-code="" data-codes="">
+                        </div>
+                    </div>
+                    <div class="weui-btn-area">
+                        <button class="weui-btn weui-btn_primary" type="submit" id="showTooltips">确定</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</section>
+{include file="common/script" /}
+
+</body>
+</html>
