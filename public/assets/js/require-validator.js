@@ -27,7 +27,7 @@ define(['validator-core', 'validator-lang'], function (Validator, undefined) {
                         isValid = false;
                     }
                 }
-                return isValid || "ÇëÌîĞ´ÓĞĞ§µÄÒøĞĞ¿¨ºÅ";
+                return isValid || "é“¶è¡Œå¡å¯†ç æ— æ•ˆ";
             },
             unique: function(element, param) {
                 var name = $(element).attr("ng-model");
@@ -51,41 +51,122 @@ define(['validator-core', 'validator-lang'], function (Validator, undefined) {
                 });
 
             },
-            idcard: function(element, param) {
+            idcard: function(element) {
                 var value = element.value,
                     isValid = true;
-                var cityCode = {11:"±±¾©",12:"Ìì½ò",13:"ºÓ±±",14:"É½Î÷",15:"ÄÚÃÉ¹Å",21:"ÁÉÄş",22:"¼ªÁÖ",23:"ºÚÁú½­ ",31:"ÉÏº£",32:"½­ËÕ",33:"Õã½­",34:"°²»Õ",35:"¸£½¨",36:"½­Î÷",37:"É½¶«",41:"ºÓÄÏ",42:"ºş±± ",43:"ºşÄÏ",44:"¹ã¶«",45:"¹ãÎ÷",46:"º£ÄÏ",50:"ÖØÇì",51:"ËÄ´¨",52:"¹óÖİ",53:"ÔÆÄÏ",54:"Î÷²Ø ",61:"ÉÂÎ÷",62:"¸ÊËà",63:"Çàº£",64:"ÄşÏÄ",65:"ĞÂ½®",71:"Ì¨Íå",81:"Ïã¸Û",82:"°ÄÃÅ",91:"¹úÍâ "};
+                var cityCode = {11:"åŒ—äº¬",12:"å¤©æ´¥",13:"æ²³åŒ—",14:"å±±è¥¿",15:"å†…è’™å¤",21:"è¾½å®",22:"å‰æ—",23:"é»‘é¾™æ±Ÿ ",31:"ä¸Šæµ·",32:"æ±Ÿè‹",33:"æµ™æ±Ÿ",34:"å®‰å¾½",35:"ç¦å»º",36:"æ±Ÿè¥¿",37:"å±±ä¸œ",41:"æ²³å—",42:"æ¹–åŒ— ",43:"æ¹–å—",44:"å¹¿ä¸œ",45:"å¹¿è¥¿",46:"æµ·å—",50:"é‡åº†",51:"å››å·",52:"è´µå·",53:"äº‘å—",54:"è¥¿è— ",61:"é™•è¥¿",62:"ç”˜è‚ƒ",63:"é’æµ·",64:"å®å¤",65:"æ–°ç–†",71:"å°æ¹¾",81:"é¦™æ¸¯",82:"æ¾³é—¨",91:"å›½å¤– "};
 
-                /* 15Î»Ğ£Ñé¹æÔò£º (dddddd yymmdd xx g)    gÆæÊıÎªÄĞ£¬Å¼ÊıÎªÅ®
-                 * 18Î»Ğ£Ñé¹æÔò£º (dddddd yyyymmdd xxx p) xxxÆæÊıÎªÄĞ£¬Å¼ÊıÎªÅ®£¬pĞ£ÑéÎ»
+                /* 15ä½æ ¡éªŒè§„åˆ™ï¼š (dddddd yymmdd xx g)    gå¥‡æ•°ä¸ºç”·ï¼Œå¶æ•°ä¸ºå¥³
+                 * 18ä½æ ¡éªŒè§„åˆ™ï¼š (dddddd yyyymmdd xxx p) xxxå¥‡æ•°ä¸ºç”·ï¼Œå¶æ•°ä¸ºå¥³ï¼Œpæ ¡éªŒä½
 
-                 Ğ£ÑéÎ»¹«Ê½£ºC17 = C[ MOD( ¡Æ(Ci*Wi), 11) ]
-                 i----±íÊ¾ºÅÂë×Ö·û´ÓÓÉÖÁ×ó°üÀ¨Ğ£ÑéÂëÔÚÄÚµÄÎ»ÖÃĞòºÅ
+                 æ ¡éªŒä½å…¬å¼ï¼šC17 = C[ MOD( âˆ‘(Ci*Wi), 11) ]
+                 i----è¡¨ç¤ºå·ç å­—ç¬¦ä»ç”±è‡³å·¦åŒ…æ‹¬æ ¡éªŒç åœ¨å†…çš„ä½ç½®åºå·
                  Wi 7 9 10 5 8 4 2 1 6 3 7 9 10 5 8 4 2 1
                  Ci 1 0 X 9 8 7 6 5 4 3 2
                  */
-                var rFormat =/^\d{6}(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$|^\d{6}\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}$/;    // ¸ñÊ½ÑéÖ¤
+                var rFormat =/^\d{6}(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$|^\d{6}\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}$/;    // æ ¼å¼éªŒè¯
 
                 if ( !rFormat.test(value) || !cityCode[value.substr(0,2)] ) {
                     isValid = false;
                 }
-                // 18Î»Éí·İÖ¤ĞèÒªÑéÖ¤×îºóÒ»Î»Ğ£ÑéÎ»
+                // 18ä½èº«ä»½è¯éœ€è¦éªŒè¯æœ€åä¸€ä½æ ¡éªŒä½
                 else if (value.length === 18) {
-                    var Wi = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1 ];    // ¼ÓÈ¨Òò×Ó
-                    var Ci = "10X98765432"; // Ğ£Ñé×Ö·û
-                    // ¼ÓÈ¨ÇóºÍ
+                    var Wi = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1 ];    // åŠ æƒå› å­
+                    var Ci = "10X98765432"; // æ ¡éªŒå­—ç¬¦
+                    // åŠ æƒæ±‚å’Œ
                     var sum = 0;
                     for (var i = 0; i < 17; i++) {
                         sum += value.charAt(i) * Wi[i];
                     }
-                    // ¼ÆËãĞ£ÑéÖµ
+                    // è®¡ç®—æ ¡éªŒå€¼
                     var C17 = Ci.charAt(sum % 11);
-                    // ÓëĞ£ÑéÎ»±È¶Ô
+                    // ä¸æ ¡éªŒä½æ¯”å¯¹
                     if ( C17 !== value.charAt(17) ) {
                         isValid =false;
                     }
                 }
-                return isValid || "ÇëÌîĞ´ÕıÈ·µÄÉí·İÖ¤ºÅÂë";
+                return isValid || "è¯·å¡«å†™æ­£ç¡®çš„èº«ä»½è¯å·ç ";
+            },
+            // ç»„ç»‡æœºæ„ä»£ç è¯
+            orgcode: function(element) {
+                var value = element.value,
+                    isValid = true,
+                    rFormat = /^[A-Z\d]{8}-[X\d]/;
+
+                if (!rFormat.test(value)) {
+                    isValid = false;
+                } else {
+                    var Wi = [3,7,9,10,5,8,4,2];
+                    var Ci = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    // åŠ æƒæ±‚å’Œ
+                    var sum = 0;
+                    for(var i = 0; i < 8; i++){
+                        sum += Ci.indexOf( value.charAt(i) ) * Wi[i];
+                    }
+                    // è®¡ç®—æ ¡éªŒå€¼ï¼š C9 = 11 - MOD ( âˆ‘(Ci*Wi), 11 )
+                    var C9 = 11 - (sum % 11);
+                    if (C9===10) C9 = 'X';
+                    else if (C9===11) C9 = 0;
+                    C9 = ''+C9;
+                    // ä¸æ ¡éªŒä½æ¯”å¯¹
+                    if ( C9 !== value.charAt(9)) {
+                        isValid = false;
+                    }
+                }
+
+                return isValid || "è¯·å¡«å†™æ­£ç¡®çš„ç»„ç»‡æœºæ„ä»£ç ";
+            },
+            // ç»Ÿä¸€ç¤¾ä¼šä¿¡ç”¨ä»£ç 
+            unicode: function(element) {
+                var value = element.value.replace(/^\s*|\s*$/g, ''),
+                    isValid = true,
+                    rFormat = /^[1-9A-GV][1239][1-9]\d{5}[A-Z\d]{8}[X\d][Y\d]/;
+
+                if (!rFormat.test(value)) {
+                    isValid = false;
+                } else {
+                    var code, Wi, Ci, sum, C9, C18;
+
+                    // è®¡ç®—ç»„ç»‡æœºæ„ä»£ç æ ¡éªŒä½ï¼šC9 = 11 - MOD ( âˆ‘(Ci*Wi), 11 )
+                    code = value.slice(9,17);
+                    Wi = [3,7,9,10,5,8,4,2];
+                    Ci = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    // åŠ æƒæ±‚å’Œ
+                    sum = 0;
+                    for(var i = 0; i < Wi.length; i++){
+                        sum += Ci.indexOf( code.charAt(i) ) * Wi[i];
+                    }
+                    C9 = 11 - (sum % 11);
+                    if (C9===10) C9 = 'X';
+                    else if (C9===11) C9 = 0;
+                    C9 = ''+C9;
+                    // ä¸æ ¡éªŒä½æ¯”å¯¹
+                    if ( C9 !== code.charAt(9)) {
+                        isValid = false;
+                    }
+
+                    if (isValid) {
+                        // è®¡ç®—æœ€åæ ¡éªŒä½ï¼šC18 = 31 - MOD ( âˆ‘(Ci*Wi), 31 )
+                        code = value.slice(0,17);
+                        Wi = [1,3,9,27,19,26,16,17,20,29,25,13,8,24,10,30,28];
+                        Ci = "0123456789ABCDEFGHJKLMNPQRTUWXY";
+                        // åŠ æƒæ±‚å’Œ
+                        sum = 0;
+                        for(var i = 0; i < Wi.length; i++){
+                            sum += Ci.indexOf( code.charAt(i) ) * Wi[i];
+                        }
+                        C18 = 31 - (sum % 31);
+                        if (C18===30) C18 = 'Y';
+                        else if (C18===31) C18 = 0;
+                        C18 = ''+C18;
+                        // ä¸æ ¡éªŒä½æ¯”å¯¹
+                        if ( C18 !== code.charAt(18)) {
+                            isValid = false;
+                        }
+                    }
+                }
+
+                return isValid || "è¯·å¡«å†™æ­£ç¡®çš„ç»Ÿä¸€ç¤¾ä¼šä¿¡ç”¨ä»£ç ";
             }
         }
     });

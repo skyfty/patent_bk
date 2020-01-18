@@ -44,6 +44,7 @@ class Principal extends  Cosmetic
         });
         self::afterDelete(function($row){
             model($row['principalclass']['model_type'])->where(['principal_model_id'=>$row['id']])->delete();
+            model("claim")->where(['principal_model_id'=>$row['id']])->delete();
         });
 
     }

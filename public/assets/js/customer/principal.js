@@ -20,6 +20,21 @@ define(['jquery', 'bootstrap', 'fast', 'customer', 'form','flexible'], function 
                                     var template_name = "principal-tmpl-" + ret.data.substance_type;
                                     var html = Template(template_name,ret.data);
                                     $("#principal-body").html(html);
+                                    $("a.principal-delete").on("click", function(){
+                                        var id = $(this).data("id");
+                                        $.confirm({
+                                            title: '删除主体',
+                                            text: '确定要删除这个主体吗?',
+                                            onOK: function () {
+                                                $.ajax({url: "/principal/del", data: {ids: id},
+                                                        success: function (ret) {
+                                                            window.location.reload();
+                                                        }
+                                                    }
+                                                )
+                                            }
+                                        });
+                                    });
                                 } else {
                                     Toastr.error("获取数据失败");
                                 }
@@ -41,7 +56,7 @@ define(['jquery', 'bootstrap', 'fast', 'customer', 'form','flexible'], function 
             });
 
 
-            Form.api.bindevent($("#update-form-myavatar"), function(){
+            Form.api.bindevent($("#form"), function(){
                 return false;
             });
         },
@@ -53,17 +68,11 @@ define(['jquery', 'bootstrap', 'fast', 'customer', 'form','flexible'], function 
             });
 
 
-            Form.api.bindevent($("#update-form-myavatar"), function(){
+            Form.api.bindevent($("#form"), function(){
                 return false;
             });
         },
 
-        defaultact:function() {
-            Form.api.bindevent($("#form"), function(){
-                $.toast("修改成功");
-                return false;
-            });
-        },
         api: {
         }
     };
