@@ -24,19 +24,19 @@
                     <div class="weui-cell__hd"><label for="name" class="weui-label">姓名</label></div>
                     <div class="weui-cell__bd">
                         <input class="weui-input" type="text" id="name"  name="row[name]"
-                               data-tip="Please fill in at least eight characters"  data-rule="required;" value="{$row['name']|default=''}" placeholder="请输入姓名">
+                               data-tip="Please fill in at least eight characters"  data-rule="required;" data-msg-required="姓名不可以为空" value="{$row['name']|default=''}" placeholder="请输入姓名">
                     </div>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label for="birthday" class="weui-label">生日</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" id="birthday" name="row[birthday]" data-rule="required;"  type="date" value="{$row['birthday']|default=''}">
+                        <input class="weui-input" id="birthday" name="row[birthday]" data-rule="required;"  data-msg-required="生日不可以为空"  type="date" value="{$row['birthday']|default=''}">
                     </div>
                 </div>
                 <div class="weui-cell ">
                     <div class="weui-cell__hd"><label for="idcard" class="weui-label">身份证</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" id="idcard"  name="row[idcard]" data-rule="required;idcard"  value="{$row['idcard']|default=''}" placeholder="请输入身份证">
+                        <input class="weui-input" type="text" id="idcard"  name="row[idcard]" data-rule="required;idcard" data-msg-required="身份证不可以为空"  value="{$row['idcard']|default=''}" placeholder="请输入身份证">
                     </div>
                 </div>
                 <div class="weui-cell weui-cell_select weui-cell_select-after">
