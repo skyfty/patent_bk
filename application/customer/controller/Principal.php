@@ -25,8 +25,16 @@ class Principal extends Customer
         $list = $this->model->with($this->relationSearch)->where("id","in", function($query){
             $query->table("__CLAIM__")->where("customer_model_id", $this->user->customer->id)->field("principal_model_id");
         })->order("principalclass_model_id asc")->select();
+
+        $principallclass = model("Principalclass");
+        foreach($list as $v) {
+            if ($v['substance_type'] == "persion") {
+                $principallclass->where("model_type", "neq", "persion");
+                break;
+            }
+        }
         $this->view->assign("list", $list);
-        $this->view->assign("principal_class", model("Principalclass")->select());
+        $this->view->assign("principal_class", $principallclass->select());
 
         return $this->view->fetch();
     }
@@ -109,7 +117,7 @@ class Principal extends Customer
                 ]);
                 if ($claim !== false) {
                     $db->commit();
-                    $this->success("成功", "/principal/index?id=".$principal->id);
+                    $this->success("主体添加成功", "/principal/index?id=".$principal->id);
                 }
             } catch (\think\exception\PDOException $e) {
                 $db->rollback();

@@ -50,30 +50,25 @@ define(['jquery', 'bootstrap', 'fast', 'customer', 'form','flexible'], function 
 
         },
         edit:function() {
-            require(['jquery-weui-city-picker'], function(){
-                $(".weui-address-pick").cityPicker({
-                });
-            });
-
-
-            Form.api.bindevent($("#form"), function(){
-                return false;
-            });
+            Controller.api.bindevent();
         },
 
         add:function() {
-            require(['jquery-weui-city-picker'], function(){
-                $(".weui-address-pick").cityPicker({
-                });
-            });
-
-
-            Form.api.bindevent($("#form"), function(){
-                return false;
-            });
+            Controller.api.bindevent();
         },
 
         api: {
+            bindevent: function () {
+                require(['jquery-weui-city-picker'], function(){
+                    $(".weui-address-pick").cityPicker({
+                    });
+                });
+                Form.api.bindevent($("#form"), function(data, ret){
+                    Toastr.success(ret.msg);
+                    setTimeout(function(){window.location.replace(ret.url);}, 1000);
+
+                });
+            }
         }
     };
     Controller.api = $.extend(Customer.api, Controller.api);
