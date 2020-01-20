@@ -24,7 +24,7 @@ class Company extends \app\common\model\Company
     public function getRegisterdateTextAttr($value, $data)
     {
         $value = $value ? $value : (isset($data['registerdate']) ? $data['registerdate'] : '');
-        return date("Y-m-d",$value);
+        return $value?date("Y-m-d",$value):$value;
     }
 
     private function getSelectFieldText($value, $field_name) {
