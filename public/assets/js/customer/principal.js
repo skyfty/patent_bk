@@ -13,33 +13,7 @@ define(['jquery', 'bootstrap', 'fast', 'customer', 'form','flexible'], function 
                 window.IScroll = IScroll;
                 $('#retr').navbarscroll({
                     endClickScroll:function(thisObj){
-                        var id = $("#retr li.cur a").data("id");
-                        $.ajax({ url:"/principal/view", data:{ id:id, },
-                            success:function(ret) {
-                                if (ret && ret.code == 0 && ret.data) {
-                                    var template_name = "principal-tmpl-" + ret.data.substance_type;
-                                    var html = Template(template_name,ret.data);
-                                    $("#principal-body").html(html);
-                                    $("a.principal-delete").on("click", function(){
-                                        var id = $(this).data("id");
-                                        $.confirm({
-                                            title: '删除主体',
-                                            text: '确定要删除这个主体吗?',
-                                            onOK: function () {
-                                                $.ajax({url: "/principal/del", data: {ids: id},
-                                                        success: function (ret) {
-                                                            window.location.reload();
-                                                        }
-                                                    }
-                                                )
-                                            }
-                                        });
-                                    });
-                                } else {
-                                    Toastr.error("获取数据失败");
-                                }
-                            }
-                        });
+                        Controller.api.refreshprincipal($("#retr li.cur a").data("id"));
                     }
                 });
                 var id = Fast.api.query("id");
@@ -65,6 +39,35 @@ define(['jquery', 'bootstrap', 'fast', 'customer', 'form','flexible'], function 
                 });
                 Form.api.bindevent($("#form"), function(data, ret){
                     setTimeout(function(){window.location.replace(ret.url);}, 1000);
+                });
+            },
+            refreshprincipal:function(id) {
+                Fast.api.ajax({
+                    url:"/principal/view",
+                    data:{ id:id, }
+                },function(data,ret) {
+                    var template_name = "principal-tmpl-" + data.substance_type;
+                    $("#principal-body").html(Template(template_name,data));
+                    Controller.api.bindprincipalevent();
+                    return false;
+                });
+            },
+            bindprincipalevent:function(){
+                $("a.principal-delete").on("click", function(){
+                    var id = $(this).data("id");
+                    $.confirm({
+                        title: '删除主体',
+                        text: '确定要删除这个主体吗?',
+                        onOK: function () {
+                            $.ajax({
+                                    url: "/principal/del",
+                                    data: {ids: id},
+                                    success: function (ret) {
+                                        window.location.reload();
+                                    }
+                                });
+                        }
+                    });
                 });
             }
         }
