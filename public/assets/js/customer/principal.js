@@ -64,9 +64,7 @@ define(['jquery', 'bootstrap', 'fast', 'customer', 'form','flexible'], function 
                     });
                 });
                 Form.api.bindevent($("#form"), function(data, ret){
-                    Toastr.success(ret.msg);
                     setTimeout(function(){window.location.replace(ret.url);}, 1000);
-
                 });
             }
         }
