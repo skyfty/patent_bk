@@ -73,7 +73,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 } else {
                     if (Table.api.formatter[field.type]) {
                         data = Table.api.formatter[field.type].call(this, data, row);
-
+                    } else if (field.tip) {
+                        data += field.tip;
                     }
                 }
                 return data;
