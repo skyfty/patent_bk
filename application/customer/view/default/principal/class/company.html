@@ -4,6 +4,13 @@
 <head>
     {include file="common/meta" /}
     <link href="__CDN__/assets/css/customer/principal.css?v={$site.version}" rel="stylesheet">
+    <style type="text/css">
+        .weui-label {
+            width: 135px;
+            font-size: 14px;
+
+        }
+    </style>
 
 </head>
 <body ontouchstart>
@@ -46,12 +53,25 @@
                     </div>
                     <div class="weui-cell weui-cell_select weui-cell_select-after">
                         <div class="weui-cell__hd">
-                            <label for="type" class="weui-label">类型</label>
+                            <label for="type" class="weui-label">企业性质</label>
                         </div>
                         <div class="weui-cell__bd">
-                            <select class="weui-select" id="type"  name="row[type]" >
-                                <option value="limited" {eq name="row['type']|default=''" value="limited"}selected{/eq}>有限责任公司</option>
-                                <option value="shares" {eq name="row['type']|default=''" value="shares"}selected{/eq}>股份有限公司</option>
+                            <select name="row[type]" class="weui-select" id="type">
+                                {foreach name=":listfield('company','type')" item="vo"}
+                                <option value="{$key}" {in name="key" value="$row['type']"}selected{/in}>{$vo}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell_select weui-cell_select-after">
+                        <div class="weui-cell__hd">
+                            <label for="type" class="weui-label">所属行业代码</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <select name="row[type]" class="weui-select" id="type">
+                                {foreach name=":listfield('company','criterion')" item="vo"}
+                                <option value="{$key}" {in name="key" value="$row['type']"}selected{/in}>{$vo}</option>
+                                {/foreach}
                             </select>
                         </div>
                     </div>
