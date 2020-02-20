@@ -46,9 +46,13 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
         },
 
         bindevent:function($scope) {
-            if (Config.admin_branch_model_id != 0) {
-
-            }
+            $('[name="row[species_model_id]"]').data("e-params",function(){
+                var param = {};
+                param.custom = {
+                    "model": "aptitude",
+                };
+                return param;
+            });
             Form.api.bindevent($("form[role=form]"), $scope.submit);
             if (Config.staff != null)$('[data-field-name="branch"]').hide().trigger("rate");
         },

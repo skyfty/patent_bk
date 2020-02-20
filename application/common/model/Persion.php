@@ -11,9 +11,15 @@ class Persion extends Cosmetic
     protected $name = 'persion';
     public $keywordsFields = [];
 
+
     protected static function init()
     {
         parent::init();
+
+        self::beforeInsert(function($row){
+            $maxid = self::max("id") + 1;
+            $row['idcode'] = sprintf("PE%06d", $maxid);
+        });
     }
 
     public function principal()

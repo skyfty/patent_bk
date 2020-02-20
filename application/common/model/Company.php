@@ -11,9 +11,15 @@ class Company extends Cosmetic
     protected $name = 'company';
     public $keywordsFields = [];
 
+
     protected static function init()
     {
         parent::init();
+
+        self::beforeInsert(function($row){
+            $maxid = self::max("id") + 1;
+            $row['idcode'] = sprintf("CO%06d", $maxid);
+        });
     }
 
     public function principal()

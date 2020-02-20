@@ -35,6 +35,11 @@ class Policy extends  Cosmetic
     }
 
 
+
+    public function species()
+    {
+        return $this->hasOne('species','id','species_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
     public function relevance()
     {
         return $this->morphMany('provider', 'provider_model');

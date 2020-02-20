@@ -64,6 +64,13 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         },
 
         bindevent:function($scope){
+            $('[name="row[species_model_id]"]').data("e-params",function(){
+                var param = {};
+                param.custom = {
+                    "model": "policy",
+                };
+                return param;
+            });
             Form.api.bindevent($("form[role=form]"), $scope.submit);
 
             require(['bootstrap-select', 'bootstrap-select-lang'], function () {

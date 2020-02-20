@@ -209,7 +209,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
             $('[name="row[relevance_model_id]"]').data("e-params",function(){
                 var param = {};
                 param.custom = {
-                    "type": $scope.row['type'],
+                    "species_model_id": $scope.row['species_model_id'],
                     "branch_model_id":$scope.row['branch_model_id']
                 };
                 return param;
@@ -229,8 +229,13 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
                 var url = $(this).val() + "/index";
                 $('[name="row[relevance_model_id]"]').selectPageClear().selectPageDataUrl(url);
             });
-            $('[name="row[type]"]').change(function(){
-                $('[name="row[relevance_model_id]"]').selectPageClear();
+
+            $('[name="row[species_model_id]"]').data("e-params",function(){
+                var param = {};
+                param.custom = {
+                    "model": $scope.row['relevance_model_type'],
+                };
+                return param;
             });
 
             Form.api.bindevent($("form[role=form]"), function (data, ret) {
