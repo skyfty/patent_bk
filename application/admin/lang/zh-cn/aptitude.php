@@ -10,5 +10,6 @@ return [
     'Creator_model_id' => '创建者',
     'Owners_model_id'  => '所有者',
     'Group_model_id'   => '分组',
-    'Type'             => '类型'
+    'Type'             => '类型',
+    'Branch_model_id'  => '机构'
 ];

@@ -1,0 +1,101 @@
+<div class="row animated fadeInRight"  ng-controller="view" ng-init="editmode=false;sceneryInit()">
+    <div class="col-md-3">
+        <div class="box box-success">
+            <div class="panel-heading">
+                基本信息
+            </div>
+            <div class="panel-body">
+                <div class="box-body box-profile">
+                    <h3 class="profile-username text-center">{{row.name}}</h3>
+                    <p class="text-muted text-center">{{row.idcode}}</p>
+                    <div class="tab-pane fade in" >
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                <tr  ng-repeat="f in block.fields">
+                                    <th style="width:30%">{{f.title}}</th>
+                                    <td  formatter data-field="f" data-model="row">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="box box-success">
+            <div class="panel panel-default panel-intro">
+                <div class="panel-heading">
+                    <div class="navbar-header" data-toggle="collapse" data-target="#navbar-collapse">
+                        <div class="nav-title visible-xs">{{navtitle}}</div>
+                        <button type="button" class="navbar-toggle collapsed navbar-toggle-center" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse navbar-nav-justified" id="navbar-collapse">
+                        <ul id="scenery-tab"  class="nav nav-tabs  nav-justified">
+                            {foreach name="config.sceneryList['view']" item="vo"}
+                            <li class="  {:$auth->check('business/view/'.$vo['name'])?'':'hide'}  {eq name='vo.name' value='warrant'}{:check_adscription($row, $config.staff)?'':'hide'} {/eq} "><a href="#tab-{$vo['name']}" data-scenery-index="{$vo['name']}" data-toggle="tab">{$vo['title']}</a></li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        {foreach name="config.sceneryList['view']" item="vo"}
+                        <div class="tab-pane fade in  {:$auth->check('business/view/'.$vo['name'])?'':'hide'}  " id="tab-{$vo['name']}"  ng-controller="scenery-{$vo['name']}" ng-init="sceneryInit('{$vo['name']}')">
+                            {eq name="vo.type" value="default"}
+                            <form class="form-horizontal" role="form" data-toggle="validator" method="POST" action="business/edit/ids/{$row['id']}" >
+                                <input type="hidden" name="scenery" value="{$vo.name}"/>
+                                <input type="hidden" name="row[id]" value="{$row.id}"/>
+
+                                <div class="box-header with-border">
+                                </div>
+                                <div class="box-body no-padding">
+                                    <div class="mailbox-controls">
+                                        <div class="btn-group">
+                                            <div ng-hide="viewstate.editing" >
+                                                <button type="button" class="btn btn-danger btn-del btn-sm {:check_adscription($row, $config.staff)?'':'hide'}   {:$auth->check('business/del')?'':'hide'}"  href="business/del"  data-toggle="tooltip" data-container="body" title="{:__('Delete')}">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-default btn-inline-edit btn-sm {:check_adscription($row, $config.staff)?'':'hide'}  {:$auth->check('business/edit')?'':'hide'}" ng-click="edit()" data-toggle="tooltip" data-container="body" title="{:__('Edit')}">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+
+                                                <button type="button" class="btn btn-default btn-sm" ng-click="refreshRow()" data-toggle="tooltip" data-container="body" title="刷新">
+                                                    <i class="fa  fa-refresh"></i>
+                                                </button>
+                                            </div>
+                                            <div  ng-show="viewstate.editing">
+
+                                                <button type="submit" class="btn btn-success btn-sm"   data-toggle="tooltip" data-container="body" title="{:__('Submit')}">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                                <a  class="btn btn-default btn-sm" ng-click="repeal()" data-toggle="tooltip" data-container="body" title="{:__('Close')}">
+                                                    <i class="fa fa-close "></i>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="mailbox-messages" ng-hide="viewstate.editing" id="data-view-{$vo['name']}">
+                                    </div>
+                                    <div class="mailbox-messages" ng-show="viewstate.editing" id="data-edit-{$vo['name']}">
+                                    </div>
+                                </div>
+                            </form>
+                            {/eq}
+                        </div>
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">var row ={$row|json_encode};</script>
+{include file="common/tmpl" /}
