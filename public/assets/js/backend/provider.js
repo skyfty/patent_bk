@@ -227,13 +227,14 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
 
             $('[name="row[relevance_model_type]"]').change(function(){
                 var url = $(this).val() + "/index";
+                $('[name="row[species_model_id]"]').selectPageClear();
                 $('[name="row[relevance_model_id]"]').selectPageClear().selectPageDataUrl(url);
             });
 
             $('[name="row[species_model_id]"]').data("e-params",function(){
                 var param = {};
                 param.custom = {
-                    "model": $scope.row['relevance_model_type'],
+                    "model":  $('[name="row[relevance_model_type]"]').val(),
                 };
                 return param;
             });
