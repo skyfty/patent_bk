@@ -13,7 +13,7 @@ use app\admin\model\Sight;
 class Customer extends Cosmetic
 {
     protected $selectpageFields = ['name', 'idcode', 'slug', 'id', 'status'];
-    protected $searchFields = ['name', 'idcode', 'slug','nickname'];
+    protected $searchFields = ['name', 'idcode', 'slug'];
     protected $selectpageShowFields = ['name', 'idcode'];
 
     public function _initialize()

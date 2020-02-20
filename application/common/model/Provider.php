@@ -94,6 +94,10 @@ class Provider extends Cosmetic
         return $this->hasOne('promotion','id','promotion_model_id')->joinType("LEFT")->field('id,idcode,name')->setEagerlyType(0);
     }
 
+    public function relevance()
+    {
+        return $this->morphTo("relevance_model_id","relevance_model_type");
+    }
 
     public function amount() {
 

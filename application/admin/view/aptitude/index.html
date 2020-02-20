@@ -38,12 +38,8 @@
                         </div>
                     </div>
                     <div id="toolbar-{$vo['name']}" class="toolbar">
-                        <classify-tree data-config="genre/classtree" data-change="classChanged"></classify-tree>
-                        {:build_toolbar(['refresh'])}
-                        <a href="unsafe:javascript:;" class="btn btn-danger btn-del btn-disabled {:$auth->check('aptitude/del')?'':'hide'}" data-url="/aptitude/del/ids/{ids}" title="删除"><i class="fa fa-trash"></i> </a>
-                        <a href="{:url('aptitude/add?type=default')}" class="btn btn-success btn-dialog" title="添加资质">
-                            <i class="fa fa-plus"></i>
-                        </a>
+                        {:build_toolbar(['refresh','add','del'])}
+
                     </div>
                     <table id="table-{$vo['name']}"  ui-formidable="fields"
                            data-fields="fields"

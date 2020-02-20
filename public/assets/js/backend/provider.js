@@ -206,6 +206,33 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
         bindevent:function($scope,$timeout, defer){
             var self = this;
 
+            $('[name="row[relevance_model_id]"]').data("e-params",function(){
+                var param = {};
+                param.custom = {
+                    "type": $scope.row['type'],
+                    "branch_model_id":$scope.row['branch_model_id']
+                };
+                return param;
+            }).data("e-selected", function(data){
+
+            });
+            $('[name="row[customer_model_id]"]').data("e-params",function(){
+                var param = {};
+                param.custom = {
+                    "branch_model_id":$scope.row['branch_model_id']
+                };
+                return param;
+            });
+
+
+            $('[name="row[relevance_model_type]"]').change(function(){
+                var url = $(this).val() + "/index";
+                $('[name="row[relevance_model_id]"]').selectPageClear().selectPageDataUrl(url);
+            });
+            $('[name="row[type]"]').change(function(){
+                $('[name="row[relevance_model_id]"]').selectPageClear();
+            });
+
             Form.api.bindevent($("form[role=form]"), function (data, ret) {
                 if (defer) {
                     defer.resolve(data);
@@ -214,6 +241,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
                 }
             });
 
+            require(['selectpage'], function () {
+                $('[name="row[relevance_model_type]"]').trigger("change");
+            });
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },
 

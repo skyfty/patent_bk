@@ -38,7 +38,6 @@
                         </div>
                     </div>
                     <div id="toolbar-{$vo['name']}" class="toolbar">
-                        <classify-tree data-config="genre/classtree" data-change="classChanged"></classify-tree>
                         {:build_toolbar(['refresh'])}
                         <a href="unsafe:javascript:;" class="btn btn-danger btn-del btn-disabled {:$auth->check('promotion/del')?'':'hide'}" data-url="/promotion/del/ids/{ids}" title="删除"><i class="fa fa-trash"></i> </a>
                         <a href="{:url('promotion/add?type=default')}" class="btn btn-success btn-dialog" title="添加课程">

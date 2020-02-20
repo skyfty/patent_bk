@@ -35,6 +35,10 @@ class Policy extends  Cosmetic
     }
 
 
+    public function relevance()
+    {
+        return $this->morphMany('provider', 'provider_model');
+    }
 
     public function industry() {
         return $this->hasOne('industry','id','industry_model_id')->joinType("LEFT")->setEagerlyType(0);
