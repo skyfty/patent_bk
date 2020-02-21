@@ -16,6 +16,12 @@ class Business extends Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("BU%06d", $maxid);
         });
+
+        self::afterInsert(function($row){
+            $row->relevance()->create([
+
+            ]);
+        });
     }
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
@@ -23,9 +29,8 @@ class Business extends Cosmetic
 
     public function relevance()
     {
-        return $this->morphMany('provider', 'provider_model');
+        return $this->morphOne('provider', 'provider_model');
     }
-
 
     public function species()
     {

@@ -25,7 +25,7 @@ class Aptitude extends Cosmetic
 
     public function relevance()
     {
-        return $this->morphMany('provider', 'provider_model');
+        return $this->morphOne('provider', 'provider_model');
     }
 
 
