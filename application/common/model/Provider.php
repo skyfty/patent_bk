@@ -8,8 +8,6 @@ use Endroid\QrCode\QrCode;
 
 class Provider extends Cosmetic
 {
-    use \traits\model\SoftDelete;
-
     protected $name = 'provider';
 
     public $keywordsFields = ["idcode"];
@@ -92,14 +90,6 @@ class Provider extends Cosmetic
 
     public function promotion() {
         return $this->hasOne('promotion','id','promotion_model_id')->joinType("LEFT")->field('id,idcode,name')->setEagerlyType(0);
-    }
-    public function species()
-    {
-        return $this->hasOne('species','id','species_model_id')->joinType("LEFT")->setEagerlyType(0);
-    }
-    public function relevance()
-    {
-        return $this->morphTo("relevance_model_id","relevance_model_type");
     }
 
     public function amount() {

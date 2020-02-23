@@ -10,7 +10,7 @@ use fast\Tree;
  *
  * @icon fa fa-circle-o
  */
-class Species extends Cosmetic
+class Species extends Backend
 {
 
     use \app\admin\library\traits\Cascader;
