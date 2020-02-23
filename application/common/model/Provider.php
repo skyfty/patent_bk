@@ -52,7 +52,7 @@ class Provider extends Cosmetic
 
 
         self::beforeInsert(function($row){
-            $maxid = self::withTrashed()->max("id") + 1;
+            $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("PV%06d", $maxid);
         });
 
@@ -72,8 +72,6 @@ class Provider extends Cosmetic
             self::upstat($row);
         };
         self::afterInsert($countProvider);self::afterDelete($countProvider);
-
-
     }
 
     public function branch() {

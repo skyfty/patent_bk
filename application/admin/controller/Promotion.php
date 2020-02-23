@@ -20,7 +20,7 @@ class Promotion extends Cosmetic
      * @var \app\admin\model\Promotion
      */
     protected $model = null;
-    protected $selectpageFields = ['idcode','name', 'id', 'status'];
+    protected $selectpageFields = ['idcode','name', 'id', 'status',];
     protected $searchFields = ['name', 'idcode','slug'];
 
     public function _initialize()

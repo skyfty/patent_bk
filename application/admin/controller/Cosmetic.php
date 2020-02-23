@@ -82,12 +82,24 @@ class Cosmetic extends Backend
             return call_user_func([$this, $scenery['pos']]);
         }
     }
+    protected function getRelationModel($cosmeticModel) {
+        $relationFields = [];
+        $modelFields = model("fields")->where("relevance","neq","")->where(array("model_id"=>$cosmeticModel['id']))->where("type","in", ["model","cascader"] )->where("name", "not in",['group'])->cache(!App::$debug)->order("id", "ASC")->select();
+        foreach($modelFields as $v) {
+            $relationFields[$v['relevance']][] = $v['name'];
+        }
+        return $relationFields;
+    }
 
     protected function getRelationSearch($cosmeticModel) {
         $relationFields = [];
         $modelFields = model("fields")->where(array("model_id"=>$cosmeticModel['id']))->where("type","in", ["model","cascader"] )->where("name", "not in",['group'])->cache(!App::$debug)->order("id", "ASC")->select();
         foreach($modelFields as $v) {
             if ($v['relevance']) {
+                $idx =array_search($v['relevance'],$relationFields);
+                if ($idx !== false) {
+                    unset($relationFields[$idx]);
+                }
                 $relationFields[] = $v['relevance'].".".$v['name'];
             } else {
                 $relationFields[] = $v['name'];
@@ -148,7 +160,6 @@ class Cosmetic extends Backend
             $name = \think\Loader::parseName(basename(str_replace('\\', '/', get_class($this->model))));
 
             $relationSearch = $this->getRelationSearch($cosmeticModel);;
-
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
             $this->model->alias($name)->where($where)->with($relationSearch);
             $this->spectacle($this->model);
@@ -158,6 +169,12 @@ class Cosmetic extends Backend
             $this->spectacle($this->model);
             $list = $this->model->select();
 
+            $relationModel = $this->getRelationModel($cosmeticModel);;
+            foreach($list as $row) {
+                foreach($relationModel as $rmk=>$rm) {
+                    $row->appendRelationAttr($rmk, $rm);
+                }
+            }
             return json(array("total" => $total, "rows" => collection($list)->toArray()));
         }
 
@@ -208,6 +225,10 @@ class Cosmetic extends Backend
             if (!in_array($row[$this->dataLimitField], $adminIds)) {
                 $this->error(__('You have no permission'));
             }
+        }
+        $relationModel = $this->getRelationModel($cosmeticModel);;
+        foreach($relationModel as $rmk=>$rm) {
+            $row->appendRelationAttr($rmk, $rm);
         }
         $this->view->assign("row", $row);
 
