@@ -2,44 +2,42 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
     var Controller = {
         lands:{
             index:function($scope, $compile,$timeout, data) {
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {};
+
+                    var branchSelect = $('[name="branch_select"]');
+                    if (branchSelect.data("selectpicker")) {
+                        var branchIds = branchSelect.selectpicker('val');
+                        if (branchIds && branchIds.length > 0) {
+                            param.custom['branch_model_id'] = ["in", branchIds];
+                        }
+                    }
+                    return param;
+                };
+
+                var options = {
+                    extend: {
+                        index_url: 'staff/index',
+                        add_url: 'staff/add',
+                        del_url: 'staff/del',
+                        summation_url: 'staff/summation',
+                        table: 'staff',
+                    },
+                    buttons : [
+                        {
+                            name: 'view',
+                            title: function(row, j){
+                                return __('%s', row.name);
+                            },
+                            classname: 'btn btn-xs  btn-success btn-magic btn-addtabs btn-view',
+                            icon: 'fa fa-folder-o',
+                            url: 'staff/view'
+                        }
+                    ]
+                };
+                Table.api.init(options);
+                Form.api.bindevent($("div[ng-controller='index']"));
             }
-        },
-        indexscape:function($scope, $compile,$timeout){
-            $scope.searchFieldsParams = function(param) {
-                param.custom = {};
-
-                var branchSelect = $('[name="branch_select"]');
-                if (branchSelect.data("selectpicker")) {
-                    var branchIds = branchSelect.selectpicker('val');
-                    if (branchIds && branchIds.length > 0) {
-                        param.custom['branch_model_id'] = ["in", branchIds];
-                    }
-                }
-                return param;
-            };
-
-            var options = {
-                extend: {
-                    index_url: 'staff/index',
-                    add_url: 'staff/add',
-                    del_url: 'staff/del',
-                    summation_url: 'staff/summation',
-                    table: 'staff',
-                },
-                buttons : [
-                    {
-                        name: 'view',
-                        title: function(row, j){
-                            return __('%s', row.name);
-                        },
-                        classname: 'btn btn-xs  btn-success btn-magic btn-addtabs btn-view',
-                        icon: 'fa fa-folder-o',
-                        url: 'staff/view'
-                    }
-                ]
-            };
-            Table.api.init(options);
-            Form.api.bindevent($("div[ng-controller='index']"));
         },
         viewscape:function($scope, $compile,$parse, $timeout){
             $scope.refreshRow = function(){

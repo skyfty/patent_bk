@@ -2,72 +2,71 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
     var Controller = {
         lands:{
             index:function($scope, $compile,$timeout, data) {
+                var options = {
+                    extend: {
+                        index_url: 'promotion/index',
+                        add_url: 'promotion/add',
+                        del_url: null,
+                        summation_url: 'promotion/summation',
+                        table: 'promotion',
+                    },
+                    buttons : [
+                        {
+                            name: 'view',
+                            title: function(row, j){
+                                return __('%s', row.name);
+                            },
+                            classname: 'btn btn-xs  btn-success btn-magic btn-addtabs btn-view',
+                            icon: 'fa fa-folder-o',
+                            url: 'promotion/view',
+                            extend: 'data-toggle="tooltip"',
+                        },
+                        {
+                            name: 'del',
+                            url: 'promotion/del',
+                            classname: 'btn btn-xs btn-danger btn-delone',
+                            icon: 'fa fa-trash',
+                            extend: 'data-toggle="tooltip"',
+                            visible:function(row, j){
+                                if (typeof Config.admin_branch_model_id == "undefined") {
+                                    return true;
+                                }
+                                return Config.admin_branch_model_id == row.branch_model_id;
+                            }
+                        }
+                    ]
+                };
+                Table.api.init(options);
+                var table = $("#table-index");
+
+                $scope.genreModelIds = [];
+                $scope.classChanged = function(data) {
+                    var typeIds = [];
+                    angular.forEach(data.selected, function(id){
+                        if ($.isNumeric(id))
+                            typeIds.push(id);
+                    });
+                    $scope.genreModelIds = typeIds;
+                    $scope.$broadcast("refurbish");
+                };
+
+                $scope.formatterOperate = function(value, row, index) {
+                    var buttons = Table.api.formatter.operate.call(this,value, row, index);
+                    return buttons;
+                };
+
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {};
+                    if ($scope.genreModelIds.length > 0) {
+                        param.custom['genre_cascader_id'] = ["in",$scope.genreModelIds];
+                    }
+                    return param;
+                };
+
+                Form.api.bindevent($("div[ng-controller='index']"));
             }
         },
-        indexscape:function($scope, $compile,$timeout){
-            var options = {
-                extend: {
-                    index_url: 'promotion/index',
-                    add_url: 'promotion/add',
-                    del_url: null,
-                    summation_url: 'promotion/summation',
-                    table: 'promotion',
-                },
-                buttons : [
-                    {
-                        name: 'view',
-                        title: function(row, j){
-                            return __('%s', row.name);
-                        },
-                        classname: 'btn btn-xs  btn-success btn-magic btn-addtabs btn-view',
-                        icon: 'fa fa-folder-o',
-                        url: 'promotion/view',
-                        extend: 'data-toggle="tooltip"',
-                    },
-                    {
-                        name: 'del',
-                        url: 'promotion/del',
-                        classname: 'btn btn-xs btn-danger btn-delone',
-                        icon: 'fa fa-trash',
-                        extend: 'data-toggle="tooltip"',
-                        visible:function(row, j){
-                            if (typeof Config.admin_branch_model_id == "undefined") {
-                                return true;
-                            }
-                            return Config.admin_branch_model_id == row.branch_model_id;
-                        }
-                    }
-                ]
-            };
-            Table.api.init(options);
-            var table = $("#table-index");
 
-            $scope.genreModelIds = [];
-            $scope.classChanged = function(data) {
-                var typeIds = [];
-                angular.forEach(data.selected, function(id){
-                    if ($.isNumeric(id))
-                        typeIds.push(id);
-                });
-                $scope.genreModelIds = typeIds;
-                $scope.$broadcast("refurbish");
-            };
-
-            $scope.formatterOperate = function(value, row, index) {
-                var buttons = Table.api.formatter.operate.call(this,value, row, index);
-                return buttons;
-            };
-
-            $scope.searchFieldsParams = function(param) {
-                param.custom = {};
-                if ($scope.genreModelIds.length > 0) {
-                    param.custom['genre_cascader_id'] = ["in",$scope.genreModelIds];
-                }
-                return param;
-            };
-
-            Form.api.bindevent($("div[ng-controller='index']"));
-        },
         viewscape:function($scope, $compile,$parse, $timeout){
             $scope.refreshRow = function(){
                 $.ajax({url: "promotion/index",dataType: 'json',
@@ -89,11 +88,34 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
         },
 
         bindevent:function($scope) {
-            if (Config.admin_branch_model_id != 0) {
+            var self = this;
 
-            }
-            Form.api.bindevent($("form[role=form]"), $scope.submit);
-            if (Config.staff != null)$('[data-field-name="branch"]').hide().trigger("rate");
+            $('[name="row[relevance_model_id]"]').data("e-params",function(){
+                var param = {};
+                param.custom = {
+                    "branch_model_id":$scope.row['branch_model_id']
+                };
+                return param;
+            });
+
+            $('[name="row[species_cascader_id]"]').change(function(){
+                var relevance_model = $('[name="row[relevance_model_id]"]');
+                relevance_model.selectPageClear();
+                if ($scope.row.species_cascader_keyword) {
+                    var species = JSON.parse($scope.row.species_cascader_keyword);
+                    var url = species.row.model + "/index";
+                    relevance_model.selectPageDataUrl(url);
+                }
+            });
+
+            Form.api.bindevent($("form[role=form]"), function (data, ret) {
+                $scope.submit(data, ret);
+            });
+
+            require(['selectpage'], function () {
+                $('[name="row[species_cascader_id]"]').trigger("change");
+            });
+            if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },
 
         chart:function() {

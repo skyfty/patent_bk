@@ -2,28 +2,26 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
     var Controller = {
         lands:{
             index:function($scope, $compile,$timeout, data) {
+                var options = {
+                    extend: {
+                        index_url: 'business/index',
+                        add_url: 'business/add',
+                        del_url: 'business/del',
+                        summation_url: 'business/summation',
+                        table: 'business',
+                    },
+                };
+                Table.api.init(options);
+                var table = $("#table-index");
+
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {};
+
+                    return param;
+                };
+
+                Form.api.bindevent($("div[ng-controller='index']"));
             }
-        },
-        indexscape:function($scope, $compile,$timeout){
-            var options = {
-                extend: {
-                    index_url: 'business/index',
-                    add_url: 'business/add',
-                    del_url: 'business/del',
-                    summation_url: 'business/summation',
-                    table: 'business',
-                },
-            };
-            Table.api.init(options);
-            var table = $("#table-index");
-
-            $scope.searchFieldsParams = function(param) {
-                param.custom = {};
-
-                return param;
-            };
-
-            Form.api.bindevent($("div[ng-controller='index']"));
         },
         viewscape:function($scope, $compile,$parse, $timeout){
             $scope.refreshRow = function(){

@@ -8,6 +8,7 @@ define(["require", "exports", "module","jquery", "template"], function (require,
         this.textArr=[];        // 最终的text数组
         this.textStr="";        // 最终的text
         this.valueArr=[];        // 最终的value数组
+
         this.onOff=false;       // 是否显示
         this.positionArr=[];    // 当前点击的面板在数据中的下标位置
         this.blockData={};      // 当前点击的当前面板的数据
@@ -104,6 +105,7 @@ define(["require", "exports", "module","jquery", "template"], function (require,
             this.textArr.push(this.blockData.label);
             this.valueArr.length=this.floor;
             this.valueArr.push(this.blockData.value);
+
             var string =  Template.compile(
                 '<ul class="urp-cascader-child">'+
                     '<%for(var i=0;i< d.length;i++){%>'+
@@ -127,7 +129,7 @@ define(["require", "exports", "module","jquery", "template"], function (require,
                 this.textStr=this.textArr.join("/");
                 $(this.elem).val(this.textStr);
                 
-                if(triggerData!=="initValue" && this.option.success) this.option.success(this.valueArr,this.textArr);
+                if(triggerData!=="initValue" && this.option.success) this.option.success(this.valueArr,this.textArr,this.blockData);
             }
         },
         // 结束之后拿取数据
@@ -138,6 +140,7 @@ define(["require", "exports", "module","jquery", "template"], function (require,
             this.textArr.push(this.blockData.label);
             this.valueArr.length=this.floor;
             this.valueArr.push(this.blockData.value);
+
             // 文本拼接
             this.textStr=this.textArr.join("/");
 
@@ -152,7 +155,7 @@ define(["require", "exports", "module","jquery", "template"], function (require,
             $(this.elem).siblings("i").replaceWith('<i class="layui-icon layui-icon-down"></i>');
 
             // 如果有初始值，则第一次不回调
-            if(triggerData!=="initValue" && this.option.success) this.option.success(this.valueArr,this.textArr);
+            if(triggerData!=="initValue" && this.option.success) this.option.success(this.valueArr,this.textArr,this.blockData);
         },
         // 赋初值
         initValue: function() {
@@ -251,8 +254,8 @@ define(["require", "exports", "module","jquery", "template"], function (require,
             this.domContent="";     
             this.textArr=[];        
             this.textStr="";        
-            this.valueArr=[];       
-            this.onOff=false;       
+            this.valueArr=[];
+            this.onOff=false;
             this.positionArr=[];    
             this.blockData={};      
             return this.initOption()

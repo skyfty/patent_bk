@@ -29,11 +29,11 @@ class Promotion extends Cosmetic
 
     public function species()
     {
-        return $this->hasOne('species','id','species_model_id')->joinType("LEFT")->setEagerlyType(0);
+        return $this->hasOne('species','id','species_cascader_id')->joinType("LEFT")->setEagerlyType(0);
     }
     public function relevance()
     {
-        return $this->morphTo("relevance_model_id","relevance_model_type");
+        return $this->morphTo("relevance_model");
     }
 
 }

@@ -16,8 +16,13 @@ class Trademark extends Cosmetic
 
         self::beforeInsert(function($row){
             $maxid = self::max("id") + 1;
-            $row['idcode'] = sprintf("IN%06d", $maxid);
+            $row['idcode'] = sprintf("TR%06d", $maxid);
         });
+    }
+
+    public function relevance()
+    {
+        return $this->morphOne('promotion', 'relevance_model');
     }
 
     public function branch() {

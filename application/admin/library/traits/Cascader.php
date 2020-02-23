@@ -36,6 +36,7 @@ trait Cascader
             $data = [
                 'value'=>$v->id,
                 'label'=>$v->name,
+                'model'=>$v->model,
             ];
             $children = $this->cascaderTree($v['id']);
             if ($children && count($children) > 0) {

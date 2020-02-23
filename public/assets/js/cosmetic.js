@@ -23,7 +23,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
 
                 showData = showData.join(",");
 
-                var control = data[field.name + "_type"] || field.defaultvalue;
+                var control = data[field.name + "_type"] ||  data[field.name + "_model_type"] || field.defaultvalue;
                 var url = control + "/hinder?ids=" + data[field.name + "_model_id"];
                 url = Fast.api.fixurl(url);
                 return '<a href="' + url + '" class="dialogit" data-value="' + showData + '" title="' + showData + '">' + showData + '</a>';
@@ -63,10 +63,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     if (field.relevance) {
                         data = data[field.relevance];
                     }
-                    var cascaderKeyword = data[field.name + "_cascader_keyword"];
-                    if (cascaderKeyword) {
-                        cascaderKeyword = JSON.parse(cascaderKeyword);
-                        data = cascaderKeyword['name'].join("/");
+                    var cascader_full_name = data[field.name]['full_name'];
+                    if (cascader_full_name) {
+                        data = cascader_full_name;
                     } else {
                         data = "-";
                     }
@@ -597,12 +596,13 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                         elem: $element,
                         url: $attrs.source,
                         value: val?JSON.parse(val)['ids']:"",
-                        success: function (valData,labelData) {
+                        success: function (valData,labelData, row) {
                             $scope.$apply(function() {
                                 if (valData && valData.length > 0) {
                                     var retsult = JSON.stringify({
                                         ids:valData,
-                                        name:labelData
+                                        name:labelData,
+                                        row:row
                                     });
                                     if (retsult != val) {
                                         hiddenInput.val(retsult);

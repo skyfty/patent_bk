@@ -1,3 +1,4 @@
+
 /* #region 级联选择器 */
 .layui-input-block>i{
     position: absolute;
@@ -71,3 +72,32 @@ ul.urp-cascader-child:first-of-type:after{
     border: 1px solid #e4e7ed;
 }
 /* #endregion */
+
+
+.layui-icon-right:before {
+    content: "\e602"
+}
+
+.layui-icon-left:before {
+    content: "\e603"
+}
+
+.layui-icon-cart-simple:before {
+    content: "\e698"
+}
+
+.layui-icon-face-cry:before {
+    content: "\e69c"
+}
+
+.layui-icon-face-smile:before {
+    content: "\e6af"
+}
+
+.layui-icon-survey:before {
+    content: "\e6b2"
+}
+
+.layui-icon-tree:before {
+    content: "\e62e"
+}

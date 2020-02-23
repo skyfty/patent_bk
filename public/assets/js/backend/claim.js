@@ -2,21 +2,18 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
     var Controller = {
         lands:{
             index:function($scope, $compile,$timeout, data) {
+                var options = {
+                    extend: {
+                        index_url: 'claim/index',
+                        del_url: 'claim/del',
+                        add_url: 'claim/add',
+                        table: 'claim',
+                    }
+                };
+                Table.api.init(options);
+                Form.api.bindevent($("div[ng-controller='index']"));
             }
         },
-        indexscape:function($scope, $compile,$timeout){
-            var options = {
-                extend: {
-                    index_url: 'claim/index',
-                    del_url: 'claim/del',
-                    add_url: 'claim/add',
-                    table: 'claim',
-                }
-            };
-            Table.api.init(options);
-            Form.api.bindevent($("div[ng-controller='index']"));
-        },
-
         add: function () {
             AngularApp.controller("add", function($scope,$sce, $compile,$timeout) {
                 $scope.fields = Config.scenery.fields;

@@ -33,7 +33,7 @@ class Invent extends Cosmetic
         }
         $branch_model_id = $branch_model_id != null ?$branch_model_id: $this->staff->branch_model_id;
 
-        $model->where("copyright.branch_model_id", $branch_model_id);
+        $model->where("invent.branch_model_id", $branch_model_id);
 
         return $model;
     }

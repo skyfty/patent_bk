@@ -3,50 +3,48 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         //for index
         lands:{
             index:function($scope, $compile,$timeout, data) {
-            }
-        },
-        indexscape:function($scope, $compile,$timeout){
-            $scope.searchFieldsParams = function(param) {
-                param.custom = {};
-                return param;
-            };
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {};
+                    return param;
+                };
 
-            $scope.detailFormater = function(idx, row) {
-                if (typeof row.substance != "undefined") {
-                    var field_values = [];
-                    for (var idx in row.substance_fields) {
-                        var field = row.substance_fields[idx];
-                        var data = row['substance'][field.name];
-                        var html = Cosmetic.api.formatter(field, data, row['substance']);
-                        field_values.push(field.title + " : " + html)
+                $scope.detailFormater = function(idx, row) {
+                    if (typeof row.substance != "undefined") {
+                        var field_values = [];
+                        for (var idx in row.substance_fields) {
+                            var field = row.substance_fields[idx];
+                            var data = row['substance'][field.name];
+                            var html = Cosmetic.api.formatter(field, data, row['substance']);
+                            field_values.push(field.title + " : " + html)
+                        }
+                        return field_values.join("<br/>");
                     }
-                    return field_values.join("<br/>");
-                }
-                return "没有关联";
-            };
-            var options = {
-                extend: {
-                    index_url: 'principal/index',
-                    add_url: 'principal/add',
-                    del_url: 'principal/del',
-                    multi_url: 'principal/multi',
-                    summation_url: 'principal/summation',
-                    table: 'principal',
-                },
-                buttons : [
-                    {
-                        name: 'view',
-                        title: function(row, j){
-                            return __(' %s', row.name);
-                        },
-                        classname: 'btn btn-xs  btn-success btn-magic btn-addtabs btn-view',
-                        icon: 'fa fa-folder-o',
-                        url: 'principal/view'
-                    }
-                ]
-            };
-            Table.api.init(options);
-            Form.api.bindevent($("div[ng-controller='index']"));
+                    return "没有关联";
+                };
+                var options = {
+                    extend: {
+                        index_url: 'principal/index',
+                        add_url: 'principal/add',
+                        del_url: 'principal/del',
+                        multi_url: 'principal/multi',
+                        summation_url: 'principal/summation',
+                        table: 'principal',
+                    },
+                    buttons : [
+                        {
+                            name: 'view',
+                            title: function(row, j){
+                                return __(' %s', row.name);
+                            },
+                            classname: 'btn btn-xs  btn-success btn-magic btn-addtabs btn-view',
+                            icon: 'fa fa-folder-o',
+                            url: 'principal/view'
+                        }
+                    ]
+                };
+                Table.api.init(options);
+                Form.api.bindevent($("div[ng-controller='index']"));
+            }
         },
 
         add: function () {

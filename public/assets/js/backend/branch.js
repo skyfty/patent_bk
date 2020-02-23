@@ -3,32 +3,30 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
 
         lands:{
             index:function($scope, $compile,$timeout, data) {
+                var options = {
+                    extend: {
+                        index_url: 'branch/index',
+                        add_url: 'branch/add',
+                        del_url: 'branch/del',
+                        multi_url: 'branch/multi',
+                        summation_url: 'branch/summation',
+                        table: 'branch',
+                    },
+                    buttons : [
+                        {
+                            name: 'view',
+                            title: function(row, j){
+                                return __('%s', row.name);
+                            },
+                            classname: 'btn btn-xs  btn-success btn-magic btn-addtabs btn-view',
+                            icon: 'fa fa-folder-o',
+                            url: 'branch/view'
+                        }
+                    ]
+                };
+                Table.api.init(options);
+                Form.api.bindevent($("div[ng-controller='index']"));
             }
-        },
-        indexscape:function($scope, $compile,$timeout){
-            var options = {
-                extend: {
-                    index_url: 'branch/index',
-                    add_url: 'branch/add',
-                    del_url: 'branch/del',
-                    multi_url: 'branch/multi',
-                    summation_url: 'branch/summation',
-                    table: 'branch',
-                },
-                buttons : [
-                    {
-                        name: 'view',
-                        title: function(row, j){
-                            return __('%s', row.name);
-                        },
-                        classname: 'btn btn-xs  btn-success btn-magic btn-addtabs btn-view',
-                        icon: 'fa fa-folder-o',
-                        url: 'branch/view'
-                    }
-                ]
-            };
-            Table.api.init(options);
-            Form.api.bindevent($("div[ng-controller='index']"));
         },
 
         scenery: {
