@@ -9,6 +9,11 @@ class Species extends Cosmetic
     public $keywordsFields = ["name", "idcode"];
 
 
+    // 追加属性
+    protected $append = [
+        'full_name'
+    ];
+
     protected static function init()
     {
         parent::init();
@@ -17,6 +22,27 @@ class Species extends Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("SP%06d", $maxid);
         });
+    }
+
+    public function getRootNameAttr($value, $data) {
+        if ($data['pid'] != 0) {
+            return self::get($data['pid'])->getData("name");
+        }
+        return $data['name'];
+    }
+
+    public function getFullNameAttr($value, $data)
+    {
+        $name = $data['name'];
+        if ($data['pid'] != 0) {
+            $name.= "/".self::get($data['pid'])->full_name;
+        }
+        return $name;
+    }
+
+    public function parent()
+    {
+        return $this->hasOne('species','id','pid')->joinType("LEFT")->setEagerlyType(0);
     }
 
 }

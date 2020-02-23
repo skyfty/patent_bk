@@ -1,55 +1,66 @@
-define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','ztree'], function ($, Backend, Table, Form, Template,angular, Cosmetic,Ztree) {
+define(['jquery', 'bootstrap', 'backend', 'table', 'form','bootstrap-treegrid'], function ($, undefined, Backend, Table, Form,undefinded) {
+
     var Controller = {
-        lands:{
-            index:function($scope, $compile,$timeout, data) {
-            }
-        },
-        indexscape:function($scope, $compile,$timeout){
-            var options = {
+        index: function () {
+            // 初始化表格参数配置
+            Table.api.init({
                 extend: {
                     index_url: 'species/index',
                     add_url: 'species/add',
+                    edit_url: 'species/edit',
                     del_url: 'species/del',
-                    summation_url: 'species/summation',
                     table: 'species',
-                },
-            };
-            Table.api.init(options);
-            var table = $("#table-index");
+                }
+            });
 
-            $scope.searchFieldsParams = function(param) {
-                param.custom = {};
+            var table = $("#table");
 
-                return param;
-            };
-
-            Form.api.bindevent($("div[ng-controller='index']"));
-        },
-        viewscape:function($scope, $compile,$parse, $timeout){
-            $scope.refreshRow = function(){
-                $.ajax({url: "species/index",dataType: 'json',
-                    data:{
-                        custom:{id:$scope.row.id}
-                    },
-                    success: function (data) {
-                        if (data && data.rows && data.rows.length == 1) {
-                            $scope.$apply(function(){
-                                $parse("row").assign($scope, data.rows[0]);
-                            });
+            // 初始化表格
+            table.bootstrapTable({
+                url: $.fn.bootstrapTable.defaults.extend.index_url,
+                pk: 'id',
+                escape: false,
+                sortName: 'id',
+                pagination: false,
+                commonSearch: false,
+                columns: [
+                    [
+                        {checkbox: true},
+                        {
+                            field: 'name', title: __('Name'), align: 'left'
+                        },
+                        {
+                            field: 'order', title: "顺序", align: 'left'
+                        },
+                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
+                    ]
+                ],
+                treeShowField:"name",
+                parentIdField:"pid",
+                onLoadSuccess:function (data) {
+                    table.treegrid({
+                        treeColumn: 1,
+                        onChange: function () {
+                            table.bootstrapTable('resetWidth');
                         }
-                    }
-                });
-            };
-        },
+                    });
+                }
+            });
 
-        bindevent:function($scope) {
-            Form.api.bindevent($("form[role=form]"), $scope.submit);
-            if (Config.staff != null)$('[data-field-name="branch"]').hide().trigger("rate");
+            // 为表格绑定事件
+            Table.api.bindevent(table);
+        },
+        add: function () {
+            Controller.api.bindevent();
+        },
+        edit: function () {
+            Controller.api.bindevent();
         },
         api: {
-
+            bindevent: function () {
+                Form.api.bindevent($("form[role=form]"));
+            }
         }
     };
-    Controller.api = $.extend(Cosmetic.api, Controller.api);
-    return $.extend(Cosmetic, Controller);
+    return Controller;
 });
