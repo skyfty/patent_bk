@@ -22,6 +22,9 @@ class Aptitude extends Cosmetic
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
+    public function company() {
+        return $this->hasOne('company','id','company_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
 
 
     public function relevance()
