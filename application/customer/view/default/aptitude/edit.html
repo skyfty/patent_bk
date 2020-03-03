@@ -27,7 +27,9 @@
         <div class="aui-tab" data-ydui-tab>
             <form id="form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
                 <input type="hidden" name="ids" value="{$Request.param.ids}"/>
-                <input type="hidden" name="row[company_model_id]" value="{$Request.param.ids}"/>
+                <input type="hidden" name="row[company_model_id]" value="{$company.id}"/>
+                <input type="hidden" name="row[branch_model_id]" value="{$company.branch_model_id}"/>
+                <input type="hidden" name="row[status]" value="process"/>
 
                 <div class="weui-cells weui-cells_form">
                     <div class="weui-cell ">

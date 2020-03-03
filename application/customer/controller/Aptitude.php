@@ -43,7 +43,6 @@ class Aptitude extends Customer
             $db = $this->model->getQuery();
             $db->startTrans();
             try {
-                $params['status'] = "process";
                 $aptitude = $this->model->save($params);
                 if ($aptitude === false) {
                     throw new \think\Exception($this->model->getError());
@@ -58,6 +57,7 @@ class Aptitude extends Customer
                 $this->error($e->getMessage());
             }
         }
+        $this->view->assign('company', $company);
         $this->view->assign('refere_url', Request::instance()->server('HTTP_REFERER'));
         return $this->view->fetch();
     }
