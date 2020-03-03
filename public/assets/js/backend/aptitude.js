@@ -10,6 +10,17 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                         summation_url: 'aptitude/summation',
                         table: 'aptitude',
                     },
+                    buttons : [
+                        {
+                            name: 'view',
+                            title: function(row, j){
+                                return __('%s', row.name);
+                            },
+                            classname: 'btn btn-xs  btn-success btn-magic btn-dialog btn-view',
+                            icon: 'fa fa-folder-o',
+                            url: 'aptitude/view'
+                        }
+                    ]
                 };
                 Table.api.init(options);
                 var table = $("#table-index");
