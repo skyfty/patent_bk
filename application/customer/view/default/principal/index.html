@@ -145,6 +145,22 @@
                     <label class="weui-form-preview__label">已申请软件著作权</label>
                     <span class="weui-form-preview__value"><%=substance.apply_bookmaking_count%>件</span>
                 </div>
+
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">知识产权贯标</label>
+                    <span class="weui-form-preview__value">
+                        <%if (substance.aptitude_state =='yes'){%>
+                        已获得
+                         <%}else if (substance.aptitude_state =='process'){%>
+                        审核中
+                        <%}else{%>
+                        <a href="/aptitude/edit/ids/<%=substance.id%>">
+                        未获得(获取)
+                        </a>
+                        <%}%>
+
+                    </span>
+                </div>
             </div>
             <div class="weui-form-preview__ft">
                 <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="/principal/edit/ids/<%=id%>">编辑</a>
