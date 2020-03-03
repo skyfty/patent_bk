@@ -43,6 +43,7 @@ class Aptitude extends Customer
             $db = $this->model->getQuery();
             $db->startTrans();
             try {
+                $params['status'] = "process";
                 $aptitude = $this->model->save($params);
                 if ($aptitude === false) {
                     throw new \think\Exception($this->model->getError());
