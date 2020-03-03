@@ -14,7 +14,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                         {
                             name: 'view',
                             title: function(row, j){
-                                return __('%s', row.name);
+                                return __('%s', row.idcode);
                             },
                             classname: 'btn btn-xs  btn-success btn-magic btn-dialog btn-view',
                             icon: 'fa fa-folder-o',
