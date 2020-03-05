@@ -4,12 +4,24 @@ namespace app\common\model;
 
 class Promotion extends Cosmetic
 {
-    use \traits\model\SoftDelete;
-
     // 表名
     protected $name = 'promotion';
     public $keywordsFields = ["name", "idcode"];
 
+    protected static function init()
+    {
+        parent::init();
+
+        self::beforeInsert(function($row){
+            $maxid = self::max("id") + 1;
+            $row['idcode'] = sprintf("PN%06d", $maxid);
+        });
+
+        self::afterDelete(function($row){
+            Provider::destroy(['promotion_model_id'=>$row['id']]);
+            model($row['relevance_model_type'])->where("id", $row['relevance_model_id'])->delete();
+        });
+    }
     public function getPictureListAttr($value, $data)
     {
         $value = $value ? $value : $data['pictures'];

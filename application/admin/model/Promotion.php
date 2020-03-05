@@ -18,24 +18,8 @@ class Promotion extends  \app\common\model\Promotion
         });
         parent::init();
 
-        self::beforeInsert(function($row){
-            $maxid = self::withTrashed()->max("id") + 1;
-            $row['idcode'] = sprintf("PN%06d", $maxid);
-            if (isset($row['name'])) {
-                $row['slug'] = \fast\Pinyin::get($row['name']);
-            }
-        });
-
-        self::beforeUpdate(function($row){
-            if (isset($row['name'])) {
-                $row['slug'] = \fast\Pinyin::get($row['name']);
-            }
-        });
-
         self::afterDelete(function($row){
             Provider::destroy(['promotion_model_id'=>$row['id']]);
         });
-
-
     }
 }
