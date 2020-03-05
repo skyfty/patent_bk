@@ -2,7 +2,7 @@
 
 namespace app\common\model;
 
-class Aptitude extends Cosmetic
+class Aptitude extends Professional
 {
     // 表名
     protected $name = 'aptitude';
@@ -19,22 +19,8 @@ class Aptitude extends Cosmetic
         });
     }
 
-    public function branch() {
-        return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
-    }
     public function company() {
         return $this->hasOne('company','id','company_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
-
-    public function relevance()
-    {
-        return $this->morphOne('promotion', 'relevance_model');
-    }
-
-
-    public function species()
-    {
-        return $this->hasOne('species','id','species_model_id')->joinType("LEFT")->setEagerlyType(0);
-    }
 }

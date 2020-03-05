@@ -4,7 +4,7 @@ namespace app\common\model;
 
 use think\Model;
 
-class Practical extends Cosmetic
+class Practical extends Professional
 {
     // 表名
     protected $name = 'practical';
@@ -18,14 +18,5 @@ class Practical extends Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("PR%06d", $maxid);
         });
-    }
-
-    public function relevance()
-    {
-        return $this->morphOne('promotion', 'relevance_model');
-    }
-
-    public function branch() {
-        return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 }
