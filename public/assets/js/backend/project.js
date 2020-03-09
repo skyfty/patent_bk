@@ -55,10 +55,44 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 });
             };
         },
+        initParam:[
+            'policy_model_id'],
+        add: function () {
+            var self = this;
+            AngularApp.controller("add", function($scope,$sce, $compile,$timeout){
+                $scope.fields = Config.scenery.fields;
+                $scope.pre ={}; $scope.row = {};
+                $scope.row['branch_model_id'] = Config.admin_branch_model_id!= null?Config.admin_branch_model_id:0;
+                $scope.row['creator_model_id'] = $scope.row['owners_model_id'] = Config.admin_id;
 
-        bindevent:function($scope){
+                for(var i in self.initParam) {
+                    var param = Backend.api.query(self.initParam[i]);
+                    if (param) {
+                        $scope.pre[self.initParam[i]] = $scope.row[self.initParam[i]] = param;
+                    }
+                }
+                var html = Template("edit-tmpl",{state:"add",'fields':"fields"});
+                $timeout(function(){
+                    $("#data-view").html($compile(html)($scope));
+                    $timeout(function(){
+                        self.bindevent($scope, $timeout);
+                    });
+                });
+            });
+        },
+
+        bindevent:function($scope, $timeout){
+            var self = this;
+            Form.api.bindevent($("form[role=form]"));
+            require(['selectpage'], function () {
+                for (var i in self.initParam) {
+                    var param = Backend.api.query(self.initParam[i]);
+                    if (param) {
+                        $('[name="row[' + self.initParam[i] + ']"]').selectPageDisabled(true);
+                    }
+                }
+            });
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
-            Form.api.bindevent($("form[role=form]"), $scope.submit);
         },
 
         api: {

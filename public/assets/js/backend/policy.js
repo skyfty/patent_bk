@@ -56,8 +56,66 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             };
         },
         scenery: {
+            ordinal:function($scope, $compile,$timeout, data){
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {policy_model_id:$scope.row.id};
+                    return param;
+                };
 
+                Table.api.init({
+                    extend: {
+                        index_url: 'ordinal/index',
+                        add_url: 'ordinal/add',
+                        del_url: 'ordinal/del',
+                        summation_url: 'ordinal/summation',
+                        table: 'ordinal',
+                    },
+                    buttons : [
+                        {
+                            name: 'view',
+                            title: function(row, j){
+                                return __('%s', row.idcode);
+                            },
+                            classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                            icon: 'fa fa-folder-o',
+                            url: 'ordinal/view'
+                        }
+                    ]
+                });
+                $scope.fields = data.fields;
+                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
+                $scope.$broadcast("shownTable");
+            },
+            project:function($scope, $compile,$timeout, data){
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {policy_model_id:$scope.row.id};
+                    return param;
+                };
 
+                Table.api.init({
+                    extend: {
+                        index_url: 'project/index',
+                        add_url: 'project/add',
+                        del_url: 'project/del',
+                        summation_url: 'project/summation',
+                        table: 'project',
+                    },
+                    buttons : [
+                        {
+                            name: 'view',
+                            title: function(row, j){
+                                return __('%s', row.idcode);
+                            },
+                            classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                            icon: 'fa fa-folder-o',
+                            url: 'project/view'
+                        }
+                    ]
+                });
+                $scope.fields = data.fields;
+                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
+                $scope.$broadcast("shownTable");
+            },
         },
 
         bindevent:function($scope){

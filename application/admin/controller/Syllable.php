@@ -11,12 +11,8 @@ use app\common\controller\Backend;
  */
 class Syllable extends Cosmetic
 {
-    
-    /**
-     * Syllable模型对象
-     * @var \app\admin\model\Syllable
-     */
-    protected $model = null;
+    protected $selectpageFields = ['name', 'idcode', 'id', 'condition', 'type'];
+    protected $selectpageShowFields = ['name', 'idcode'];
 
     public function _initialize()
     {

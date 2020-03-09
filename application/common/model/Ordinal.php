@@ -19,8 +19,13 @@ class Ordinal extends Cosmetic
             $row['idcode'] = sprintf("CO%06d", $maxid);
         });
     }
-
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
+    public function syllable() {
+        return $this->hasOne('syllable','id','syllable_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
+    public function policy() {
+        return $this->hasOne('policy','id','policy_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 }

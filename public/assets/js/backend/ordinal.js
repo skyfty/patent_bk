@@ -56,9 +56,76 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             };
         },
 
-        bindevent:function($scope){
+        initParam:[
+            'policy_model_id'],
+        add: function () {
+            var self = this;
+            AngularApp.controller("add", function($scope,$sce, $compile,$timeout){
+                $scope.fields = Config.scenery.fields;
+                $scope.pre ={}; $scope.row = {};
+                $scope.row['branch_model_id'] = Config.admin_branch_model_id!= null?Config.admin_branch_model_id:0;
+                $scope.row['creator_model_id'] = $scope.row['owners_model_id'] = Config.admin_id;
+
+                for(var i in self.initParam) {
+                    var param = Backend.api.query(self.initParam[i]);
+                    if (param) {
+                        $scope.pre[self.initParam[i]] = $scope.row[self.initParam[i]] = param;
+                    }
+                }
+                var html = Template("edit-tmpl",{state:"add",'fields':"fields"});
+                $timeout(function(){
+                    $("#data-view").html($compile(html)($scope));
+                    $timeout(function(){
+                        self.bindevent($scope, $timeout);
+                    });
+                });
+            });
+        },
+
+        bindevent:function($scope, $timeout){
+            var self = this;
+            $('[name="row[syllable_model_id]"]').data("e-params",function(){
+                var param = {};
+                param.custom = {
+                };
+                return param;
+            }).data("e-selected", function(data){
+                var condition_select = $('[name="row[condition]"]');
+                condition_select.empty();
+
+                var condition = data.row.condition;
+                var condition_array = condition.split('\n');
+                condition_array.forEach(function(item, index){
+                    var option_div = $("<option/>");
+                    var option = item.split("|");
+                    if (option.length == 2) {
+                        option_div.val(option[0]);
+                        option_div.html(option[1]);
+                    } else {
+                        option_div.val(option[0]);
+                        option_div.html(option[0]);
+                    }
+                    condition_select.append(option_div);
+                });
+                condition_select.selectpicker('refresh').selectpicker('render');
+                condition_select.trigger("change");
+            });
+
+            Form.api.bindevent($("form[role=form]"));
+            require(['selectpage'], function () {
+                for (var i in self.initParam) {
+                    var param = Backend.api.query(self.initParam[i]);
+                    if (param) {
+                        $('[name="row[' + self.initParam[i] + ']"]').selectPageDisabled(true);
+                    }
+                }
+
+                $('[name="row[condition]"]').on("change", function(){
+                    $('[name="row[content]"]').val($(this).val());
+                });
+            });
+
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
-            Form.api.bindevent($("form[role=form]"), $scope.submit);
         },
 
         api: {
