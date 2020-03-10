@@ -24,6 +24,7 @@ class Syllable extends Cosmetic
     {
         $condition = [];
         foreach(explode("\r\n", $data['condition']) as $k=>$v) {
+            if ($v == "") continue;
             $v = explode("|", $v);
             $condition[$v[0]] = $v[1];
         }

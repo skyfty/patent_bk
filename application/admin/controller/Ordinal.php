@@ -11,13 +11,6 @@ use app\common\controller\Backend;
  */
 class Ordinal extends Cosmetic
 {
-    
-    /**
-     * Ordinal模型对象
-     * @var \app\admin\model\Ordinal
-     */
-    protected $model = null;
-
     public function _initialize()
     {
         parent::_initialize();

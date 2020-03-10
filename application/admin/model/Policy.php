@@ -19,8 +19,8 @@ class Policy extends   \app\common\model\Policy
         parent::init();
 
         self::afterDelete(function($row){
-            $row->ordinals()->delete();
-            $row->projects()->delete();
+            model("ordinal")->where("policy_model_id",$row['id'])->delete();
+            model("project")->where("policy_model_id",$row['id'])->delete();
         });
     }
 

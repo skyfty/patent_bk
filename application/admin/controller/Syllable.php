@@ -11,8 +11,8 @@ use app\common\controller\Backend;
  */
 class Syllable extends Cosmetic
 {
-    protected $selectpageFields = ['name', 'idcode', 'id', 'condition', 'type'];
-    protected $selectpageShowFields = ['name', 'idcode'];
+    protected $selectpageFields = ['name','title', 'idcode', 'id', 'condition', 'type'];
+    protected $selectpageShowFields = ['title'];
 
     public function _initialize()
     {
