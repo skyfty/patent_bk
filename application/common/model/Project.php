@@ -25,4 +25,8 @@ class Project extends Cosmetic
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
+
+    public function blueprint() {
+        return $this->hasOne('blueprint','id','blueprint_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
 }
