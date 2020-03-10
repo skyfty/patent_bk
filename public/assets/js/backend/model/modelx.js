@@ -79,6 +79,23 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
             // 为表格绑定事件
             Table.api.bindevent(table);
+
+
+            //绑定TAB事件
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                var reckonId = $(this).attr("href").replace('#','');
+                var options = table.bootstrapTable('getOptions');
+                options.pageNumber = 1;
+                options.queryParams = function (params) {
+                    if (reckonId == "professional") {
+                        params.custom = {'professional':'1'};
+                    }
+                    return params;
+                };
+                table.bootstrapTable('refresh', {});
+                return false;
+
+            });
         },
         add: function () {
             Controller.api.bindevent();
