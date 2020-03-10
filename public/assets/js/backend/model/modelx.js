@@ -89,6 +89,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 options.queryParams = function (params) {
                     if (reckonId == "professional") {
                         params.custom = {'professional':'1'};
+                    } else if (reckonId == "accouont") {
+                            params.custom = {'accountswitch':'1'};
+
                     }
                     return params;
                 };
