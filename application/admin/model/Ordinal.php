@@ -18,5 +18,10 @@ class Ordinal extends    \app\common\model\Ordinal
             $row['creator_model_id'] = $auth->isLogin() ? $auth->id : 1;
         });
         parent::init();
+
+        $updatePolicy = function($row){
+            $row->policy->updateCondition();
+        };
+        self::afterInsert($updatePolicy);self::afterUpdate($updatePolicy);self::afterDelete($updatePolicy);
     }
 }

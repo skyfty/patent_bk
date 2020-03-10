@@ -34,7 +34,15 @@ class Policy extends  Cosmetic
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
+    public function ordinals()
+    {
+        return $this->hasMany('Ordinal','id','policy_model_id');
+    }
 
+    public function projects()
+    {
+        return $this->hasMany('Project','id','policy_model_id');
+    }
 
     public function species()
     {

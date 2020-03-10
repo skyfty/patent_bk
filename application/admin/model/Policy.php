@@ -17,8 +17,21 @@ class Policy extends   \app\common\model\Policy
             $row['creator_model_id'] = $auth->isLogin() ? $auth->id : 1;
         });
         parent::init();
+
+        self::afterDelete(function($row){
+            $row->ordinals()->delete();
+            $row->projects()->delete();
+        });
     }
 
-
+    public function updateCondition() {
+        $condition = [];
+        $ordinals = $this->ordinals()->select();
+        foreach($ordinals as $ord) {
+            $condition[] = "(".$ord['content'].")";
+        }
+        $condition = implode(" AND ", $condition);
+        $this->save(['condition'=>$condition]);
+    }
 }
 
