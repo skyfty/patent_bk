@@ -14,15 +14,4 @@ class Ordinal extends Cosmetic
         parent::_initialize();
         $this->model = new \app\admin\model\Ordinal;
     }
-
-
-    /**
-     * 添加
-     */
-    public function add() {
-        if (!$this->request->isPost() ) {
-
-        }
-        return parent::add();
-    }
 }

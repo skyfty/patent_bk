@@ -351,7 +351,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                         if (validator) {
                             validator.reset();
                         }
-                        self.bindevent($scope,$timeout);
+                        self.bindevent($scope,$timeout,$compile);
                     });
                 };
 

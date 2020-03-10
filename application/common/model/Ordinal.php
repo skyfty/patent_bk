@@ -20,10 +20,29 @@ class Ordinal extends Cosmetic
         });
     }
 
+    static public function getConditionList() {
+        return [
+            ">"=>"大于",
+            "<"=>"小于",
+            ">="=>"大于等于",
+            "<="=>"小于等于",
+            "LIKE %...%"=>"包含",
+            "NOT LIKE %...%"=>"不包含",
+            "="=>"是",
+            "!="=>"不是",
+            "IS NULL"=>"为空",
+            "IS NOT NULL"=>"不为空",
+        ];
+    }
+
     public function getConditionTextAttr($value, $data)
     {
         $value = $value ? $value : $data['condition'];
-        $list = $this->syllable->condition_list;
+        if ($data['type'] == "custom") {
+            $list = self::getConditionList();
+        } else {
+            $list = $this->syllable->condition_list;
+        }
         return isset($list[$value]) ? $list[$value] : '';
     }
 

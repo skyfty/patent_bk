@@ -76,13 +76,13 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 $timeout(function(){
                     $("#data-view").html($compile(html)($scope));
                     $timeout(function(){
-                        self.bindevent($scope, $compile);
+                        self.bindevent($scope, $timeout,$compile);
                     });
                 });
             });
         },
 
-        bindevent:function($scope, $compile){
+        bindevent:function($scope, $timeout, $compile){
             var self = this;
 
             $('[name="row[syllable_model_id]"]').data("e-params",function(){
@@ -135,6 +135,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     var condition = $(this).val();
                     $('[name="row[content]"]').val(condition);
                 });
+                $('[name="row[content]"]').attr("readonly","readonly");
             }
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },
