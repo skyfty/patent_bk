@@ -19,6 +19,15 @@ class Ordinal extends Cosmetic
             $row['idcode'] = sprintf("CO%06d", $maxid);
         });
     }
+
+    public function getConditionTextAttr($value, $data)
+    {
+        $value = $value ? $value : $data['condition'];
+        $list = $this->syllable->condition_list;
+        return isset($list[$value]) ? $list[$value] : '';
+    }
+
+
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }

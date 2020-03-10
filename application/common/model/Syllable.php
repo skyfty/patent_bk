@@ -20,6 +20,16 @@ class Syllable extends Cosmetic
         });
     }
 
+    public function getConditionListAttr($value, $data)
+    {
+        $condition = [];
+        foreach(explode("\r\n", $data['condition']) as $k=>$v) {
+            $v = explode("|", $v);
+            $condition[$v[0]] = $v[1];
+        }
+        return $condition;
+    }
+
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }

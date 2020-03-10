@@ -107,8 +107,12 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     }
                     condition_select.append(option_div);
                 });
+                condition_select.val($scope.row.condition);
                 condition_select.selectpicker('refresh').selectpicker('render');
-                condition_select.trigger("change");
+
+                if ($scope.row.condition == "") {
+                    condition_select.trigger("change");
+                }
             });
 
             Form.api.bindevent($("form[role=form]"));
@@ -121,7 +125,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 }
 
                 $('[name="row[condition]"]').on("change", function(){
-                    $('[name="row[content]"]').val($(this).val());
+                    var condition = $(this).val();
+                    $('[name="row[content]"]').val(condition);
                 });
             });
 
