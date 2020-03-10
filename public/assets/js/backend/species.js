@@ -32,7 +32,26 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','bootstrap-treegrid'],
                         {
                             field: 'order', title: "顺序", align: 'left'
                         },
-                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
+                        {
+                            field: 'operate',
+                            title: __('Operate'),
+                            table: table,
+                            events: Table.api.events.operate,
+                            formatter: Table.api.formatter.operate,
+                            buttons:[
+                                {
+                                    name: 'view',
+                                    title: function(row, j){
+                                        return __('%s', row.idcode);
+                                    },
+                                    classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                                    icon: 'fa fa-folder-o',
+                                    url: function(row){
+                                        return 'procedure/index/relevance_model_type/' + row.model;
+                                    }
+                                }
+                            ]
+                        }
                     ]
                 ],
                 treeShowField:"name",

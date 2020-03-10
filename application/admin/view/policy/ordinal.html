@@ -5,7 +5,11 @@
     <div class="panel-body">
         <div class="widget-body no-padding  table-cosmetic">
             <div id="toolbar-ordinal" class="toolbar">
-                {:build_toolbar('refresh,add,del',['add'=>[url('ordinal/add',['policy_model_id'=>$row['id']]), 'btn btn-default btn-dialog', 'fa fa-plus',  __(''), __('添加规则')]])}
+                {:build_toolbar('refresh,del')}
+                <div class="btn-group" role="group">
+                <a href="{:url('ordinal/add',['policy_model_id'=>$row['id'],'type'=>'pre'])}" class="btn btn-default btn-dialog" title="添加规则"><i class="fa fa-plus"></i> </a>
+                <a href="{:url('ordinal/add',['policy_model_id'=>$row['id'],'type'=>'custom'])}" class="btn btn-default btn-dialog" title="添加自定义规则"><i class="fa fa-cubes"></i> </a>
+                </div>
             </div>
             <table id="table-ordinal"  ui-formidable="fields"
                    data-fields='fields'

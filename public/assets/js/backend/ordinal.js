@@ -57,7 +57,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         },
 
         initParam:[
-            'policy_model_id'],
+            'policy_model_id','type'],
         add: function () {
             var self = this;
             AngularApp.controller("add", function($scope,$sce, $compile,$timeout){
@@ -76,14 +76,15 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 $timeout(function(){
                     $("#data-view").html($compile(html)($scope));
                     $timeout(function(){
-                        self.bindevent($scope, $timeout);
+                        self.bindevent($scope, $compile);
                     });
                 });
             });
         },
 
-        bindevent:function($scope, $timeout){
+        bindevent:function($scope, $compile){
             var self = this;
+
             $('[name="row[syllable_model_id]"]').data("e-params",function(){
                 var param = {};
                 param.custom = {
@@ -92,24 +93,29 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             }).data("e-selected", function(data){
                 var condition_select = $('[name="row[condition]"]');
                 condition_select.empty();
+                if ($scope.row.type == "pre") {
+                    var condition = data.row.condition;
+                    var condition_array = condition.split('\n');
+                    condition_array.forEach(function(item, index){
+                        var option_div = $("<option/>");
+                        var option = item.split("|");
+                        if (option.length == 2) {
+                            option_div.val(option[0]);
+                            option_div.html(option[1]);
+                        } else {
+                            option_div.val(option[0]);
+                            option_div.html(option[0]);
+                        }
+                        condition_select.append(option_div);
+                    });
 
-                var condition = data.row.condition;
-                var condition_array = condition.split('\n');
-                condition_array.forEach(function(item, index){
-                    var option_div = $("<option/>");
-                    var option = item.split("|");
-                    if (option.length == 2) {
-                        option_div.val(option[0]);
-                        option_div.html(option[1]);
-                    } else {
-                        option_div.val(option[0]);
-                        option_div.html(option[0]);
-                    }
-                    condition_select.append(option_div);
-                });
+                } else {
+                    var html = Template("spotcircus-condition-tmpl",data.row);
+                    var form = $compile(html)($scope);
+                    condition_select.append(form);
+                }
                 condition_select.val($scope.row.condition);
                 condition_select.selectpicker('refresh').selectpicker('render');
-
                 if ($scope.row.condition == "") {
                     condition_select.trigger("change");
                 }
@@ -123,13 +129,13 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                         $('[name="row[' + self.initParam[i] + ']"]').selectPageDisabled(true);
                     }
                 }
-
+            });
+            if ($scope.row.type == "pre") {
                 $('[name="row[condition]"]').on("change", function(){
                     var condition = $(this).val();
                     $('[name="row[content]"]').val(condition);
                 });
-            });
-
+            }
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },
 

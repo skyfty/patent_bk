@@ -29,6 +29,42 @@
 </script>
 
 
+<script id="spotcircus-condition-tmpl" type="text/html">
+    <%if(type=="datetime" || type == "date" || type=="time"){%>
+    <option value="between time">在之间&nbsp;&nbsp;</option>
+    <option value="not between time">不在之间&nbsp;&nbsp;</option>
+    <option value="ltb">早于起始&nbsp;&nbsp;</option>
+    <option value="gtb">晚于起始&nbsp;&nbsp;</option>
+    <option value="lte">早于结束&nbsp;&nbsp;</option>
+    <option value="gte">晚于结束&nbsp;&nbsp;</option>
+    <%}else if(type=="checkbox"||type=="radio"||type=="select"||type=="selects"){%>
+    <option value="IN(...)">是&nbsp;&nbsp;</option>
+    <option value="NOT IN(...)">不是&nbsp;&nbsp;</option>
+    <%}else if(type=="number"){%>
+    <option value="=">等于&nbsp;&nbsp;</option>
+    <option value=">">大于&nbsp;&nbsp;</option>
+    <option value="<">小于&nbsp;&nbsp;</option>
+    <option value="!=">不等于&nbsp;&nbsp;</option>
+    <option value=">=">大于等于&nbsp;&nbsp;</option>
+    <option value="<=">小于等于&nbsp;&nbsp;</option>
+    <%}else if(type=="model"){%>
+    <option value="QJSON">关键字&nbsp;&nbsp;</option>
+    <%}else if(type=="address"){%>
+    <option value="LIKE %...%">是&nbsp;&nbsp;</option>
+    <option value="NOT LIKE %...%">不是&nbsp;&nbsp;</option>
+    <option value="IS NULL">为空&nbsp;&nbsp;</option>
+    <option value="IS NOT NULL">不为空&nbsp;&nbsp;</option>
+    <%}else{%>
+    <option value="LIKE %...%">包含&nbsp;&nbsp;</option>
+    <option value="NOT LIKE %...%">不包含&nbsp;&nbsp;</option>
+    <option value="=">是&nbsp;&nbsp;</option>
+    <option value="!=">不是&nbsp;&nbsp;</option>
+    <option value="IS NULL">为空&nbsp;&nbsp;</option>
+    <option value="IS NOT NULL">不为空&nbsp;&nbsp;</option>
+    <%}%>
+</script>
+
+
 <script id="spotcircus-tmpl" type="text/html">
     <div  class="form-inline" >
         <%if(f.type=="datetime" || f.type == "date" || f.type=="time"){%>
@@ -70,12 +106,8 @@
         <%}else if(f.type=="number"){%>
         <div class="form-group">
             <select class="form-control" ng-model="<%=d%>.condition">
-                <option value="=">等于&nbsp;&nbsp;</option>
-                <option value=">">大于&nbsp;&nbsp;</option>
-                <option value="<">小于&nbsp;&nbsp;</option>
-                <option value="!=">不等于&nbsp;&nbsp;</option>
-                <option value=">=">大于等于&nbsp;&nbsp;</option>
-                <option value="<=">小于等于&nbsp;&nbsp;</option>
+                <%include('spotcircus-condition-tmpl', f)%>
+
             </select>
             <div class="input-group" style="position: relative;">
                 <input type="number"  class="form-control"  ng-model="<%=d%>.value" />
