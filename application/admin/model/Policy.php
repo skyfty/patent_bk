@@ -28,10 +28,14 @@ class Policy extends   \app\common\model\Policy
         $condition = [];
         $ordinals = $this->ordinals()->select();
         foreach($ordinals as $ord) {
-            $condition[] = "(".$ord['content'].")";
+            $syllable = $ord->syllable;
+            if ($ord["type"] == "pre") {
+                $condition[] = $ord['content'];
+            } else {
+                $condition[] = build_where_param($ord['condition'],$syllable['name'],$ord['content']);
+            }
         }
-        $condition = implode(" AND ", $condition);
-        $this->save(['condition'=>$condition]);
+        $this->save(['condition'=>json_encode($condition)]);
     }
 }
 

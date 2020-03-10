@@ -484,3 +484,115 @@ if (!function_exists('thumbnail')) {
         return file_exists($thumbnail_full_path)?$thumbnail_url:$path;
     }
 }
+
+function build_where_param($sym,$k,$v,$relationSearch=null) {
+    $where = [];
+    switch ($sym) {
+        case '=':
+        case '!=':
+            $where = [$k, $sym, (string)$v];
+            break;
+        case 'LIKE':
+        case 'NOT LIKE':
+        case 'LIKE %...%':
+        case 'NOT LIKE %...%':
+            $where = [$k, trim(str_replace('%...%', '', $sym)), "%{$v}%"];
+            break;
+        case '>':
+        case '>=':
+        case '<':
+        case '<=':
+            $where = [$k, $sym, intval($v)];
+            break;
+        case 'FINDIN':
+        case 'FINDINSET':
+        case 'FIND_IN_SET':
+            $where = "FIND_IN_SET('{$v}', " . ($relationSearch ? $k : '`' . str_replace('.', '`.`', $k) . '`') . ")";
+            break;
+        case 'IN':
+        case 'IN(...)':
+        case 'NOT IN':
+        case 'NOT IN(...)':
+            $where = [$k, str_replace('(...)', '', $sym), is_array($v) ? $v : explode(',', $v)];
+            break;
+        case 'BETWEEN':
+        case 'NOT BETWEEN':
+            $v = str_replace(' - ', ',', $v);
+            $arr = array_slice(explode(',', $v), 0, 2);
+            if (stripos($v, ',') === false || !array_filter($arr))
+                continue;
+            //当出现一边为空时改变操作符
+            if ($arr[0] === '') {
+                $sym = $sym == 'BETWEEN' ? '<=' : '>';
+                $arr = $arr[1];
+            } else if ($arr[1] === '') {
+                $sym = $sym == 'BETWEEN' ? '>=' : '<';
+                $arr = $arr[0];
+            }
+            $where = [$k, $sym, $arr];
+            break;
+        case 'RANGE':
+        case 'NOT RANGE':
+            $v = str_replace(' - ', ',', $v);
+            $arr = array_slice(explode(',', $v), 0, 2);
+            if (stripos($v, ',') === false || !array_filter($arr))
+                continue;
+            //当出现一边为空时改变操作符
+            if ($arr[0] === '') {
+                $sym = $sym == 'RANGE' ? '<=' : '>';
+                $arr = $arr[1];
+            } else if ($arr[1] === '') {
+                $sym = $sym == 'RANGE' ? '>=' : '<';
+                $arr = $arr[0];
+            }
+            $where = [$k, str_replace('RANGE', 'BETWEEN', $sym) . ' time', $arr];
+            break;
+        case 'NULL':
+        case 'IS NULL':
+        case 'NOT NULL':
+        case 'IS NOT NULL':
+            $where = [$k, strtolower(str_replace('IS ', '', $sym))];
+            break;
+        case 'QJSON':
+            $where = [$k, 'LIKE', "%{$v}%"];
+            break;
+        case 'BETWEEN TIME':
+        case 'NOT BETWEEN TIME':{
+            if (is_string($v)) {
+                $v = explode(" - ",$v);
+                if (count($v) == 2) {
+                    $v[0] = strtotime($v[0]." 00:00:00");
+                    $v[1] = strtotime($v[1]." 23:59:59");
+                }
+            }
+            $where = [$k, $sym, $v];
+            break;
+        }
+        case 'LTB': {
+            $v = explode(" - ",$v);
+            $where = [$k, "<= time", $v[0]];
+            break;
+        }
+        case 'GTB': {
+            $v = explode(" - ",$v);
+            $where = [$k, ">= time", $v[0]];
+            break;
+        }
+        case 'LTE': {
+            $v = explode(" - ",$v);
+            $where = [$k, "<= time", $v[1]];
+            break;
+        }
+        case 'GTE': {
+            $v = explode(" - ",$v);
+            $where = [$k, ">= time", $v[1]];
+            break;
+        }
+        default: {
+            $where = [$k, $sym, $v];
+            break;
+
+        }
+    }
+    return $where;
+}
