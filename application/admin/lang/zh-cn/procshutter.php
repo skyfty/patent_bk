@@ -10,6 +10,5 @@ return [
     'Creator_model_id'   => '创建者',
     'Owners_model_id'    => '所有者',
     'Group_model_id'     => '分组',
-    'Relevance_model_id' => '业务',
-    'Species_model_id'   => '服务类型'
+    'Procedure_model_id' => '步骤'
 ];

@@ -1,0 +1,43 @@
+<div class="panel panel-default panel-intro" ng-controller="index"  ng-init="sceneryInit()">
+    <div class="panel-heading">
+        {:build_heading(null,FALSE)}
+        <ul id="landscape-tab"  class="nav nav-tabs">
+            {foreach name="config.sceneryList['index']" item="vo"}
+            <li class=" {:$auth->check('procshutter/index/'.$vo['name'])?'':'hide'}" data-toggle='poshytip' id="landscape-tab-{$vo['name']}" title="{{scenerys[{$vo['name']}]['tabstate']['groupName']}}">
+                <a href="#tab-{$vo['name']}"  data-scenery-index="{$vo['name']}" data-table="table-{$vo['name']}" data-url="catering/{$vo['name']}"  data-toolbar="toolbar-{$vo['name']}" data-toggle="tab">
+                    {$vo['title']}
+                    <i class="fa fa-group" style="cursor: pointer" ng-show="scenerys[{$vo['name']}]['tabstate']['group']" ng-click="refurbishSearch({$vo['name']}, 'group')"></i>
+                    <i class="fa fa-search-minus" style="cursor: pointer"  ng-show="scenerys[{$vo['name']}]['tabstate']['complex']" ng-click="refurbishSearch({$vo['name']}, 'complex')"></i>
+                </a>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+    <div class="panel-body">
+        <div  class="tab-content">
+            {foreach name="config.sceneryList['index']" item="vo"}
+            <div class="tab-pane fade in {:$auth->check('procshutter/index/'.$vo['name'])?'':'hide'}" id="tab-{$vo['name']}" ng-controller="landscape-{$vo['name']}" ng-init="sceneryInit('{$vo['name']}')">
+                {eq name="vo.type" value="default"}
+                <div class="widget-body no-padding  table-cosmetic">
+                    <div id="toolbar-{$vo['name']}" class="toolbar">
+                        {:build_toolbar(['refresh', 'add', 'del'],['add'=>[url('procshutter/add'), 'btn btn-default btn-dialog', 'fa fa-plus',  __(''), __('添加新行业')]])}
+                    </div>
+                    <table id="table-{$vo['name']}" ui-formidable="fields"
+                           data-fields="fields"
+                           data-url="procshutter/{$vo['name']}"
+                           data-search-fields="allFields"
+                           data-toolbar="toolbar-{$vo['name']}"
+                           data-query-params="searchFieldsParams"
+                           data-buttons="tableExtendButtons"
+                           data-operate-view="{:$auth->check('procshutter/view')}"
+                           data-operate-del="{:$auth->check('procshutter/del')}"
+                           class="table table-striped table-bordered table-hover  text-nowrap" width="100%">
+                    </table>
+                </div>
+                {/eq}
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</div>
+{include file="common/tmpl" /}
