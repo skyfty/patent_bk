@@ -27,11 +27,11 @@ class Aptitude extends Cosmetic
         if ($procedure_ids) {
             $where['id']=["in",$procedure_ids ];
         }
-
         $procedures = model("procedure")->where("relevance_model_type","aptitude")->where($where)->select();
         foreach($procedures as $procedure) {
             $row->produceDocument($procedure);
         }
+        $this->success();
     }
 
     protected function spectacle($model) {
