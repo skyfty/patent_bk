@@ -87,7 +87,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     };
 
                     if ($scope.procedures.length > 0) {
-                        param.custom['procedure_model_id'] = ["in",$scope.procedures];
+                        param.custom['procshutter.procedure_model_id'] = ["in",$scope.procedures];
                     }
                     return param;
                 };

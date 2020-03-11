@@ -2,7 +2,6 @@
 
 namespace app\customer\model;
 
-use app\common\model\Fields;
 use think\Model;
 
 class Company extends \app\common\model\Company
