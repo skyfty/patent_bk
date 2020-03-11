@@ -13,13 +13,13 @@ class Professional extends Cosmetic
         self::afterInsert(function($row){
             $model_name = $row->name;
             $species = model("species")->where("model",$model_name)->cache(true)->find();
-            model("promotion")->create([
+            $promotion = model("promotion")->create([
                 'branch_model_id'=>$row['branch_model_id'],
                 'relevance_model_id'=>$row['id'],
                 'relevance_model_type'=>$model_name,
                 'species_cascader_id'=>$species['id'],
             ]);
-
+            $row->save(['promotion_model_id'=>$promotion['id']]);
         });
     }
 

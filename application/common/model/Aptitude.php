@@ -19,10 +19,6 @@ class Aptitude extends Professional
         });
     }
 
-    public function promotion() {
-        return $this->hasOne('promotion','id','promotion_model_id')->joinType("LEFT")->setEagerlyType(0);
-    }
-
     public function company() {
         return $this->hasOne('company','id','company_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
