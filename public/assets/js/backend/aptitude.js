@@ -52,6 +52,25 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
         },
         scenery: {
             procshutter:function($scope, $compile,$timeout, data) {
+                var dataTable = $("#table-procshutter");
+
+                $scope.produceDocument = function() {
+                    Layer.confirm(
+                        __('确认要重新生成所有文档吗?'), {icon: 3, title: __('Warning'), offset: 0, shadeClose: true},
+                        function (index) {
+                            Fast.api.ajax({
+                                url:"/aptitude/produce",
+                                data:{
+                                    id:$scope.row.id
+                                }
+                            }, function(){
+
+                            });
+                            Layer.close(index);
+                        }
+                    );
+                };
+
                 $scope.procedures = [];
 
                 $scope.classChanged = function(data) {

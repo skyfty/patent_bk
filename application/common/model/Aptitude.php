@@ -22,5 +22,4 @@ class Aptitude extends Professional
     public function company() {
         return $this->hasOne('company','id','company_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
-
 }

@@ -29,7 +29,10 @@ class Procedure extends Cosmetic
         };
         self::afterDelete($updateSpecies);self::afterInsert($updateSpecies);
     }
-
+    public function alternatings()
+    {
+        return $this->hasMany('alternating','procedure_model_id');
+    }
     public function species()
     {
         return $this->hasOne('species','id','species_cascader_id')->joinType("LEFT")->setEagerlyType(0);

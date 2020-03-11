@@ -7,6 +7,7 @@
             <div id="toolbar-procshutter" class="toolbar">
                 <classify-tree data-config="procedure/classtree/relevance_model_type/aptitude" data-change="classChanged"></classify-tree>
                 {:build_toolbar('refresh')}
+                <a href="unsafe:javascript:;" class="btn btn-success btn-produce" ng-click="produceDocument()" title="刷新"><i class="fa fa-creative-commons"></i> </a>
             </div>
             <table id="table-procshutter"  ui-formidable="fields"
                    data-fields='fields'

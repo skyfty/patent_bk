@@ -13,14 +13,42 @@ class Professional extends Cosmetic
         self::afterInsert(function($row){
             $model_name = $row->name;
             $species = model("species")->where("model",$model_name)->cache(true)->find();
-            $promotion = model("promotion")->create([
+            $procedure = model("procedure")->where("relevance_model_type",$model_name)->where("weigh",0)->find();
+            $data = $row->getInitPromotionData($species);;
+            $data = array_merge([
                 'branch_model_id'=>$row['branch_model_id'],
                 'relevance_model_id'=>$row['id'],
                 'relevance_model_type'=>$model_name,
                 'species_cascader_id'=>$species['id'],
-            ]);
+                'procedure_model_id'=>$procedure['id'],
+            ],$data);
+            $promotion = model("promotion")->create($data);
             $row->save(['promotion_model_id'=>$promotion['id']]);
         });
+    }
+
+    public function produceDocument($procedure) {
+        if (is_numeric($procedure)) {
+            $procedure = model("procedure")->get($procedure);
+        }
+        model("procshutter")->where("promotion_model_id", $procedure['id'])->delete();
+
+        $alternatings = $procedure->alternatings;
+        $shutterings = model("shuttering")->where("procedure_model_id", $procedure['id'])->select();
+        foreach($shutterings as $shuttering) {
+            $filename = $shuttering->produce($this, $alternatings);
+            if ($filename) {
+                model("procshutter")->create([
+                    "procedure_model_id"=> $procedure['id'],
+                    "file"=> $filename,
+                    "name"=> $shuttering['name'],
+                ]);
+            }
+        }
+    }
+
+    public function getInitPromotionData($species) {
+        return [];
     }
 
     public function species()
