@@ -4,7 +4,7 @@ namespace app\common\model;
 
 use think\Model;
 
-class Invent extends Cosmetic
+class Invent extends Professional
 {
     // 表名
     protected $name = 'invent';
@@ -18,11 +18,6 @@ class Invent extends Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("IN%06d", $maxid);
         });
-    }
-
-    public function relevance()
-    {
-        return $this->morphOne('promotion', 'relevance_model');
     }
 
     public function branch() {

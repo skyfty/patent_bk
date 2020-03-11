@@ -19,6 +19,7 @@ class Professional extends Cosmetic
                 'relevance_model_type'=>$model_name,
                 'species_cascader_id'=>$species['id'],
             ]);
+
         });
     }
 
@@ -30,6 +31,9 @@ class Professional extends Cosmetic
         return $this->morphOne('promotion', 'relevance_model');
     }
 
+    public function promotion() {
+        return $this->hasOne('promotion','id','promotion_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }

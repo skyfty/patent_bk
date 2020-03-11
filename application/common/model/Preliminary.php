@@ -4,7 +4,7 @@ namespace app\common\model;
 
 use think\Model;
 
-class Preliminary extends Cosmetic
+class Preliminary extends Professional
 {
     // 表名
     protected $name = 'preliminary';
@@ -18,11 +18,6 @@ class Preliminary extends Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("PM%06d", $maxid);
         });
-    }
-
-    public function relevance()
-    {
-        return $this->morphOne('promotion', 'relevance_model');
     }
 
     public function branch() {

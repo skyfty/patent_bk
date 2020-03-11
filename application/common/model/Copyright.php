@@ -4,7 +4,7 @@ namespace app\common\model;
 
 use think\Model;
 
-class Copyright extends Cosmetic
+class Copyright extends Professional
 {
     // 表名
     protected $name = 'copyright';
@@ -18,11 +18,6 @@ class Copyright extends Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("CO%06d", $maxid);
         });
-    }
-
-    public function relevance()
-    {
-        return $this->morphOne('promotion', 'relevance_model');
     }
 
     public function branch() {

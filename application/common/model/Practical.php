@@ -19,4 +19,9 @@ class Practical extends Professional
             $row['idcode'] = sprintf("PR%06d", $maxid);
         });
     }
+
+
+    public function promotion() {
+        return $this->hasOne('promotion','id','promotion_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
 }
