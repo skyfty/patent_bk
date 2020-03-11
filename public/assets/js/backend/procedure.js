@@ -74,9 +74,37 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                             title: function(row, j){
                                 return __('%s', row.name);
                             },
-                            classname: 'btn btn-xs btn-success btn-magic btn-addtabs btn-view',
+                            classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
                             icon: 'fa fa-folder-o',
-                            url: 'shuttering/hinder'
+                            url: 'shuttering/view'
+                        }
+                    ]
+                });
+                $scope.fields = data.fields;
+                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
+                $scope.$broadcast("shownTable");
+            },
+            alternating: function($scope, $compile,$timeout, data){
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {procedure_model_id:$scope.row.id};
+                    return param;
+                };
+
+                Table.api.init({
+                    extend: {
+                        index_url: 'alternating/index',
+                        summation_url: 'alternating/summation',
+                        table: 'alternating',
+                    },
+                    buttons : [
+                        {
+                            name: 'view',
+                            title: function(row, j){
+                                return __('%s', row.name);
+                            },
+                            classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                            icon: 'fa fa-folder-o',
+                            url: 'alternating/view'
                         }
                     ]
                 });

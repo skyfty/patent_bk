@@ -1,49 +1,44 @@
-define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], function ($, Backend, Table, Form, Template,angular, Cosmetic) {
+define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','ztree'], function ($, Backend, Table, Form, Template,angular, Cosmetic,Ztree) {
     var Controller = {
-        //for index
         lands:{
             index:function($scope, $compile,$timeout, data) {
-                $scope.searchFieldsParams = function(param) {
-                    param.custom = {};
-                    var branchSelect = $('[name="branch_select"]');
-                    if (branchSelect.data("selectpicker")) {
-                        var branchIds = branchSelect.selectpicker('val');
-                        if (branchIds && branchIds.length > 0) {
-                            param.custom['branch_model_id'] = ["in", branchIds];
-                        }
-                    }
-                    return param;
-                };
                 var options = {
                     extend: {
-                        index_url: 'shuttering/index',
-                        add_url: 'shuttering/add',
-                        del_url: 'shuttering/del',
-                        multi_url: 'shuttering/multi',
-                        summation_url: 'shuttering/summation',
-                        table: 'shuttering',
+                        index_url: 'alternating/index',
+                        add_url: 'alternating/add',
+                        del_url: 'alternating/del',
+                        summation_url: 'alternating/summation',
+                        table: 'alternating',
                     },
                     buttons : [
                         {
                             name: 'view',
                             title: function(row, j){
-                                return __(' %s', row.name);
+                                return __('%s', row.idcode);
                             },
                             classname: 'btn btn-xs  btn-success btn-magic btn-dialog btn-view',
                             icon: 'fa fa-folder-o',
-                            url: 'shuttering/view'
+                            url: 'alternating/view'
                         }
                     ]
                 };
                 Table.api.init(options);
+                var table = $("#table-index");
+
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {};
+
+                    return param;
+                };
+
                 Form.api.bindevent($("div[ng-controller='index']"));
             }
         },
         viewscape:function($scope, $compile,$parse, $timeout){
             $scope.refreshRow = function(){
-                $.ajax({url: "shuttering/index",dataType: 'json',
+                $.ajax({url: "alternating/index",dataType: 'json',
                     data:{
-                        custom: {"shuttering.id":$scope.row.id}
+                        custom:{id:$scope.row.id}
                     },
                     success: function (data) {
                         if (data && data.rows && data.rows.length == 1) {
@@ -54,6 +49,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     }
                 });
             };
+        },
+        scenery: {
+
         },
 
         initParam:[
@@ -96,7 +94,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },
 
+
         api: {
+
         }
     };
     Controller.api = $.extend(Cosmetic.api, Controller.api);

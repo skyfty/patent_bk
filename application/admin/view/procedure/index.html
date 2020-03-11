@@ -20,7 +20,7 @@
                 {eq name="vo.type" value="default"}
                 <div class="widget-body no-padding  table-cosmetic">
                     <div id="toolbar-{$vo['name']}" class="toolbar">
-                        {:build_toolbar(['refresh', 'add', 'del'],['add'=>[url('procedure/add',['species_cascader_id'=>$Request.param.species_model_id]), 'btn btn-default btn-dialog', 'fa fa-plus',  __(''), __('添加新行业')]])}
+                        {:build_toolbar(['refresh', 'add', 'del'],['add'=>[url('procedure/add',['species_cascader_id'=>$Request.param.species_model_id]), 'btn btn-default btn-dialog', 'fa fa-plus',  __(''), __('添加步骤')]])}
                     </div>
                     <table id="table-{$vo['name']}" ui-formidable="fields"
                            data-fields="fields"
