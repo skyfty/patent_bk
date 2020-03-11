@@ -5,8 +5,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                 var options = {
                     extend: {
                         index_url: 'promotion/index',
-                        add_url: 'promotion/add',
-                        del_url: null,
+                        add_url: '',
+                        del_url: 'promotion/del',
                         summation_url: 'promotion/summation',
                         table: 'promotion',
                     },
@@ -16,23 +16,10 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                             title: function(row, j){
                                 return __('%s', row.idcode);
                             },
-                            classname: 'btn btn-xs  btn-success btn-magic btn-addtabs btn-view',
+                            classname: 'btn btn-xs  btn-success btn-magic btn-dialog btn-view',
                             icon: 'fa fa-folder-o',
                             url: 'promotion/view',
                             extend: 'data-toggle="tooltip"',
-                        },
-                        {
-                            name: 'del',
-                            url: 'promotion/del',
-                            classname: 'btn btn-xs btn-danger btn-delone',
-                            icon: 'fa fa-trash',
-                            extend: 'data-toggle="tooltip"',
-                            visible:function(row, j){
-                                if (typeof Config.admin_branch_model_id == "undefined") {
-                                    return true;
-                                }
-                                return Config.admin_branch_model_id == row.branch_model_id;
-                            }
                         }
                     ]
                 };
