@@ -15,7 +15,11 @@ class Blueprint extends Cosmetic
         foreach(explode("\r\n", $data['condition']) as $k=>$v) {
             if ($v == "") continue;
             $v = explode("|", $v);
-            $condition[$v[0]] = $v[1];
+            if (count($v) == 2) {
+                $condition[$v[0]] = $v[1];
+            } else {
+                $condition[$v[0]] = $v[0];
+            }
         }
         return $condition;
     }
