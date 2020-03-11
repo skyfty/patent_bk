@@ -44,10 +44,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','bootstrap-treegrid'],
                                     title: function(row, j){
                                         return __('%s', row.idcode);
                                     },
-                                    classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                                    classname: 'btn btn-xs btn-success btn-magic btn-addtabs btn-view',
                                     icon: 'fa fa-folder-o',
                                     url: function(row){
-                                        return 'procedure/index/relevance_model_type/' + row.model;
+                                        return 'procedure/index?relevance_model_type=' + row.model + "&species_model_id=" + row.id;
                                     }
                                 }
                             ]

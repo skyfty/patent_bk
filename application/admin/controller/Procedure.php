@@ -21,12 +21,8 @@ class Procedure extends Cosmetic
 
     public function index() {
         if ($this->request->isAjax() || !$this->request->has("relevance_model_type")) {
-            return parent::index();
         }
-
-        $cosmeticModel = Modelx::get(['table' => "procedure"],[],!App::$debug);
-        $this->assignScenery($cosmeticModel->id, ['index']);
-        return $this->view->fetch("list");
+        return parent::index();
     }
 
 }
