@@ -31,7 +31,7 @@ class Professional extends Cosmetic
         if (is_numeric($procedure)) {
             $procedure = model("procedure")->get($procedure);
         }
-        model("procshutter")->where("promotion_model_id", $procedure['id'])->delete();
+        model("procshutter")->where("procedure_model_id", $procedure['id'])->delete();
 
         $alternatings = $procedure->alternatings;
         $shutterings = model("shuttering")->where("procedure_model_id", $procedure['id'])->select();
