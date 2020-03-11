@@ -45,4 +45,9 @@ class Species extends Cosmetic
         return $this->hasOne('species','id','pid')->joinType("LEFT")->setEagerlyType(0);
     }
 
+    public function updateProcedureCount() {
+        $cnt = model("procedure")->where("species_cascader_id", $this['id'])->count();
+        $this->save(['procedure_count'=>$cnt]);
+    }
+
 }

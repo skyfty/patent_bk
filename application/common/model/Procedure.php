@@ -23,6 +23,11 @@ class Procedure extends Cosmetic
         self::beforeInsert(function($row){
             $row['relevance_model_type'] = $row->species->model;
         });
+
+        $updateSpecies = function($row){
+            $row->species->updateProcedureCount();
+        };
+        self::afterDelete($updateSpecies);self::afterInsert($updateSpecies);
     }
 
     public function species()
