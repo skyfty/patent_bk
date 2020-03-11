@@ -16,7 +16,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                             title: function(row, j){
                                 return __('%s', row.idcode);
                             },
-                            classname: 'btn btn-xs  btn-success btn-magic btn-dialog btn-view',
+                            classname: 'btn btn-xs  btn-success btn-magic btn-addtabs btn-view',
                             icon: 'fa fa-folder-o',
                             url: 'aptitude/view'
                         }
@@ -51,7 +51,44 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
             };
         },
         scenery: {
+            procshutter:function($scope, $compile,$timeout, data) {
+                $scope.procedures = [];
 
+                $scope.classChanged = function(data) {
+                    var procedures = [];
+                    angular.forEach(data.selected, function(id){
+                        if ($.isNumeric(id))
+                            procedures.push(id);
+                    });
+                    $scope.procedures = procedures;
+                    $scope.$broadcast("refurbish");
+                };
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {
+                    };
+
+                    if ($scope.procedures.length > 0) {
+                        param.custom['procedure_model_id'] = ["in",$scope.procedures];
+                    }
+                    return param;
+                };
+                $scope.fields = data.fields;
+                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
+                Table.api.init({
+                    buttons : [
+                        {
+                            name: 'view',
+                            title: function(row, j){
+                                return __('%s', row.name);
+                            },
+                            classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                            icon: 'fa fa-folder-o',
+                            url: 'procshutter/view'
+                        }
+                    ]
+                });
+                $scope.$broadcast("shownTable");
+            }
         },
 
         bindevent:function($scope) {
