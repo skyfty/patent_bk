@@ -98,6 +98,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     "alternating":1
                 };
                 return param;
+            }).data("e-selected", function(data){
+                $scope.row.name = data.row.title;
             });
 
             Form.api.bindevent($("form[role=form]"), $scope.submit);
