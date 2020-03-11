@@ -56,7 +56,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             };
         },
         scenery: {
-            procshutter: function($scope, $compile,$timeout, data){
+            shuttering: function($scope, $compile,$timeout, data){
                 $scope.searchFieldsParams = function(param) {
                     param.custom = {procedure_model_id:$scope.row.id};
                     return param;
@@ -64,9 +64,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
 
                 Table.api.init({
                     extend: {
-                        index_url: 'procshutter/index',
-                        summation_url: 'procshutter/summation',
-                        table: 'procshutter',
+                        index_url: 'shuttering/index',
+                        summation_url: 'shuttering/summation',
+                        table: 'shuttering',
                     },
                     buttons : [
                         {
@@ -76,7 +76,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                             },
                             classname: 'btn btn-xs btn-success btn-magic btn-addtabs btn-view',
                             icon: 'fa fa-folder-o',
-                            url: 'procshutter/hinder'
+                            url: 'shuttering/hinder'
                         }
                     ]
                 });
