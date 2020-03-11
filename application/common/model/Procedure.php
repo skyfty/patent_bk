@@ -18,6 +18,11 @@ class Procedure extends Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("CO%06d", $maxid);
         });
+
+
+        self::beforeInsert(function($row){
+            $row['relevance_model_type'] = $row->species->model;
+        });
     }
 
     public function species()

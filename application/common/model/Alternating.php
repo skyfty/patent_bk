@@ -19,7 +19,9 @@ class Alternating extends Cosmetic
             $row['idcode'] = sprintf("IN%06d", $maxid);
         });
     }
-
+    public function field() {
+        return $this->hasOne('fields','id','field_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
     public function procedure() {
         return $this->hasOne('procedure','id','procedure_model_id')->joinType("LEFT")->setEagerlyType(0);
     }

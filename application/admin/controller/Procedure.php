@@ -13,16 +13,12 @@ use think\App;
  */
 class Procedure extends Cosmetic
 {
+    protected $selectpageFields = ['name', 'idcode', 'id', 'relevance_model_type', 'species_cascader_id'];
+    protected $selectpageShowFields = ['name','idcode'];
+
     public function _initialize()
     {
         parent::_initialize();
         $this->model = new \app\admin\model\Procedure;
     }
-
-    public function index() {
-        if ($this->request->isAjax() || !$this->request->has("relevance_model_type")) {
-        }
-        return parent::index();
-    }
-
 }

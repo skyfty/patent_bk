@@ -82,6 +82,24 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
 
         bindevent:function($scope){
             var self = this;
+            var procedure = null;
+            $('[name="row[procedure_model_id]"]').data("e-params",function(){
+                var param = {};
+                return param;
+            }).data("e-selected", function(data){
+                procedure = data.row;
+                $('[name="row[field_model_id]"]').selectPageClear();
+            });
+
+            $('[name="row[field_model_id]"]').data("e-params",function(){
+                var param = {};
+                param.custom = {
+                    "model_table":procedure.relevance_model_type,
+                    "alternating":1
+                };
+                return param;
+            });
+
             Form.api.bindevent($("form[role=form]"), $scope.submit);
             require(['selectpage'], function () {
                 for (var i in self.initParam) {
