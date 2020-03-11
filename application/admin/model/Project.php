@@ -8,7 +8,7 @@ use traits\model\SoftDelete;
 
 class Project extends    \app\common\model\Project
 {
-// 追加属性
+    public $append = ["condition_text"];
 
     protected static function init()
     {
