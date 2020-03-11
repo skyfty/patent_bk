@@ -56,7 +56,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             };
         },
         initParam:[
-            'policy_model_id'],
+            'policy_model_id','type'],
         add: function () {
             var self = this;
             AngularApp.controller("add", function($scope,$sce, $compile,$timeout){
@@ -75,14 +75,51 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 $timeout(function(){
                     $("#data-view").html($compile(html)($scope));
                     $timeout(function(){
-                        self.bindevent($scope, $timeout);
+                        self.bindevent($scope, $timeout, $compile);
                     });
                 });
             });
         },
 
-        bindevent:function($scope, $timeout){
+        bindevent:function($scope, $timeout, $compile){
             var self = this;
+
+            $('[name="row[blueprint_model_id]"]').data("e-params",function(){
+                var param = {};
+                param.custom = {
+                };
+                return param;
+            }).data("e-selected", function(data){
+                var condition_select = $('[name="row[condition]"]');
+                condition_select.empty();
+                if ($scope.row.type == "pre") {
+                    var condition = data.row.condition;
+                    var condition_array = condition.split('\n');
+                    condition_array.forEach(function(item, index){
+                        var option_div = $("<option/>");
+                        var option = item.split("|");
+                        if (option.length == 2) {
+                            option_div.val(option[0]);
+                            option_div.html(option[1]);
+                        } else {
+                            option_div.val(option[0]);
+                            option_div.html(option[0]);
+                        }
+                        condition_select.append(option_div);
+                    });
+
+                } else {
+                    var html = Template("spotcircus-condition-tmpl",data.row);
+                    var form = $compile(html)($scope);
+                    condition_select.append(form);
+                }
+                condition_select.val($scope.row.condition);
+                condition_select.selectpicker('refresh').selectpicker('render');
+                if ($scope.row.condition == "") {
+                    condition_select.trigger("change");
+                }
+            });
+
             Form.api.bindevent($("form[role=form]"));
             require(['selectpage'], function () {
                 for (var i in self.initParam) {
@@ -92,6 +129,13 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     }
                 }
             });
+            if ($scope.row.type == "pre") {
+                $('[name="row[condition]"]').on("change", function(){
+                    var condition = $(this).val();
+                    $('[name="row[content]"]').val(condition);
+                });
+                $('[name="row[content]"]').attr("readonly","readonly");
+            }
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },
 

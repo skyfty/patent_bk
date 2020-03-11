@@ -11,6 +11,9 @@ use app\common\controller\Backend;
  */
 class Blueprint extends Cosmetic
 {
+    protected $selectpageFields = ['name', 'idcode', 'id', 'condition', 'type'];
+    protected $selectpageShowFields = ['name'];
+
     public function _initialize()
     {
         parent::_initialize();

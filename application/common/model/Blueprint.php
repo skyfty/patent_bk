@@ -9,6 +9,17 @@ class Blueprint extends Cosmetic
     public $keywordsFields = ["name", "idcode"];
 
 
+    public function getConditionListAttr($value, $data)
+    {
+        $condition = [];
+        foreach(explode("\r\n", $data['condition']) as $k=>$v) {
+            if ($v == "") continue;
+            $v = explode("|", $v);
+            $condition[$v[0]] = $v[1];
+        }
+        return $condition;
+    }
+
     protected static function init()
     {
         parent::init();
