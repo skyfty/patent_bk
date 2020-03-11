@@ -17,9 +17,5 @@ class Promotion extends  \app\common\model\Promotion
             $row['creator_model_id'] = $auth->isLogin() ? $auth->id : 1;
         });
         parent::init();
-
-        self::afterDelete(function($row){
-            Provider::destroy(['promotion_model_id'=>$row['id']]);
-        });
     }
 }
