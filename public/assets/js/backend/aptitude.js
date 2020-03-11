@@ -64,7 +64,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                                     id:$scope.row.id
                                 }
                             }, function(){
-
+                                $scope.$broadcast("refurbish");
                             });
                             Layer.close(index);
                         }
