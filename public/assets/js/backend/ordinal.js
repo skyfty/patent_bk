@@ -84,7 +84,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
 
         bindevent:function($scope, $timeout, $compile){
             var self = this;
-
+            $scope.initvar = false;
             $('[name="row[syllable_model_id]"]').data("e-params",function(){
                 var param = {};
                 param.custom = {
@@ -128,6 +128,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     }
                     $('[role="form"]').validator("setField", 'row[content]', rule.join(";"));
                 }
+                $('[name="row[condition]"]').off("change");
 
                 if ($scope.row.type == "pre" || data.row.type == "selects") {
                     $('[name="row[condition]"]').on("change", function(){
@@ -141,12 +142,14 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
 
                 }
                 condition_select.val($scope.row.condition);
-                condition_select.selectpicker('refresh').selectpicker('render');
-                if ($scope.row.condition == "" || typeof $scope.row.condition == "undefined") {
+                //condition_select.selectpicker('refresh').selectpicker('render');
+                if ($scope.initvar) {
+                    $('[name="row[content]"]').val("");
                     condition_select.trigger("change");
                 }
+                $scope.initvar = true;
             });
-
+            $('[name="row[condition]"]').removeClass("selectpicker");
             Form.api.bindevent($("form[role=form]"));
             require(['selectpage'], function () {
                 for (var i in self.initParam) {

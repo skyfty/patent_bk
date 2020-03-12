@@ -38,10 +38,11 @@ class Ordinal extends Cosmetic
     public function getConditionTextAttr($value, $data)
     {
         $value = $value ? $value : $data['condition'];
-        if ($data['type'] == "custom") {
+        $syllable = $this->syllable;
+        if ($data['type'] == "custom" && $syllable['type'] != "selects") {
             $list = self::getConditionList();
         } else {
-            $list = $this->syllable->condition_list;
+            $list = $syllable->condition_list;
         }
         return isset($list[$value]) ? $list[$value] : '';
     }
