@@ -61,6 +61,7 @@ class Shuttering extends Cosmetic
             mkdir($destFileDir);
         $filename = \fast\Random::build("unique").".".$suffix;
         $templWord->saveAs($destFileDir.$filename);
+
         return $uploadDir.$filename;
     }
 }

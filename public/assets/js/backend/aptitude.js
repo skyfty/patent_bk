@@ -71,6 +71,17 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     );
                 };
 
+                $scope.formaterColumn = function(j, data) {
+                    if (data.field == "file") {
+                        data.formatter = function (value, row, index) {
+                            var html = Table.api.formatter.files.call(this, value, row, index);
+                            html += " <a target='_blank' href='/procshutter/topdf?id="+row.id+"' alt='下载PDF格式'><i  class='fa fa-file-pdf-o'></i></a>";
+                            return html;
+                        }
+                    }
+                    return data;
+                };
+
                 $scope.procedures = [];
 
                 $scope.classChanged = function(data) {

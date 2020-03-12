@@ -113,6 +113,21 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     var html = Template("spotcircus-condition-tmpl",data.row);
                     var form = $compile(html)($scope);
                     condition_select.append(form);
+
+                    var rule = [];
+                    switch(data.row.type) {
+                        case "number": {
+                            rule.push("required");
+                            rule.push("numeric");
+                            break;
+                        }
+                        case "text": {
+                            rule.push("required");
+                            break;
+                        }
+                    }
+                    $('[role="form"]').validator("setField", 'row[content]', "required;integer;");
+
                 }
                 condition_select.val($scope.row.condition);
                 condition_select.selectpicker('refresh').selectpicker('render');
