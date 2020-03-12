@@ -33,17 +33,12 @@ class Shuttering extends Cosmetic
 
     public function produce($data, $alternatings) {
         $tempfile =  ROOT_PATH . '/public' . $this['file'];
-        $templWord = new \PhpOffice\PhpWord\TemplateProcessor($tempfile);
-        foreach($alternatings as $alternating) {
-            $field = $alternating['field'];
-            if (isset($data[$field['name']])) {
-                $val = $data[$field['name']];
-                $templWord->setValue(trim($field['title']), $val);
-            }
-        }
-
         $suffix = strtolower(pathinfo($tempfile, PATHINFO_EXTENSION));
-        $suffix = $suffix ? $suffix : 'docx';
+        if ($this['type'] == "excel") {
+            $suffix = $suffix ? $suffix : 'xlsx';
+        } else {
+            $suffix = $suffix ? $suffix : 'docx';
+        }
         $replaceArr = [
             '{year}'     => date("Y"),
             '{mon}'      => date("m"),
@@ -60,8 +55,33 @@ class Shuttering extends Cosmetic
         if (!file_exists($destFileDir))
             mkdir($destFileDir);
         $filename = \fast\Random::build("unique").".".$suffix;
-        $templWord->saveAs($destFileDir.$filename);
 
+
+        if ($this['type'] == "excel") {
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($tempfile);
+            $worksheet = $spreadsheet->getActiveSheet();
+            foreach($alternatings as $alternating) {
+                $field = $alternating['field'];
+                if (isset($data[$field['name']])) {
+                    $val = $data[$field['name']];
+                    $title = trim($field['title']);
+
+
+                }
+            }
+            $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'xlsx');
+            $writer->save($destFileDir.$filename);
+        } else {
+            $templWord = new \PhpOffice\PhpWord\TemplateProcessor($tempfile);
+            foreach($alternatings as $alternating) {
+                $field = $alternating['field'];
+                if (isset($data[$field['name']])) {
+                    $val = $data[$field['name']];
+                    $templWord->setValue(trim($field['title']), $val);
+                }
+            }
+            $templWord->saveAs($destFileDir.$filename);
+        }
         return $uploadDir.$filename;
     }
 }

@@ -27,7 +27,7 @@
         "phpoffice/phpexcel": "^1.8",
         "phpoffice/phpword": "^0.17.0",
         "topthink/think-image": "^1.0",
-        "mpdf/mpdf": "^6.1"
+        "dompdf/dompdf": "^0.8.3"
 
     },
     "config": {
