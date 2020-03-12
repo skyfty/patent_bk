@@ -93,7 +93,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             }).data("e-selected", function(data){
                 var condition_select = $('[name="row[condition]"]');
                 condition_select.empty();
-                if ($scope.row.type == "pre") {
+                if ($scope.row.type == "pre" || data.row.type == "selects") {
                     var condition = data.row.condition;
                     var condition_array = condition.split('\n');
                     condition_array.forEach(function(item, index){
@@ -118,7 +118,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     switch(data.row.type) {
                         case "number": {
                             rule.push("required");
-                            rule.push("numeric");
+                            rule.push("integer");
                             break;
                         }
                         case "text": {
@@ -126,12 +126,23 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                             break;
                         }
                     }
-                    $('[role="form"]').validator("setField", 'row[content]', "required;integer;");
+                    $('[role="form"]').validator("setField", 'row[content]', rule.join(";"));
+                }
+
+                if ($scope.row.type == "pre" || data.row.type == "selects") {
+                    $('[name="row[condition]"]').on("change", function(){
+                        var condition = $(this).val();
+                        $('[name="row[content]"]').val(condition);
+                    });
+                    $('[name="row[content]"]').attr("readonly","readonly");
+                    $('[role="form"]').validator("setField", 'row[content]', "");
+                } else {
+                    $('[name="row[content]"]').removeAttr("readonly");
 
                 }
                 condition_select.val($scope.row.condition);
                 condition_select.selectpicker('refresh').selectpicker('render');
-                if ($scope.row.condition == "") {
+                if ($scope.row.condition == "" || typeof $scope.row.condition == "undefined") {
                     condition_select.trigger("change");
                 }
             });
@@ -145,13 +156,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     }
                 }
             });
-            if ($scope.row.type == "pre") {
-                $('[name="row[condition]"]').on("change", function(){
-                    var condition = $(this).val();
-                    $('[name="row[content]"]').val(condition);
-                });
-                $('[name="row[content]"]').attr("readonly","readonly");
-            }
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },
 

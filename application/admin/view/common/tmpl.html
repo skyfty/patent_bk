@@ -70,12 +70,8 @@
         <%if(f.type=="datetime" || f.type == "date" || f.type=="time"){%>
         <div class="form-group">
             <select class="form-control" ng-model="<%=d%>.condition">
-                <option value="between time">在之间&nbsp;&nbsp;</option>
-                <option value="not between time">不在之间&nbsp;&nbsp;</option>
-                <option value="ltb">早于起始&nbsp;&nbsp;</option>
-                <option value="gtb">晚于起始&nbsp;&nbsp;</option>
-                <option value="lte">早于结束&nbsp;&nbsp;</option>
-                <option value="gte">晚于结束&nbsp;&nbsp;</option>
+                <%include('spotcircus-condition-tmpl', f)%>
+
             </select>
             <div class="input-group date datetimepicker" style="position: relative;">
                 <input type="search" class="form-control datetimerange" datetimerange ng-model="<%=d%>.value">
@@ -88,8 +84,8 @@
         <div class="form-group">
             <div style="float: left">
                 <select class="form-control" ng-model="<%=d%>.condition">
-                    <option value="IN(...)">是&nbsp;&nbsp;</option>
-                    <option value="NOT IN(...)">不是&nbsp;&nbsp;</option>
+                    <%include('spotcircus-condition-tmpl', f)%>
+
                 </select>
             </div>
             <div  class="input-group"  style="float: left">
@@ -119,7 +115,8 @@
         <%}else if(f.type=="model"){%>
         <div class="form-group">
             <select class="form-control" ng-model="<%=d%>.condition">
-                <option value="QJSON">关键字&nbsp;&nbsp;</option>
+                <%include('spotcircus-condition-tmpl', f)%>
+
             </select>
             <div class="input-group" style="position: relative;">
                 <input type="search"  class="form-control"  ng-model="<%=d%>.value" />
@@ -131,10 +128,8 @@
         <%}else if(f.type=="address"){%>
         <div class="form-group">
             <select class="form-control" ng-model="<%=d%>.condition">
-                <option value="LIKE %...%">是&nbsp;&nbsp;</option>
-                <option value="NOT LIKE %...%">不是&nbsp;&nbsp;</option>
-                <option value="IS NULL">为空&nbsp;&nbsp;</option>
-                <option value="IS NOT NULL">不为空&nbsp;&nbsp;</option>
+                <%include('spotcircus-condition-tmpl', f)%>
+
             </select>
             <div class="input-group" style="position: relative;">
                 <input type="search"  class="form-control"  ng-model="<%=d%>.value" />
@@ -146,12 +141,8 @@
         <%}else{%>
         <div class="form-group">
             <select class="form-control" ng-model="<%=d%>.condition">
-                <option value="LIKE %...%">包含&nbsp;&nbsp;</option>
-                <option value="NOT LIKE %...%">不包含&nbsp;&nbsp;</option>
-                <option value="=">是&nbsp;&nbsp;</option>
-                <option value="!=">不是&nbsp;&nbsp;</option>
-                <option value="IS NULL">为空&nbsp;&nbsp;</option>
-                <option value="IS NOT NULL">不为空&nbsp;&nbsp;</option>
+                <%include('spotcircus-condition-tmpl', f)%>
+
             </select>
             <div class="input-group" style="position: relative;">
                 <input type="search"  class="form-control"  ng-model="<%=d%>.value" />
