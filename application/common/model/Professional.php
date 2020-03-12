@@ -16,6 +16,7 @@ class Professional extends Cosmetic
             $procedure = model("procedure")->where("relevance_model_type",$model_name)->where("weigh",0)->find();
             $data = $row->getInitPromotionData($species);;
             $data = array_merge([
+                'name'=>$species['name'],
                 'branch_model_id'=>$row['branch_model_id'],
                 'relevance_model_id'=>$row['id'],
                 'relevance_model_type'=>$model_name,

@@ -9,6 +9,11 @@ use think\Model;
  */
 class Promotion Extends \app\common\model\Promotion
 {
+    // 追加属性
+    protected $append = [
+        "species"
+    ];
+
     protected static function init()
     {
         self::beforeInsert(function($row){

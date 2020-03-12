@@ -59,4 +59,9 @@ class Principal extends  Cosmetic
     {
         return $this->morphTo();
     }
+
+    public function promotions()
+    {
+        return $this->hasMany('promotion','principal_model_id');
+    }
 }

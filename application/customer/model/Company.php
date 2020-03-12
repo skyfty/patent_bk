@@ -47,9 +47,5 @@ class Company extends \app\common\model\Company
         return str_replace(" ", "/", $value);
     }
 
-    public function promotion()
-    {
-        return $this->morphTo();
-    }
 }
 

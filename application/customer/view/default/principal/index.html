@@ -169,11 +169,17 @@
         </div>
         <div class="weui-form-preview">
             <div class="weui-form-preview__bd">
+                <%for (var i=0;i<promotions.length;i++) {%>
                 <div class="weui-flex">
-                    <div class="weui-flex__item"><div class="placeholder" style="text-align: left">weui</div></div>
-                    <div class="weui-flex__item"><div class="placeholder"style="text-align:center">weui</div></div>
-                    <div class="weui-flex__item"><div class="placeholder" style="text-align: right">weui</div></div>
+                    <div class="weui-flex__item"><div class="placeholder" style="text-align: left"><%=promotions[i].species.name%></div></div>
+                    <div class="weui-flex__item"><div class="placeholder"style="text-align:center">1/1</div></div>
+                    <div class="weui-flex__item"><div class="placeholder" style="text-align: right">
+                        <a class="btn btn-default btn-xs" href="">
+                            详情
+                        </a>
+                    </div></div>
                 </div>
+                <%}%>
             </div>
         </div>
     </div>

@@ -47,7 +47,7 @@ class Principal extends Customer
         $row = $this->model->find($id);
         if (!$row)
             $this->error(__('No Results were found'));
-        $row->append(["substance","substance.promotion"]);
+        $row->append(["substance","promotions"]);
         $this->success("OK","/",$row);
     }
     public function edit($ids = null) {
