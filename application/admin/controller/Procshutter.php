@@ -30,12 +30,13 @@ class Procshutter extends Cosmetic
         \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
         $phpWord = \PhpOffice\PhpWord\IOFactory::load(ROOT_PATH . '/public' . $row['file']);
         $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
-        $xmlWriter->save('php://output');
-        $response = Response::create();
-        $response->contentType("application/pdf");
-        $response->header("Cache-Control","max-age=0");
-        $response->header("Content-Transfer-Encoding","binary");
-        $response->header("Accept-Ranges","bytes");
-        return $response;
+
+        $uploadDir = "/pdfs/";
+        $destFileDir =ROOT_PATH . '/public' . $uploadDir;
+        if (!file_exists($destFileDir))
+            mkdir($destFileDir);
+        $filename = \fast\Random::build("unique").".pdf";
+        $xmlWriter->save($destFileDir.$filename);
+        $this->redirect($uploadDir.$filename);
     }
 }
