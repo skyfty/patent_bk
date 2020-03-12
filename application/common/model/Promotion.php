@@ -42,6 +42,9 @@ class Promotion extends Cosmetic
         return $this->hasOne('genre','id','genre_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
+    public function principal() {
+        return $this->hasOne('principal','id','principal_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
     public function species()
     {
         return $this->hasOne('species','id','species_cascader_id')->joinType("LEFT")->setEagerlyType(0);
