@@ -169,6 +169,8 @@
         </div>
         <div class="weui-form-preview">
             <div class="weui-form-preview__bd">
+                <%if (substance.aptitude_state =='yes'){%>
+
                 <%for (var i=0;i<promotions.length;i++) {%>
                 <div class="weui-flex">
                     <div class="weui-flex__item"><div class="placeholder" style="text-align: left"><%=promotions[i].species.name%></div></div>
@@ -178,6 +180,14 @@
                             详情
                         </a>
                     </div></div>
+                </div>
+                <%}%>
+                <%}else{%>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">专利申请</label>
+                    <span class="weui-form-preview__value">
+                        申请
+                    </span>
                 </div>
                 <%}%>
             </div>
