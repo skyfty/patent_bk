@@ -58,7 +58,7 @@
                         <div class="weui-cell__bd">
                             <select name="row[type]" class="weui-select" id="type">
                                 {foreach name=":listfield('company','type')" item="vo"}
-                                <option value="{$key}" {in name="key" value="$row['type']"}selected{/in}>{$vo}</option>
+                                <option value="{$key}" {in name="key" value="$row['type']|default=[]"}selected{/in}>{$vo}</option>
                                 {/foreach}
                             </select>
                         </div>
@@ -68,9 +68,9 @@
                             <label for="type" class="weui-label">所属行业代码</label>
                         </div>
                         <div class="weui-cell__bd">
-                            <select name="row[type]" class="weui-select" id="type">
+                            <select name="row[criterion]" class="weui-select" id="criterion">
                                 {foreach name=":listfield('company','criterion')" item="vo"}
-                                <option value="{$key}" {in name="key" value="$row['type']"}selected{/in}>{$vo}</option>
+                                <option value="{$key}" {in name="key" value="$row['criterion']|default=[]"}selected{/in}>{$vo}</option>
                                 {/foreach}
                             </select>
                         </div>
