@@ -395,6 +395,10 @@ define(['jquery', 'bootstrap', 'backend', 'addtabs', 'adminlte', 'form'], functi
                     avatar: data.avatar
                 }));
                 location.href = Backend.api.fixurl(data.url);
+            }, function(data, ret){
+                if (ret.msg == "验证码错误!") {
+                    $("#login_captcha").trigger("click");
+                }
             });
 
             $("#pd-form-username").on("change", function(){
