@@ -36,20 +36,6 @@ class Provider extends Cosmetic
             $row['state'] =1;
         });
 
-        $updateStartEndTime = function($row) {
-            $appointCourse = $row->getData('appoint_course');
-            $course = explode("-", $appointCourse);
-            if (count($course) != 2)
-                return;
-            $appointTime = $row->getData('appoint_time');
-            $appointTime = date("Y-m-d", $appointTime);
-            $starttime = $appointTime ." ".$course[0];
-            $endtime = $appointTime ." ".$course[1];
-            $row['starttime'] = strtotime($starttime);
-            $row['endtime'] = strtotime($endtime);
-        };
-        self::beforeUpdate($updateStartEndTime);self::beforeInsert($updateStartEndTime);
-
 
         self::beforeInsert(function($row){
             $maxid = self::max("id") + 1;
@@ -58,12 +44,6 @@ class Provider extends Cosmetic
 
 
         $countProvider = function($row) {
-            $ids = self::where("customer_model_id", $row['customer_model_id'])->column("id");
-            if ($ids) {
-                $idcnt = count($ids);
-                $ids = implode(",", $ids);
-                model("customer")->save(['provider_ids'=>$ids, 'promotion_total'=>$idcnt], ["id"=>$row['customer_model_id']]);
-            }
             $ids = self::where("staff_model_id", $row['staff_model_id'])->column("id");
             if ($ids) {
                 $ids = implode(",", $ids);
@@ -78,16 +58,12 @@ class Provider extends Cosmetic
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
-    public function customer() {
-        return $this->hasOne('customer','id','customer_model_id')->joinType("LEFT")->setEagerlyType(0);
-    }
-
     public function staff() {
-        return $this->hasOne('staff','id','staff_model_id')->joinType("LEFT")->field('id,name,idcode,telephone,nickname,emolument')->setEagerlyType(0);
+        return $this->hasOne('staff','id','staff_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
     public function promotion() {
-        return $this->hasOne('promotion','id','promotion_model_id')->joinType("LEFT")->field('id,idcode,name')->setEagerlyType(0);
+        return $this->hasOne('promotion','id','promotion_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
     public function amount() {

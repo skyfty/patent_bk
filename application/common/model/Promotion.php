@@ -24,9 +24,11 @@ class Promotion extends Cosmetic
 
 
         self::afterInsert(function($row){
+            $staff = model("staff")->where(build_where_param('FINDIN', "quarters", "4"))->find();
             model("provider")->create([
                 "promotion_model_id"=>$row['id'],
-//                "promotion_model_id"=>$row['relevance'][''],
+                'staff_model_id'=>$staff['id'],
+                'branch_model_id'=>$row['branch_model_id']
 
             ]);
         });
