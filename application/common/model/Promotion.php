@@ -26,7 +26,7 @@ class Promotion extends Cosmetic
         self::afterInsert(function($row){
             model("provider")->create([
                 "promotion_model_id"=>$row['id'],
-                "promotion_model_id"=>$row['relevance'][''],
+//                "promotion_model_id"=>$row['relevance'][''],
 
             ]);
         });

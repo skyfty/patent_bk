@@ -36,16 +36,11 @@
                                                 <button type="button" class="btn btn-danger btn-del btn-sm {:check_adscription($row, $config.staff)?'':'hide'}   {:$auth->check('promotion/del')?'':'hide'}"  href="promotion/del"  data-toggle="tooltip" data-container="body" title="{:__('Delete')}">
                                                     <i class="fa fa-trash-o"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-default btn-inline-edit btn-sm {:check_adscription($row, $config.staff)?'':'hide'}  {:$auth->check('promotion/edit')?'':'hide'}" ng-click="edit()" data-toggle="tooltip" data-container="body" title="{:__('Edit')}">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-
                                                 <button type="button" class="btn btn-default btn-sm" ng-click="refreshRow()" data-toggle="tooltip" data-container="body" title="刷新">
                                                     <i class="fa  fa-refresh"></i>
                                                 </button>
                                             </div>
                                             <div  ng-show="viewstate.editing">
-
                                                 <button type="submit" class="btn btn-success btn-sm"   data-toggle="tooltip" data-container="body" title="{:__('Submit')}">
                                                     <i class="fa fa-check"></i>
                                                 </button>
