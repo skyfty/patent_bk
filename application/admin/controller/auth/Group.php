@@ -84,7 +84,13 @@ class Group extends Backend
     public function index()
     {
         if ($this->request->isAjax()) {
-            $list = AuthGroup::all(array_keys($this->groupdata));
+            $searchKey = $this->request->request('searchKey');
+            if ($searchKey && $searchKey == "id") {
+                $list = AuthGroup::all($this->request->request('searchValue'));
+            } else {
+                $list = AuthGroup::all(array_keys($this->groupdata));
+
+            }
             $list = collection($list)->toArray();
             $groupList = [];
             foreach ($list as $k => $v) {

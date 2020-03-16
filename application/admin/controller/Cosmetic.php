@@ -207,6 +207,18 @@ class Cosmetic extends Backend
         return $this->view->fetch();
     }
 
+    protected function getModelRow($ids) {
+        $cosmeticModel = Modelx::get(['table' => $this->model->raw_name],[],!App::$debug);
+        $row = $this->model->with($this->getRelationSearch($cosmeticModel))->find($ids);
+        if ($row) {
+            $relationModel = $this->getRelationModel($cosmeticModel);;
+            foreach($relationModel as $rmk=>$rm) {
+                $row->appendRelationAttr($rmk, $rm);
+            }
+        }
+        return $row;
+    }
+
     public function view() {
         $ids =$this->request->param("ids", null);
         if ($ids === null)
@@ -216,21 +228,7 @@ class Cosmetic extends Backend
         if (!$cosmeticModel) {
             $this->error('未找到对应模型');
         }
-
-        $row = $this->model->with($this->getRelationSearch($cosmeticModel))->find($ids);
-        if (!$row)
-            $this->error(__('No Results were found'));
-        $adminIds = $this->getDataLimitAdminIds();
-        if (is_array($adminIds)) {
-            if (!in_array($row[$this->dataLimitField], $adminIds)) {
-                $this->error(__('You have no permission'));
-            }
-        }
-        $relationModel = $this->getRelationModel($cosmeticModel);;
-        foreach($relationModel as $rmk=>$rm) {
-            $row->appendRelationAttr($rmk, $rm);
-        }
-        $this->view->assign("row", $row);
+        $this->view->assign("row", $this->getModelRow($ids));
 
         if ($this->request->isAjax()) {
             if ($this->request->has("scenery_id")) {
@@ -287,7 +285,7 @@ class Cosmetic extends Backend
             $result = $row->allowField(true)->save($params);
             if ($result !== false) {
                 $db->commit();
-                $this->result($this->model->get($ids),1);
+                $this->result($this->getModelRow($ids),1);
             } else {
                 $db->rollback();
                 $this->error($row->getError());
