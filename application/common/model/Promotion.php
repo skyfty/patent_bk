@@ -21,6 +21,16 @@ class Promotion extends Cosmetic
             Provider::destroy(['promotion_model_id'=>$row['id']]);
             model($row['relevance_model_type'])->where("id", $row['relevance_model_id'])->delete();
         });
+
+
+        self::afterInsert(function($row){
+            model("provider")->create([
+                "promotion_model_id"=>$row['id'],
+                "promotion_model_id"=>$row['relevance'][''],
+
+            ]);
+        });
+
     }
     public function getPictureListAttr($value, $data)
     {
