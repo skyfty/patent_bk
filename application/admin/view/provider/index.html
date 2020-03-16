@@ -45,19 +45,7 @@
                         </div>
                     </div>
                     <div id="toolbar-{$vo['name']}" class="toolbar">
-                        {:build_toolbar(['refresh', 'add', 'del'],['add'=>[url('provider/add'), 'btn btn-success btn-dialog', 'fa fa-plus',  __(''), __('添加授课')]])}
-
-                        <div class="dropdown btn-group">
-                            <a class="btn btn-primary btn-more dropdown-toggle btn-disabled disabled" data-toggle="dropdown"><i class="fa fa-cog"></i> {:__('More')}</a>
-                            <ul class="dropdown-menu text-left" role="menu">
-                                <li>
-                                    <a class="btn btn-link btn-disabled btn-change-staff  {:$auth->check('provider/changestaff')?'':'hide'}" ng-click="changestaff();" title="修改老师" href="javascript:;">
-                                        <i class="fa fa-adjust"></i> 修改老师
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
+                        {:build_toolbar(['refresh', 'add', 'del'],['add'=>[url('provider/add'), 'btn btn-success btn-dialog', 'fa fa-plus',  __(''), __('添加订单')]])}
 
                         <div style="display: inline-block;" class="hidden-xs {notempty name='config.staff'}hide{/notempty}" id="div_branch_select">{:build_branch_select('branch_select')}</div>
 
