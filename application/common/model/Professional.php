@@ -13,7 +13,7 @@ class Professional extends Cosmetic
         self::afterInsert(function($row){
             $model_name = $row->name;
             $species = model("species")->where("model",$model_name)->cache(true)->find();
-            $procedure = model("procedure")->where("relevance_model_type",$model_name)->find();
+            $procedure = model("procedure")->where("relevance_model_type",$model_name)->where("order",1)->find();
             $data = $row->getInitPromotionData($species);;
             $data = array_merge([
                 'name'=>$species['name'],

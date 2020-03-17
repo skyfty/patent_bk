@@ -2,8 +2,6 @@
 
 namespace app\customer\model;
 
-use app\common\model\Fields;
-
 class Provider extends \app\common\model\Provider
 {
     // 追加属性

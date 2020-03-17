@@ -2,7 +2,6 @@
 
 namespace app\customer\model;
 
-use app\common\model\Fields;
 use think\Model;
 
 class Persion extends \app\common\model\Persion

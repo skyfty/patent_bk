@@ -2,7 +2,6 @@
 
 namespace app\customer\model;
 
-use InvalidArgumentException;
 use think\Config;
 use think\Db;
 use think\Model;

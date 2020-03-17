@@ -2,10 +2,7 @@
 
 namespace app\customer\model;
 
-use app\common\model\Fields;
-use fast\Random;
 use think\Model;
-use traits\model\SoftDelete;
 
 class Customer extends \app\common\model\Customer
 {

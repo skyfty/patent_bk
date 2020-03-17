@@ -3,7 +3,6 @@
 namespace app\customer\model;
 
 use think\Model;
-use app\admin\library\Auth;
 
 class Aptitude extends  \app\common\model\Aptitude
 {
