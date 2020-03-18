@@ -19,4 +19,8 @@ class Stem extends Cosmetic
             $row['idcode'] = sprintf("ST%06d", $maxid);
         });
     }
+
+    public function commission() {
+        return $this->hasOne('commission','id','commission_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
 }
