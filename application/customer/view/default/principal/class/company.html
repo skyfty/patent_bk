@@ -28,27 +28,27 @@
             <form id="form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
                 <div class="weui-cells weui-cells_form">
                     <div class="weui-cell ">
-                        <div class="weui-cell__hd"><label for="name" class="weui-label">姓名</label></div>
+                        <div class="weui-cell__hd"><label for="name" class="weui-label">名称</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input" type="text" id="name" data-rule="required;"  data-msg="姓名不可以为空" name="row[name]" value="{$row['name']|default=''}" placeholder="请输入姓名">
+                            <input class="weui-input" type="text" id="name" data-rule="required;"  data-msg="名称不可以为空" name="row[name]" value="{$row['name']|default=''}" placeholder="请输入姓名">
                         </div>
                     </div>
                     <div class="weui-cell">
                         <div class="weui-cell__hd"><label for="registerdate" class="weui-label">注册日期</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input" id="registerdate" name="row[registerdate]" data-msg="注册日期必须选择" data-rule="required;"  type="date" value="{$row['registerdate']|default=''}">
+                            <input class="weui-input" id="registerdate" name="row[registerdate]" type="date" value="{$row['registerdate']|default=''}">
                         </div>
                     </div>
                     <div class="weui-cell ">
                         <div class="weui-cell__hd"><label for="registerfund" class="weui-label">注册资金</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input" type="text" id="registerfund"  data-rule="required;"  data-msg-required="注册资金不可以为空"  name="row[registerfund]" value="{$row['registerfund']|default=''}" placeholder="请输入注册资金">
+                            <input class="weui-input" type="text" id="registerfund" name="row[registerfund]" value="{$row['registerfund']|default=''}" placeholder="请输入注册资金">
                         </div>
                     </div>
                     <div class="weui-cell ">
                         <div class="weui-cell__hd"><label for="credit_code" class="weui-label">统一信用代码</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input" type="text" id="credit_code" data-rule="required" data-msg-required="统一信用代码不可以为空"   name="row[credit_code]" value="{$row['credit_code']|default=''}" placeholder="请输入统一信用代码">
+                            <input class="weui-input" type="text" id="credit_code" name="row[credit_code]" value="{$row['credit_code']|default=''}" placeholder="请输入统一信用代码">
                         </div>
                     </div>
                     <div class="weui-cell weui-cell_select weui-cell_select-after">
