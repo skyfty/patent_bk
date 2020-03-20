@@ -53,6 +53,8 @@ class Staff extends Cosmetic
                     $groupName[] = $v['name'];
                 }
                 $row['leading'] = in_array('校区负责人', $groupName)?1:0;
+                $row['adviser'] = in_array('客户顾问', $groupName)?1:0;
+
                 $row['quarters_keywords'] = implode("\r\n", $quartersKeyword);
             }
         };
