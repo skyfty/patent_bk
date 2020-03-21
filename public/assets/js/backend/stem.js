@@ -85,6 +85,18 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     }
                 }
             });
+
+            require(['bootstrap-select', 'bootstrap-select-lang'], function () {
+                $('[name="row[nationwide]"]').change(function(){
+                    var val = $(this).val();
+                    if (val == "yes") {
+                        $('[data-field-name="location"]').hide().trigger("rate");
+                    } else {
+                        $('[data-field-name="location"]').show().trigger("rate");
+
+                    }
+                }).trigger("change");
+            });
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },
 
