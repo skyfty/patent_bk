@@ -46,7 +46,7 @@ class User extends Customer
         $adviser = $this->user->customer->adviser;
         if (!$adviser || $adviser->persionalqrcode == "") {
             $branch_model_id = $this->user->customer->branch_model_id;
-            $authGroup = model("AuthGroup")->where("branch_id", $branch_model_id)->where("name",'课程顾问')->find();
+            $authGroup = model("AuthGroup")->where("branch_id", $branch_model_id)->where("name",'客户顾问')->find();
             if (!$authGroup) {
                 $this->redirect(url("page/index",['id'=>49]));
             }
