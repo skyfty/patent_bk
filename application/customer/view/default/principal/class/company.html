@@ -10,6 +10,12 @@
             font-size: 14px;
 
         }
+
+        {if condition="!$row"}
+        .cell-hide-filed {
+            display: none;
+        }
+        {/if}
     </style>
 
 </head>
@@ -33,25 +39,25 @@
                             <input class="weui-input" type="text" id="name" data-rule="required;"  data-msg="名称不可以为空" name="row[name]" value="{$row['name']|default=''}" placeholder="请输入名称">
                         </div>
                     </div>
-                    <div class="weui-cell">
+                    <div class="weui-cell cell-hide-filed">
                         <div class="weui-cell__hd"><label for="registerdate" class="weui-label">注册日期</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" id="registerdate" name="row[registerdate]" type="date" value="{$row['registerdate']|default=''}">
                         </div>
                     </div>
-                    <div class="weui-cell ">
+                    <div class="weui-cell  cell-hide-filed">
                         <div class="weui-cell__hd"><label for="registerfund" class="weui-label">注册资金</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" type="text" id="registerfund" name="row[registerfund]" value="{$row['registerfund']|default=''}" placeholder="请输入注册资金">
                         </div>
                     </div>
-                    <div class="weui-cell ">
+                    <div class="weui-cell  cell-hide-filed">
                         <div class="weui-cell__hd"><label for="credit_code" class="weui-label">统一信用代码</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" type="text" id="credit_code" name="row[credit_code]" value="{$row['credit_code']|default=''}" placeholder="请输入统一信用代码">
                         </div>
                     </div>
-                    <div class="weui-cell weui-cell_select weui-cell_select-after">
+                    <div class="weui-cell weui-cell_select weui-cell_select-after cell-hide-filed">
                         <div class="weui-cell__hd">
                             <label for="type" class="weui-label">企业性质</label>
                         </div>
@@ -63,7 +69,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="weui-cell weui-cell_select weui-cell_select-after">
+                    <div class="weui-cell weui-cell_select weui-cell_select-after cell-hide-filed">
                         <div class="weui-cell__hd">
                             <label for="type" class="weui-label">所属行业代码</label>
                         </div>
@@ -75,45 +81,45 @@
                             </select>
                         </div>
                     </div>
-                    <div class="weui-cell">
+                    <div class="weui-cell cell-hide-filed">
                         <div class="weui-cell__hd"><label for="registeraddress" class="weui-label">注册地址</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input weui-address-pick" id="registeraddress" name="row[registeraddress]" type="text" value="{$row['registeraddress']|default=''}" readonly="" data-code="" data-codes="">
                         </div>
                     </div>
-                    <div class="weui-cell ">
+                    <div class="weui-cell  cell-hide-filed">
                         <div class="weui-cell__hd"><label for="acreage" class="weui-label">办公面积</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" type="text" id="acreage"  name="row[acreage]" value="{$row['acreage']|default=''}" placeholder="请输入办公面积">
                         </div>
                     </div>
-                    <div class="weui-cell ">
+                    <div class="weui-cell cell-hide-filed ">
                         <div class="weui-cell__hd"><label for="accept_invent_count" class="weui-label">已受理发明专利</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" type="text" id="accept_invent_count"  name="row[accept_invent_count]" value="{$row['accept_invent_count']|default=''}" placeholder="已受理发明专利">
                         </div>
                     </div>
-                    <div class="weui-cell ">
+                    <div class="weui-cell  cell-hide-filed">
                         <div class="weui-cell__hd"><label for="authorize_patent_count" class="weui-label">已授权发明专利</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" type="text" id="authorize_patent_count"  name="row[authorize_patent_count]" value="{$row['authorize_patent_count']|default=''}" placeholder="已授权发明专利">
                         </div>
                     </div>
-                    <div class="weui-cell ">
+                    <div class="weui-cell  cell-hide-filed">
                         <div class="weui-cell__hd"><label for="accept_new_patent_count" class="weui-label">已受理实用新型专利</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" type="text" id="accept_new_patent_count"  name="row[accept_new_patent_count]" value="{$row['accept_new_patent_count']|default=''}" placeholder="已受理实用新型专利">
                         </div>
                     </div>
 
-                    <div class="weui-cell ">
+                    <div class="weui-cell  cell-hide-filed">
                         <div class="weui-cell__hd"><label for="authorize_new_patent_count" class="weui-label">已授权实用新型专利</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" type="text" id="authorize_new_patent_count"  name="row[authorize_new_patent_count]" value="{$row['authorize_new_patent_count']|default=''}" placeholder="已授权实用新型专利">
                         </div>
                     </div>
 
-                    <div class="weui-cell ">
+                    <div class="weui-cell  cell-hide-filed">
                         <div class="weui-cell__hd"><label for="register_bookmaking_count" class="weui-label">已登记软件著作权</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" type="text" id="register_bookmaking_count"  name="row[register_bookmaking_count]" value="{$row['register_bookmaking_count']|default=''}" placeholder="已登记软件著作权">
@@ -121,7 +127,7 @@
                     </div>
 
 
-                    <div class="weui-cell ">
+                    <div class="weui-cell  cell-hide-filed">
                         <div class="weui-cell__hd"><label for="apply_bookmaking_count" class="weui-label">已申请软件著作权</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" type="text" id="apply_bookmaking_count"  name="row[apply_bookmaking_count]" value="{$row['apply_bookmaking_count']|default=''}" placeholder="已申请软件著作权">
