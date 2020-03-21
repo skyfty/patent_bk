@@ -49,7 +49,10 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             };
         },
 
-        initParam:[],
+        initParam:[
+            "principal_model_id",
+            "customer_model_id",
+        ],
         add: function () {
             var self = this;
             AngularApp.controller("add", function($scope,$sce, $compile,$timeout){

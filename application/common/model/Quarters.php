@@ -20,7 +20,14 @@ class Quarters extends Cosmetic
         });
     }
 
+    public function principal() {
+        return $this->hasOne('principal','id','principal_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
 
+
+    public function customer() {
+        return $this->hasOne('customer','id','customer_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }

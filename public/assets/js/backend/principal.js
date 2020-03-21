@@ -79,8 +79,33 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             };
         },
         scenery: {
-            substance:function($scope, $compile,$timeout, data) {
+            quarters:function($scope, $compile,$timeout, data) {
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {principal_model_id:$scope.row.id};
+                    return param;
+                };
 
+                Table.api.init({
+                    extend: {
+                        index_url: 'quarters/index',
+                        summation_url: 'quarters/summation',
+                        table: 'quarters',
+                    },
+                    buttons : [
+                        {
+                            name: 'view',
+                            title: function(row, j){
+                                return __('%s', row.name);
+                            },
+                            classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                            icon: 'fa fa-folder-o',
+                            url: 'quarters/view'
+                        }
+                    ]
+                });
+                $scope.fields = data.fields;
+                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
+                $scope.$broadcast("shownTable");
             }
         },
 
