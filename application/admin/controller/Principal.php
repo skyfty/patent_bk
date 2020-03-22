@@ -193,11 +193,13 @@ class Principal extends Cosmetic
         if (!$params) {
             $this->error(__('Parameter %s can not be empty', ''));
         }
+        $params['principalclass_model_id'] = $row['principalclass_model_id'];
 
         $db = $this->model->getQuery();
         $db->startTrans();
         try {
-            $result = $row->allowField(true)->save($params);
+
+            $result = $row->allowField(true)->validate("principal.edit")->save($params);
             if ($result !== false) {
                 $db->commit();
                 $row = $this->model->get($ids);

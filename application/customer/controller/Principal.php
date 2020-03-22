@@ -95,10 +95,11 @@ class Principal extends Customer
 
         if ($this->request->isPost()) {
             $params = $this->request->param("row/a");
-
-            $principal = model("principal")->where("name",$params['name'])->find();
-            if ($principal) {
-                $this->error("主体名称重复");
+            if ($principalclass['id'] ==2) {
+                $principal = model("principal")->where("name",$params['name'])->find();
+                if ($principal) {
+                    $this->error("主体名称重复");
+                }
             }
 
             $db = $this->model->getQuery();
