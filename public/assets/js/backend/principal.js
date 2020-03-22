@@ -88,6 +88,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 Table.api.init({
                     extend: {
                         index_url: 'quarters/index',
+                        del_url: 'quarters/del',
                         summation_url: 'quarters/summation',
                         table: 'quarters',
                     },
