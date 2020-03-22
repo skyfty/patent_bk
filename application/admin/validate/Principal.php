@@ -9,6 +9,7 @@ class Principal extends Cosmetic
     protected $name = "principal";
 
     protected $rule = [
+        'name'       => 'require|unique:principal'
     ];
 
 
@@ -16,10 +17,8 @@ class Principal extends Cosmetic
      * 验证场景
      */
     protected $scene = [
-        'add'  => [
-        ],
-        'view.edit' => [
-        ]
+        'add'  =>['name'],
+        'edit' => ['name'],
     ];
 
 }
