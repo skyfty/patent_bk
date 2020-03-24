@@ -158,6 +158,9 @@ class Principal extends Cosmetic
         } else {
             $sceneryList = [];
             $sceneryWhere = array_merge(['model_id' => $cosmeticModel->id, 'pos' => array("in", $this->viewScenerys)]);
+            if ($row['substance_type'] == "persion") {
+                $sceneryWhere['name'] = ["neq", "quarters"];
+            }
             foreach (Scenery::where($sceneryWhere)->cache(!App::$debug)->order("weigh", "ASC")->select() as $k=>$v) {
                 if ($v['name'] == "substance"){
                     $principal_type = $row['principalclass']['model_type'];
