@@ -151,7 +151,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 }
             });
             if ($scope.row.species_cascader_id) {
-                $('[data-field-name="species"]').hide().trigger("rate");
+                //$('[data-field-name="species"]').hide().trigger("rate");
             }
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },

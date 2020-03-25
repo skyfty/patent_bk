@@ -24,15 +24,17 @@ class Promotion extends Cosmetic
 
 
         self::afterInsert(function($row){
-            $auth_model_id = $row->procedure->auth_model_id;
-            $staff = model("staff")->where(build_where_param('FINDIN', "quarters", $auth_model_id))->find();
-            $staff_model_id = $staff?$staff['id']:1;
-            model("provider")->create([
-                "promotion_model_id"=>$row['id'],
-                'staff_model_id'=>$staff_model_id,
-                'branch_model_id'=>$row['branch_model_id']
+            $procedure= $row->procedure;
+            if ($procedure) {
+                $staff = model("staff")->where(build_where_param('FINDIN', "quarters", $procedure->auth_model_id))->find();
+                $staff_model_id = $staff?$staff['id']:1;
+                model("provider")->create([
+                    "promotion_model_id"=>$row['id'],
+                    'staff_model_id'=>$staff_model_id,
+                    'branch_model_id'=>$row['branch_model_id']
+                ]);
+            }
 
-            ]);
         });
 
     }
