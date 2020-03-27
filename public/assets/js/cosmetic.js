@@ -591,6 +591,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 var hiddenInput = $("[name='row["+$attrs.fieldName+"_cascader_keyword]']", $element.parent());
                 var hiddenIdInput = $("[name='row["+$attrs.fieldName+"_cascader_id]']", $element.parent());
                 require(['cascader'], function (cascader) {
+                    var val = hiddenInput.val();
                     cascader({
                         elem: $element,
                         url: $attrs.source,

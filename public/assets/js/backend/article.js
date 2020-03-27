@@ -55,8 +55,31 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
         },
 
         bindevent:function($scope) {
+            $scope.submit = function(data, ret){
+                if ($(document.body).hasClass("is-dialog")) {
+                    Backend.api.close();
+                } else {
+                    Backend.api.addtabs("article/view/ids/" + data.id, __('%s',data.idcode));
+                    Backend.api.closetabs('article/add');
+                }
+            };
             Form.api.bindevent($("form[role=form]"), $scope.submit);
-            if (Config.staff != null)$('[data-field-name="branch"]').hide().trigger("rate");
+
+            $('[name="row[type]"]').change(function(){
+                var type = $(this).val();
+                if (typeof Form.formatter[type] == "undefined") {
+                    type = "text";
+                }
+                var field = {"name":"content","type":type};
+                if ($scope.row.id) {
+                    var html = $(Form.formatter[type]("edit",field, $scope.row['content'], $scope.row));
+                } else {
+                    var html = $(Form.formatter[type]("add",field, "", {}));
+                }
+                $('[name="row[content]"]').parents("magicfield").html(html);
+                Form.api.bindevent($("form[role=form]"), $scope.submit);
+            }).trigger("change");
+            if (Config.admin_branch_model_id != null)$('[data-field-name="branch"]').hide().trigger("rate");
         },
 
         api: {
