@@ -6,7 +6,7 @@ use app\admin\library\Auth;
 use think\Model;
 use traits\model\SoftDelete;
 
-class Paragraph extends  \app\common\model\Chapters
+class Paragraph extends  \app\common\model\Paragraph
 {
     // 追加属性
 
