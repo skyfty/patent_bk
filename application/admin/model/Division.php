@@ -6,7 +6,7 @@ use app\admin\library\Auth;
 use think\Model;
 use traits\model\SoftDelete;
 
-class Division extends  \app\common\model\Chapters
+class Division extends  \app\common\model\Division
 {
     // 追加属性
 
