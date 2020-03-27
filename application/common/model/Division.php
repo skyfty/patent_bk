@@ -19,4 +19,13 @@ class Division extends Cosmetic
             $row['idcode'] = sprintf("BL%06d", $maxid);
         });
     }
+
+    public function patent()
+    {
+        return $this->morphTo();
+    }
+
+    public function chapters() {
+        return $this->hasOne('chapters','id','chapters_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
 }

@@ -18,4 +18,13 @@ class Paragraph extends Cosmetic
             $row['idcode'] = sprintf("BL%06d", $maxid);
         });
     }
+
+    public function division() {
+        return $this->hasOne('division','id','division_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
+
+
+    public function article() {
+        return $this->hasOne('article','id','article_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
 }
