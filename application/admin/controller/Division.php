@@ -24,9 +24,25 @@ class Division extends Cosmetic
         $this->model = new \app\admin\model\Division;
     }
 
+    public function classtree() {
+        $where = array();
+        $where['procedure_model_id'] = $this->request->param("procedure_model_id");
+        $list =collection($this->model->where($where)->select())->toArray() ;
+
+        $chequelList = [];
+        foreach ($list as $k => $v) {
+            $chequelList[] = [
+                'id'     => $v['id'],
+                'parent' => '#',
+                'text'   => $v['name'],
+                'type'   => "list",
+                'state'  => ['opened' => false]
+            ];
+        }
+        return $chequelList;
+    }
 
     protected function spectacle($model) {
         return $model;
     }
-
 }
