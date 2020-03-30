@@ -357,6 +357,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                         param.custom = {
                             "procedure_model_id": $scope.row.id,
                         };
+                        if ( $scope.selectnode) {
+                            param.custom['division_model_id'] = $scope.selectnode.id;
+                        }
                         return param;
                     }
                 });
