@@ -43,4 +43,9 @@ class Procedure extends Cosmetic
     public function auth() {
         return $this->hasOne('AuthGroup','id','auth_model_id')->joinType("LEFT")->field("id,name,auth_department_id")->setEagerlyType(0);
     }
+
+    public function divisions()
+    {
+        return $this->hasMany('division','procedure_model_id');
+    }
 }

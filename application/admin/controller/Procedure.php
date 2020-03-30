@@ -69,4 +69,14 @@ class Procedure extends Cosmetic
         }
         return $chequelList;
     }
+
+
+    public function preview() {
+        $row = $this->model->where("id",$this->request->param("id"))->find();
+        if (!$row)
+            $this->error(__('No Results were found'));
+        $this->view->assign("row", $row);
+        return $this->view->fetch();
+
+    }
 }

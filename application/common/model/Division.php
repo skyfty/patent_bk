@@ -23,8 +23,10 @@ class Division extends Cosmetic
           model("chapters")->where("division_model_id", $row['id'])->delete();
        });
     }
-
     public function chapters() {
         return $this->hasOne('chapters','id','chapters_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
+    public function paragraphs() {
+        return $this->hasMany('paragraph','division_model_id');
     }
 }

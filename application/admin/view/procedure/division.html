@@ -11,11 +11,14 @@
 </style>
 
 <div class="panel panel-default panel-intro">
-    <div class="panel-heading">
-        <div style="    text-align: right;
-    padding-bottom: 15px;">
-            <span class='label label-default label-{{key}}' style="font-size: 13px;background-color:{{value.color}}" ng-repeat="(key,value) in colors">{{value.title}}</span>
-
+    <div class="panel-heading" style="    background: #ffffff;">
+        <div class="row">
+            <a href="/procedure/preview/id/{$row.id}" target="_blank" class="btn btn-success btn-preview" title="预览">
+                <i class="fa fa-plus"></i>
+            </a>
+            <a href="/paragraph/add?" class="btn btn-success btn-rebuild" title="添加流程">
+                <i class="fa fa-plus"></i>
+            </a>
         </div>
     </div>
     <div class="panel-body">
