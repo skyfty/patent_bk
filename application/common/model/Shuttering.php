@@ -65,8 +65,6 @@ class Shuttering extends Cosmetic
                 if (isset($data[$field['name']])) {
                     $val = $data[$field['name']];
                     $title = trim($field['title']);
-
-
                 }
             }
             $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'xlsx');
