@@ -99,7 +99,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                             $.ajax({url:"division/classtree",
                                 data:{
                                     procedure_model_id:$scope.row.id,
-                                    id:$scope.selectnode.id
                                 }
                             }).then(function(ret){
                                 var tree = $.fn.zTree.getZTreeObj("channeltree");
@@ -135,8 +134,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                 $scope.onTreeClick = function(event, treeId, treeNode, clickFlag) {
                     $scope.selectnode = treeNode;
                     $("#table-paragraph").bootstrapTable('refresh');
-                    $("div.btn-add-paragraph-group").toggleClass('hide', !($scope.selectnode.type == "lecture"));
-                    $("a.btn-del-warerange").toggleClass('disabled', $scope.selectnode.status == "locked");
+                    $("div.btn-add-division-group").toggleClass('hide', !($scope.selectnode.id != "0"));
+                    $("a.btn-del-warerange").toggleClass('disabled', $scope.selectnode.id == "0");
                     return true;
                 };
 
@@ -281,7 +280,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     var root =  {
                         'id':0,
                         'isParent':true,
-                        'name'  : "讲解流程",
+                        'name'  : "流程",
                         'open'  : true,
                         'childOuter':false,
                         'status':"locked",
