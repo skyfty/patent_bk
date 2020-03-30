@@ -30,9 +30,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','bootstrap-treegrid'],
                             field: 'name', title: __('Name'), align: 'left'
                         },
                         {
-                            field: 'order', title: "顺序", align: 'left'
-                        },
-                        {
                             field: 'operate',
                             title: __('Operate'),
                             table: table,

@@ -20,8 +20,6 @@ class Article extends Cosmetic
         });
     }
 
-
-
     public function chapters() {
         return $this->hasOne('chapters','id','chapters_model_id')->joinType("LEFT")->setEagerlyType(0);
     }

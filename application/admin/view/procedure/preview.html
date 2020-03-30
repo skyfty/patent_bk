@@ -20,9 +20,9 @@
             <div class="content">
                 {volist name="row.divisions" id="division"}
                 {$division.chapters.name}<br/>
-                <hr/>
+                <hr/><br/>
                 {volist name="division.paragraphs" id="paragraph"}
-                {$paragraph.article.content}
+                {$paragraph.content_text}
                 {/volist}
                 {/volist}
             </div>
