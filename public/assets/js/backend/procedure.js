@@ -1,4 +1,4 @@
-define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], function ($, Backend, Table, Form, Template,angular, Cosmetic) {
+define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','ztree'], function ($, Backend, Table, Form, Template,angular, Cosmetic,Ztree) {
     var Controller = {
         //for index
         lands:{
@@ -96,7 +96,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     var url = "/division/add?procedure_model_id=" + $scope.row.id;
                     Backend.api.open(url, "新章节", {
                         callback: function (res) {
-                            $.ajax({url:"exlecture/classtree",
+                            $.ajax({url:"division/classtree",
                                 data:{
                                     promotion_model_id:$scope.row.id,
                                     id:$scope.selectnode.id
@@ -115,7 +115,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                             __('Are you sure you want to delete this item?'),
                             {icon: 3, title: __('Warning'), shadeClose: true},
                             function (index) {
-                                Backend.api.ajax({url:"exlecture/del",
+                                Backend.api.ajax({url:"division/del",
                                     data:{
                                         ids:$scope.selectnode.id
                                     }
@@ -266,7 +266,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                                     orderNode[parentNode.id].push(n2.id);
                                 });
                             });
-                            $.ajax({url:"exlecture/weigh",data:{nodes:orderNode}});
+                            $.ajax({url:"division/weigh",data:{nodes:orderNode}});
                         },
                         onClick: $scope.onTreeClick,
                     }
@@ -287,14 +287,14 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                         'status':"locked",
                         'type':'catenate',
                         'children':ret,
-                        'lecatenate_id':0,
                         'iconSkin':"root"
                     };
                     $.fn.zTree.init($("#channeltree"), setting, root);
                     var treeObj = $.fn.zTree.getZTreeObj("channeltree");
                     var parentNode =  treeObj.getNodeByParam("id", 0, null);
-                    treeObj.selectNode(parentNode);$scope.onTreeClick(null, "channeltree", parentNode);
-                    $('#channeltree').css("height", document.body.offsetHeight - 200);
+                    treeObj.selectNode(parentNode);
+                    $scope.onTreeClick(null, "channeltree", parentNode);
+                    $('#channeltree').css("height", document.body.offsetHeight - 250);
                 });
                 var html = $compile(data.content)($scope);
                 $scope.$apply(function(){
@@ -351,21 +351,18 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                         param.custom = {
                             "procedure_model_id": $scope.row.id,
                         };
-                        if ($scope.selectnode) {
-                            param.custom['exlecture_model_id'] = ($scope.selectnode?$scope.selectnode.id:-1);
-                        }
                         return param;
                     }
                 });
                 Table.api.bindevent(table);
 
                 $(".btn-add-paragraph").click(function(){
-                    if ($scope.selectnode == null || $scope.selectnode.type != "lecture") {
+                    if ($scope.selectnode == null) {
                         Layer.alert('必须选择模板');
                         return false;
                     }
                     var href = $(this).attr("href");
-                    var url = href + '&procedure_model_id=' + $scope.row.id + "&exlecture_model_id=" + $scope.selectnode.id;
+                    var url = href + '&procedure_model_id=' + $scope.row.id + "&division_model_id=" + $scope.selectnode.id;
                     var index = Backend.api.open(url, "新建流程", {
                         moveOut: false,
                         callback: function (res) {
