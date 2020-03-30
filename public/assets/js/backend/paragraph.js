@@ -53,10 +53,69 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
         scenery: {
 
         },
+        initParam:[
+            'procedure_model_id',
+            'division_model_id'],
 
-        bindevent:function($scope) {
-            Form.api.bindevent($("form[role=form]"), $scope.submit);
-            if (Config.staff != null)$('[data-field-name="branch"]').hide().trigger("rate");
+        addController:function($scope,$sce, $compile,$timeout) {
+            var self = this;
+            var defer = $.Deferred();
+            $scope.fields = Config.scenery.fields;
+            $scope.pre ={}; $scope.row = {};
+            $scope.row['branch_model_id'] = Config.admin_branch_model_id!= null?Config.admin_branch_model_id:0;
+            $scope.row['creator_model_id'] = $scope.row['owners_model_id'] = Config.admin_id;
+
+            for(var i in self.initParam) {
+                var param = Backend.api.query(self.initParam[i]);
+                if (param) {
+                    $scope.pre[self.initParam[i]] = $scope.row[self.initParam[i]] = param;
+                }
+            }
+            var html = Template("edit-tmpl",{state:"add",'fields':"fields"});
+            $timeout(function(){
+                $("#data-view").html($compile(html)($scope));
+                $timeout(function(){
+                    self.bindevent($scope, $timeout, defer);
+                });
+            });
+            return defer;
+        },
+
+        add: function () {
+            AngularApp.controller("add", function($scope,$sce, $compile,$timeout) {
+                Controller.addController($scope,$sce, $compile,$timeout).then(function(ret){
+                    Backend.api.close(ret);
+                });
+            });
+        },
+        bindevent:function($scope, $timeout, defer) {
+            var self = this;
+
+            $('[name="row[article_model_id]"]').data("e-params",function(){
+                var param = {};
+                return param;
+            }).data("e-selected", function(data){
+                var url = "/article/preview/id/" + data.row.id;
+                $("#preview").attr("src", url);
+            });
+
+
+            Form.api.bindevent($("form[role=form]"), function (data, ret) {
+                if (defer) {
+                    defer.resolve(data);
+                } else {
+                    $scope.submit(data, ret);
+                }
+            });
+            require(['selectpage'], function () {
+                for (var i in self.initParam) {
+                    var param = Backend.api.query(self.initParam[i]);
+                    if (param) {
+                        $('[name="row[' + self.initParam[i] + ']"]').selectPageDisabled(true);
+                    }
+                }
+            });
+            if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },
 
         api: {

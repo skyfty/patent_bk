@@ -98,7 +98,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                         callback: function (res) {
                             $.ajax({url:"division/classtree",
                                 data:{
-                                    promotion_model_id:$scope.row.id,
+                                    procedure_model_id:$scope.row.id,
                                     id:$scope.selectnode.id
                                 }
                             }).then(function(ret){
@@ -285,7 +285,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                         'open'  : true,
                         'childOuter':false,
                         'status':"locked",
-                        'type':'catenate',
                         'children':ret,
                         'iconSkin':"root"
                     };
@@ -304,7 +303,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                 Table.api.init({
                     extend: {
                         index_url: 'paragraph/index',
-                        edit_url: 'paragraph/edit',
+                        edit_url: '',
                         del_url: 'paragraph/del',
                         table: 'paragraph',
                     },
@@ -328,7 +327,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     [
                         {checkbox: true},
                         {
-                            field: 'name', title: __('name'), align: 'left'
+                            field: 'article.name', title: "内容", align: 'left'
                         },
                         {
                             field: 'operate',
@@ -347,6 +346,14 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     pk: 'id',
                     sortName: 'weigh',
                     columns: columns,
+                    detailView:true,
+                    detailFormatter:function(idx, row) {
+                        var field = {
+                            "type":row['article']['type'],
+                            "name":"content",
+                        };
+                        return  Cosmetic.api.formatter(field, row['article']['content'], row['article']);
+                    },
                     queryParams:function (param) {
                         param.custom = {
                             "procedure_model_id": $scope.row.id,
@@ -363,12 +370,10 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     }
                     var href = $(this).attr("href");
                     var url = href + '&procedure_model_id=' + $scope.row.id + "&division_model_id=" + $scope.selectnode.id;
-                    var index = Backend.api.open(url, "新建流程", {
-                        moveOut: false,
+                    Backend.api.open(url, "新建流程", {
                         callback: function (res) {
                         }}
                     );
-                    Layer.full(index);
                     return false;
                 });
             },

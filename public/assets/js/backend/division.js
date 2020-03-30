@@ -87,10 +87,16 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                 });
             });
         },
-        bindevent:function($scope) {
+        bindevent:function($scope, $timeout, defer) {
             var self = this;
 
-            Form.api.bindevent($("form[role=form]"));
+            Form.api.bindevent($("form[role=form]"), function (data, ret) {
+                if (defer) {
+                    defer.resolve(data);
+                } else {
+                    $scope.submit(data, ret);
+                }
+            });
             require(['selectpage'], function () {
                 for (var i in self.initParam) {
                     var param = Backend.api.query(self.initParam[i]);

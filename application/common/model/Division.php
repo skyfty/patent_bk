@@ -18,11 +18,10 @@ class Division extends Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("BL%06d", $maxid);
         });
-    }
 
-    public function patent()
-    {
-        return $this->morphTo();
+       self::afterDelete( function($row){
+          model("chapters")->where("division_model_id", $row['id'])->delete();
+       });
     }
 
     public function chapters() {

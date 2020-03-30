@@ -24,6 +24,21 @@ class Paragraph extends Cosmetic
         $this->model = new \app\admin\model\Paragraph;
     }
 
+    /**
+     * 添加
+     */
+    public function edit($ids = NULL) {
+        $row = $this->model->get($ids);
+        if (!$row) {
+            $row = [
+                'promotion_model_id'=>$this->request->param("promotion_model_id"),
+                'exlecture_model_id'=>$this->request->param("exlecture_model_id"),
+            ];
+        }
+        $this->view->assign("row", $row);
+
+        return $this->view->fetch();
+    }
 
     protected function spectacle($model) {
         return $model;

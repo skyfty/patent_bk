@@ -11,12 +11,8 @@ use app\common\controller\Backend;
  */
 class Article extends Cosmetic
 {
-    
-    /**
-     * Article模型对象
-     * @var \app\admin\model\Article
-     */
-    protected $model = null;
+    protected $selectpageFields = ['name', 'idcode', 'id', 'content'];
+    protected $noNeedRight = ['preview'];
 
     public function _initialize()
     {
@@ -24,6 +20,13 @@ class Article extends Cosmetic
         $this->model = new \app\admin\model\Article;
     }
 
+    public function preview($id) {
+        $row = $this->model->with($this->relationSearch)->find($id);
+        if (!$row)
+            $this->error(__('No Results were found'));
+        $this->view->assign("row", $row);
+        return $this->view->fetch();
+    }
 
 
     protected function spectacle($model) {

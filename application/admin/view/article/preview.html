@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+
+<html lang="{$config.language}">
+<head>
+    <meta charset="utf-8">
+    <title>{$title|default=''}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+
+    <link rel="shortcut icon" href="__CDN__/assets/img/favicon.ico" />
+    <!-- Loading Bootstrap -->
+    <link href="__CDN__/assets/libs/bootstrap/dist/css/bootstrap.min.css?v={$Think.config.site.version}" rel="stylesheet">
+
+    <script type="text/javascript">var row ={$row|json_encode};</script>
+</head>
+<body>
+<div id="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="content">
+                {if condition="($row.type == 'editor')"}
+                {$row.content}
+                {else /}
+                <img src="{$row.content}"/>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -34,7 +34,7 @@ class Division extends Cosmetic
             $chequelList[] = [
                 'id'     => $v['id'],
                 'parent' => '#',
-                'text'   => $v['chapters']['name'],
+                'name'   => $v['chapters']['name'],
                 'type'   => "list",
                 'state'  => ['opened' => false]
             ];
