@@ -78,6 +78,15 @@ class Shuttering extends Cosmetic
                     $templWord->setValue(trim($field['title']), $val);
                 }
             }
+            $templWord->setValue("CURRENT_DATE", date("Y年m月d日"));
+            $templWord->setValue("CURRENT_TIME", date("H时i分s秒"));
+            $templWord->setValue("CURRENT_DATE_TIME", date("Y年m月d日 H时i分s秒"));
+            $templWord->setValue("CURRENT_YEAR", date("Y"));
+            $templWord->setValue("CURRENT_MONTH", date("m"));
+            $templWord->setValue("CURRENT_DAY", date("d"));
+            $templWord->setValue("TOMORROW", date("Y年m月d日",strtotime("+1 day")));
+            $templWord->setValue("POSTNATAL", date("Y年m月d日",strtotime("+2 days")));
+
             $templWord->saveAs($destFileDir.$filename);
         }
         return $uploadDir.$filename;
