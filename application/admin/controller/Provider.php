@@ -60,9 +60,9 @@ class Provider extends Cosmetic
                 $result = model($species['model'])->create([
                     "branch_model_id"=>$params["branch_model_id"],
                 ]);
-                if ($result) {
-                    model("provider")->where("promotion_model_id", $result['promotion_model_id'])->update(["staff_model_id"=>$params["staff_model_id"]]);
-                }
+//                if ($result) {
+//                    model("provider")->where("promotion_model_id", $result['promotion_model_id'])->update(["staff_model_id"=>$params["staff_model_id"]]);
+//                }
             }
 
             if ($result !== false) {
