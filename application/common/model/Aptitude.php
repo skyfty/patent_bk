@@ -17,12 +17,22 @@ class Aptitude extends Professional
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("AP%06d", $maxid);
         });
+
+        self::afterUpdate(function($row){
+            $changeData = $row->readonly("updatetime")->getChangedData();
+            if (isset($changeData['company_model_id'])) {
+                model("promotion")
+                    ->where(['relevance_model_type'=>'aptitude',"relevance_model_id"=>$row['id']])
+                    ->update(['principal_model_id'=>$row['company']['principal_model_id']]);
+            }
+        });
     }
 
     public function getInitPromotionData($species) {
-        $data = [
-            "principal_model_id"=>$this['company']['principal_model_id']
-        ];
+        $data = [];
+        if (isset($this['company_model_id'])) {
+            $data["principal_model_id"]=$this['company']['principal_model_id'];
+        }
         return $data;
     }
 

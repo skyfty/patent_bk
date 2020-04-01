@@ -97,15 +97,15 @@ class Cosmetic extends Backend
         foreach($modelFields as $v) {
             if ($v['relevance']) {
                 $idx =array_search($v['relevance'],$relationFields);
-                if ($idx !== false) {
+                if ($idx !== false && is_string($relationFields[$idx])) {
                     unset($relationFields[$idx]);
                 }
-                $relationFields[] = $v['relevance'].".".$v['name'];
+                $relationFields[$v['relevance']][] =  $v['name'];
             } else {
                 $relationFields[] = $v['name'];
             }
         }
-        return array_unique(array_merge($this->relationSearch, $relationFields));
+        return $relationFields;
     }
 
     protected function assignScenery($model_id, $pos, $sceneryWhere = array()) {

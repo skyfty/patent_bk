@@ -22,7 +22,6 @@ class Principal extends Cosmetic
     ];
 
     public function checkPrincipal($value,$rule,$data, $field, $title) {
-
         if ($data['principalclass_model_id']  == 2) {
             $principal = model("Principal")->where("name", $data['name'])->where(function($query)use($data){
                 if (isset($data['id'])) {

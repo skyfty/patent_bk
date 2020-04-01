@@ -195,11 +195,18 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
         bindevent:function($scope,$timeout, defer){
             var self = this;
 
+            $('[name="row[species_cascader_id]"]').change(function(){
+                $('[name="row[promotion_model_id]"]').selectPageClear();
+            });
+
             $('[name="row[promotion_model_id]"]').data("e-params",function(){
                 var param = {};
                 param.custom = {
                     "branch_model_id":$scope.row['branch_model_id']
                 };
+                if ($scope.row.species_cascader_id) {
+                    param.custom["species_cascader_id"] = $scope.row['species_cascader_id'];
+                }
                 return param;
             }).data("e-selected", function(data){
 

@@ -52,8 +52,19 @@ class Provider extends Cosmetic
         $db = $this->model->getQuery();
         $db->startTrans();
         try {
+            if ($params["promotion_model_id"]) {
+                unset($params["species_cascader_id"]);
+                $result = $this->model->validate("provider.add")->allowField(true)->save($params);
+            } else {
+                $species = model("species")->get($params["species_cascader_id"]);
+                $result = model($species['model'])->create([
+                    "branch_model_id"=>$params["branch_model_id"],
+                ]);
+                if ($result) {
+                    model("provider")->where("promotion_model_id", $result['promotion_model_id'])->update(["staff_model_id"=>$params["staff_model_id"]]);
+                }
+            }
 
-            $result = $this->model->validate("provider.add")->allowField(true)->save($params);
             if ($result !== false) {
                 $db->commit();
                 Hook::listen('newprovider',$this->model);
