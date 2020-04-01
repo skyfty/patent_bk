@@ -16,6 +16,16 @@ class Aptitude extends Professional
         self::beforeInsert(function($row){
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("AP%06d", $maxid);
+            if (isset($row['company_model_id'])) {
+                $row['name'] = $row->company->name;
+            }
+        });
+
+        self::beforeUpdate(function($row){
+            $changeData = $row->readonly("updatetime")->getChangedData();
+            if (isset($changeData['company_model_id'])) {
+                $row['name'] = $row->company->name;
+            }
         });
 
         self::afterUpdate(function($row){
