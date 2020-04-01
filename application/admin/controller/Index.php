@@ -143,15 +143,22 @@ class Index extends Backend
 
     public function ggg()
     {
-        $rows = Db::table("fa_promotion_distribute")->select();
+        $rows = model("procedure")->select();
         $cnt = count($rows);
         foreach ($rows as $row) {
             echo $cnt-- . "\r\n";
-            model("distribute")->create([
-                "promotion_model_id"=>$row['promotion_model_id'],
-                "branch_model_id"=>$row['branch_model_id'],
+            $fields = model("fields")->where("model_table", $row['relevance_model_type'])->where("alternating", 1)->select();
+            foreach($fields as $f) {
+               $r =  model("alternating")->where("field_model_id", $f['id'])->find();
+                if (!$r) {
+                    model("alternating")->create([
+                        "procedure_model_id"=>$row['id'],
+                        "field_model_id"=>$f['id'],
+                        "name"=>$f['title'],
+                    ]);
+                }
 
-            ]);
+            }
 
         }
     }
