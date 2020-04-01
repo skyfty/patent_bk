@@ -149,7 +149,7 @@ class Index extends Backend
             echo $cnt-- . "\r\n";
             $fields = model("fields")->where("model_table", $row['relevance_model_type'])->where("alternating", 1)->select();
             foreach($fields as $f) {
-               $r =  model("alternating")->where("field_model_id", $f['id'])->find();
+               $r =  model("alternating")->where("field_model_id", $f['id'])->where("procedure_model_id", $row['id'])->find();
                 if (!$r) {
                     model("alternating")->create([
                         "procedure_model_id"=>$row['id'],
