@@ -8,8 +8,23 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
         },
         indexscape:function($scope, $compile,$timeout){
             var species_cascader_id = Fast.api.query("species_cascader_id");
+
+            $scope.speciesModelIds = [];
+            $scope.classChanged = function(data) {
+                var typeIds = [];
+                angular.forEach(data.selected, function(id){
+                    if ($.isNumeric(id))
+                        typeIds.push(id);
+                });
+                $scope.speciesModelIds = typeIds;
+                $scope.$broadcast("refurbish");
+            };
+
             $scope.searchFieldsParams = function(param) {
                 param.custom = {};
+                if ($scope.speciesModelIds.length > 0) {
+                    param.custom['species_cascader_id'] = ["in",$scope.speciesModelIds];
+                }
                 if (species_cascader_id) {
                     param.custom['species_cascader_id'] = species_cascader_id;
                 }
