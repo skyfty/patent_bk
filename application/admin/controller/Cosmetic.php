@@ -102,7 +102,10 @@ class Cosmetic extends Backend
                 }
                 $relationFields[$v['relevance']][] =  $v['name'];
             } else {
-                $relationFields[] = $v['name'];
+                $idx =array_search($v['name'],$relationFields);
+                if ($idx === false) {
+                    $relationFields[] = $v['name'];
+                }
             }
         }
         return $relationFields;

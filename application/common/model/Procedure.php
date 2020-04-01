@@ -25,9 +25,21 @@ class Procedure extends Cosmetic
         });
 
         $updateSpecies = function($row){
+            model("alternating")->where("procedure_model_id", $row['id'])->delete();
             $row->species->updateProcedureCount();
         };
         self::afterDelete($updateSpecies);self::afterInsert($updateSpecies);
+
+        self::afterInsert(function($row){
+            $fields = model("fields")->where("model_table", $row['relevance_model_type'])->where("alternating", 1)->select();
+            foreach($fields as $f) {
+                model("alternating")->create([
+                    "procedure_model_id"=>$row['id'],
+                    "field_model_id"=>$f['id'],
+                    "name"=>$f['title'],
+                ]);
+            }
+        });
     }
     public function alternatings()
     {

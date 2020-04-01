@@ -211,6 +211,37 @@ class Fields extends \app\common\model\Fields
             }
             Sight::destroy(array("fields_id"=>$row['id']));
         });
+
+
+        self::afterDelete(function ($row) {
+          if ($row['alternating'] ==1) {
+              model("alternating")->where("field_model_id", $row['id'])->delete();
+          }
+        });
+
+        self::afterInsert(function ($row) {
+            if ($row['alternating'] ==1) {
+                $procedures = model("procedure")->where("relevance_model_type", $row['model_table'])->select();
+                foreach($procedures as $p) {
+                    model("alternating")->create([
+                        "procedure_model_id"=>$p['id'],
+                        "field_model_id"=>$row['id'],
+                        "name"=>$row['title'],
+                    ]);
+                }
+            }
+        });
+
+        self::afterUpdate(function ($row) {
+            if ($row['alternating'] ==1) {
+                $changeData = $row->readonly("updatetime")->getChangedData();
+                if (isset($changeData['title'])) {
+                    model("alternating")->where("field_model_id", $row['id'])->update([
+                        "name"=>$row['title']
+                    ]);
+                }
+            }
+        });
     }
 
 
