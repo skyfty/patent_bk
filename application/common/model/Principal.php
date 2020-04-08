@@ -3,6 +3,7 @@
 namespace app\common\model;
 
 use think\App;
+use think\Loader;
 use think\Model;
 
 class Principal extends  Cosmetic

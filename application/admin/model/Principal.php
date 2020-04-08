@@ -3,7 +3,9 @@
 namespace app\admin\model;
 use app\admin\library\Auth;
 
+use PhpOffice\PhpSpreadsheet\Calculation\Exception;
 use think\App;
+use think\Loader;
 use think\Model;
 use traits\model\SoftDelete;
 
@@ -27,6 +29,10 @@ class Principal extends  \app\common\model\Principal
                 if (in_array($k, $fields)) {
                     $data[$k] = $v;
                 }
+            }
+            $validate = Loader::validate($row['substance_type']);
+            if(!$validate->check($data)){
+                throw new \think\Exception($validate->getError());
             }
             model($row['substance_type'])->where("id",$row['substance_id'])->find()->allowField($fields)->save($data);
         });
