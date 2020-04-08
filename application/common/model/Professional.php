@@ -34,10 +34,10 @@ class Professional extends Cosmetic
         }
         model("procshutter")->where("procedure_model_id", $procedure['id'])->delete();
 
-        $alternatings = $procedure->alternatings;
+        $fields = model("fields")->where("model_table", $procedure['relevance_model_type'])->where("alternating", 1)->select();
         $shutterings = model("shuttering")->where("procedure_model_id", $procedure['id'])->select();
         foreach($shutterings as $shuttering) {
-            $filename = $shuttering->produce($this, $alternatings);
+            $filename = $shuttering->produce($this, $fields);
             if ($filename) {
                 model("procshutter")->create([
                     "procedure_model_id"=> $procedure['id'],

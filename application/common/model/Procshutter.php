@@ -9,6 +9,7 @@ class Procshutter extends Cosmetic
     // 表名
     protected $name = 'procshutter';
     public $keywordsFields = ["name", "idcode"];
+    public $append=['download_text'];
 
     protected static function init()
     {
@@ -24,6 +25,13 @@ class Procshutter extends Cosmetic
     }
 
 
+    public function getDownloadTextAttr($value,$data) {
+        if (!$value && !isset($data['file'])) {
+            return "";
+        }
+        $info = pathinfo($data['file']);
+        return $data['name'].".".$info['extension'];
+    }
     public function promotion() {
         return $this->hasOne('promotion','id','promotion_model_id')->joinType("LEFT")->setEagerlyType(0);
     }

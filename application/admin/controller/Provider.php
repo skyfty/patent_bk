@@ -79,6 +79,22 @@ class Provider extends Cosmetic
     }
 
 
+    public function procedure() {
+        $ids =$this->request->param("ids", null);
+        if ($ids === null)
+            $this->error(__('Params error!'));
+
+        $row = $this->getModelRow($ids);
+        if ($row === null)
+            $this->error(__('No Results were found'));
+
+        $this->view->assign("row", $row);
+
+        $fields = [];
+        $content = $this->view->fetch("division");
+
+        return array("content"=>$content, "fields"=>$fields, "row"=>$row);
+    }
     protected function spectacle($model) {
         $branch_model_id = $this->request->param("branch_model_id");
         if (!$branch_model_id) {

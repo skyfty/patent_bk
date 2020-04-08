@@ -31,7 +31,7 @@ class Shuttering extends Cosmetic
         return $this->hasOne('procedure','id','procedure_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
-    public function produce($data, $alternatings) {
+    public function produce($data, $fields) {
         $tempfile =  ROOT_PATH . '/public' . $this['file'];
         $suffix = strtolower(pathinfo($tempfile, PATHINFO_EXTENSION));
         if ($this['type'] == "excel") {
@@ -60,19 +60,12 @@ class Shuttering extends Cosmetic
         if ($this['type'] == "excel") {
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($tempfile);
             $worksheet = $spreadsheet->getActiveSheet();
-            foreach($alternatings as $alternating) {
-                $field = $alternating['field'];
-                if (isset($data[$field['name']])) {
-                    $val = $data[$field['name']];
-                    $title = trim($field['title']);
-                }
-            }
+
             $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'xlsx');
             $writer->save($destFileDir.$filename);
         } else {
             $templWord = new \PhpOffice\PhpWord\TemplateProcessor($tempfile);
-            foreach($alternatings as $alternating) {
-                $field = $alternating['field'];
+            foreach($fields as $field) {
                 if (isset($data[$field['name']])) {
                     $val = $data[$field['name']];
                     $templWord->setValue(trim($field['title']), $val);

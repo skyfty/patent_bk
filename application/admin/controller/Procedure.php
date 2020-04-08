@@ -29,10 +29,6 @@ class Procedure extends Cosmetic
         if ($ids === null)
             $this->error(__('Params error!'));
 
-        $cosmeticModel = Modelx::get(['table' => "procedure"],[],!App::$debug);
-        if (!$cosmeticModel) {
-            $this->error('未找到对应模型');
-        }
         $row = $this->getModelRow($ids);
         if ($row === null)
             $this->error(__('No Results were found'));
@@ -50,7 +46,6 @@ class Procedure extends Cosmetic
             $content = $this->view->fetch("division");
         }
         return array("content"=>$content, "fields"=>$fields, "row"=>$row);
-
     }
 
     public function classtree() {

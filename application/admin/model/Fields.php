@@ -219,19 +219,6 @@ class Fields extends \app\common\model\Fields
           }
         });
 
-        self::afterInsert(function ($row) {
-            if ($row['alternating'] ==1) {
-                $procedures = model("procedure")->where("relevance_model_type", $row['model_table'])->select();
-                foreach($procedures as $p) {
-                    model("alternating")->create([
-                        "procedure_model_id"=>$p['id'],
-                        "field_model_id"=>$row['id'],
-                        "name"=>$row['title'],
-                    ]);
-                }
-            }
-        });
-
         self::afterUpdate(function ($row) {
             if ($row['alternating'] ==1) {
                 $changeData = $row->readonly("updatetime")->getChangedData();
