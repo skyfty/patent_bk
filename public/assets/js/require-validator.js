@@ -167,7 +167,25 @@ define(['validator-core', 'validator-lang'], function (Validator, undefined) {
                 }
 
                 return isValid || "请填写正确的统一社会信用代码";
-            }
+            },
+            // 公司简称
+            abbrevi: function(element) {
+                var value = element.value,
+                    isValid = true,
+                    rFormat = /^[A-Z]+$/;
+                if (!value) {
+                    return isValid;
+                }
+
+                if (value.length > 4 || value.length < 3) {
+                    return "公司简称长度错误";
+                }
+
+                if (!rFormat.test(value)) {
+                    isValid = false;
+                }
+                return isValid || "请填写正确的公司简称";
+            },
         }
     });
     return Validator;

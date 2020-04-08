@@ -79,7 +79,9 @@ class Config extends Model
             'chinese'  => '中文',
             'username' => '用户名',
             'password' => '密码',
-            'bankcard' => '银行卡号'
+            'bankcard' => '银行卡号',
+            'abbrevi' => '公司简称'
+
         ];
         return $regexList;
     }
