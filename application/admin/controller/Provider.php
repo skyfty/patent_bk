@@ -10,6 +10,7 @@ use app\admin\model\Sight;
 use app\admin\model\Statistics;
 use app\admin\model\TException;
 use EasyWeChat\Foundation\Application;
+use think\App;
 use think\Config;
 use think\Exception;
 use think\Hook;
@@ -78,6 +79,44 @@ class Provider extends Cosmetic
         }
     }
 
+    public function view() {
+        $ids =$this->request->param("ids", null);
+        if ($ids === null)
+            $this->error(__('Params error!'));
+
+        $row = $this->getModelRow($ids);
+        if ($row === null)
+            $this->error(__('No Results were found'));
+
+        $principal = $row->promotion->principal->substance;
+        $this->view->assign("row", $row);
+
+        if ($this->request->isAjax()) {
+            return parent::view();
+        } else {
+            $sceneryList = [];
+            $scenerys = model("scenery")->where(['model_table' => "provider", 'pos' => "view"])->cache(!App::$debug)->order("weigh", "ASC")->select();
+            foreach ($scenerys as $k=>$v) {
+                if ($v['name'] == "procedure") {
+                    $procedure = $row->promotion->procedure;
+                    $fields = [];
+                    foreach($procedure->alternatings as $alternating) {
+                        $fields[] = $alternating->field;
+                    }
+                    $v['fields'] = $fields;
+                } else {
+                    $where =array(
+                        'scenery_id'=>$v['id']
+                    );
+                    $v['fields'] = model("sight")->with('fields')->cache(!App::$debug)->where($where)->order("weigh", "asc")->select();
+                }
+                $sceneryList[$v['pos']][] = $v;
+            }
+            $this->assignconfig('sceneryList', $sceneryList);
+
+            return $this->view->fetch();
+        }
+    }
 
     public function procedure() {
         $ids =$this->request->param("ids", null);
@@ -90,9 +129,13 @@ class Provider extends Cosmetic
 
         $this->view->assign("row", $row);
 
-        $fields = [];
-        $content = $this->view->fetch("division");
+        $procedure = $row->promotion->procedure;
 
+        $fields = [];
+        foreach($procedure->alternatings as $alternating) {
+            $fields[] = $alternating->field;
+        }
+        $content = $this->view->fetch("procedure");
         return array("content"=>$content, "fields"=>$fields, "row"=>$row);
     }
     protected function spectacle($model) {

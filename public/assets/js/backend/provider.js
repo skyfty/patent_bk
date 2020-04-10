@@ -152,7 +152,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
             $(".btn-ajax").data("success", $scope.refreshRow);
         },
         scenery: {
-
         },
         initParam:[
             'customer_model_id',
