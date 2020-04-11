@@ -66,8 +66,12 @@ class Shuttering extends Cosmetic
         } else {
             $templWord = new \PhpOffice\PhpWord\TemplateProcessor($tempfile);
             foreach($fields as $field) {
-                if (isset($data[$field['name']])) {
-                    $val = $data[$field['name']];
+                $relevance = $data;
+                if (isset($field['relevance']) && $field['relevance']) {
+                    $relevance = $relevance[$field['relevance']];
+                }
+                if (isset($relevance[$field['name']])) {
+                    $val = $relevance[$field['name']];
                     $templWord->setValue(trim($field['title']), $val);
                 }
             }

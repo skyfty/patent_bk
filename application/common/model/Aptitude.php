@@ -36,6 +36,14 @@ class Aptitude extends Professional
         return "";
     }
 
+
+    public function getEnglishNameAttr($value, $data) {
+        if (isset($this['company_model_id'])) {
+            return $this->company->english_name;
+        }
+        return "";
+    }
+
     public function getInitPromotionData($species) {
         $data = [];
         if (isset($this['company_model_id'])) {
