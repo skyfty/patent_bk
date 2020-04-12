@@ -75,7 +75,7 @@ class Shuttering extends Cosmetic
                     $relevance = $relevance[$field['relevance']];
                 }
                 if (isset($relevance[$field['name']])) {
-                    $val = $relevance[$field['name']];
+                    $val =  str_replace(PHP_EOL, '<br />', $relevance[$field['name']]);
                     $searchval = '${'.trim($field['title']).'}';
                     $content = str_replace($searchval, $val, $content);
                 }
