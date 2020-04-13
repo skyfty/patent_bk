@@ -71,6 +71,7 @@ class Shuttering extends Cosmetic
                 }
                 if (isset($relevance[$field['name']])) {
                     $val = $relevance[$field['name']];
+                    $val = str_replace("\r\n", '<w:br />', $val);
                     $templWord->setValue(trim($field['title']), $val);
                 }
             }
