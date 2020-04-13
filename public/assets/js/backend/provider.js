@@ -51,30 +51,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
                     );
                 };
 
-                $scope.changestaff = function() {
-                    var that = this;
-                    var ids = Table.api.selectedids(dataTable);
-                    Fast.api.open("provider/changestaff?hidec=0&ids="+ids, "修改老师", {
-                        callback: function (data) {
-                            $scope.$apply(function(){
-                                dataTable.bootstrapTable('refresh', {});
-                            });
-                        }
-                    });
-                };
-
-                $scope.changeappointtime = function() {
-                    var that = this;
-                    var ids = Table.api.selectedids(dataTable);
-                    Fast.api.open("provider/changeappointtime?ids="+ids, "调整时间", {
-                        callback: function (data) {
-                            $scope.$apply(function(){
-                                dataTable.bootstrapTable('refresh', {});
-                            });
-                        }
-                    });
-                };
-
                 var options = {
                     extend: {
                         index_url: 'provider/index',
@@ -99,34 +75,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
                 };
                 Table.api.init(options);
                 Form.api.bindevent($("div[ng-controller='index']"));
-            },
-            calendar:function($scope, $compile,$timeout, data) {
-                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
-                var events = {
-                    url: "provider/calendar",
-
-                };
-                var resources = [];
-                angular.forEach(data.classrooms, function(v){
-                    resources.push({id: v.id, title: v.name+"," + v.idcode});
-                });
-                require(['jquery-ui.min','scheduler', 'fullcalendar-lang'], function () {
-                    $('#calendar').fullCalendar({
-                        groupByResource: true,
-                        defaultView: 'timelineDay',
-                        resourceLabelText: '教室',
-                        header: {
-                            left: 'prev,next today',
-                            center: 'title',
-                            right: 'timelineDay,timelineWeek,timelineMonth'
-                        },
-                        resources: resources,
-                        navLinks: true,
-                        events:events,
-                    });
-
-
-                });
             }
         },
         viewscape:function($scope, $compile,$parse, $timeout){
@@ -153,77 +101,40 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
         },
         scenery: {
         },
-        initParam:[
-            'customer_model_id',
-            'branch_model_id',
-            'promotion_model_id',
-            'staff_model_id'],
+        initParam:[],
 
         addController:function($scope,$sce, $compile,$timeout) {
-            var self = this;
-            var defer = $.Deferred();
-            $scope.fields = Config.scenery.fields;
-            $scope.pre ={}; $scope.row = {};
-            $scope.row['branch_model_id'] = Config.admin_branch_model_id!= null?Config.admin_branch_model_id:0;
-            $scope.row['creator_model_id'] = $scope.row['owners_model_id'] = Config.admin_id;
 
-            for(var i in self.initParam) {
-                var param = Backend.api.query(self.initParam[i]);
-                if (param) {
-                    $scope.pre[self.initParam[i]] = $scope.row[self.initParam[i]] = param;
-                }
-            }
-            var html = Template("edit-tmpl",{state:"add",'fields':"fields"});
-            $timeout(function(){
-                $("#data-view").html($compile(html)($scope));
-                $timeout(function(){
-                    self.bindevent($scope, $timeout, defer);
-                });
-            });
-            return defer;
         },
 
         add: function () {
             AngularApp.controller("add", function($scope,$sce, $compile,$timeout) {
-                Controller.addController($scope,$sce, $compile,$timeout).then(function(ret){
-                    Backend.api.close(ret);
+                var self = this;
+                $scope.fields = Config.scenery.fields;
+                $scope.pre ={}; $scope.row = {};
+                $scope.row['branch_model_id'] = Config.admin_branch_model_id!= null?Config.admin_branch_model_id:0;
+                $scope.row['creator_model_id'] = $scope.row['owners_model_id'] = Config.admin_id;
+
+                for(var i in self.initParam) {
+                    var param = Backend.api.query(self.initParam[i]);
+                    if (param) {
+                        $scope.pre[self.initParam[i]] = $scope.row[self.initParam[i]] = param;
+                    }
+                }
+                var html = Template("edit-tmpl",{state:"add",'fields':"fields"});
+                $timeout(function(){
+                    $("#data-view").html($compile(html)($scope));
+                    $timeout(function(){
+                        self.bindevent($scope, $timeout);
+                    });
                 });
             });
         },
 
-        bindevent:function($scope,$timeout, defer){
+        bindevent:function($scope,$timeout){
             var self = this;
-
-            $('[name="row[species_cascader_id]"]').change(function(){
-                $('[name="row[promotion_model_id]"]').selectPageClear();
-            });
-
-            $('[name="row[promotion_model_id]"]').data("e-params",function(){
-                var param = {};
-                param.custom = {
-                    "branch_model_id":$scope.row['branch_model_id']
-                };
-                if ($scope.row.species_cascader_id) {
-                    param.custom["species_cascader_id"] = $scope.row['species_cascader_id'];
-                }
-                return param;
-            }).data("e-selected", function(data){
-
-            });
-            $('[name="row[customer_model_id]"]').data("e-params",function(){
-                var param = {};
-                param.custom = {
-                    "branch_model_id":$scope.row['branch_model_id']
-                };
-                return param;
-            });
-
             Form.api.bindevent($("form[role=form]"), function (data, ret) {
-                if (defer) {
-                    defer.resolve(data);
-                } else {
-                    $scope.submit(data, ret);
-                }
+                $scope.submit(data, ret);
             });
 
             require(['selectpage'], function () {
@@ -232,23 +143,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },
 
-        changestaff: function () {
-            var self = this;
-            AngularApp.controller("changestaff", function($scope,$sce, $compile,$timeout) {
-                Controller.addController($scope,$sce, $compile,$timeout).then(function(ret){
-                    Backend.api.close(ret);
-                });
-            });
-        },
-
-        changeappointtime: function () {
-            var self = this;
-            AngularApp.controller("changeappointtime", function($scope,$sce, $compile,$timeout) {
-                Form.api.bindevent($("form[role=form]"), function(data, ret){
-                    Backend.api.close(ret);
-                });
-            });
-        },
         chart:function() {
             AngularApp.controller("chart", function($scope,$sce, $compile,$timeout) {
                 $scope.refresh = function(){

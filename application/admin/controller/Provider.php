@@ -118,6 +118,42 @@ class Provider extends Cosmetic
         }
     }
 
+    /**
+     * 编辑
+     */
+    public function edit($ids = NULL)  {
+        $row = $this->model->get($ids);
+        if (!$row)
+            $this->error(__('No Results were found'));
+
+        $params = $this->request->post("row/a");
+        if (!$params) {
+            $this->error(__('Parameter %s can not be empty', ''));
+        }
+
+        $db = $this->model->getQuery();
+        $db->startTrans();
+        try {
+            $scenery = $this->request->param("scenery");
+
+            $result = $row->allowField(true)->validate("Provider.view")->save($params);
+            if ($result !== false) {
+                if ($scenery == "procedure"){
+                    $row->promotion->relevance->save($params);
+                }
+                $db->commit();
+                $this->result($this->getModelRow($ids),1);
+            } else {
+                $db->rollback();
+                $this->error($row->getError());
+            }
+        } catch(\think\Exception $e) {
+            $db->rollback();
+            $this->error($e->getMessage());
+        }
+    }
+
+
     public function procedure() {
         $ids =$this->request->param("ids", null);
         if ($ids === null)

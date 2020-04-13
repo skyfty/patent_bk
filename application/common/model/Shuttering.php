@@ -63,36 +63,27 @@ class Shuttering extends Cosmetic
             $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'xlsx');
             $writer->save($destFileDir.$filename);
         } else {
-            $tmpfname = tempnam(sys_get_temp_dir(), "shutter");
-            $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter(\PhpOffice\PhpWord\IOFactory::load($tempfile), 'HTML');
-            $objWriter->save($tmpfname);
-            $content = file_get_contents($tmpfname);
-            unlink($tmpfname);
-
+            $templWord = new \PhpOffice\PhpWord\TemplateProcessor($tempfile);
             foreach($fields as $field) {
                 $relevance = $data;
                 if (isset($field['relevance']) && $field['relevance']) {
                     $relevance = $relevance[$field['relevance']];
                 }
                 if (isset($relevance[$field['name']])) {
-                    $val =  str_replace(PHP_EOL, '<br />', $relevance[$field['name']]);
-                    $searchval = '${'.trim($field['title']).'}';
-                    $content = str_replace($searchval, $val, $content);
+                    $val = $relevance[$field['name']];
+                    $templWord->setValue(trim($field['title']), $val);
                 }
             }
-            $content = str_replace($searchval, $val, $content);
-            $content = str_replace("CURRENT_DATE", date("Y年m月d日"), $content);
-            $content = str_replace("CURRENT_TIME", date("H时i分s秒"), $content);
-            $content = str_replace("CURRENT_DATE_TIME", date("Y年m月d日 H时i分s秒"), $content);
-            $content = str_replace("CURRENT_YEAR", date("Y"), $content);
-            $content = str_replace("CURRENT_MONTH", date("m"), $content);
-            $content = str_replace("CURRENT_DAY", date("d"), $content);
-            $content = str_replace("TOMORROW", date("Y年m月d日",strtotime("+1 day")), $content);
-            $content = str_replace("POSTNATAL", date("Y年m月d日",strtotime("+2 days")), $content);
+            $templWord->setValue("CURRENT_DATE", date("Y年m月d日"));
+            $templWord->setValue("CURRENT_TIME", date("H时i分s秒"));
+            $templWord->setValue("CURRENT_DATE_TIME", date("Y年m月d日 H时i分s秒"));
+            $templWord->setValue("CURRENT_YEAR", date("Y"));
+            $templWord->setValue("CURRENT_MONTH", date("m"));
+            $templWord->setValue("CURRENT_DAY", date("d"));
+            $templWord->setValue("TOMORROW", date("Y年m月d日",strtotime("+1 day")));
+            $templWord->setValue("POSTNATAL", date("Y年m月d日",strtotime("+2 days")));
 
-            $phpWord = new \PhpOffice\PhpWord\PhpWord();
-            \PhpOffice\PhpWord\Shared\Html::addHtml($phpWord->addSection(), $content, true);
-            $phpWord->save($destFileDir.$filename);
+            $templWord->saveAs($destFileDir.$filename);
         }
         return $uploadDir.$filename;
     }
