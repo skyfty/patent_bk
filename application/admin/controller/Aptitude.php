@@ -31,20 +31,7 @@ class Aptitude extends Cosmetic
         foreach($procedures as $procedure) {
             $row->produceDocument($procedure);
         }
-
-        model("procshutter")->where("status", "locked")->delete();
-        $company = $row->company;
-        foreach(["business_licence"] as $field_name) {
-            $field = model("fields")->where("model_table", "company")->where("name", $field_name)->find();
-            model("procshutter")->create([
-                "relevance_model_type"=>"aptitude",
-                "relevance_model_id"=> $row['id'],
-                "procedure_model_id"=>0,
-                "file"=> $company[$field_name],
-                "name"=> $field['title'],
-                "status"=> "locked",
-            ]);
-        }
+        $row->produceCompanyDocument();
         $this->success();
     }
 
