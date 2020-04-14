@@ -84,7 +84,7 @@ class Provider extends Cosmetic
         $row = $this->model->with($this->getRelationSearch($cosmeticModel))->find($ids);
         if ($row) {
             $relevance = $row->promotion->relevance;;
-            $alternat_fields = model("fields")->where("alternating",1)->where("model_table", $relevance->raw_name)->cache(!App::$debug)->select();
+            $alternat_fields = model("fields")->where("alternating",1)->where("model_table", $relevance->raw_name)->where("relevance","")->cache(!App::$debug)->select();
             foreach($alternat_fields as $field) {
                 $row[$field['name']] = $relevance[$field['name']];
             }
