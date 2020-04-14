@@ -569,6 +569,22 @@ define(['jquery', 'bootstrap', 'moment', 'moment/locale/zh-cn', 'bootstrap-table
                     }
                     return '<a href="javascript:;" class="searchit" data-toggle="tooltip" title="' + __('Click to search %s', value) + '" data-field="' + field + '" data-value="' + value + '">' + value + '</a>';
                 },
+                mapfileicon:function(value) {
+                    var filemap = {
+                        "pdf": "fa-file-pdf-o", "pptx": "fa-file-powerpoint-o", "ppt": "fa-file-powerpoint-o",
+                        "zip": "fa-file-zip-o", "rar": "fa-file-zip-o", "gz": "fa-file-zip-o",
+                        "txt": "fa-file-text", "docx": "fa-file-word-o", "doc": " fa-file-word-o",
+                        "xls": "fa-file-excel-o", "xlsx": "fa-file-excel-o",
+                    };
+                    var exticon = "fa-file";
+                    var filepath = value.split(".");
+                    if (filepath.length > 1) {
+                        if (filemap[filepath[1]]) {
+                            exticon = filemap[filepath[1]];
+                        }
+                    }
+                    return exticon;
+                },
                 file: function (value, row, index) {
                     return Table.api.formatter.files.call(this, value, row, index);
                 },
@@ -576,22 +592,10 @@ define(['jquery', 'bootstrap', 'moment', 'moment/locale/zh-cn', 'bootstrap-table
                     var html = [];
                     value = value === null ? '' : value.toString();
                     if (value != "") {
-                        var filemap = {
-                            "pdf": "fa-file-pdf-o", "pptx": "fa-file-powerpoint-o", "ppt": "fa-file-powerpoint-o",
-                            "zip": "fa-file-zip-o", "rar": "fa-file-zip-o", "gz": "fa-file-zip-o",
-                            "txt": "fa-file-text", "docx": " fa-file-word-o", "doc": " fa-file-word-o",
-                            "xls": " fa-file-excel-o", "xlsx": "fa-file-excel-o",
-                        };
                         var arr = value.split(',');
                         $.each(arr, function (i, value) {
                             value = value ? value : '';
-                            var exticon = "fa-file";
-                            var filepath = value.split(".");
-                            if (filepath.length > 1) {
-                                if (filemap[filepath[1]]) {
-                                    exticon = filemap[filepath[1]];
-                                }
-                            }
+                            var exticon =  Table.api.formatter.mapfileicon.call(this, value);
                             html.push('<a download="'+(row['download_text']?row['download_text']:'')+'" href="' + Fast.api.cdnurl(value) + '" target="_blank" alt="' + Fast.api.cdnurl(value) + '"><i class="fa ' + exticon + '"></i></a>');
                         });
                     }

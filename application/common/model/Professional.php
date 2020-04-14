@@ -32,7 +32,7 @@ class Professional extends Cosmetic
         if (is_numeric($procedure)) {
             $procedure = model("procedure")->get($procedure);
         }
-        model("procshutter")->where("procedure_model_id", $procedure['id'])->delete();
+        model("procshutter")->where("procedure_model_id", $procedure['id'])->where("status", "normal")->delete();
 
         $fields = model("fields")->where("model_table", $procedure['relevance_model_type'])->where("alternating", 1)->select();
         $shutterings = model("shuttering")->where("procedure_model_id", $procedure['id'])->select();
@@ -40,9 +40,12 @@ class Professional extends Cosmetic
             $filename = $shuttering->produce($this, $fields);
             if ($filename) {
                 model("procshutter")->create([
+                    "relevance_model_type"=> $procedure['relevance_model_type'],
+                    "relevance_model_id"=> $this['id'],
                     "procedure_model_id"=> $procedure['id'],
                     "file"=> $filename,
                     "name"=> $shuttering['name'],
+                    "status"=> "normal",
                 ]);
             }
         }

@@ -75,7 +75,10 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     if (data.field == "file") {
                         data.formatter = function (value, row, index) {
                             var html = Table.api.formatter.files.call(this, value, row, index);
-                            html += " <a target='_blank'  download='"+row.name+".pdf' href='/procshutter/topdf?id="+row.id+"' alt='下载PDF格式'><i  class='fa fa-file-pdf-o'></i></a>";
+                            var exticon =  Table.api.formatter.mapfileicon.call(this, value);
+                            if (exticon == "fa-file-word-o") {
+                                html += " <a target='_blank'  download='"+row.name+".pdf' href='/procshutter/topdf?id="+row.id+"' alt='下载PDF格式'><i  class='fa fa-file-pdf-o'></i></a>";
+                            }
                             return html;
                         }
                     }
@@ -95,6 +98,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                 };
                 $scope.searchFieldsParams = function(param) {
                     param.custom = {
+                        "procshutter.relevance_model_type":"aptitude",
+                        "procshutter.relevance_model_id":$scope.row.id,
                     };
 
                     if ($scope.procedures.length > 0) {
