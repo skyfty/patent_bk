@@ -79,6 +79,24 @@ class Provider extends Cosmetic
         }
     }
 
+    protected function getModelRow($ids) {
+        $cosmeticModel = Modelx::get(['table' => $this->model->raw_name],[],!App::$debug);
+        $row = $this->model->with($this->getRelationSearch($cosmeticModel))->find($ids);
+        if ($row) {
+            $relevance = $row->promotion->relevance;;
+            $alternat_fields = model("fields")->where("alternating",1)->where("model_table", $relevance->raw_name)->cache(!App::$debug)->select();
+            foreach($alternat_fields as $field) {
+                $row[$field['name']] = $relevance[$field['name']];
+            }
+
+            $relationModel = $this->getRelationModel($cosmeticModel);;
+            foreach($relationModel as $rmk=>$rm) {
+                $row->appendRelationAttr($rmk, $rm);
+            }
+        }
+        return $row;
+    }
+
     public function view() {
         $ids =$this->request->param("ids", null);
         if ($ids === null)
@@ -88,7 +106,6 @@ class Provider extends Cosmetic
         if ($row === null)
             $this->error(__('No Results were found'));
 
-        $principal = $row->promotion->principal->substance;
         $this->view->assign("row", $row);
 
         if ($this->request->isAjax()) {
@@ -98,9 +115,8 @@ class Provider extends Cosmetic
             $scenerys = model("scenery")->where(['model_table' => "provider", 'pos' => "view"])->cache(!App::$debug)->order("weigh", "ASC")->select();
             foreach ($scenerys as $k=>$v) {
                 if ($v['name'] == "procedure") {
-                    $procedure = $row->promotion->procedure;
                     $fields = [];
-                    foreach($procedure->alternatings as $alternating) {
+                    foreach($row->promotion->procedure->alternatings as $alternating) {
                         $fields[] = $alternating->field;
                     }
                     $v['fields'] = $fields;
@@ -139,6 +155,7 @@ class Provider extends Cosmetic
             $result = $row->allowField(true)->validate("Provider.view")->save($params);
             if ($result !== false) {
                 if ($scenery == "procedure"){
+                    unset($params['id']);
                     $row->promotion->relevance->save($params);
                 }
                 $db->commit();

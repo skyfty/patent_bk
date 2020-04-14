@@ -403,6 +403,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                 Table.api.init({
                     extend: {
                         index_url: 'alternating/index',
+                        del_url: 'alternating/del',
                         summation_url: 'alternating/summation',
                         table: 'alternating',
                     },
