@@ -40,14 +40,13 @@ class Professional extends Cosmetic
             $field = model("fields")->where("name", "name")->where("model_table", "procedure")->find();
             $field["type"] = $alternating['field_model_id'];
             $field["title"] = $alternating['name'];
-            $field["name"] = $alternating['name'];
+            $field["name"] = $alternating['field_name'];
             $fields[] = $field;
         }
 
         if ($this['extend']) {
-            $this['extend'] = json_decode($this['extend']);
-            foreach($this['extend'] as $field=>$v) {
-                $this[$field] = $v;
+            foreach(json_decode($this['extend'], true) as $field_name=>$v) {
+                $this[$field_name] = $v['value'];
             }
         }
 

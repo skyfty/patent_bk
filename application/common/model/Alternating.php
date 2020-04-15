@@ -18,6 +18,15 @@ class Alternating extends Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("IN%06d", $maxid);
         });
+
+        $updatefieldname = function($row){
+            if ($row['type'] == "custom") {
+                $row['field_name'] =  \fast\Pinyin::get($row['name']);
+            } else {
+                $row['field_name'] = $row->field->name;
+            }
+        };
+        self::beforeInsert($updatefieldname); self::beforeUpdate($updatefieldname);
     }
     public function field() {
         return $this->hasOne('fields','id','field_model_id')->joinType("LEFT")->setEagerlyType(0);

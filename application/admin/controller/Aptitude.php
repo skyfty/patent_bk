@@ -25,9 +25,9 @@ class Aptitude extends Cosmetic
         $row = $this->model->with($this->getRelationSearch($cosmeticModel))->find($ids);
         if ($row) {
             if ($row['extend']) {
-                $row['extend'] = json_decode($row['extend']);
-                foreach($row['extend'] as $field=>$v) {
-                    $row[$field] = $v;
+                $row['extend'] = json_decode($row['extend'], true);
+                foreach($row['extend'] as $field_name=>$v) {
+                    $row[$field_name] = $v['value'];
                 }
             }
             $relationModel = $this->getRelationModel($cosmeticModel);;
@@ -67,7 +67,7 @@ class Aptitude extends Cosmetic
                     $field = model("fields")->where("name", "name")->where("model_table", "procedure")->find();
                     $field["type"] = $alternating['field_model_id'];
                     $field["title"] = $alternating['name'];
-                    $field["name"] = $alternating['name'];
+                    $field["name"] = $alternating['field_name'];
                     $fields[] = $field;
                 }
                 $v['fields'] =$fields;
@@ -102,7 +102,7 @@ class Aptitude extends Cosmetic
                 $query->table("__PROCEDURE__")->where("relevance_model_type", "aptitude")->field("id");
             })->select();
             foreach($alternatings as $alternating) {
-                $extend[$alternating['name']] = $params[$alternating['name']];
+                $extend[$alternating['field_name']] = ["name"=>$alternating['name'], "value"=>$params[$alternating['field_name']]];
             }
             $params['extend'] = json_encode($extend, JSON_UNESCAPED_UNICODE);
 

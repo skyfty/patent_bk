@@ -87,9 +87,9 @@ class Provider extends Cosmetic
             }
             $relevance = $row->promotion->relevance;
             if ($relevance['extend']) {
-                $relevance['extend'] = json_decode($relevance['extend']);
-                foreach($relevance['extend'] as $field=>$v) {
-                    $row[$field] = $v;
+                $relevance['extend'] = json_decode($relevance['extend'], true);
+                foreach($relevance['extend'] as $field_name=>$v) {
+                    $row[$field_name] = $v['value'];
                 }
             }
 
@@ -125,7 +125,7 @@ class Provider extends Cosmetic
                             $field = model("fields")->where("name", "name")->where("model_table", "procedure")->find();
                             $field["type"] = $alternating['field_model_id'];
                             $field["title"] = $alternating['name'];
-                            $field["name"] = $alternating['name'];
+                            $field["name"] = $alternating['field_name'];
                             $fields[] = $field;
                         } else {
                             $fields[] = $alternating->field;;
@@ -171,8 +171,8 @@ class Provider extends Cosmetic
                     $extend = [];
                     $alternatings = $row->promotion->procedure->alternatings()->where("type", "custom")->select();
                     foreach($alternatings as $alternating) {
-                        $extend[$alternating['name']] = $params[$alternating['name']];
-                        unset($params[$alternating['name']]);
+                        $extend[$alternating['field_name']] = ["name"=>$alternating['name'], "value"=>$params[$alternating['field_name']]];
+                        unset($params[$alternating['field_name']]);
                     }
                     $params['extend'] = json_encode($extend, JSON_UNESCAPED_UNICODE);
                     $row->promotion->relevance->save($params);
