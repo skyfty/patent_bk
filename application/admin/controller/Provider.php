@@ -61,9 +61,6 @@ class Provider extends Cosmetic
                 $result = model($species['model'])->create([
                     "branch_model_id"=>$params["branch_model_id"],
                 ]);
-//                if ($result) {
-//                    model("provider")->where("promotion_model_id", $result['promotion_model_id'])->update(["staff_model_id"=>$params["staff_model_id"]]);
-//                }
             }
 
             if ($result !== false) {
@@ -88,6 +85,13 @@ class Provider extends Cosmetic
             foreach($alternat_fields as $field) {
                 $row[$field['name']] = $relevance[$field['name']];
             }
+            $relevance = $row->promotion->relevance;
+            if ($relevance['extend']) {
+                $relevance['extend'] = json_decode($relevance['extend']);
+                foreach($relevance['extend'] as $field=>$v) {
+                    $row[$field] = $v;
+                }
+            }
 
             $relationModel = $this->getRelationModel($cosmeticModel);;
             foreach($relationModel as $rmk=>$rm) {
@@ -105,8 +109,8 @@ class Provider extends Cosmetic
         $row = $this->getModelRow($ids);
         if ($row === null)
             $this->error(__('No Results were found'));
-
         $this->view->assign("row", $row);
+
 
         if ($this->request->isAjax()) {
             return parent::view();
@@ -117,7 +121,15 @@ class Provider extends Cosmetic
                 if ($v['name'] == "procedure") {
                     $fields = [];
                     foreach($row->promotion->procedure->alternatings as $alternating) {
-                        $fields[] = $alternating->field;
+                        if ($alternating['type'] == "custom") {
+                            $field = model("fields")->where("name", "name")->where("model_table", "procedure")->find();
+                            $field["type"] = $alternating['field_model_id'];
+                            $field["title"] = $alternating['name'];
+                            $field["name"] = $alternating['name'];
+                            $fields[] = $field;
+                        } else {
+                            $fields[] = $alternating->field;;
+                        }
                     }
                     $v['fields'] = $fields;
                 } else {
@@ -156,6 +168,13 @@ class Provider extends Cosmetic
             if ($result !== false) {
                 if ($scenery == "procedure"){
                     unset($params['id']);
+                    $extend = [];
+                    $alternatings = $row->promotion->procedure->alternatings()->where("type", "custom")->select();
+                    foreach($alternatings as $alternating) {
+                        $extend[$alternating['name']] = $params[$alternating['name']];
+                        unset($params[$alternating['name']]);
+                    }
+                    $params['extend'] = json_encode($extend, JSON_UNESCAPED_UNICODE);
                     $row->promotion->relevance->save($params);
                 }
                 $db->commit();

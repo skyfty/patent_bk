@@ -2,6 +2,10 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
     var Controller = {
         lands:{
             index:function($scope, $compile,$timeout, data) {
+                $scope.formatter = function(field, data, row) {
+
+                };
+
                 var options = {
                     extend: {
                         index_url: 'alternating/index',
@@ -49,13 +53,15 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     }
                 });
             };
+            $scope.fieldFormatter =Controller.api.fieldFormatter;
+
         },
         scenery: {
 
         },
 
         initParam:[
-            'procedure_model_id'],
+            'procedure_model_id','type'],
         add: function () {
             var self = this;
             AngularApp.controller("add", function($scope,$sce, $compile,$timeout){
@@ -82,6 +88,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
 
         bindevent:function($scope){
             var self = this;
+
             var procedure = null;
             $('[name="row[procedure_model_id]"]').data("e-params",function(){
                 var param = {};
@@ -91,32 +98,70 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                 $('[name="row[field_model_id]"]').selectPageClear();
             });
 
-            $('[name="row[field_model_id]"]').data("e-params",function(){
-                var param = {};
-                param.custom = {
-                    "model_table":procedure.relevance_model_type,
-                    "alternating":1
-                };
-                return param;
-            }).data("e-selected", function(data){
-                $scope.row.name = data.row.title;
+            $('[name="row[type]"]').change(function(){
+                var type = $(this).val();
+                var field = {"name":"field","type":"model"};
+                if (type == "custom") {
+                    field['name'] = "field_model_id";
+                    field['type'] = "select";
+                    field['content_list'] = Controller.api.convertFieldName();;
+                    field['defaultvalue'] = "date";
+                } else {
+                    field['defaultvalue'] = "/model/fields/index";
+                }
+                if ($scope.row.id) {
+                    var html = $(Form.formatter[field['type']]("edit",field, $scope.row['file'], $scope.row));
+                } else {
+                    var html = $(Form.formatter[field['type']]("add",field, "", {}));
+                }
+                $('[name="row[field_model_id]"]').parents("magicfield").html(html);
+
+                if (type == "default") {
+                    $('[name="row[field_model_id]"]').data("e-params",function(){
+                        var param = {};
+                        param.custom = {
+                            "model_table":procedure.relevance_model_type,
+                            alternating:"1",
+                        };
+                        return param;
+                    }).data("e-selected", function(data){
+                        $scope.$apply(function(){
+                            $scope.row.name = data.row.title;
+                        });
+                    });
+                    $('[name="row[field_model_id]"]').val($scope.row['field_model_id']);
+                    $('[name="row[field_model_id]"]').selectPageRefresh();
+                }
+                Form.api.bindevent($("form[role=form]"), $scope.submit);
             });
 
             Form.api.bindevent($("form[role=form]"), $scope.submit);
             require(['selectpage'], function () {
                 for (var i in self.initParam) {
-                    var param = Backend.api.query(self.initParam[i]);
-                    if (param) {
-                        $('[name="row[' + self.initParam[i] + ']"]').selectPageDisabled(true);
+                    if (self.initParam[i] == "type") {
+                        //$('[name="row[type]"]').attr("disabled","disabled").val($scope.row['type']);
+                    } else {
+                        var param = Backend.api.query(self.initParam[i]);
+                        if (param) {
+                            $('[name="row[' + self.initParam[i] + ']"]').selectPageDisabled(true);
+                        }
                     }
                 }
+                $('[name="row[type]"]').trigger("change");
+
             });
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },
 
 
         api: {
-
+            fieldFormatter:function(field, data, row) {
+                if (field.name == "field" && data['type'] == "custom") {
+                    return Controller.api.convertFieldName(data['field_model_id'])
+                } else {
+                    return Cosmetic.api.formatter(field, data, row);
+                }
+            }
         }
     };
     Controller.api = $.extend(Cosmetic.api, Controller.api);

@@ -117,6 +117,15 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 setTimeout(function(){
                     $(el).removeClass('flash');
                 }, 1000);
+            },
+            convertFieldName:function(field_name) {
+                var fields =  {
+                    "date": "日期",
+                    "time": "时间",
+                    "datetime": "日期时间",
+                };
+
+                return typeof field_name == "undefined" ? fields:fields[field_name];
             }
         },
 
@@ -633,6 +642,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
         return {
             link: function($scope, $element, $attrs) {
                 var field = $parse($attrs.field)($scope);
+                var fieldFormatter = $parse("fieldFormatter")($scope);
+
                 var fieldName  = "row." + field.name;
                 if (field.type == "model") {
                     fieldName += "_model_id";
@@ -650,7 +661,11 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                             var data = row[field.name];
                         }
                     }
-                    var html = Cosmetic.api.formatter(field, data, row);
+                    if (typeof fieldFormatter != "undefined") {
+                        var html = fieldFormatter(field, data, row);
+                    } else {
+                        var html = Cosmetic.api.formatter(field, data, row);
+                    }
                     $element.html(html?html:"-");
                 });
             }
@@ -1294,6 +1309,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
             scope:true,
             controller: function($scope,$element,$attrs, $filter, $compile,$parse,$timeout){
                 var fields = $parse($attrs.fields)($scope);
+                var fieldFormatter = $parse("fieldFormatter")($scope);
 
                 var searchFields = $parse($attrs.searchFields)($scope);
                 $scope.searchFields = [];
@@ -1321,7 +1337,11 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                         data.sortable = true;
                         if (j.type == 'radio' || j.type == 'check' || j.type == 'select' || j.type == 'selects') {
                             data.formatter = function(d, row){
-                                return Cosmetic.api.formatter(j, d, row);
+                                if (typeof fieldFormatter != "undefined") {
+                                    return fieldFormatter(j, d, row);
+                                } else {
+                                    return Cosmetic.api.formatter(j, d, row);
+                                }
                             };
                             data.extend = j.content;
                             var searchList = [];
@@ -1332,7 +1352,11 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
 
                         } else if(j.type == "model" || j.type == "cascader"){
                             data.formatter = function(d, row){
-                                return Cosmetic.api.formatter(j, row);
+                                if (typeof fieldFormatter != "undefined") {
+                                    return fieldFormatter(j, row);
+                                } else {
+                                    return Cosmetic.api.formatter(j, row);
+                                }
                             };
                         } else if(j.type == "address"){
                             data.formatter = function(d, row){
@@ -1343,8 +1367,12 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                         } else if(j.type == "text" || j.type == "string"){
                             data.align = 'left';
                         } else {
-                            if (Table.api.formatter[j.type]) {
-                                data.formatter = Table.api.formatter[j.type];
+                            if (typeof fieldFormatter != "undefined") {
+                                data.formatter = fieldFormatter;
+                            } else {
+                                if (Table.api.formatter[j.type]) {
+                                    data.formatter = Table.api.formatter[j.type];
+                                }
                             }
                             if (j.type == "number") {
                                 data.class = "number-total";

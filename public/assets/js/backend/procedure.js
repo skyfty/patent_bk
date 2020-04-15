@@ -7,8 +7,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
             }
         },
         indexscape:function($scope, $compile,$timeout){
-            var species_cascader_id = Fast.api.query("species_cascader_id");
+            $scope.fieldFormatter =Controller.api.fieldFormatter;
 
+            var species_cascader_id = Fast.api.query("species_cascader_id");
             $scope.speciesModelIds = [];
             $scope.classChanged = function(data) {
                 var typeIds = [];
@@ -55,6 +56,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
             Form.api.bindevent($("div[ng-controller='index']"));
         },
         viewscape:function($scope, $compile,$parse, $timeout){
+
             $scope.refreshRow = function(){
                 $.ajax({url: "procedure/index",dataType: 'json',
                     data:{
@@ -69,6 +71,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     }
                 });
             };
+
         },
         scenery: {
             shuttering: function($scope, $compile,$timeout, data){
@@ -395,6 +398,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                 });
             },
             alternating: function($scope, $compile,$timeout, data){
+                $scope.fieldFormatter =Controller.api.fieldFormatter;
+
                 $scope.searchFieldsParams = function(param) {
                     param.custom = {procedure_model_id:$scope.row.id};
                     return param;
@@ -452,6 +457,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
 
         bindevent:function($scope){
             var self = this;
+
             Form.api.bindevent($("form[role=form]"), $scope.submit);
             require(['selectpage'], function () {
                 for (var i in self.initParam) {
@@ -468,6 +474,13 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
         },
 
         api: {
+            fieldFormatter:function(field, data, row) {
+                if (field.name == "field" && data['type'] == "custom") {
+                    return Controller.api.convertFieldName(data['field_model_id'])
+                } else {
+                    return Cosmetic.api.formatter(field, data, row);
+                }
+            }
         }
     };
     Controller.api = $.extend(Cosmetic.api, Controller.api);
