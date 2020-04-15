@@ -69,7 +69,6 @@ class Shuttering extends Cosmetic
             $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'xlsx');
             $writer->save($destFileDir.$filename);
         } elseif($this['type'] == "image"){
-            $species = model("species")->get($this['species_cascader_id'], [], true);
             $file_field = model("fields")->get($this['file']);
             if ($file_field['relevance']) {
                 $data = $data[$file_field['relevance']];

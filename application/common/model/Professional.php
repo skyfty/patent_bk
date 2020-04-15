@@ -35,6 +35,22 @@ class Professional extends Cosmetic
         model("procshutter")->where("procedure_model_id", $procedure['id'])->where("status", "normal")->delete();
 
         $fields = model("fields")->where("model_table", $procedure['relevance_model_type'])->where("alternating", 1)->select();
+        $alternatings = $procedure->alternatings()->where("type", "custom")->select();
+        foreach($alternatings as $alternating) {
+            $field = model("fields")->where("name", "name")->where("model_table", "procedure")->find();
+            $field["type"] = $alternating['field_model_id'];
+            $field["title"] = $alternating['name'];
+            $field["name"] = $alternating['name'];
+            $fields[] = $field;
+        }
+
+        if ($this['extend']) {
+            $this['extend'] = json_decode($this['extend']);
+            foreach($this['extend'] as $field=>$v) {
+                $this[$field] = $v;
+            }
+        }
+
         $shutterings = model("shuttering")->where("procedure_model_id", $procedure['id'])->select();
         foreach($shutterings as $shuttering) {
             $filename = $shuttering->produce($this, $fields);
