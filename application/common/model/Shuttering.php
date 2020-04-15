@@ -24,6 +24,10 @@ class Shuttering extends Cosmetic
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
+    public function species()
+    {
+        return $this->hasOne('species','id','species_cascader_id')->joinType("LEFT")->setEagerlyType(0);
+    }
     public function procshutter() {
         return $this->hasOne('procshutter','id','procshutter_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
@@ -36,6 +40,8 @@ class Shuttering extends Cosmetic
         $suffix = strtolower(pathinfo($tempfile, PATHINFO_EXTENSION));
         if ($this['type'] == "excel") {
             $suffix = $suffix ? $suffix : 'xlsx';
+        }elseif($this['type'] == "image") {
+            $suffix = $suffix ? $suffix : 'png';
         } else {
             $suffix = $suffix ? $suffix : 'docx';
         }
@@ -62,6 +68,13 @@ class Shuttering extends Cosmetic
 
             $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'xlsx');
             $writer->save($destFileDir.$filename);
+        } elseif($this['type'] == "image"){
+            $species = model("species")->get($this['species_cascader_id'], [], true);
+            $file_field = model("fields")->get($this['file']);
+            if ($file_field['relevance']) {
+                $data = $data[$file_field['relevance']];
+            }
+            return $data[$file_field['name']];
         } else {
             $templWord = new \PhpOffice\PhpWord\TemplateProcessor($tempfile);
             foreach($fields as $field) {

@@ -57,7 +57,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         },
 
         initParam:[
-            'procedure_model_id'],
+            'procedure_model_id',
+            'species_cascader_id'
+        ],
         add: function () {
             var self = this;
             AngularApp.controller("add", function($scope,$sce, $compile,$timeout){
@@ -84,6 +86,56 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
 
         bindevent:function($scope){
             var self = this;
+
+            $('[name="row[type]"]').change(function(){
+                var type = $(this).val();
+                var field = {"name":"file","type":"file"};
+                if (typeof Form.formatter[type] == "undefined") {
+                    field['type'] = "file";
+                } else if (type == "image") {
+                    field['type'] = "listing";
+                    field['defaultvalue'] = "/model/fields/index";
+                }
+                if ($scope.row.id) {
+                    var html = $(Form.formatter[field['type']]("edit",field, $scope.row['file'], $scope.row));
+                } else {
+                    var html = $(Form.formatter[field['type']]("add",field, "", {}));
+                }
+                $('[name="row[file]"]').parents("magicfield").html(html);
+
+                var species = null;
+                $.ajax({
+                    async:false,
+                    url:"/species/index",
+                    data:{
+                        custom:{
+                            id:$scope.row.species_cascader_id
+                        }
+                    }
+                }).then(function(data){
+                    species = data.rows[0];
+                });
+
+                if (type == "image") {
+                    $('[name="row[file]"]').data("e-params",function(){
+                        var param = {};
+                        param.custom = {
+                            model_table:species.model,
+                            type:"image",
+                            alternating:"1",
+                        };
+                        return param;
+                    }).data("e-selected", function(data){
+                        $scope.$apply(function(){
+                            $scope.row.name = data.row.title;
+                        });
+                    });
+                    $('[name="row[file]"]').val($scope.row['file']);
+                    $('[name="row[file]"]').selectPageRefresh();
+                }
+                Form.api.bindevent($("form[role=form]"), $scope.submit);
+            });
+
             Form.api.bindevent($("form[role=form]"), $scope.submit);
             require(['selectpage'], function () {
                 for (var i in self.initParam) {
@@ -92,6 +144,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                         $('[name="row[' + self.initParam[i] + ']"]').selectPageDisabled(true);
                     }
                 }
+                $('[name="row[type]"]').trigger("change");
             });
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },

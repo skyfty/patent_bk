@@ -24,6 +24,9 @@ class Shuttering extends   \app\common\model\Shuttering
         if (!$value && !isset($data['file'])) {
             return "";
         }
+        if ($data['type'] == "image") {
+            return model("fields")->get($data['file'],[], true)->title;
+        }
         $info = pathinfo($data['file']);
         return $data['name'].".".$info['extension'];
     }

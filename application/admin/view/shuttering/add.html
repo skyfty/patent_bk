@@ -1,5 +1,6 @@
 <form class="form-horizontal" role="form" data-toggle="validator" method="POST" action="" ng-controller="add" >
     <input type="hidden" name="row[__token__]" value="{$Request.token}" />
+    <input type="hidden" name="row[species_cascader_id]" value="{$Request.param.species_cascader_id}" />
     <div class="panel panel-default panel-intro">
         {:build_heading(null,FALSE)}
         <div class="panel-heading">

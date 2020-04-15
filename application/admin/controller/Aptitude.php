@@ -31,7 +31,6 @@ class Aptitude extends Cosmetic
         foreach($procedures as $procedure) {
             $row->produceDocument($procedure);
         }
-        $row->produceCompanyDocument();
         $this->success();
     }
 

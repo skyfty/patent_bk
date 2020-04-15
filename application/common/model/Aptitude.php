@@ -26,6 +26,9 @@ class Aptitude extends Professional
                     ->where(['relevance_model_type'=>'aptitude',"relevance_model_id"=>$row['id']])
                     ->update(['principal_model_id'=>$row['company']['principal_model_id']]);
             }
+            if (isset($changeData['business_licence'])) {
+                $row->company->save(['business_licence'=>$row['business_licence']]);
+            }
         });
     }
 
