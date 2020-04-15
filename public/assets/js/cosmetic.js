@@ -123,9 +123,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     "date": "日期",
                     "time": "时间",
                     "datetime": "日期时间",
-                    "string": "年份",
+                    "number": "年份",
                 };
-
                 return typeof field_name == "undefined" ? fields:fields[field_name];
             }
         },
