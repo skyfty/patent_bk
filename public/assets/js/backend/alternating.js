@@ -132,6 +132,15 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     $('[name="row[field_model_id]"]').val($scope.row['field_model_id']);
                     $('[name="row[field_model_id]"]').selectPageRefresh();
                 }
+                setTimeout(function(){
+                    if (type == "default") {
+                        $('[name="row[scope]"]').val($scope.row['scope'] = "global")
+                        $('[data-field-name="scope"]').hide().trigger("rate");
+                    } else {
+                        $('[data-field-name="scope"]').show().trigger("rate");
+                    }
+                },0);
+
                 Form.api.bindevent($("form[role=form]"), $scope.submit);
             });
 
