@@ -29,13 +29,17 @@ class Professional extends Cosmetic
     }
 
     public function produceDocument($procedure) {
+        $model_name = $this->name;
         if (is_numeric($procedure)) {
             $procedure = model("procedure")->get($procedure);
         }
         model("procshutter")->where("procedure_model_id", $procedure['id'])->where("status", "normal")->delete();
 
         $fields = model("fields")->where("model_table", $procedure['relevance_model_type'])->where("alternating", 1)->select();
-        $alternatings = $procedure->alternatings()->where("type", "custom")->select();
+
+        $alternatings_global = model("alternating")->where("relevance_model_type", $model_name)->where("scope", "global")->where("type", "custom")->select();
+        $alternatings = $procedure->alternatings()->where("type", "custom")->where("scope", "procedure")->select();
+        $alternatings = array_merge($alternatings_global, $alternatings);
         foreach($alternatings as $alternating) {
             $field = model("fields")->where("name", "name")->where("model_table", "procedure")->find();
             $field["type"] = $alternating['field_model_id'];

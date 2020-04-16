@@ -25,9 +25,11 @@ class Alternating extends Cosmetic
             } else {
                 $row['field_name'] = $row->field->name;
             }
+            $row['relevance_model_type'] =  $row->procedure->relevance_model_type;
         };
         self::beforeInsert($updatefieldname); self::beforeUpdate($updatefieldname);
     }
+
     public function field() {
         return $this->hasOne('fields','id','field_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
