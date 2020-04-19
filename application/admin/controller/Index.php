@@ -139,27 +139,11 @@ class Index extends Backend
                 $v->dispatch();
             }
         });
-    }
 
-    public function ggg()
-    {
-        $rows = model("procedure")->select();
-        $cnt = count($rows);
-        foreach ($rows as $row) {
-            echo $cnt-- . "\r\n";
-            $fields = model("fields")->where("model_table", $row['relevance_model_type'])->where("alternating", 1)->select();
-            foreach($fields as $f) {
-               $r =  model("alternating")->where("field_model_id", $f['id'])->where("procedure_model_id", $row['id'])->find();
-                if (!$r) {
-                    model("alternating")->create([
-                        "procedure_model_id"=>$row['id'],
-                        "field_model_id"=>$f['id'],
-                        "name"=>$f['title'],
-                    ]);
-                }
-
+        model("stem")->where("link", "<>", "")->chunk(10, function($stems){
+            foreach($stems as $v) {
+                $v->dispatch();
             }
-
-        }
+        });
     }
 }
