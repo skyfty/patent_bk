@@ -21,8 +21,8 @@ class Stem extends   \app\common\model\Stem
 
     public function dispatch() {
         $cutime = time();
-        $spanstarttime = round(($this['starttime'] - $cutime) / 60);
-        $spanendtime = round(($this['endtime'] - $cutime) / 60);
+//        $spanstarttime = round(($this['starttime'] - $cutime) / 60);
+//        $spanendtime = round(($this['endtime'] - $cutime) / 60);
 
 
     }
