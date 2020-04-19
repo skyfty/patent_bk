@@ -27,6 +27,10 @@ class ComposerStaticInitd15e2bd93c7f83bfccc320b8bde0c0e9
             'think\\captcha\\' => 14,
             'think\\' => 6,
         ),
+        'p' => 
+        array (
+            'phpspider\\' => 10,
+        ),
         'Z' => 
         array (
             'Zend\\Escaper\\' => 13,
@@ -100,6 +104,10 @@ class ComposerStaticInitd15e2bd93c7f83bfccc320b8bde0c0e9
             0 => __DIR__ . '/..' . '/karsonzhang/fastadmin-addons/src',
             1 => __DIR__ . '/../..' . '/thinkphp/library/think',
             2 => __DIR__ . '/..' . '/topthink/think-image/src',
+        ),
+        'phpspider\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/owner888/phpspider',
         ),
         'Zend\\Escaper\\' => 
         array (
