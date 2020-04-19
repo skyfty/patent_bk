@@ -2,9 +2,9 @@
 
 namespace app\admin\validate;
 
-use app\common\validate\Cosmetic;
+use think\Validate;
 
-class Aptitude extends Cosmetic
+class Aptitude extends Validate
 {
     /**
      * 验证规则
