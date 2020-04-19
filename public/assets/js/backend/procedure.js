@@ -7,7 +7,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
             }
         },
         indexscape:function($scope, $compile,$timeout){
-            $scope.fieldFormatter =Controller.api.fieldFormatter;
+            //$scope.fieldFormatter =Controller.api.fieldFormatter;
 
             var species_cascader_id = Fast.api.query("species_cascader_id");
             $scope.speciesModelIds = [];
