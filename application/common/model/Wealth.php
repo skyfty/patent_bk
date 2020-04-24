@@ -23,4 +23,7 @@ class Wealth extends Cosmetic
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
+    public function stem() {
+        return $this->hasOne('stem','id','stem_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
 }

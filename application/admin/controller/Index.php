@@ -134,12 +134,6 @@ class Index extends Backend
 
     public function manage()
     {
-        \app\admin\model\Provider::where(['state'=>['in', '1,4,5']])->whereTime('starttime', 'd')->chunk(10, function($providers){
-            foreach($providers as $v) {
-                $v->dispatch();
-            }
-        });
-
         model("stem")->where("link", "<>", "")->chunk(10, function($stems){
             foreach($stems as $v) {
                 $v->dispatch();
