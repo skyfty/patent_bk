@@ -3,17 +3,26 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         //for index
         lands:{
             index:function($scope, $compile,$timeout, data) {
+                var dataTable = $("#table-index");
+                var stem = null;
+                $('#stem_index').data("e-params",function(){
+                    var param = {};
+                    return param;
+                }).data("e-selected", function(data){
+                    stem = data.row;
+                    dataTable.bootstrapTable('refresh', {});
+                }).data("e-clear", function(){
+                    stem = null;
+                    dataTable.bootstrapTable('refresh', {});
+                });
                 $scope.searchFieldsParams = function(param) {
                     param.custom = {};
-                    var branchSelect = $('[name="branch_select"]');
-                    if (branchSelect.data("selectpicker")) {
-                        var branchIds = branchSelect.selectpicker('val');
-                        if (branchIds && branchIds.length > 0) {
-                            param.custom['branch_model_id'] = ["in", branchIds];
-                        }
+                    if (stem != null) {
+                        param.custom['stem_model_id'] = stem.id;
                     }
                     return param;
                 };
+
                 var options = {
                     extend: {
                         index_url: 'wealth/index',

@@ -21,6 +21,8 @@
                 <div class="widget-body no-padding  table-cosmetic">
                     <div id="toolbar-{$vo['name']}" class="toolbar">
                         {:build_toolbar(['refresh', 'del'])}
+                        <input autocomplete="off" placeholder="选择政策来源..." id="stem_index"  style="width: 300px" type="text" data-source="stem/index" class="form-control selectpage" data-and-or="or">
+
                     </div>
                     <table id="table-{$vo['name']}" ui-formidable="fields"
                            data-fields="fields"
