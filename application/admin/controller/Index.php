@@ -9,6 +9,7 @@ use EasyWeChat\Foundation\Application;
 use think\Config;
 use think\Db;
 use think\Hook;
+use think\Loader;
 use think\Validate;
 
 /**
@@ -134,6 +135,8 @@ class Index extends Backend
 
     public function manage()
     {
+        Loader::import('phpQuery.phpQuery');
+
         model("stem")->where("link", "<>", "")->chunk(10, function($stems){
             foreach($stems as $v) {
                 $v->dispatch();

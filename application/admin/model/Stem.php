@@ -44,32 +44,102 @@ class Stem extends   \app\common\model\Stem
         return $uploadDir.$filename;
     }
 
-    public function dispatch() {
-        $cutime = time();
+    private function insertWealth($title, $href) {
+        $uri = \GuzzleHttp\Psr7\UriResolver::resolve(\GuzzleHttp\Psr7\uri_for($this['link']), \GuzzleHttp\Psr7\uri_for($href))."";
+        $snapshot_file = $this->snapshot($uri);
+        $wealth = model("wealth")->where("url", $uri)->find();
+        if (!$wealth) {
+            model("wealth")->create([
+                "name"=>$title,
+                "url"=>$uri,
+                "stem_model_id"=>$this['id'],
+                "type"=>"pdf",
+                "content"=>$snapshot_file
+            ]);
+        }
+    }
 
-        Loader::import('phpQuery.phpQuery');
+    private function parseXingtaiGovCn($content) {
+        \phpQuery::newDocument($content);
+        foreach(pq('.rgtlistconerji .titlename a') as $hui) {
+            $link = pq($hui);
+            $href = $link->attr('href');
+            $title = $link->text();
+            $title = substr($title, 0,  strpos($title, "\n"));
+            $this->insertWealth($title, $href);
+        }
+    }
 
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('GET', $this['link']);
-        if ($response->getStatusCode() == 200) {
-            \phpQuery::newDocument($response->getBody());
-            foreach(pq('.gg_list ul.hui14 li a') as $hui) {
+    private function parseChengdeGovCn($content) {
+        $pos = strpos($content, "<recordset>");
+        $pos2 = strpos($content, "</recordset>");
+        $content = substr($content, $pos, $pos2 - $pos + 12);
+        $xml=simplexml_load_string($content);
+        foreach($xml->children() as $child) {
+            if ($child->getName() == "div") {
+                continue;
+            }
+            $child_content = $child."";
+            $pos = strpos($child_content, "href='");
+            $pos2 = strpos($child_content, "'title='");
+            $pos3 = strpos($child_content, "'target");
+            $href = substr($child_content, $pos + 6, $pos2 - $pos - 6);
+            $title = substr($child_content, $pos2 + 7, $pos3 - $pos2 - 7);
+            $this->insertWealth($title, $href);
+        }
+    }
+
+    public function parseDocument($content) {
+        $pqselect = null;
+        switch($this['link']) {
+            case "http://fzgg.tj.gov.cn/zwgk/zcfg/wnwj/qt/": {
+                $pqselect = '.gg_list ul.hui14 li a';
+                break;
+            }
+            case "http://www.beijing.gov.cn/zhengce/zhengcefagui/": {
+                $pqselect = '.listBox ul.list li a';
+                break;
+            }
+            case "http://hdskjj.hd.gov.cn/web/xxgklist.aspx?newstag=hdszcfg": {
+                $pqselect = '.STYLE25 a';
+                break;
+            }
+            case "http://xingtai.gov.cn/xxgk/zfwj/xzz/": {
+                return $this->parseXingtaiGovCn($content);
+            }
+            case "http://www.tangshan.gov.cn/zhuzhan/zfwj/": {
+                $pqselect = '.open_list li a';
+                break;
+            }
+            case "http://www.chengde.gov.cn/col/col3263/index.html?number=C10006C00006": {
+                return $this->parseChengdeGovCn($content);
+            }
+            case "http://new.sjz.gov.cn/col/1490941083922/index.html": {
+                $pqselect = '.news_box ul li a';
+                break;
+            }
+        }
+        if ($pqselect) {
+            \phpQuery::newDocument($content);
+            foreach(pq($pqselect) as $hui) {
                 $link = pq($hui);
                 $href = $link->attr('href');
-                $title = $link->html();
-                $uri = \GuzzleHttp\Psr7\UriResolver::resolve(\GuzzleHttp\Psr7\uri_for($this['link']), \GuzzleHttp\Psr7\uri_for($href))."";
-                $snapshot_file = $this->snapshot($uri);
-                $wealth = model("wealth")->where("url", $uri)->find();
-                if (!$wealth) {
-                    model("wealth")->create([
-                        "name"=>$title,
-                        "url"=>$uri,
-                        "stem_model_id"=>$this['id'],
-                        "type"=>"pdf",
-                        "content"=>$snapshot_file
-                    ]);
+                if ($link->attr("title")) {
+                    $title = $link->attr('title');
+                } else {
+                    $title = $link->text();
                 }
+                $this->insertWealth($title, $href);
             }
+        }
+    }
+
+    public function dispatch() {
+        $client = new \GuzzleHttp\Client();
+        echo  $this['link'] ."\r\n";
+        $response = $client->request('GET', $this['link']);
+        if ($response->getStatusCode() == 200) {
+            $this->parseDocument($response->getBody());
         }
     }
 }
