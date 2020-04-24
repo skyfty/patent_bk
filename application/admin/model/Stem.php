@@ -59,13 +59,16 @@ class Stem extends   \app\common\model\Stem
                 $title = $link->html();
                 $uri = \GuzzleHttp\Psr7\UriResolver::resolve(\GuzzleHttp\Psr7\uri_for($this['link']), \GuzzleHttp\Psr7\uri_for($href))."";
                 $snapshot_file = $this->snapshot($uri);
-                model("wealth")->create([
-                    "name"=>$title,
-                    "url"=>$uri,
-                    "stem_model_id"=>$this['id'],
-                    "type"=>"pdf",
-                    "content"=>$snapshot_file
-                ]);
+                $wealth = model("wealth")->where("url", $uri)->find();
+                if (!$wealth) {
+                    model("wealth")->create([
+                        "name"=>$title,
+                        "url"=>$uri,
+                        "stem_model_id"=>$this['id'],
+                        "type"=>"pdf",
+                        "content"=>$snapshot_file
+                    ]);
+                }
             }
         }
     }
