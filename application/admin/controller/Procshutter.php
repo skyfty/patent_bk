@@ -24,16 +24,18 @@ class Procshutter extends Cosmetic
         if (!$row)
             $this->error(__('No Results were found'));
 
+        \PhpOffice\PhpWord\Settings::setDefaultFontName('simsun');
+        \PhpOffice\PhpWord\Settings::setPdfRenderer(
+            \PhpOffice\PhpWord\Settings::PDF_RENDERER_DOMPDF, ROOT_PATH . '/vendor/dompdf/dompdf/src');
+        $phpWord = \PhpOffice\PhpWord\IOFactory::createReader("Word2007")->load(ROOT_PATH . '/public' . $row['file']);
+
         $uploadDir = "/pdfs/";
         $destFileDir =ROOT_PATH . '/public' . $uploadDir;
         if (!file_exists($destFileDir))
             mkdir($destFileDir);
-        $inputfile = ROOT_PATH . '/public' . $row['file'];
-        $pdfcmd = "libreoffice --headless --convert-to pdf:writer_pdf_Export ".$inputfile." --outdir ".$destFileDir;
-        system($pdfcmd);
-        $filename = substr($row['file'], strrpos($row['file'], "/") + 1);
-        $filename = substr($filename, 0, strpos($filename, ".")).".pdf";
-        echo($uploadDir.$filename);
+        $filename = \fast\Random::build("unique").".pdf";
+        $pdfWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
+        $pdfWriter->save($destFileDir.$filename);
         $this->redirect($uploadDir.$filename);
     }
 }

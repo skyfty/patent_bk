@@ -93,9 +93,9 @@ return array(
             'normal' => $distFontDir . 'DejaVuSerif'
         ),
         'simsun' => array(
-            'normal' => $fontDir . '/simsun',
-            'bold' => $fontDir . '/simsun',
-            'italic' => $fontDir . '/simsun',
-            'bold_italic' => $fontDir . '/simsun',
+            'normal' => $distFontDir . '/simsun',
+            'bold' => $distFontDir . '/simsun',
+            'italic' => $distFontDir . '/simsun',
+            'bold_italic' => $distFontDir . '/simsun',
           )
 );
