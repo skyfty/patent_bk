@@ -26,7 +26,7 @@ class Procshutter extends Cosmetic
 
         \PhpOffice\PhpWord\Settings::setDefaultFontName('simsun');
         \PhpOffice\PhpWord\Settings::setPdfRenderer(
-            \PhpOffice\PhpWord\Settings::PDF_RENDERER_DOMPDF, ROOT_PATH . '/vendor/dompdf/dompdf/src');
+            \PhpOffice\PhpWord\Settings::PDF_RENDERER_MPDF, ROOT_PATH . '/vendor/mpdf/mpdf');
         $phpWord = \PhpOffice\PhpWord\IOFactory::createReader("Word2007")->load(ROOT_PATH . '/public' . $row['file']);
 
         $uploadDir = "/pdfs/";

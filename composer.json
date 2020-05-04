@@ -28,7 +28,8 @@
         "phpoffice/phpword": "^0.17.0",
         "topthink/think-image": "^1.0",
         "dompdf/dompdf": "^0.8.3",
-        "owner888/phpspider": "v2.1.6"
+        "owner888/phpspider": "v2.1.6",
+        "mpdf/mpdf": "^6.1"
 
     },
     "config": {
