@@ -20,4 +20,12 @@ class Actualize extends  Cosmetic
             $row['idcode'] = sprintf("BL%06d", $maxid);
         });
     }
+
+    public function principal() {
+        return $this->hasOne('principal','id','principal_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
+
+    public function policy() {
+        return $this->hasOne('policy','id','policy_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
 }
