@@ -107,7 +107,36 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 $scope.fields = data.fields;
                 angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
                 $scope.$broadcast("shownTable");
-            }
+            },
+            actualize:function($scope, $compile,$timeout, data) {
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {principal_model_id:$scope.row.id};
+                    return param;
+                };
+
+                Table.api.init({
+                    extend: {
+                        index_url: 'actualize/index',
+                        del_url: 'actualize/del',
+                        summation_url: 'actualize/summation',
+                        table: 'actualize',
+                    },
+                    buttons : [
+                        {
+                            name: 'view',
+                            title: function(row, j){
+                                return __('%s', row.name);
+                            },
+                            classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                            icon: 'fa fa-folder-o',
+                            url: 'actualize/view'
+                        }
+                    ]
+                });
+                $scope.fields = data.fields;
+                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
+                $scope.$broadcast("shownTable");
+            },
         },
 
         bindevent:function($scope){
