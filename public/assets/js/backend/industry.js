@@ -27,6 +27,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','bootstrap-treegrid'],
                     [
                         {checkbox: true},
                         {
+                            field: 'idcode', title: __('ID'), align: 'left'
+                        },
+                        {
                             field: 'name', title: __('Name'), align: 'left'
                         },
                         {
