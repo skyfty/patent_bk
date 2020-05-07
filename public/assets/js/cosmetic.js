@@ -1288,7 +1288,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                         },
                         check: {
                             enable: true,
-                            chkboxType: {"Y":"", "N":""},
                             autoCheckTrigger:true
                         },
                         async: {
