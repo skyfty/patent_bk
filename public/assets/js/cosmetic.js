@@ -1034,26 +1034,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 var onCheck =  $parse($attr.onCheck)($scope);
                 var filter =  $parse($attr.filter)($scope);
 
-                $scope.onBodyDown = function(event){
-                    if (!(event.target.id == "menuBtn" || event.target.id == "citySel" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
-                        $scope.hideMenu();
-                    }
-                };
-                $scope.showFieldMenu = function(fieldName) {
-                    var cityObj =  $("[name='row["+fieldName+"]']");
-                    var cityOffset = cityObj.offset();
-
-                    $("#" + fieldName + "MenuContent").css({
-                        "z-index":100,
-                        left:40 + "px",
-                        top:5 + cityObj.outerHeight() + "px"}).slideDown("fast");
-                    //$("body").bind("mousedown", $scope.onBodyDown);
-                };
-
-                $scope.hideMenu = function() {
-                   // $("#" + fieldName + "MenuContent").fadeOut("fast");
-                    //$("body").unbind("mousedown", $scope.onBodyDown);
-                };
 
                 require(['ztree'], function () {
                     var className = "dark", curDragNodes, autoExpandNode;
@@ -1208,6 +1188,86 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                         setting['view']['removeHoverDom'] = removeHoverDom;
                     }
 
+                    setting['check'] = {};
+                    if ($attr.check == "check") {
+                        setting['check']['enable'] = true;
+                        setting['check']['autoCheckTrigger'] = true;
+
+                    }
+                    $.fn.zTree.init($($element), setting);
+                });
+            }
+        }
+    }]);
+
+
+    window.AngularApp.directive('mztree',['$parse', function($parse){
+        return {
+            restrict : 'A',
+            link: function($scope,$element,$attr){
+                var fieldName = $attr.fieldName;
+
+                $scope.onBodyDown = function(event){
+                    var target_id = event.target.id;
+                    if (target_id.indexOf(fieldName) == -1) {
+                        $scope.hideMenu();
+                    }
+                };
+                $scope.showFieldMenu = function() {
+                    var cityObj =  $("[name='row["+fieldName+"]']");
+                    $("#" + fieldName + "MenuContent").css({
+                        "z-index":100,
+                        left:40 + "px",
+                        top:5 + cityObj.outerHeight() + "px"}).slideDown("fast");
+                    $("body").bind("mousedown", $scope.onBodyDown);
+                };
+
+                $scope.hideMenu = function() {
+                    $("#" + fieldName + "MenuContent").fadeOut("fast");
+                    $("body").unbind("mousedown", $scope.onBodyDown);
+                };
+
+                var customCallback =  $parse($attr.custom)($scope);
+
+                require(['ztree'], function () {
+                    var setting = {
+                        data: {
+                            simpleData: {
+                                enable: true
+                            }
+                        },
+                        async: {
+                            enable: true,
+                            url:$attr.url,
+                            autoParam:[
+                                "id", "name=n", "level=lv"
+                            ],
+                            otherParam:{
+                                "embody":$attr.embody,
+                                "pid":$attr.pid,
+                            }
+                        },
+                        callback: {
+                            onCheck:  function() {
+                                var zTree = $.fn.zTree.getZTreeObj(fieldName),
+                                    nodes = zTree.getCheckedNodes(true),
+                                    v = "";
+                                for (var i=0, l=nodes.length; i<l; i++) {
+                                    v += nodes[i].name + ",";
+                                }
+                                if (v.length > 0 ) v = v.substring(0, v.length-1);
+                                var cityObj = $("#citySel");
+                                cityObj.attr("value", v);
+                            }
+                        }
+                    };
+
+                    if (typeof customCallback == "function") {
+                        setting['async']['otherParam']['custom'] = customCallback;
+                    }
+                    setting['view'] = {
+                        dblClickExpand: false
+                    };
                     setting['check'] = {};
                     if ($attr.check == "check") {
                         setting['check']['enable'] = true;

@@ -871,7 +871,7 @@ define(['jquery', 'bootstrap', 'upload', 'validator', 'moment'], function ($, un
                     '</span>');
                 wap.append(btn);
 
-                var menuContentUl =$('<ul ztree class="ztree mztree" style="margin-top:0; width:430px; height: 200px;" data-check="check"></ul>');
+                var menuContentUl =$('<ul mztree class="ztree mztree" id="'+fieldName+'"  data-field-name="'+fieldName+'" style="margin-top:0; width:430px; height: 200px;" data-check="check"></ul>');
                 if (field.defaultvalue != "") {
                     menuContentUl.attr("data-url",field.defaultvalue + "/ztreelist");
                 }
