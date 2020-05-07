@@ -139,7 +139,13 @@ class Stem extends   \app\common\model\Stem
         echo  $this['link'] ."\r\n";
         $response = $client->request('GET', $this['link']);
         if ($response->getStatusCode() == 200) {
-            $this->parseDocument($response->getBody());
+            try{
+                $this->parseDocument($response->getBody());
+
+            }catch(\Exception $e) {
+                echo  $e->getMessage() ."\r\n";
+
+            }
         }
     }
 }
