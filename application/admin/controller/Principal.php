@@ -32,6 +32,10 @@ class Principal extends Cosmetic
     protected function mergerow(&$row) {
         $scenery = Scenery::where(["model_table"=>$row['substance_type'],"pos"=>'view'])->cache(!App::$debug)->find();
         $fields = Sight::with('fields')->cache(!App::$debug)->where(['scenery_id'=>$scenery['id']])->column("fields.name");
+        $fields2 = Sight::with('fields')->cache(!App::$debug)->where(['scenery_id'=>$scenery['id']])->where("type", "in", ["model", "mztree"])->column("fields.name");
+        foreach($fields2 as $k=>$v) {
+            $fields[] = $v."_model_id";
+        }
         foreach($row->substance->getData() as $k=>$v) {
             if (in_array($k, $fields)) {
                 $row[$k] = $v;
@@ -101,7 +105,7 @@ class Principal extends Cosmetic
                 $list[$k]['substance_fields'] = $fields;
             }
             if ($total > 0) {
-                $rows = collection($list)->append(["substance"])->toArray();
+                $rows = collection($list)->append(["substance", "industry"])->toArray();
             } else {
                 $rows = [];
             }
@@ -128,7 +132,8 @@ class Principal extends Cosmetic
         $row = $this->model->with($this->getRelationSearch($cosmeticModel))->find($ids);
         if (!$row)
             $this->error(__('No Results were found'));
-        $row->append(["substance"]);
+        $row->append(["substance", "industry"]);
+
         $this->mergerow($row);
         $this->view->assign("row", $row);
 
@@ -206,6 +211,7 @@ class Principal extends Cosmetic
             if ($result !== false) {
                 $db->commit();
                 $row = $this->model->get($ids);
+                $row->append(["substance", "industry"]);
                 $this->mergerow($row);
                 $this->result($row,1);
             } else {

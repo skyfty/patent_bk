@@ -11,7 +11,6 @@ class Company extends Cosmetic
     protected $name = 'company';
     public $keywordsFields = [];
 
-
     protected static function init()
     {
         parent::init();
@@ -22,6 +21,10 @@ class Company extends Cosmetic
         });
     }
 
+
+    public function industry() {
+        return $this->hasManyComma('industry','id','industry_model_id');
+    }
     public function principal()
     {
         return $this->morphOne('Principal', 'substance');

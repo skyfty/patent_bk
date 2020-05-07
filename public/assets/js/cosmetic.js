@@ -95,13 +95,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                         data = "-";
                     }
                 } else if (field.type=="mztree") {
-                    if (field.relevance) {
-                        data = data[field.relevance];
-                    }
-                    var modelKeyword = data[field.name];
-                    if (modelKeyword) {
+                    if (data) {
                         var showData = [];
-                        showData.push(self.formatMZtreeKeyword(field, data, modelKeyword));
+                        showData.push(self.formatMZtreeKeyword(field, row, data));
                         if (showData.length == 1) {
                             data = showData[0];
                         } else {
@@ -703,7 +699,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 }
                 $scope.$watch(fieldName, function(){
                     var row = $parse($attrs.model)($scope);
-                    if (field.type == "model" || field.type == "cascader" || field.type == "mztree") {
+                    if (field.type == "model" || field.type == "cascader") {
                         var data = row;
                     } else {
                         if (field.relevance != "") {
@@ -1505,12 +1501,20 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                             });
                             data.searchList = searchList;
 
-                        } else if(j.type == "model" || j.type == "cascader" || j.type == "mztree"){
+                        } else if(j.type == "model" || j.type == "cascader"){
                             data.formatter = function(d, row){
                                 if (typeof fieldFormatter != "undefined") {
                                     return fieldFormatter(j, row);
                                 } else {
                                     return Cosmetic.api.formatter(j, row);
+                                }
+                            };
+                        } else if(j.type == "mztree"){
+                            data.formatter = function(d, row){
+                                if (typeof fieldFormatter != "undefined") {
+                                    return fieldFormatter(j,d, row);
+                                } else {
+                                    return Cosmetic.api.formatter(j, d,row);
                                 }
                             };
                         } else if(j.type == "address"){

@@ -30,10 +30,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','bootstrap-treegrid'],
                             field: 'idcode', title: __('ID'), align: 'left'
                         },
                         {
-                            field: 'name', title: __('Name'), align: 'left'
+                            field: 'code', title: '代码', align: 'left'
                         },
                         {
-                            field: 'code', title: '代码', align: 'left'
+                            field: 'name', title: __('Name'), align: 'left'
                         },
                         {
                             field: 'operate',

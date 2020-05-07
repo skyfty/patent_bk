@@ -61,6 +61,10 @@ class Principal extends  Cosmetic
         return $this->morphTo();
     }
 
+
+    public function industry() {
+        return $this->hasManyComma('industry','id','industry_model_id');
+    }
     public function promotions()
     {
         return $this->hasMany('promotion','principal_model_id');

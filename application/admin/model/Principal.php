@@ -24,6 +24,10 @@ class Principal extends  \app\common\model\Principal
         self::afterUpdate(function($row){
             $scenery = Scenery::where(["model_table"=>$row['substance_type'],"pos"=>'view'])->cache(!App::$debug)->find();
             $fields = Sight::with('fields')->cache(!App::$debug)->where(['scenery_id'=>$scenery['id']])->column("fields.name");
+            $fields2 = Sight::with('fields')->cache(!App::$debug)->where(['scenery_id'=>$scenery['id']])->where("type","in", ["model", "mztree"])->column("fields.name");
+            foreach($fields2 as $k=>$v) {
+                $fields[] = $v."_model_id";
+            }
             $data = [];
             foreach($row->getData() as $k=>$v) {
                 if (in_array($k, $fields)) {
