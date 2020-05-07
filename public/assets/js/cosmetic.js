@@ -1290,6 +1290,10 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                                 enable: true
                             }
                         },
+                        check: {
+                            enable: true,
+                            chkboxType: {"Y":"", "N":""}
+                        },
                         async: {
                             enable: true,
                             url:$attr.url,
@@ -1340,11 +1344,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     setting['view'] = {
                         dblClickExpand: false
                     };
-                    setting['check'] = {};
-                    if ($attr.check == "check") {
-                        setting['check']['enable'] = true;
-                        setting['check']['autoCheckTrigger'] = true;
-                    }
+
                     var zTree = $.fn.zTree.init($($element), setting);
                 });
             }
