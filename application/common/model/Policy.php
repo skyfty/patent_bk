@@ -11,6 +11,9 @@ class Policy extends  Cosmetic
     // 表名
     protected $name = 'policy';
     public $keywordsFields = ["name", "idcode"];
+    public $append = [
+        'industry'
+    ];
 
     protected static function init()
     {
@@ -54,7 +57,7 @@ class Policy extends  Cosmetic
     }
 
     public function industry() {
-        return $this->hasOne('industry','id','industry_model_id')->joinType("LEFT")->setEagerlyType(0);
+        return $this->hasManyComma('industry','id','industry_model_id');
     }
 }
 

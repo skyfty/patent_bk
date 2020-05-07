@@ -136,4 +136,23 @@ class Cosmetic extends Model
     public function owners() {
         return $this->hasOne('admin','id','owners_model_id')->joinType("LEFT")->field('id,name,idcode')->setEagerlyType(0);
     }
+
+
+    /**
+     * HAS MANY 关联定义
+     * @access public
+     * @param string $model      模型名
+     * @param string $foreignKey 关联外键
+     * @param string $localKey   当前模型主键
+     * @return HasMany
+     */
+    public function hasManyComma($model, $foreignKey = '', $localKey = '')
+    {
+        // 记录当前关联信息
+        $model      = $this->parseModel($model);
+        $localKey   = $localKey ?: $this->getPk();
+        $foreignKey = $foreignKey ?: $this->getForeignKey($this->name);
+        return new HasManyComma($this, $model, $foreignKey, $localKey);
+    }
+
 }

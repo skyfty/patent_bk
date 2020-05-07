@@ -28,7 +28,42 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 url = Fast.api.fixurl(url);
                 return '<a href="' + url + '" class="dialogit" data-value="' + showData + '" title="' + showData + '">' + showData + '</a>';
             },
+            formatMZtreeKeyword:function(field, data, model) {
+                var showData = [];
+                var ids = [];
+                if (field.content_list && field.content_list['sight']) {
+                    $.each(model, function(k, v2){
+                        $.each(field.content_list['sight'], function(k, v){
+                            if (v2[v]) {
+                                showData.push(v2[v]);
+                            }
+                        });
+                        ids.push(v2['id']);
+                    });
+                } else {
+                    $.each(model, function(k, v){
+                        showData.push(v);
+                        ids.push(v['id']);
+                    });
+                }
 
+                var showHtml = [];
+                $.each(ids, function(k, id){
+                    var control = data[field.name + "_type"] ||  data[field.name + "_model_type"] || field.defaultvalue;
+                    var url = control + "/hinder?ids=" + id;
+                    url = Fast.api.fixurl(url);
+                    if ($.isArray(showData[k])) {
+                        var sd = showData[k].join(",");
+                    } else {
+                        var sd = showData[k];
+                    }
+                    var html = '<a href="' + url + '" class="dialogit" data-value="' + sd + '" title="' + sd + '">' + sd + '</a>';
+                    showHtml.push(html);
+                });
+
+                showHtml = showHtml.join(",");
+                return showHtml;
+            },
             formatter:function(field, data, row) {
                 var self = this;
                 if (field.type == 'radio' || field.type == 'checkbox' || field.type == 'select' || field.type == 'selects') {
@@ -43,7 +78,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                         data = Table.api.formatter.label.call(this, titles,field);
                     }
 
-                } else if (field.type=="model" || field.type=="mztree") {
+                } else if (field.type=="model") {
                     if (field.relevance) {
                         data = data[field.relevance];
                     }
@@ -51,6 +86,22 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     if (modelKeyword) {
                         var showData = [];
                         showData.push(self.formatModelKeyword(field, data, modelKeyword));
+                        if (showData.length == 1) {
+                            data = showData[0];
+                        } else {
+                            data = showData.join("<br/>");
+                        }
+                    } else {
+                        data = "-";
+                    }
+                } else if (field.type=="mztree") {
+                    if (field.relevance) {
+                        data = data[field.relevance];
+                    }
+                    var modelKeyword = data[field.name];
+                    if (modelKeyword) {
+                        var showData = [];
+                        showData.push(self.formatMZtreeKeyword(field, data, modelKeyword));
                         if (showData.length == 1) {
                             data = showData[0];
                         } else {
@@ -1214,7 +1265,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     }
                 };
                 $scope.showFieldMenu = function() {
-                    var cityObj =  $("[name='row["+fieldName+"]']");
+                    var cityObj =  $("#"+fieldName+"Input");
                     $("#" + fieldName + "MenuContent").css({
                         "z-index":100,
                         left:40 + "px",
@@ -1227,9 +1278,12 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     $("body").unbind("mousedown", $scope.onBodyDown);
                 };
 
-                var customCallback =  $parse($attr.custom)($scope);
 
                 require(['ztree'], function () {
+                    var hiddenModel =  $("#"+fieldName+"HiddenModel");
+                    var ngmodel = hiddenModel.attr("ng-model");
+                    var data = $parse(ngmodel)($scope);
+
                     var setting = {
                         data: {
                             simpleData: {
@@ -1251,20 +1305,38 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                             onCheck:  function() {
                                 var zTree = $.fn.zTree.getZTreeObj(fieldName),
                                     nodes = zTree.getCheckedNodes(true),
-                                    v = "";
+                                    v = "", ids = [];
                                 for (var i=0, l=nodes.length; i<l; i++) {
                                     v += nodes[i].name + ",";
+                                    ids.push(nodes[i].id);
                                 }
                                 if (v.length > 0 ) v = v.substring(0, v.length-1);
-                                var cityObj = $("#citySel");
+
+                                var cityObj =  $("#"+fieldName+"Input");
                                 cityObj.attr("value", v);
+
+                                $scope.$apply(function(){
+                                    $parse("row."+fieldName).assign($scope,ids);
+                                });
+                            },
+                            onNodeCreated: function(event, treeId, treeNode) {
+                                return true;
+                            },
+                            onAsyncSuccess :function(event, treeId, treeNode, msg) {
+                                if (data) {
+                                    var zTree = $.fn.zTree.getZTreeObj(treeId);
+                                    var menuIds = data.split(',');
+                                    for(var i = 0; i < menuIds.length; i++) {
+                                        var node = zTree.getNodeByParam("id", menuIds[i]);
+                                        if(node != null) {
+                                            zTree.checkNode(node, true)
+                                        }
+                                    }
+                                }
                             }
                         }
                     };
 
-                    if (typeof customCallback == "function") {
-                        setting['async']['otherParam']['custom'] = customCallback;
-                    }
                     setting['view'] = {
                         dblClickExpand: false
                     };
@@ -1272,9 +1344,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     if ($attr.check == "check") {
                         setting['check']['enable'] = true;
                         setting['check']['autoCheckTrigger'] = true;
-
                     }
-                    $.fn.zTree.init($($element), setting);
+                    var zTree = $.fn.zTree.init($($element), setting);
                 });
             }
         }

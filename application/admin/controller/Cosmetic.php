@@ -93,7 +93,7 @@ class Cosmetic extends Backend
 
     protected function getRelationSearch($cosmeticModel) {
         $relationFields = [];
-        $modelFields = model("fields")->where(array("model_id"=>$cosmeticModel['id']))->where("type","in", ["model","cascader"] )->where("name", "not in",['group'])->cache(!App::$debug)->order("id", "ASC")->select();
+        $modelFields = model("fields")->where(array("model_id"=>$cosmeticModel['id']))->where("type","in", ["model","cascader","mztree"] )->where("name", "not in",['group'])->cache(!App::$debug)->order("id", "ASC")->select();
         foreach($modelFields as $v) {
             if ($v['relevance']) {
                 $idx =array_search($v['relevance'],$relationFields);

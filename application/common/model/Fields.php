@@ -16,7 +16,7 @@ class Fields extends Model
     {
         if (in_array($data['type'], self::$listField))
             return Config::decode($data['content']);
-        if ($data['type'] == "model" && $data['content']) {
+        if (in_array($data['type'],["model", "mztree"]) && $data['content']) {
             $content = json_decode($data['content'], true);
             if ($content)
                 return $content;

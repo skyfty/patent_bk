@@ -82,6 +82,10 @@ class Fields extends \app\common\model\Fields
                         }
                         $alter->setType("number");
                         $alter->setDefaultvalue('NULL');
+                    } elseif($row['type'] == 'mztree'){
+                        $alter->setName($row['name'] . "_model_id");
+                        $alter->setType("text");
+                        $alter->setDefaultvalue('NULL');
                     }else {
                         $alter->setName($row['name']);
                         $alter->setLength($row['length']);

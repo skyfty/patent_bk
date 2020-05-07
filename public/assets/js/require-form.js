@@ -879,17 +879,19 @@ define(['jquery', 'bootstrap', 'upload', 'validator', 'moment'], function ($, un
                 menuContentDiv.append(menuContentUl);
                 wap.append(menuContentDiv);
 
-                var input = $("<input ng-click='showFieldMenu(\""+fieldName+"\");' readonly='readonly'  autocomplete='off' "+field.extend+"/>");
+                var input = $("<input id='"+fieldName+"Input' ng-click='showFieldMenu(\""+fieldName+"\");' readonly='readonly'  autocomplete='off' "+field.extend+"/>");
                 var attr = {
-                    "name":"row[" + fieldName + "]",
                     "data-rule":field.rule,
                     "data-tip":field.tip,
                     "type":"text",
                 };
                 input.attr(attr);
-
                 if (val && typeof(val[fieldName]) !=  "undefined") {
-                    input.attr("value",val[fieldName]);
+                    var valist = [];
+                    $.each(val[field.defaultvalue], function(k,v){
+                        valist.push(v.name);
+                    });
+                    input.attr("value",valist.join(","));
                 }
                 if ((val==undefined || scene=="add"?field.newstatus:field.editstatus)=='locked') {
                     input.attr("disabled", "disabled");
@@ -901,10 +903,14 @@ define(['jquery', 'bootstrap', 'upload', 'validator', 'moment'], function ($, un
 
                 wap.append(input);
 
-                var hidden = $('<input type="text" class="sp_hidden hidden_model"  style="display: none;"/>');
+                var hidden = $('<input id="'+fieldName+'HiddenModel" type="text" class="sp_hidden hidden_model"  style="display: none;"/>');
                 hidden.attr({
                     "ng-model":"row." + fieldName,
+                    "name":"row[" + fieldName + "]",
                 }).val('');
+                if (val && typeof(val[fieldName]) !=  "undefined") {
+                    hidden.attr("value",val[fieldName]);
+                }
                 wap.append(hidden);
                 return wap.prop("outerHTML");
             },
