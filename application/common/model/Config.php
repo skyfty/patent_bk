@@ -50,11 +50,12 @@ class Config extends Model
             'videos'   => __('Videos'),
             'address'  => __('Address'),
             'model'    => __('Model'),
+            'mztree'         =>'选择树',
             'location'    => __('Location'),
             'switcher'    => __('Switcher'),
             'cascader'    => __('Cascader'),
             'listing'    => __('Listing'),
-	    'url'     => __('Url'),
+	            'url'     => __('Url'),
         ];
         return $typeList;
     }

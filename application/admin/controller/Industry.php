@@ -23,13 +23,25 @@ class Industry extends Backend
         $this->model = new \app\admin\model\Industry;
 
         $tree = Tree::instance();
-        $tree->init(collection($this->model->order('id desc')->cache(true)->select())->toArray(), 'pid');
+        $tree->init(collection($this->model->order('id desc')->select())->toArray(), 'pid');
         $this->categorylist = $tree->getTreeList($tree->getTreeArray(0), 'name');
         $categorydata = [0 => ['type' => 'all', 'name' => __('None')]];
         foreach ($this->categorylist as $k => $v) {
             $categorydata[$v['id']] = $v;
         }
         $this->view->assign("parentList", $categorydata);
+    }
+
+    public function ztreelist() {
+        list($where, $sort, $order, $offset, $limit) = $this->buildparams();
+        $this->spectacle($this->model);
+        $list = $this->model
+            ->field("name, id, pid as pId")
+            ->where($where)
+            ->order($sort, $order)
+            ->select();
+        $list = collection($list)->toArray();
+        return json($list);
     }
 
     public function classtree() {
@@ -44,7 +56,7 @@ class Industry extends Backend
         foreach ($list as $k => $v) {
             $chequelList[] = [
                 'id'     => $v['id'],
-                'parent' => ($v['pid'] && $v['pid'] != $pid) ? $v['pid'] : '#',
+                'pid' => ($v['pid'] && $v['pid'] != $pid) ? $v['pid'] : '#',
                 'text'   => $v['name'],
                 'type'   => "list",
                 'state'  => ['opened' => false]
@@ -52,4 +64,5 @@ class Industry extends Backend
         }
         return $chequelList;
     }
+
 }

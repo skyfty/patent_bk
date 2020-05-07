@@ -862,6 +862,52 @@ define(['jquery', 'bootstrap', 'upload', 'validator', 'moment'], function ($, un
                 var fieldName = field.name + "_model_id";
                 return this.modelfield(scene,field, val,fieldName, false, "/index").prop("outerHTML");
             },
+            mztree:function(scene,field,val) {
+                var fieldName = field.name + "_model_id";
+                var wap = $("<div class='input-group' modelfield='"+fieldName+"'/>");
+                var btn = $('' +
+                    '<span class="input-group-btn">'+
+                    '<button type="button" class="btn btn-default btn-flat btn-model"><i class="fa fa-list-alt"></i></button>'+
+                    '</span>');
+                wap.append(btn);
+
+                var menuContentUl =$('<ul ztree class="ztree mztree" style="margin-top:0; width:430px; height: 200px;" data-check="check"></ul>');
+                if (field.defaultvalue != "") {
+                    menuContentUl.attr("data-url",field.defaultvalue + "/ztreelist");
+                }
+                var menuContentDiv = $('<div id="'+fieldName+'MenuContent" class="menuContent" style="display:none; position: absolute;">');
+                menuContentDiv.append(menuContentUl);
+                wap.append(menuContentDiv);
+
+                var input = $("<input ng-click='showFieldMenu(\""+fieldName+"\");' readonly='readonly'  autocomplete='off' "+field.extend+"/>");
+                var attr = {
+                    "name":"row[" + fieldName + "]",
+                    "data-rule":field.rule,
+                    "data-tip":field.tip,
+                    "type":"text",
+                };
+                input.attr(attr);
+
+                if (val && typeof(val[fieldName]) !=  "undefined") {
+                    input.attr("value",val[fieldName]);
+                }
+                if ((val==undefined || scene=="add"?field.newstatus:field.editstatus)=='locked') {
+                    input.attr("disabled", "disabled");
+                }
+                if (((val==undefined || scene=="add")?field.newstatus:field.editstatus)=='hidden') {
+                    input.hide();
+                }
+                input.addClass("form-control" + " form-field-" + field.name);
+
+                wap.append(input);
+
+                var hidden = $('<input type="text" class="sp_hidden hidden_model"  style="display: none;"/>');
+                hidden.attr({
+                    "ng-model":"row." + fieldName,
+                }).val('');
+                wap.append(hidden);
+                return wap.prop("outerHTML");
+            },
 
             idcode:function(scene,field,val) {
                 var wap = $("<div class='input-group'/>");

@@ -1416,6 +1416,20 @@ classify-tree.show-spot span.spot{
   vertical-align:top; *vertical-align:middle
 }
 
+ul.ztree.mztree {
+  margin-top: 10px;
+  border: 1px solid #617775;
+  background: white;
+  width: 430px;
+  height: 200px;
+  overflow-y: scroll;
+  overflow-x: auto;
+}
+
+
+ul.ztree.mztree li span.button.switch.level0 {visibility:visible; width:18px;}
+ul.ztree.mztree li ul.level0 {padding:0; background:#defdef;}
+
 ul[readonly="readonly"].plupload-preview a.btn-trash {
   display: none;
 }

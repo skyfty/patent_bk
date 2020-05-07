@@ -43,7 +43,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                         data = Table.api.formatter.label.call(this, titles,field);
                     }
 
-                } else if (field.type=="model") {
+                } else if (field.type=="model" || field.type=="mztree") {
                     if (field.relevance) {
                         data = data[field.relevance];
                     }
@@ -478,7 +478,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 var data = $parse($attrs.model)($scope);
                 var html = "";
                 if (Form.formatter[field.type]) {
-                    if (field.type == "model" || field.type == "cascader") {
+                    if (field.type == "model" || field.type == "cascader" || field.type == "mztree") {
                         html = Form.formatter[field.type]($attrs.scene,field, data);
                     }else if (field.name == "idcode"){
                         html =  Form.formatter.idcode($attrs.scene,field, data[field.name]);
@@ -645,14 +645,14 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 var fieldFormatter = $parse("fieldFormatter")($scope);
 
                 var fieldName  = "row." + field.name;
-                if (field.type == "model") {
+                if (field.type == "model" || field.type == "mztree") {
                     fieldName += "_model_id";
                 }else if (field.type == "cascader") {
                     fieldName += "_cascader_id";
                 }
                 $scope.$watch(fieldName, function(){
                     var row = $parse($attrs.model)($scope);
-                    if (field.type == "model" || field.type == "cascader") {
+                    if (field.type == "model" || field.type == "cascader" || field.type == "mztree") {
                         var data = row;
                     } else {
                         if (field.relevance != "") {
@@ -932,7 +932,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
             controller: function($scope,$element,$attrs,$parse, $timeout){
                 var field = $parse($attrs.validatorObserve)($scope);
                 var rate = function(ishide) {
-                    if (field.type == "model") {
+                    if (field.type == "model" || field.type == "mztree") {
                         var ele = $('input[name="row['+field.name+'_model_id]"]', $element);
                     }else if (field.type == "cascader"){
                         var ele = $('input[name="row['+field.name+'_cascader_id]"]', $element);
@@ -1033,6 +1033,27 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 var removeHoverDom =  $parse($attr.removeHoverDom)($scope);
                 var onCheck =  $parse($attr.onCheck)($scope);
                 var filter =  $parse($attr.filter)($scope);
+
+                $scope.onBodyDown = function(event){
+                    if (!(event.target.id == "menuBtn" || event.target.id == "citySel" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+                        $scope.hideMenu();
+                    }
+                };
+                $scope.showFieldMenu = function(fieldName) {
+                    var cityObj =  $("[name='row["+fieldName+"]']");
+                    var cityOffset = cityObj.offset();
+
+                    $("#" + fieldName + "MenuContent").css({
+                        "z-index":100,
+                        left:40 + "px",
+                        top:5 + cityObj.outerHeight() + "px"}).slideDown("fast");
+                    //$("body").bind("mousedown", $scope.onBodyDown);
+                };
+
+                $scope.hideMenu = function() {
+                   // $("#" + fieldName + "MenuContent").fadeOut("fast");
+                    //$("body").unbind("mousedown", $scope.onBodyDown);
+                };
 
                 require(['ztree'], function () {
                     var className = "dark", curDragNodes, autoExpandNode;
@@ -1173,7 +1194,10 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     if (typeof customCallback == "function") {
                         setting['async']['otherParam']['custom'] = customCallback;
                     }
-                    setting['view'] = {};
+                    setting['view'] = {
+                        dblClickExpand: false
+                    };
+
                     if (typeof addDiyDom == "function") {
                         setting['view']['addDiyDom'] = addDiyDom;
                     }
@@ -1350,7 +1374,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                             });
                             data.searchList = searchList;
 
-                        } else if(j.type == "model" || j.type == "cascader"){
+                        } else if(j.type == "model" || j.type == "cascader" || j.type == "mztree"){
                             data.formatter = function(d, row){
                                 if (typeof fieldFormatter != "undefined") {
                                     return fieldFormatter(j, row);
@@ -1534,7 +1558,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                             if (fieldName === "__all_fields__") {
                                 fieldName = $scope.complexAllFields($scope.fields);;
                             }
-                            if (co.field.type === "model") {
+                            if (co.field.type === "model" || co.field.type === "mztree") {
                                 fieldName = fieldName + "_model_keyword";
                             }
                             if (co.field.type === "cascader") {
@@ -1553,7 +1577,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     if (params.sort) {
                         $.each(fields, function (i, j) {
                             if(j.name == params.sort){
-                                if (j.type=="model") {
+                                if (j.type=="model"|| j.type === "mztree") {
                                     params.sort = params.sort + "_model_id";
                                 }
                                 if (j.type=="cascader") {
