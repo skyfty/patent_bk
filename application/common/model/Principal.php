@@ -47,6 +47,7 @@ class Principal extends  Cosmetic
             model($row['principalclass']['model_type'])->where(['principal_model_id'=>$row['id']])->delete();
             model("claim")->where(['principal_model_id'=>$row['id']])->delete();
             model("actualize")->where("principal_model_id", $row['id'])->delete();
+            model("quarters")->where("principal_model_id", $row['id'])->delete();
         });
 
         self::afterUpdate(function($row){
@@ -67,6 +68,10 @@ class Principal extends  Cosmetic
 
     public function company() {
         return $this->hasOne('Company','id','substance_id')->joinType("LEFT")->setEagerlyType(0);
+    }
+
+    public function persion() {
+        return $this->hasOne('Persion','id','substance_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
     public function industry() {

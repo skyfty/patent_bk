@@ -18,6 +18,12 @@ class Ordinal extends Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("CO%06d", $maxid);
         });
+
+        $updatepolicy = function($row){
+            $row->policy->match();
+        };
+        self::afterDelete($updatepolicy); self::afterUpdate($updatepolicy); self::afterInsert($updatepolicy);
+
     }
 
     static public function getConditionList() {

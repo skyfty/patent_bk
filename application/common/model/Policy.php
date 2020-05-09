@@ -31,12 +31,10 @@ class Policy extends  Cosmetic
             $row['idcode'] = sprintf("PO%06d", $maxid);
         });
 
-        self::afterUpdate(function($row){
-            $row->match();
-        });
-
         self::afterDelete(function($row){
             model("actualize")->where("policy_model_id", $row['id'])->delete();
+            model("ordinal")->where("policy_model_id", $row['id'])->delete();
+            model("project")->where("policy_model_id", $row['id'])->delete();
         });
     }
 
