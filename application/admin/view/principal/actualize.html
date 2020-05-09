@@ -5,9 +5,9 @@
     <div class="panel-body">
         <div class="widget-body no-padding  table-cosmetic">
             <div id="toolbar-actualize" class="toolbar">
-                {:build_toolbar('refresh,del')}
+                {:build_toolbar('refresh')}
                 <div class="btn-group" role="group">
-                    <a href="{:url('actualize/add',['principal_model_id'=>$row['id']])}" class="btn btn-default btn-dialog" title="添加岗位"><i class="fa fa-plus"></i> </a>
+                    <a href="javascript:void(0);" class="btn btn-default" title="匹配政策" ng-click="match()"><i class="fa fa-glide"></i> </a>
                 </div>
 
             </div>
@@ -20,7 +20,6 @@
                    data-buttons="tableExtendButtons"
                    data-search-button-hide-group="true"
                    data-operate-view="{:$auth->check('actualize/view')}"
-                   data-operate-del="{:$auth->check('actualize/del')}"
                    class="table table-striped table-bordered table-hover  text-nowrap" width="100%">
             </table>
         </div>

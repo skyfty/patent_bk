@@ -16,15 +16,9 @@ use think\App;
  */
 class Principal extends Cosmetic
 {
-    
-    /**
-     * Principal模型对象
-     * @var \app\admin\model\Principal
-     */
-    protected $model = null;
-
     public function _initialize()
     {
+        $this->noNeedRight = array_merge($this->noNeedRight, ["match"]);
         parent::_initialize();
         $this->model = new \app\admin\model\Principal;
     }
@@ -227,4 +221,16 @@ class Principal extends Cosmetic
         }
     }
 
+    public function match() {
+        $ids =$this->request->param("ids", null);
+        if ($ids === null)
+            $this->error(__('Params error!'));
+
+        $row = $this->model->find($ids);
+        if (!$row)
+            $this->error(__('No Results were found'));
+
+        $row->match();
+        $this->success("SUCCESS");
+    }
 }

@@ -36,4 +36,13 @@ class Policy extends Cosmetic
 
         return $model;
     }
+
+    public function rest($ids = NULL) {
+        $row = $this->model->find($ids);
+        if (!$row)
+            $this->error(__('No Results were found'));
+        $row->match();
+        $this->success();
+
+    }
 }

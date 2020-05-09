@@ -7,8 +7,10 @@
             <div id="toolbar-ordinal" class="toolbar">
                 {:build_toolbar('refresh,del')}
                 <div class="btn-group" role="group">
-                <a href="{:url('ordinal/add',['policy_model_id'=>$row['id'],'type'=>'pre'])}" class="btn btn-default btn-dialog" title="添加规则"><i class="fa fa-plus"></i> </a>
-                <a href="{:url('ordinal/add',['policy_model_id'=>$row['id'],'type'=>'custom'])}" class="btn btn-default btn-dialog" title="添加自定义规则"><i class="fa fa-cubes"></i> </a>
+                <a href="{:url('ordinal/add',['policy_model_id'=>$row['id'],'type'=>'pre','principalclass'=>$row['principalclass']])}" class="btn btn-default btn-dialog" title="添加规则"><i class="fa fa-plus"></i> </a>
+                <a href="{:url('ordinal/add',['policy_model_id'=>$row['id'],'type'=>'custom','principalclass'=>$row['principalclass']])}" class="btn btn-default btn-dialog" title="添加自定义规则"><i class="fa fa-cubes"></i> </a>
+                    <a href="{:url('policy/rest',['ids'=>$row['id']])}" class="btn btn-default btn-ajax" title="重新匹配"><i class="fa fa-glide"></i> </a>
+
                 </div>
             </div>
             <table id="table-ordinal"  ui-formidable="fields"

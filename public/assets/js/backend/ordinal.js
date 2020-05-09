@@ -57,7 +57,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         },
 
         initParam:[
-            'policy_model_id','type'],
+            'policy_model_id','type','principalclass'],
         add: function () {
             var self = this;
             AngularApp.controller("add", function($scope,$sce, $compile,$timeout){
@@ -88,6 +88,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             $('[name="row[syllable_model_id]"]').data("e-params",function(){
                 var param = {};
                 param.custom = {
+                    'principalclass': $scope.row['principalclass']
                 };
                 return param;
             }).data("e-selected", function(data){

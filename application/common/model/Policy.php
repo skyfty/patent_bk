@@ -30,6 +30,14 @@ class Policy extends  Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("PO%06d", $maxid);
         });
+
+        self::afterUpdate(function($row){
+            $row->match();
+        });
+
+        self::afterDelete(function($row){
+            model("actualize")->where("policy_model_id", $row['id'])->delete();
+        });
     }
 
 
@@ -58,6 +66,35 @@ class Policy extends  Cosmetic
 
     public function industry() {
         return $this->hasManyComma('industry','id','industry_model_id');
+    }
+
+    public function condition() {
+        $conditions = [];
+        $ordinals = $this->ordinals()->select();
+        foreach($ordinals as $ordinal) {
+            $conditions[] = $ordinal['condition'];
+        }
+        $conditions = implode(" and ", $conditions);
+        return $conditions;
+    }
+
+    public function match_principal($where = []) {
+        $principal_ids = model("principal")->with($this['principalclass'])
+            ->where("substance_type",$this['principalclass'])
+            ->where($this->condition())->where($where)->column("principal.id");
+        return $principal_ids;
+    }
+
+    public function match() {
+        model("actualize")->where("policy_model_id", $this['id'])->delete();
+        $data = [];
+        foreach($this->match_principal() as $v) {
+            $data[] = [
+                "principal_model_id"=>$v,
+                "policy_model_id"=>$this['id'],
+            ];
+        }
+        model("actualize")->saveAll($data);
     }
 }
 

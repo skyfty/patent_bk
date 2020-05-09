@@ -46,8 +46,12 @@ class Principal extends  Cosmetic
         self::afterDelete(function($row){
             model($row['principalclass']['model_type'])->where(['principal_model_id'=>$row['id']])->delete();
             model("claim")->where(['principal_model_id'=>$row['id']])->delete();
+            model("actualize")->where("principal_model_id", $row['id'])->delete();
         });
 
+        self::afterUpdate(function($row){
+            $row->match();
+        });
     }
 
     public function principalclass() {
@@ -61,6 +65,9 @@ class Principal extends  Cosmetic
         return $this->morphTo();
     }
 
+    public function company() {
+        return $this->hasOne('Company','id','substance_id')->joinType("LEFT")->setEagerlyType(0);
+    }
 
     public function industry() {
         return $this->hasManyComma('industry','id','industry_model_id');
@@ -68,5 +75,21 @@ class Principal extends  Cosmetic
     public function promotions()
     {
         return $this->hasMany('promotion','principal_model_id');
+    }
+
+    public function match() {
+        model("actualize")->where("principal_model_id", $this['id'])->delete();
+        $data = [];
+        $policys = model("policy")->where("principalclass",$this['substance_type'])->select();
+        foreach($policys as $policy) {
+            $principal_ids = $policy->match_principal(['principal.id'=>$this['id']]);
+            if ($principal_ids && in_array($this['id'], $principal_ids)) {
+                $data[] = [
+                    "principal_model_id"=>$this['id'],
+                    "policy_model_id"=>$policy['id'],
+                ];
+            }
+        }
+        model("actualize")->saveAll($data);
     }
 }

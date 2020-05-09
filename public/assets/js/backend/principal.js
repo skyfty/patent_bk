@@ -114,10 +114,20 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     return param;
                 };
 
+                $scope.match = function() {
+                    Fast.api.ajax({
+                        url: "principal/match",
+                        data: {ids:  $scope.row.id}
+                    }, function () {
+                        $("#table-actualize").bootstrapTable('refresh');
+                        return false;
+                    });
+                };
+
                 Table.api.init({
                     extend: {
                         index_url: 'actualize/index',
-                        del_url: 'actualize/del',
+                        del_url: '',
                         summation_url: 'actualize/summation',
                         table: 'actualize',
                     },
