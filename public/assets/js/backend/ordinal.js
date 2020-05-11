@@ -150,7 +150,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 }
                 $scope.initvar = true;
             }).data("e-clear", function(){
-                $('[name="row[condition]"]').selectPageClear();
+                $('[name="row[condition]"]').empty();
             });
 
             $('[name="row[condition]"]').removeClass("selectpicker");
