@@ -143,13 +143,16 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
 
                 }
                 condition_select.val($scope.row.condition);
-                //condition_select.selectpicker('refresh').selectpicker('render');
+
                 if ($scope.initvar) {
                     $('[name="row[content]"]').val("");
                     condition_select.trigger("change");
                 }
                 $scope.initvar = true;
+            }).data("e-clear", function(){
+                $('[name="row[condition]"]').selectPageClear();
             });
+
             $('[name="row[condition]"]').removeClass("selectpicker");
             Form.api.bindevent($("form[role=form]"));
             require(['selectpage'], function () {
