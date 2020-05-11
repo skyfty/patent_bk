@@ -38,7 +38,6 @@ class Policy extends  Cosmetic
         });
     }
 
-
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
@@ -77,9 +76,17 @@ class Policy extends  Cosmetic
     }
 
     public function match_principal($where = []) {
+        $industry_wehre = [];
+        foreach(explode(",",  $this['industry_model_id']) as $industrys_id) {
+            $industry_wehre[] = build_where_param("FINDIN", 'industry_model_id', $industrys_id);
+        }
+        $industry_wehre = implode(" OR ", $industry_wehre);
+
         $principal_ids = model("principal")->with($this['principalclass'])
             ->where("substance_type",$this['principalclass'])
-            ->where($this->condition())->where($where)->column("principal.id");
+            ->where($this->condition())->where($where)->where(function($query)use($industry_wehre){
+                $query->where($industry_wehre);
+            })->column("principal.id");
         return $principal_ids;
     }
 

@@ -140,7 +140,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     $('[role="form"]').validator("setField", 'row[content]', "");
                 } else {
                     $('[name="row[content]"]').removeAttr("readonly");
-
                 }
                 condition_select.val($scope.row.condition);
 
