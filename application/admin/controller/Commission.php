@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller\auth;
+namespace app\admin\controller;
 
 use app\common\controller\Backend;
 use fast\Tree;
@@ -76,6 +76,18 @@ class Commission extends Backend
         $this->error();
     }
 
+
+    public function ztreelist() {
+        list($where, $sort, $order, $offset, $limit) = $this->buildparams();
+        $this->spectacle($this->model);
+        $list = $this->model
+            ->field("name, id, pid as pId")
+            ->where($where)
+            ->order($sort, $order)
+            ->select();
+        $list = collection($list)->toArray();
+        return json($list);
+    }
 
     public function classtree() {
         $where = array();

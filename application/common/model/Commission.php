@@ -7,7 +7,7 @@ use think\Model;
 class Commission extends Model
 {
     // 表名
-    protected $name = 'auth_commission';
+    protected $name = 'commission';
     
     // 自动写入时间戳字段
     protected $autoWriteTimestamp = 'int';
