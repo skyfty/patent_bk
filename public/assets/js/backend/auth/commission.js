@@ -24,7 +24,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'id', title: __('Id')},
                         {field: 'name', title: __('Name'), align: 'left'},
                         {field: 'rank_text', title: "级别", formatter: Table.api.formatter.normal},
 
@@ -40,6 +39,16 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
                 pagination: false,
                 search: false,
                 commonSearch: false,
+                treeShowField:"name",
+                parentIdField:"pid",
+                onLoadSuccess:function (data) {
+                    table.treegrid({
+                        treeColumn: 1,
+                        onChange: function () {
+                            table.bootstrapTable('resetWidth');
+                        }
+                    });
+                }
             });
 
             // 为表格绑定事件

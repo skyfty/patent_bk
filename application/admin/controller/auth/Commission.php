@@ -40,61 +40,6 @@ class Commission extends Backend
 
     }
 
-
-    /**
-     * 查看
-     */
-    public function index()
-    {
-        if ($this->request->isAjax())
-        {
-            $list = \app\admin\model\Commission::all(array_keys($this->commissiondata));
-            $list = collection($list)->toArray();
-            $commissionList = [];
-            foreach ($list as $k => $v)
-            {
-                $commissionList[$v['id']] = $v;
-            }
-            $list = [];
-            foreach ($this->commissiondata as $k => $v)
-            {
-                if (isset($commissionList[$k]))
-                {
-                    $commissionList[$k]['name'] = $v;
-                    $list[] = $commissionList[$k];
-                }
-            }
-            $total = count($list);
-            $result = array("total" => $total, "rows" => $list);
-
-            return json($result);
-        }
-        return $this->view->fetch();
-    }
-
-    /**
-     * 编辑
-     */
-    public function edit($ids = NULL)
-    {
-        $row = $this->model->get(['id' => $ids]);
-        if (!$row)
-            $this->error(__('No Results were found'));
-        if ($this->request->isPost())
-        {
-            $params = $this->request->post("row/a", [], 'strip_tags');
-            // 父节点不能是它自身的子节点
-            $childrenCommissionIds = $this->auth->getChildrenCommissionIds($row['id'], $row['pid']);
-            if (in_array($params['pid'], $childrenCommissionIds))
-            {
-                $this->error(__('The parent group can not be its own child'));
-            }
-            return parent::edit($ids);
-        }
-        $this->view->assign("row", $row);
-        return $this->view->fetch();
-    }
-
     /**
      * 删除
      */
@@ -105,7 +50,7 @@ class Commission extends Backend
             $ids = explode(',', $ids);
             $commissionlist = $this->auth->getGroups();
             $commission_ids = array_map(function($group) { return $group['id']; }, $commissionlist);
-            // 移除掉当前管理员所在组别
+
             $ids = array_diff($ids, $commission_ids);
 
             $commissionlist = $this->model->where('id', 'in', $ids)->select();
@@ -129,5 +74,27 @@ class Commission extends Backend
             }
         }
         $this->error();
+    }
+
+
+    public function classtree() {
+        $where = array();
+        $pid = $this->request->param("pid");
+        if ($pid) {
+            $where['pid'] = $pid;
+        }
+        $list =collection($this->model->where($where)->cache(true)->select())->toArray() ;
+
+        $chequelList = [];
+        foreach ($list as $k => $v) {
+            $chequelList[] = [
+                'id'     => $v['id'],
+                'pid' => ($v['pid'] && $v['pid'] != $pid) ? $v['pid'] : '#',
+                'text'   => $v['name'],
+                'type'   => "list",
+                'state'  => ['opened' => false]
+            ];
+        }
+        return $chequelList;
     }
 }

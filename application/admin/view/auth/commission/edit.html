@@ -1,11 +1,4 @@
 <form id="edit-form" class="form-horizontal form-ajax" role="form" method="POST" action="">
-
-    <div class="form-group">
-        <label class="control-label col-xs-12 col-sm-2">{:__('Pid')}:</label>
-        <div class="col-xs-12 col-sm-8">
-            {:build_select('row[pid]', $commissiondata, $row['pid'], ['class'=>'form-control selectpicker', 'data-rule'=>'required', 'data-id'=>$row['id'], 'data-pid'=>$row['pid']])}
-        </div>
-    </div>
     <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2">{:__('Name')}:</label>
         <div class="col-xs-12 col-sm-8">

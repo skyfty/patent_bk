@@ -44,6 +44,7 @@ class Industry extends Backend
         return json($list);
     }
 
+
     public function classtree() {
         $where = array();
         $pid = $this->request->param("pid");
