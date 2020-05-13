@@ -932,7 +932,6 @@ define(['jquery', 'bootstrap', 'upload', 'validator', 'moment'], function ($, un
             },
             cascader:function(scene,field,val) {
                 var cascaderid = field.name + "_cascader_id";
-                var cascaderidkeyword = field.name + "_cascader_keyword";
 
                 var wap = $("<div/>");
                 var input = $("<input readonly='readonly' style='cursor: hand' class='cascader  form-control ' autocomplete='off' type='text' "+field.extend+" />");
@@ -941,7 +940,6 @@ define(['jquery', 'bootstrap', 'upload', 'validator', 'moment'], function ($, un
                     "data-rule":field.rule,
                     "data-tip":field.tip,
                     "data-model":"row." + cascaderid,
-                    "data-keyword-model":"row." + cascaderidkeyword,
                     "data-field-name":field.name,
                 };
                 input.attr(attr);
@@ -955,21 +953,14 @@ define(['jquery', 'bootstrap', 'upload', 'validator', 'moment'], function ($, un
                 }
                 wap.append(input);
 
-                var hidden = $('<input type="hidden"/>');
-                hidden.attr({
-                    "ng-model":"row." + cascaderidkeyword,
-                    "name":"row[" + cascaderidkeyword + "]",
-                }).val('');
-                if (val && typeof(val[cascaderid]) !=  "undefined") {
-                    hidden.val(val[cascaderidkeyword]);
-                }
-                wap.append(hidden);
-
                 var hidden_model = $('<input type="text" class="sp_hidden hidden_model"  style="display: none;"/>');
                 hidden_model.attr({
                     "name":"row[" + cascaderid + "]",
                     "ng-model":"row." + cascaderid,
                 }).val('');
+                if (val!=undefined && typeof val[field.name] != "undefined") {
+                    hidden_model.attr("data-ids", val[field.name]['full_id']);
+                }
                 wap.append(hidden_model);
                 return wap.prop("outerHTML");
             },

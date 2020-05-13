@@ -11,12 +11,8 @@ use fast\Tree;
  */
 class Commission extends Backend
 {
-    
-    /**
-     * AuthDepartment模型对象
-     * @var \app\admin\model\Department
-     */
-    protected $model = null;
+    use \app\admin\library\traits\Cascader;
+    protected $noNeedRight = ['selectpage','cascader'];
 
     public function _initialize()
     {
@@ -35,6 +31,7 @@ class Commission extends Backend
         }
         $this->commissiondata = $commissionName;
         $this->view->assign('commissiondata', $this->commissiondata);
+
         $this->view->assign("statusList", $this->model->getStatusList());
         $this->view->assign("rankList", $this->model->getRankList());
 

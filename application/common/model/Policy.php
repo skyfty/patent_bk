@@ -56,6 +56,10 @@ class Policy extends  Cosmetic
     {
         return $this->hasOne('species','id','species_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
+    public function commission()
+    {
+        return $this->hasOne('commission','id','commission_cascader_id')->joinType("LEFT")->setEagerlyType(0);
+    }
     public function relevance()
     {
         return $this->morphOne('provider', 'provider_model');

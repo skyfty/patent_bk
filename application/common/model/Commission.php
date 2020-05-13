@@ -25,7 +25,9 @@ class Commission extends Model
     // 追加属性
     protected $append = [
         'status_text',
-        'rank_text'
+        'rank_text',
+        'full_name',
+        "full_id"
 
     ];
     public function getStatusList()
@@ -53,5 +55,25 @@ class Commission extends Model
     }
 
 
+    public function getFullNameAttr($value, $data)
+    {
+        $name = "";
+        if ($data['pid'] != 0) {
+            $name= self::get($data['pid'])->full_name;
+            $name.="/";
+        }
+        $name .= $data['name'];
+        return $name;
+    }
 
+    public function getFullIdAttr($value, $data)
+    {
+        $id = "";
+        if ($data['pid'] != 0) {
+            $id= self::get($data['pid'])->full_id;
+            $id.=",";
+        }
+        $id .= $data['id'];
+        return $id;
+    }
 }

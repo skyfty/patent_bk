@@ -644,33 +644,22 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
         return {
             restrict : 'C',
             link: function($scope, $element, $attrs) {
-                var hiddenInput = $("[name='row["+$attrs.fieldName+"_cascader_keyword]']", $element.parent());
                 var hiddenIdInput = $("[name='row["+$attrs.fieldName+"_cascader_id]']", $element.parent());
                 require(['cascader'], function (cascader) {
-                    var val = hiddenInput.val();
+                    var val = hiddenIdInput.attr("data-ids");
                     cascader({
                         elem: $element,
                         url: $attrs.source,
-                        value: val?JSON.parse(val)['ids']:"",
+                        value: val?val.split(","):"",
                         success: function (valData,labelData, row) {
                             $scope.$apply(function() {
                                 if (valData && valData.length > 0) {
-                                    var retsult = JSON.stringify({
-                                        ids:valData,
-                                        name:labelData,
-                                        row:row
-                                    });
-                                    if (retsult != val) {
-                                        hiddenInput.val(retsult);
-                                        $parse($attrs.keywordModel).assign($scope.$parent, retsult);
-                                        $parse($attrs.model).assign($scope.$parent, valData[valData.length - 1]);
-                                        hiddenIdInput.val(valData[valData.length - 1]);
-                                        hiddenIdInput.trigger("change");
-                                    }
+                                    $parse($attrs.model).assign($scope.$parent, valData[valData.length - 1]);
+                                    hiddenIdInput.val(valData[valData.length - 1]);
+                                    hiddenIdInput.trigger("change");
+
                                 } else {
                                     if (val != "") {
-                                        hiddenInput.val("");
-                                        $parse($attrs.keywordModel).assign($scope.$parent, "");
                                         $parse($attrs.model).assign($scope.$parent, null);
                                         hiddenIdInput.val("");
                                         hiddenIdInput.trigger("change");
