@@ -44,7 +44,18 @@ class Commission extends Model
 
     public function getRankList()
     {
-        return ['ministerial' => __('部级'), 'bureau' => __('局级'), 'office' => __('厅级')];
+        return [
+            'z_ministerial' => __('正部级单位'),
+            'f_ministerial' => __('副部级单位'),
+            'z_bureau' => __('正局级单位'),
+            'f_bureau' => __('副局级单位'),
+            'z_office' => __('正厅级单位'),
+            'f_office' => __('副厅级单位'),
+            'z_chu' => __('正处级单位'),
+            'f_chu' => __('副处级单位'),
+            'z_ke' => __('正科级单位'),
+            'f_ke' => __('副科级单位'),
+        ];
     }
 
     public function getRankTextAttr($value, $data)
