@@ -28,7 +28,6 @@ class Commission extends Model
         'rank_text',
         'full_name',
         "full_id"
-
     ];
     public function getStatusList()
     {
@@ -47,8 +46,6 @@ class Commission extends Model
         return [
             'z_ministerial' => __('正部级单位'),
             'f_ministerial' => __('副部级单位'),
-            'z_bureau' => __('正局级单位'),
-            'f_bureau' => __('副局级单位'),
             'z_office' => __('正厅级单位'),
             'f_office' => __('副厅级单位'),
             'z_chu' => __('正处级单位'),
