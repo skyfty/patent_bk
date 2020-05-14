@@ -27,7 +27,13 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','bootstrap-treegrid'],
                     [
                         {checkbox: true},
                         {
+                            field: 'id', title: "ID", align: 'left'
+                        },
+                        {
                             field: 'name', title: __('Name'), align: 'left'
+                        },
+                        {
+                            field: 'content', title: "内容", align: 'left'
                         },
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
