@@ -10,6 +10,11 @@ class Patentclass extends  Cosmetic
     protected $name = 'patentclass';
     public $keywordsFields = ["name", "idcode"];
 
+    // 追加属性
+    protected $append = [
+        'full_name',
+        "full_id"
+    ];
     protected static function init()
     {
         parent::init();
