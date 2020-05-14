@@ -20,6 +20,10 @@ class Invent extends Professional
         });
     }
 
+    public function patentclass()
+    {
+        return $this->hasOne('patentclass','id','patentclass_cascader_id')->joinType("LEFT")->setEagerlyType(0);
+    }
     public function branch() {
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }

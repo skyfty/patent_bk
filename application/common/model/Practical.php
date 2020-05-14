@@ -21,6 +21,10 @@ class Practical extends Professional
     }
 
 
+    public function patentclass()
+    {
+        return $this->hasOne('patentclass','id','patentclass_cascader_id')->joinType("LEFT")->setEagerlyType(0);
+    }
     public function promotion() {
         return $this->hasOne('promotion','id','promotion_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
