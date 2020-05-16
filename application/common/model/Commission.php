@@ -44,6 +44,7 @@ class Commission extends Model
     public function getRankList()
     {
         return [
+            'none' => __('无'),
             'z_ministerial' => __('正部级单位'),
             'f_ministerial' => __('副部级单位'),
             'z_office' => __('正厅级单位'),
