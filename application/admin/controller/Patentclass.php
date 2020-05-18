@@ -24,6 +24,7 @@ class Patentclass extends Backend
         $this->categorylist = $tree->getTreeList($tree->getTreeArray(0), 'name');
         $categorydata = [0 => ['type' => 'all', 'name' => __('None')]];
         foreach ($this->categorylist as $k => $v) {
+            $v['name'] = $v['code'].",".$v['name'];
             $categorydata[$v['id']] = $v;
         }
         $this->view->assign("parentList", $categorydata);
