@@ -94,6 +94,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             }).data("e-selected", function(data){
                 var condition_select = $('[name="row[condition]"]');
                 condition_select.empty();
+
+                $('[data-field-name="condition"]').show();
                 if ($scope.row.type == "pre" || data.row.type == "selects") {
                     var condition = data.row.condition;
                     var condition_array = condition.split('\n');
@@ -111,9 +113,11 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     });
 
                 } else {
-                    var html = Template("spotcircus-condition-tmpl",data.row);
-                    var form = $compile(html)($scope);
-                    condition_select.append(form);
+                    if (data.row.type =="sql") {
+                        $('[data-field-name="condition"]').hide();
+                    } else {
+                        condition_select.append($compile(Template("spotcircus-condition-tmpl",data.row))($scope));
+                    }
 
                     var rule = [];
                     switch(data.row.type) {
@@ -130,6 +134,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     $('[role="form"]').validator("setField", 'row[content]', rule.join(";"));
                 }
                 $('[name="row[condition]"]').off("change");
+                condition_select.find('option:first').prop('selected', 'selected');
 
                 if ($scope.row.type == "pre" || data.row.type == "selects") {
                     $('[name="row[condition]"]').on("change", function(){
