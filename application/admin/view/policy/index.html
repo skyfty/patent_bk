@@ -39,7 +39,7 @@
                     </div>
                     <div id="toolbar-{$vo['name']}" class="toolbar">
                         {:build_toolbar(['refresh',  'del'])}
-                        <a href="{:url('policy/add')}" class="btn btn-default btn-dialog" title="添加新政策" data-fullscreen="true"><i class="fa fa-plus"></i> </a>
+                        <a href="{:url('policy/add')}" class="btn btn-default btn-dialog" title="添加新政策"><i class="fa fa-plus"></i> </a>
 
                         <div style="display: inline-block;" class="hidden-xs {notempty name='config.staff'}hide{/notempty}" id="div_branch_select">{:build_branch_select('branch_select')}</div>
 

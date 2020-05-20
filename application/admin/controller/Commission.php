@@ -12,7 +12,7 @@ use fast\Tree;
 class Commission extends Backend
 {
     use \app\admin\library\traits\Cascader;
-    protected $noNeedRight = ['selectpage','cascader'];
+    protected $noNeedRight = ['selectpage','cascader','ztreelist'];
 
     public function _initialize()
     {
@@ -37,9 +37,20 @@ class Commission extends Backend
 
     }
 
-    /**
-     * 删除
-     */
+
+    public function ztreelist() {
+        list($where, $sort, $order, $offset, $limit) = $this->buildparams();
+        $this->spectacle($this->model);
+        $list = $this->model
+            ->field("name, id, pid as pId,status, rank")
+            ->where($where)
+            ->order($sort, $order)
+            ->select();
+        $list = collection($list)->toArray();
+        return json($list);
+    }
+
+
     public function del($ids = "")
     {
         if ($ids)
@@ -73,18 +84,6 @@ class Commission extends Backend
         $this->error();
     }
 
-
-    public function ztreelist() {
-        list($where, $sort, $order, $offset, $limit) = $this->buildparams();
-        $this->spectacle($this->model);
-        $list = $this->model
-            ->field("name, id, pid as pId")
-            ->where($where)
-            ->order($sort, $order)
-            ->select();
-        $list = collection($list)->toArray();
-        return json($list);
-    }
 
     public function classtree() {
         $where = array();

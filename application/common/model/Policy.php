@@ -12,7 +12,8 @@ class Policy extends  Cosmetic
     protected $name = 'policy';
     public $keywordsFields = ["name", "idcode"];
     public $append = [
-        'industry'
+        'industry',
+        'commission'
     ];
 
     protected static function init()
@@ -58,7 +59,7 @@ class Policy extends  Cosmetic
     }
     public function commission()
     {
-        return $this->hasOne('commission','id','commission_cascader_id')->joinType("LEFT")->setEagerlyType(0);
+        return $this->hasManyComma('commission','id','commission_model_id');
     }
     public function relevance()
     {
