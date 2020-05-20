@@ -331,6 +331,8 @@ class Backend extends Controller
                             $op = trim($v[0]);
                             if ($op == "FIND_IN_SET") {
                                 $query->where($v[1],"exp","FIND_IN_SET(".$v[1].",".$k.")");
+                            }if ($op == "FIND_IN_SET_VAL") {
+                                $query->where("FIND_IN_SET(".$v[1].",".$k.")");
                             } else {
                                 $query->where($k, $op, $v[1]);
                             }

@@ -88,7 +88,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             $('[name="row[syllable_model_id]"]').data("e-params",function(){
                 var param = {};
                 param.custom = {
-                    'principalclass': $scope.row['principalclass']
+                    'principalclass': $scope.row['principalclass'],
+                    'scope': ["FIND_IN_SET_VAL","\'"+$scope.row.type + "\'"],
                 };
                 return param;
             }).data("e-selected", function(data){
