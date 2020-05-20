@@ -32,7 +32,11 @@ class Policy extends   \app\common\model\Policy
             if ($ord["type"] == "pre") {
                 $condition[] = $ord['content'];
             } else {
-                $condition[] = build_where_param($ord['condition'],$syllable['name'],$ord['content']);
+                if($syllable->type == "sql") {
+                    $condition[] = $ord['content'];
+                } else {
+                    $condition[] = build_where_param($ord['condition'],$syllable['name'],$ord['content']);
+                }
             }
         }
         $this->save(['condition'=>json_encode($condition)]);

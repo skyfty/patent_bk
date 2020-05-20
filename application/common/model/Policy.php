@@ -73,8 +73,18 @@ class Policy extends  Cosmetic
     public function condition() {
         $conditions = [];
         $ordinals = $this->ordinals()->select();
+
         foreach($ordinals as $ordinal) {
-            $conditions[] = $ordinal['condition'];
+            if ($ordinal["type"] == "pre") {
+                $condition[] = $ordinal['content'];
+            } else {
+                $syllable = $ordinal->syllable;
+                if($syllable->type == "sql") {
+                    $condition[] = $ordinal['content'];
+                } else {
+                    $condition[] = build_where_param($ordinal['condition'],$ordinal->syllable->name,$ordinal['content']);
+                }
+            }
         }
         $conditions = implode(" and ", $conditions);
         return $conditions;

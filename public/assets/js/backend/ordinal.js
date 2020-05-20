@@ -134,7 +134,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     $('[role="form"]').validator("setField", 'row[content]', rule.join(";"));
                 }
                 $('[name="row[condition]"]').off("change");
-                condition_select.find('option:first').prop('selected', 'selected');
 
                 if ($scope.row.type == "pre" || data.row.type == "selects") {
                     $('[name="row[condition]"]').on("change", function(){
