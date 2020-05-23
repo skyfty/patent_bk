@@ -9,6 +9,9 @@ class Stem extends Cosmetic
     // 表名
     protected $name = 'stem';
     public $keywordsFields = ["name", "idcode"];
+    public $append = [
+        'commission'
+    ];
 
     protected static function init()
     {
@@ -21,6 +24,6 @@ class Stem extends Cosmetic
     }
 
     public function commission() {
-        return $this->hasOne('commission','id','commission_model_id')->joinType("LEFT")->setEagerlyType(0);
+        return $this->hasManyComma('commission','id','commission_model_id');
     }
 }
