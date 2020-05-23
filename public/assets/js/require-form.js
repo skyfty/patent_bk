@@ -889,7 +889,9 @@ define(['jquery', 'bootstrap', 'upload', 'validator', 'moment'], function ($, un
                 if (val && typeof(val[fieldName]) !=  "undefined") {
                     var valist = [];
                     $.each(val[field.defaultvalue], function(k,v){
-                        valist.push(v.name);
+                        if (v) {
+                            valist.push(v.name);
+                        }
                     });
                     input.attr("value",valist.join(","));
                 }

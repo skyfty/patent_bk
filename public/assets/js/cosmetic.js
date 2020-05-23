@@ -29,6 +29,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 return '<a href="' + url + '" class="dialogit" data-value="' + showData + '" title="' + showData + '">' + showData + '</a>';
             },
             formatMZtreeKeyword:function(field, data, model) {
+                if (model == null || model.id == null) {
+                    return "-";
+                }
                 var showData = [];
                 var ids = [];
                 if (field.content_list && field.content_list['sight']) {
