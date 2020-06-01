@@ -1,0 +1,30 @@
+<form class="form-horizontal" role="form" data-toggle="validator" method="POST" action="" ng-controller="add" >
+    <input type="hidden" name="row[__token__]" value="{$Request.token}" />
+    <input type="hidden" name="row[assembly_model_id]" value="{$Request.param.assembly_model_id}" />
+    <div class="panel panel-default panel-intro">
+        {:build_heading(null,FALSE)}
+        <div class="panel-heading">
+            <ul id="scenery-tab"  class="nav nav-tabs">
+                <li class="active"><a href="#tab-basic" data-toggle="tab">{$config.scenery.title}</a></li>
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="tab-basic">
+                    <div class="box-body no-padding">
+                        <div class="mailbox-controls">
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-success btn-sm" data-toggle="tooltip" data-container="body" title="{:__('OK')}">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mailbox-messages" id="data-view">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{include file="common/tmpl" /}

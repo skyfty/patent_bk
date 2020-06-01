@@ -1,0 +1,54 @@
+{__NOLAYOUT__}
+<style>
+    img.preset-condition-img {
+        width:40px;
+    }
+</style>
+<div class="panel panel-default panel-intro">
+    <div class="panel-heading">
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-4" style="border-right-style: inset; border-right-width: thin;">
+                <div class=" box box-success">
+                    <div class="box-header ui-sortable-handle">
+                        <i class="fa fa-reorder "></i>
+                        <h4 class="box-title"></h4>
+                        <div class="box-tools pull-right">
+                            <div class="btn-group">
+                                <a class="btn btn-default btn-sm btn-add-warerange" ng-click="addCatenate()"  title="添加">
+                                    <i class="fa fa-plus text-green"></i>
+                                </a>
+                                <a class="btn btn-danger  btn-sm btn-del-warerange"  ng-click="delCaenate()" title="删除">
+                                    <i class="fa fa-trash text-trash"></i>
+                                </a>
+                                <a class="btn btn-info  btn-sm btn-slideshare-precatenate" target="_blank" href="/precatenate/slideshare/ids/{$row.id}"><i class="fa  fa-slideshare"></i></a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <ul id="channeltree" class="ztree"></ul>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-8" id="data-view">
+                <div id="toolbar-preset" class="toolbar">
+                    {:build_toolbar(['refresh', 'del'])}
+                    <a href="/preset/edit" class="btn btn-success  btn-add-preset disabled" title="添加流程">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    <a class="btn btn-info btn-slideshare-preset" target="_blank" href=""><i class="fa fa-slideshare"></i> 幻灯片</a>
+
+                </div>
+                <table id="table-preset"  data-toolbar="toolbar-preset"  data-operate-del="{:$auth->check('preset/del')}"
+                       class="table table-striped table-bordered table-hover  text-nowrap" width="100%">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

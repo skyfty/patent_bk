@@ -1,0 +1,324 @@
+<style type="text/css">
+    .bs-callout {
+        border: 1px solid #eee;
+        border-left-width: 5px;
+        border-radius: 3px;
+        border-left-color: #aa6708;
+    }
+</style>
+<link rel="stylesheet" href="__CDN__/assets/css/animate.css">
+
+<div class="row">
+    <div class="col-sm-3 panel-primary" style="min-height: 70px;">
+        <div class="box box-success">
+            <div class="panel-heading" style="padding-bottom: 0px;">
+                <span>主课件</span>
+                <div class="box-tools pull-right">
+                    <div class="btn-group">
+                        <a class="btn btn-danger  btn-xs"  title="添加" ng-click="deleteAssembly('primary')">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
+                        <a class="btn btn-default btn-xs"  title="添加" ng-click="addAssembly('primary')">
+                            <i class="fa fa-plus text-green"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" style="padding: 7px;">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">操作对象</div>
+
+                            <div class="panel-body" style="    padding: 3px;">
+                                <ul id="primary" class="ztree">
+                                </ul>
+                                <input type="hidden" name="row[primary][warehouse][id]" value="" />
+                                <input type="hidden" name="row[primary][assembly][id]" value="" />
+                                <input type="hidden" name="row[primary][behavior][id]" value="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">组件属性</div>
+                            <div class="panel-body" style="    padding: 3px;padding-top: 18px;">
+                                <div  id="primary-assembly-data-view">
+                                </div>
+
+                                <div class="bs-callout bs-callout-warning">
+                                    <ul class="sortable-list sortable-list-tags" id="primary-assembly-adjective" style="border:none;max-width: 100%;" sortable data-filter=".filter" data-group="primary-assembly-adjective">
+                                    </ul>
+                                    <input type="hidden" name="row[primary][assembly][adjective][detail]" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">行为属性</div>
+                            <div class="panel-body" style="    padding: 3px;padding-top: 18px;">
+                                <div  id="primary-behavior-data-view">
+                                </div>
+
+                                <div class="bs-callout bs-callout-warning">
+                                    <ul class="sortable-list sortable-list-tags" id="primary-behavior-adjective" style="border:none;max-width: 100%;" sortable data-filter=".filter" data-group="primary-behavior-adjective">
+                                    </ul>
+                                    <input type="hidden" name="row[primary][behavior][adjective][detail]" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 panel-second" style="min-height: 70px;">
+        <div class="box box-success">
+            <div class="panel-heading" style="    padding-bottom: 0px;">
+                <span>课件2</span>
+                <div class="box-tools pull-right">
+                    <div class="btn-group">
+                        <a class="btn btn-danger  btn-xs"  title="添加" ng-click="deleteAssembly('second')">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
+                        <a class="btn btn-default btn-xs"  title="添加" ng-click="addAssembly('second')">
+                            <i class="fa fa-plus text-green"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" style="padding: 7px;">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-sm-6">操作对象</div>
+                                    <div class="col-sm-6 amount-second hide">
+                                        <div class="input-group input-group-sm">
+                                            <input type="number" class="form-control number" name="row[second][warehouse][amount]" placeholder="数量">
+                                            <span class="input-group-addon amount-unit"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="    padding: 3px;">
+                                <ul id="second" class="ztree">
+                                </ul>
+                                <input type="hidden" name="row[second][warehouse][id]" value="" />
+                                <input type="hidden" name="row[second][assembly][id]" value="" />
+                                <input type="hidden" name="row[second][behavior][id]" value="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">组件属性</div>
+                            <div class="panel-body" style="    padding: 3px;padding-top: 18px;">
+                                <div  id="second-assembly-data-view">
+                                </div>
+                                <div class="bs-callout bs-callout-warning">
+                                    <ul class="sortable-list sortable-list-tags" id="second-assembly-adjective" style="border:none;max-width: 100%;" sortable data-filter=".filter" data-group="second-assembly-adjective">
+                                    </ul>
+                                    <input type="hidden" name="row[second][assembly][adjective][detail]" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">行为属性</div>
+                            <div class="panel-body" style="    padding: 3px;padding-top: 18px;">
+                                <div  id="second-behavior-data-view">
+                                </div>
+                                <div class="bs-callout bs-callout-warning">
+                                    <ul class="sortable-list sortable-list-tags" id="second-behavior-adjective" style="border:none;max-width: 100%;" sortable data-filter=".filter" data-group="second-behavior-adjective">
+                                    </ul>
+                                    <input type="hidden" name="row[second][behavior][adjective][detail]" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 panel-third" style="min-height: 70px;">
+        <div class="box box-success">
+            <div class="panel-heading" style="    padding-bottom: 0px;">
+                <span>课件3</span>
+                <div class="box-tools pull-right">
+                    <div class="btn-group">
+                        <a class="btn btn-danger  btn-xs"  title="添加" ng-click="deleteAssembly('third')">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
+                        <a class="btn btn-default btn-xs"  title="添加" ng-click="addAssembly('third')">
+                            <i class="fa fa-plus text-green"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" style="padding: 7px;">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-sm-6">操作对象</div>
+                                    <div class="col-sm-6 amount-third hide">
+                                        <div class="input-group input-group-sm">
+                                            <input type="number" class="form-control" name="row[third][warehouse][amount]" placeholder="数量">
+                                            <span class="input-group-addon amount-unit"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="    padding: 3px;">
+                                <ul id="third" class="ztree">
+                                </ul>
+                                <input type="hidden" name="row[third][warehouse][id]" value="" />
+                                <input type="hidden" name="row[third][assembly][id]" value="" />
+                                <input type="hidden" name="row[third][behavior][id]" value="" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">组件属性</div>
+                            <div class="panel-body" style="    padding: 3px;padding-top: 18px;">
+                                <div  id="third-assembly-data-view">
+                                </div>
+                                <div class="bs-callout bs-callout-warning">
+                                    <ul class="sortable-list sortable-list-tags" id="third-assembly-adjective" style="border:none;max-width: 100%;" sortable data-filter=".filter" data-group="third-assembly-adjective">
+                                    </ul>
+                                    <input type="hidden" name="row[third][assembly][adjective][detail]" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">行为属性</div>
+                            <div class="panel-body" style="    padding: 3px;padding-top: 18px;">
+
+                                <div  id="third-behavior-data-view">
+                                </div>
+
+                                <div class="bs-callout bs-callout-warning">
+                                    <ul class="sortable-list sortable-list-tags" id="third-behavior-adjective" style="border:none;max-width: 100%;" sortable data-filter=".filter" data-group="third-behavior-adjective">
+                                    </ul>
+                                    <input type="hidden" name="row[third][behavior][adjective][detail]" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 panel-entire" style="min-height: 70px;">
+        <div class="box box-success">
+            <div class="panel-heading" style="    padding-bottom: 0px;">
+                <span>课件4</span>
+                <div class="box-tools pull-right">
+                    <div class="btn-group">
+                        <a class="btn btn-danger  btn-xs"  title="添加" ng-click="deleteAssembly('entire')">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
+                        <a class="btn btn-default btn-xs"  title="添加" ng-click="addAssembly('entire')">
+                            <i class="fa fa-plus text-green"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" style="padding: 7px;">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-sm-6">操作对象</div>
+                                    <div class="col-sm-6 amount-entire hide">
+                                        <div class="input-group input-group-sm">
+                                            <input type="number" class="form-control" name="row[entire][warehouse][amount]" placeholder="数量">
+                                            <span class="input-group-addon amount-unit"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="    padding: 3px;">
+                                <ul id="entire" class="ztree">
+                                </ul>
+                                <input type="hidden" name="row[entire][warehouse][id]" value="" />
+                                <input type="hidden" name="row[entire][assembly][id]" value="" />
+                                <input type="hidden" name="row[entire][behavior][id]" value="" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">组件属性</div>
+                            <div class="panel-body" style="    padding: 3px;padding-top: 18px;">
+                                <div  id="entire-assembly-data-view">
+                                </div>
+                                <div class="bs-callout bs-callout-warning">
+                                    <ul class="sortable-list sortable-list-tags" id="entire-assembly-adjective" style="border:none;max-width: 100%;" sortable data-filter=".filter" data-group="entire-assembly-adjective">
+                                    </ul>
+                                    <input type="hidden" name="row[entire][assembly][adjective][detail]" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">行为属性</div>
+                            <div class="panel-body" style="    padding: 3px;padding-top: 18px;">
+
+                                <div  id="entire-behavior-data-view">
+                                </div>
+
+                                <div class="bs-callout bs-callout-warning">
+                                    <ul class="sortable-list sortable-list-tags" id="entire-behavior-adjective" style="border:none;max-width: 100%;" sortable data-filter=".filter" data-group="entire-behavior-adjective">
+                                    </ul>
+                                    <input type="hidden" name="row[entire][behavior][adjective][detail]" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+</div>

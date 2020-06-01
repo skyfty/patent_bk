@@ -1,0 +1,74 @@
+
+<div class="panel panel-default panel-intro" ng-controller="index"  ng-init="sceneryInit()">
+    <div class="panel-heading">
+        {:build_heading(null,FALSE)}
+        <ul id="landscape-tab"  class="nav nav-tabs">
+            {foreach name="config.sceneryList['index']" item="vo"}
+            <li class=" {:$auth->check('lecture/index/'.$vo['name'])?'':'hide'}" data-toggle='poshytip' id="landscape-tab-{$vo['name']}" title="{{scenerys[{$vo['name']}]['tabstate']['groupName']}}">
+                <a href="#tab-{$vo['name']}"  data-scenery-index="{$vo['name']}" data-table="table-{$vo['name']}" data-url="catering/{$vo['name']}"  data-toolbar="toolbar-{$vo['name']}" data-toggle="tab">
+                    {$vo['title']}
+                    <i class="fa fa-group" style="cursor: pointer" ng-show="scenerys[{$vo['name']}]['tabstate']['group']" ng-click="refurbishSearch({$vo['name']}, 'group')"></i>
+                    <i class="fa fa-search-minus" style="cursor: pointer"  ng-show="scenerys[{$vo['name']}]['tabstate']['complex']" ng-click="refurbishSearch({$vo['name']}, 'complex')"></i>
+                </a>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+    <div class="panel-body">
+        <div  class="tab-content">
+            {foreach name="config.sceneryList['index']" item="vo"}
+            <div class="tab-pane fade in  {:$auth->check('lecture/index/'.$vo['name'])?'':'hide'}" id="tab-{$vo['name']}" ng-controller="landscape-{$vo['name']}" ng-init="sceneryInit('{$vo['name']}')">
+                {eq name="vo.type" value="default"}
+                <div class="col-md-2 hidden-xs hidden-sm" style="padding-right:0;">
+                    <div class=" box box-success">
+                        <div class="box-header ui-sortable-handle">
+                            <i class="fa fa-reorder "></i>
+                            <h4 class="box-title"></h4>
+                            <div class="box-tools pull-right">
+                                <div class="btn-group">
+                                    <a class="btn btn-default btn-sm btn-add-catenate" ng-click="addCatenate()"  title="添加">
+                                        <i class="fa fa-plus text-green"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm btn-edit-catenate" ng-click="editCatenate()"  title="编辑">
+                                        <i class="fa fa-edit  text-green"></i>
+                                    </a>
+                                    <a class="btn btn-danger  btn-sm btn-del-catenate"  ng-click="delCatenate()" title="删除">
+                                        <i class="fa fa-trash text-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <ul id="channeltree" class="ztree"></ul>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-10">
+                    <div class="widget-body no-padding  table-cosmetic">
+                        <div id="toolbar-{$vo['name']}" class="toolbar">
+                            {:build_toolbar(['refresh', 'add', 'del'],['add'=>[url('lecture/add'), 'btn btn-success  btn-add-lecture', 'fa fa-plus', '', __('添加魔板')]])}
+                        </div>
+                        <table id="table-{$vo['name']}"  ui-formidable="fields"
+                               data-fields="fields"
+                               data-url="lecture/{$vo['name']}"
+                               data-search-fields="allFields"
+                               data-toolbar="toolbar-{$vo['name']}"
+                               data-query-params="searchFieldsParams"
+                               data-buttons="tableExtendButtons"
+                               data-operate-view="{:$auth->check('lecture/view')}"
+                               data-operate-del="{:$auth->check('lecture/del')}"
+                               class="table table-striped table-bordered table-hover  text-nowrap" width="100%">
+                        </table>
+                    </div>
+                    {/eq}
+                </div>
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</div>
+{include file="common/tmpl" /}

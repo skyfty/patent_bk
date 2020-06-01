@@ -1,0 +1,25 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="" ng-controller="select">
+    <div class="row">
+        <div class="col-xs-4" style="border-right-style: inset; border-right-width: thin;">
+            <ul id="channeltree" class="ztree"
+                data-pid="{$Request.param.pid}"
+                data-promotionid="{$Request.param.promotion_model_id}"
+                data-lids="{$Request.param.ids}"
+            >
+            </ul>
+        </div>
+        <div class="col-xs-8" id="data-view">
+            <div id="toolbar" class="toolbar">
+                {:build_toolbar("refresh")}
+            </div>
+            <table id="table" class="table table-striped table-bordered table-hover" width="100%"></table>
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <div class="row">
+            <div class="col-xs-5 col-xs-offset-3">
+                <button type="button" class="btn btn-success" id="btn-select" style="width: 100%">{:__('OK')}</button>
+            </div>
+        </div>
+    </div>
+</form>

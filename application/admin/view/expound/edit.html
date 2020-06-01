@@ -1,0 +1,25 @@
+
+<script>
+    var row = {$row|json_encode};
+</script>
+<form class="form-horizontal" role="form" data-toggle="validator" method="POST" action="/expound/update" ng-controller="edit" >
+    <input type="hidden" name="row[__token__]" value="{$Request.token}" />
+    <input type="hidden" name="row[promotion_model_id]" value="{$row.promotion_model_id}" />
+    <input type="hidden" name="row[exlecture_model_id]" value="{$row.exlecture_model_id}" />
+    <input type="hidden" name="ids" value="{$Request.param.ids}" />
+    <div class="panel panel-default panel-intro">
+        <div class="panel-body" style="padding-top: 0px;">
+            {include file="preset/tmpl" /}
+
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <div class="row">
+            <div class="col-xs-5 col-xs-offset-3">
+                <button type="submit" class="btn btn-success" style="width: 100%">{:__('OK')}</button>
+            </div>
+        </div>
+
+    </div>
+</form>
+{include file="common/tmpl" /}
