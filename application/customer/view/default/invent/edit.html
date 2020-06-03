@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    {include file="common/meta" /}
+    <link href="__CDN__/assets/css/customer/principal.css?v={$site.version}" rel="stylesheet">
+    <style type="text/css">
+        .weui-label {
+            width: 135px;
+            font-size: 14px;
+
+        }
+    </style>
+
+</head>
+<body ontouchstart>
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="javascript:void(0);" onclick="window.history.go(-1)" target="_self" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <a href="/" target="_self"><span class="aui-center-title">知识产权贯标</span></a>
+        </div>
+    </header>
+    <section class="aui-scrollView" style="    margin-bottom: 50px;">
+        <div class="aui-tab" data-ydui-tab>
+            <form id="form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+                <input type="hidden" name="ids" value="{$Request.param.ids}"/>
+                <input type="hidden" name="row[company_model_id]" value="{$company.id}"/>
+                <input type="hidden" name="row[branch_model_id]" value="0"/>
+
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="manager" class="weui-label">总经理</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" id="manager" data-rule="required;"  data-msg="总经理不可以为空" name="row[manager]" value="{$row['manager']|default=''}" placeholder="请输入总经理">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="submanager" class="weui-label">副总经理</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" id="submanager" name="row[submanager]" data-msg="副总经理不可以为空" data-rule="required;"  type="text" value="{$row['submanager']|default=''}" placeholder="请输入副总经理">
+                        </div>
+                    </div>
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="yewumanager" class="weui-label">业务经理</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" id="yewumanager"  data-rule="required;"  data-msg-required="业务经理不可以为空"  name="row[yewumanager]" value="{$row['yewumanager']|default=''}" placeholder="请输入业务经理">
+                        </div>
+                    </div>
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="kaifamanager" class="weui-label">开发经理</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" id="kaifamanager" data-rule="required;" data-msg-required="开发经理不可以为空"   name="row[kaifamanager]" value="{$row['kaifamanager']|default=''}" placeholder="请输入开发经理">
+                        </div>
+                    </div>
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="zonghemanager" class="weui-label">综合经理</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" id="zonghemanager" data-rule="required;" data-msg-required="综合经理不可以为空"   name="row[zonghemanager]" value="{$row['zonghemanager']|default=''}" placeholder="请输入综合经理">
+                        </div>
+                    </div>
+
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="guidance" class="weui-label">指导专家</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" id="guidance" data-rule="required;" data-msg-required="指导专家不可以为空"   name="row[guidance]" value="{$row['guidance']|default=''}" placeholder="请输入指导专家">
+                        </div>
+                    </div>
+
+                    <div class="weui-btn-area">
+                        <button class="weui-btn weui-btn_primary" type="submit" id="showTooltips">确定</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</section>
+{include file="common/script" /}
+
+</body>
+</html>
