@@ -82,6 +82,11 @@ class Principal extends  Cosmetic
         return $this->hasMany('promotion','principal_model_id');
     }
 
+    public function actualizes()
+    {
+        return $this->hasMany('actualize','principal_model_id');
+    }
+
     public function match() {
         model("actualize")->where("principal_model_id", $this['id'])->delete();
         $data = [];
