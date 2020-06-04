@@ -2,8 +2,6 @@
 
 namespace app\admin\controller;
 
-use app\common\controller\Backend;
-
 /**
  * 著作权
  *
@@ -11,18 +9,13 @@ use app\common\controller\Backend;
  */
 class Invent extends Cosmetic
 {
-    
-    /**
-     * Copyright模型对象
-     * @var \app\admin\model\Invent
-     */
-    protected $model = null;
-
     public function _initialize()
     {
         parent::_initialize();
         $this->model = new \app\admin\model\Invent;
     }
+
+    use \app\admin\library\traits\Produce;
 
     protected function spectacle($model) {
         $branch_model_id = $this->request->param("branch_model_id");
