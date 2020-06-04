@@ -22,6 +22,10 @@ class Persion extends Cosmetic
         });
     }
 
+    public function invent() {
+        return $this->morphOne('invent', 'relevance_model');
+    }
+
     public function principal()
     {
         return $this->morphOne('Principal', 'substance');

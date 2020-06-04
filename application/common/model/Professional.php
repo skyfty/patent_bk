@@ -48,7 +48,7 @@ class Professional extends Cosmetic
             $fields[] = $field;
         }
 
-        if ($this['extend']) {
+        if (isset($this['extend']) && $this['extend']) {
             foreach(json_decode($this['extend'], true) as $field_name=>$v) {
                 $this[$field_name] = $v['value'];
             }

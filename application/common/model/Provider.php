@@ -40,6 +40,9 @@ class Provider extends Cosmetic
         self::beforeInsert(function($row){
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("PV%06d", $maxid);
+            if (isset($row['name'])) {
+                $row['slug'] = \fast\Pinyin::get($row['name']);
+            }
         });
 
 

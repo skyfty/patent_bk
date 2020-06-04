@@ -15,6 +15,9 @@ class Promotion extends Cosmetic
         self::beforeInsert(function($row){
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("PN%06d", $maxid);
+            if (isset($row['name'])) {
+                $row['slug'] = \fast\Pinyin::get($row['name']);
+            }
         });
 
         self::afterDelete(function($row){
@@ -29,6 +32,7 @@ class Promotion extends Cosmetic
                 $staff = model("staff")->where(build_where_param('FINDIN', "quarters", $procedure->auth_model_id))->find();
                 $staff_model_id = $staff?$staff['id']:1;
                 model("provider")->create([
+                    'adviser_model_id'=>$staff_model_id,
                     "promotion_model_id"=>$row['id'],
                     'staff_model_id'=>$staff_model_id,
                     'branch_model_id'=>$row['branch_model_id']

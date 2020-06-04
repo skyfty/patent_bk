@@ -34,8 +34,8 @@ class Invent extends Customer
         return $this->view->fetch();
     }
     public function edit($ids = null) {
-        $company= model("company")->get($ids);
-        if (!$company) {
+        $principal= model("principal")->get($ids);
+        if (!$principal) {
             $this->error(__('No Results were found'));
         }
         if ($this->request->isPost()) {
@@ -47,11 +47,10 @@ class Invent extends Customer
                 if ($aptitude === false) {
                     throw new \think\Exception($this->model->getError());
                 }
-                $company->save(['aptitude_state'=>'process']);
                 $db->commit();
-                $this->model->produceDocument(model("procedure")->where("relevance_model_type","aptitude")->find());
+                $this->model->produceDocument(model("procedure")->where("relevance_model_type","invent")->find());
 
-                $this->success("成功", "/principal/index?id=".$company['principal_model_id']);
+                $this->success("成功", "/principal/index?id=".$principal['id']);
             } catch (\think\exception\PDOException $e) {
                 $db->rollback();
                 $this->error($e->getMessage());
@@ -60,7 +59,7 @@ class Invent extends Customer
                 $this->error($e->getMessage());
             }
         }
-        $this->view->assign('company', $company);
+        $this->view->assign('principal', $principal);
         $this->view->assign('refere_url', Request::instance()->server('HTTP_REFERER'));
         return $this->view->fetch();
     }

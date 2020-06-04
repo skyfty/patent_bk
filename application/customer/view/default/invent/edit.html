@@ -27,8 +27,9 @@
         <div class="aui-tab" data-ydui-tab>
             <form id="form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
                 <input type="hidden" name="ids" value="{$Request.param.ids}"/>
-                <input type="hidden" name="row[company_model_id]" value="{$company.id}"/>
+                <input type="hidden" name="row[principal_model_id]" value="{$principal.id}"/>
                 <input type="hidden" name="row[branch_model_id]" value="0"/>
+                <input type="hidden" name="row[patentclass_cascader_id]" value="0"/>
 
                 <div class="weui-cells weui-cells_form">
                     <div class="weui-cell ">
@@ -58,14 +59,14 @@
                     <div class="weui-cell ">
                         <div class="weui-cell__hd"><label for="telephone" class="weui-label">联系人电话</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input" type="text" id="telephone" data-rule="required;" data-msg-required="联系人电话不可以为空"   name="row[telephone]" value="{$row['telephone']|default=''}" placeholder="请输入联系人电话">
+                            <input class="weui-input" type="text" id="telephone" data-rule="required;telephone" data-msg-required="联系人电话不可以为空"   name="row[telephone]" value="{$row['telephone']|default=''}" placeholder="请输入联系人电话">
                         </div>
                     </div>
 
                     <div class="weui-cell ">
                         <div class="weui-cell__hd"><label for="Email" class="weui-label">联系邮箱</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input" type="text" id="Email"  name="row[Email]" value="{$row['Email']|default=''}" placeholder="联系邮箱">
+                            <input class="weui-input" type="text" id="Email" data-rule="email"  name="row[Email]" value="{$row['Email']|default=''}" placeholder="联系邮箱">
                         </div>
                     </div>
                     <div class="weui-cell ">
