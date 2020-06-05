@@ -12,7 +12,7 @@ use think\Request;
  */
 class Invent extends Customer
 {
-    protected $layout = 'aptitude/layout';
+    protected $layout = 'invent/layout';
 
     // 初始化
     public function __construct()
@@ -33,8 +33,8 @@ class Invent extends Customer
         $this->view->assign("row", $row);
         return $this->view->fetch();
     }
-    public function edit($ids = null) {
-        $principal= model("principal")->get($ids);
+    public function edit($id = null) {
+        $principal= model("principal")->get($this->request->param("principal_model_id"));
         if (!$principal) {
             $this->error(__('No Results were found'));
         }
@@ -43,14 +43,31 @@ class Invent extends Customer
             $db = $this->model->getQuery();
             $db->startTrans();
             try {
-                $aptitude = $this->model->save($params);
-                if ($aptitude === false) {
-                    throw new \think\Exception($this->model->getError());
+                $url_params = ['principal_model_id'=>$principal['id']];
+                if ($id) {
+                    $row = $this->model->get($id);
+                    if (!$row) {
+                        $this->error(__('No Results were found'));
+                    }
+                    $invent = $row->save($params);
+                    if ($invent === false) {
+                        throw new \think\Exception($this->model->getError());
+                    }
+                    $url_params['id'] = $row['id'];
+                    $url_params['step'] = $this->request->post("step");
+                } else {
+                    $invent = $this->model->save($params);
+                    if ($invent === false) {
+                        throw new \think\Exception($this->model->getError());
+                    }
+                    $url_params['id'] = $this->model['id'];
+                    $url_params['step'] = 2;
                 }
                 $db->commit();
-                $this->model->produceDocument(model("procedure")->where("relevance_model_type","invent")->find());
 
-                $this->success("成功", "/principal/index?id=".$principal['id']);
+                $this->model->produceDocument(model("procedure")->where("relevance_model_type","invent")->find());
+                $this->success("成功", url('invent/edit',$url_params));
+
             } catch (\think\exception\PDOException $e) {
                 $db->rollback();
                 $this->error($e->getMessage());
@@ -60,7 +77,11 @@ class Invent extends Customer
             }
         }
         $this->view->assign('principal', $principal);
-        $this->view->assign('refere_url', Request::instance()->server('HTTP_REFERER'));
+        $this->view->assign('procedures', model("procedure")->where("relevance_model_type", "invent")->where("type", "fields")->order("order asc")->select());
+        $this->view->assign('step', $this->request->param("step", 1));
+        $refere_url =  $this->request->param("refere_url", Request::instance()->server('HTTP_REFERER'));
+        $this->view->assign('refere_url', $refere_url);
+        $this->view->assign('id', $id);
         return $this->view->fetch();
     }
 

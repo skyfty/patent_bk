@@ -161,15 +161,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                         table: 'actualize',
                     },
                     buttons : [
-                        {
-                            name: 'view',
-                            title: function(row, j){
-                                return __('%s', row.name);
-                            },
-                            classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
-                            icon: 'fa fa-folder-o',
-                            url: 'actualize/view'
-                        }
                     ]
                 });
                 $scope.fields = data.fields;

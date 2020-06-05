@@ -19,7 +19,7 @@ define(['jquery', 'bootstrap', 'fast', 'customer', 'form','flexible'], function 
         api: {
             bindevent: function () {
                 Form.api.bindevent($("#form"), function(data, ret){
-                    setTimeout(function(){window.location.replace(ret.url);}, 1000);
+                    setTimeout(function(){window.location.replace(ret.url);}, 500);
                 });
             }
         }
