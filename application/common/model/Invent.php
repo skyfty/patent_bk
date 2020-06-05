@@ -20,6 +20,12 @@ class Invent extends Professional
         });
     }
 
+    public function getInitPromotionData($species) {
+        $data = [];
+        $data["principal_model_id"]=$this['principal_model_id'];
+        return $data;
+    }
+
     public function principal()
     {
         return $this->hasOne('principal','id','principal_model_id')->joinType("LEFT")->setEagerlyType(0);
