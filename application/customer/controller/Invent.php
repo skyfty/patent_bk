@@ -66,7 +66,12 @@ class Invent extends Customer
                 $db->commit();
 
                 $this->model->produceDocument(model("procedure")->where("relevance_model_type","invent")->find());
-                $this->success("成功", url('invent/edit',$url_params));
+
+                if ($url_params['step'] == "10") {
+                    $this->success("成功", "/principal/index?id=".$principal['id']);
+                } else {
+                    $this->success("成功", url('invent/edit',$url_params));
+                }
 
             } catch (\think\exception\PDOException $e) {
                 $db->rollback();
