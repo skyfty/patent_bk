@@ -108,8 +108,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
         },
 
         add: function () {
+            var self = this;
             AngularApp.controller("add", function($scope,$sce, $compile,$timeout) {
-                var self = this;
                 $scope.fields = Config.scenery.fields;
                 $scope.pre ={}; $scope.row = {};
                 $scope.row['branch_model_id'] = Config.admin_branch_model_id!= null?Config.admin_branch_model_id:0;
@@ -133,9 +133,14 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic', 'm
 
         bindevent:function($scope,$timeout){
             var self = this;
-            Form.api.bindevent($("form[role=form]"), function (data, ret) {
-                $scope.submit(data, ret);
+            $('[name="row[promotion_model_id]"]').data("e-params",function(){
+                var param = {};
+                param.custom = {
+                    "species_cascader_id": $scope.row['species_cascader_id']
+                };
+                return param;
             });
+            Form.api.bindevent($("form[role=form]"));
 
             require(['selectpage'], function () {
 

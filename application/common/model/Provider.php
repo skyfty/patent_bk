@@ -45,16 +45,6 @@ class Provider extends Cosmetic
             }
         });
 
-
-        $countProvider = function($row) {
-            $ids = self::where("staff_model_id", $row['staff_model_id'])->column("id");
-            if ($ids) {
-                $ids = implode(",", $ids);
-                model("staff")->save(['provider_ids'=>$ids], ["id"=>$row['staff_model_id']]);
-            }
-            self::upstat($row);
-        };
-        self::afterInsert($countProvider);self::afterDelete($countProvider);
     }
 
     public function branch() {
