@@ -123,6 +123,24 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         },
         bindevent:function($scope){
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
+            $('[name="row[principal_model_id]"]').data("e-params",function(){
+                var param = {};
+                if ($scope.row.principalclass_model_id) {
+                    param.custom = {
+                        "principalclass_model_id": $scope.row.principalclass_model_id,
+                    };
+                }
+                return param;
+            });
+            $('[name="row[principalclass_model_id]"]').data("e-params",function(){
+                var param = {};
+                return param;
+            }).data("e-selected", function(data){
+                $('[name="row[principal_model_id]"]').selectPageClear();
+            }).data("e-clear", function(data){
+                $('[name="row[principal_model_id]"]').selectPageClear();
+            });
+
             Form.api.bindevent($("form[role=form]"), $scope.submit);
         },
 
