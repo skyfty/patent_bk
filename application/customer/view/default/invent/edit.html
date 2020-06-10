@@ -66,6 +66,13 @@
                         </div>
                     </div>
                     <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="申请人" class="weui-label">申报类型</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" id="row_type" type="text" value="" readonly="" data-values="{$row['type']|default=''}">
+                            <input  type="hidden" name="row[type]" value="{$row['type']|default=''}" />
+                        </div>
+                    </div>
+                    <div class="weui-cell ">
                         <div class="weui-cell__hd"><label for="penster" class="weui-label">发明人</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" type="text" id="penster"  data-rule="required;"  data-msg-required="发明人不可以为空"  name="row[penster]" value="{$row['penster']|default=''}" placeholder="请输入发明人">
