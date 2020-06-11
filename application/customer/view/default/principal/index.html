@@ -27,10 +27,10 @@
     <div class="tab-panel">
         <div class="tab-panel-item tab-active">
             <section class="aui-scrollView">
-                    <div class="aui-head-user">
-                        <div class="aui-head-user-bd" id="principal-body">
-                        </div>
+                <div class="aui-head-user">
+                    <div class="aui-head-user-bd" id="principal-body">
                     </div>
+                </div>
             </section>
         </div>
     </div>
@@ -157,7 +157,7 @@
                         审核中
                         <%}else{%>
                         <a class="btn btn-default btn-xs" href="/aptitude/edit/ids/<%=substance.id%>">
-                        未获得 (获取)
+                            未获得 (获取)
                         </a>
                         <%}%>
 
@@ -184,13 +184,22 @@
                             <%=promotions[i].procedure_complate_count+1%>/<%=promotions[i].species.procedure_count%>
                         </div>
                     </div>
-                    <div class="weui-flex__item"><div class="placeholder" style="text-align: right">
-                        <a class="btn btn-default btn-xs" href="">
-                            详情
-                        </a>
-                    </div></div>
+                    <div class="weui-flex__item">
+                        <div class="placeholder" style="text-align: right">
+                            <%if (promotions[i]['procedure'].tickling == "yes"){%>
+                            <a class="btn btn-default btn-xs" href="/procshutter/edit/relevance/<%=promotions[i].relevance_model_type%>/id/<%=promotions[i].relevance_model_id%>">
+                                反馈文档
+                            </a>
+                            <%}else{%>
+                            <a class="btn btn-default btn-xs" href="">
+                                详情
+                            </a>
+                            <%}%>
+                        </div>
+                    </div>
                 </div>
                 <%}%>
+
                 <%}else{%>
                 <div class="weui-flex">
                     <div class="weui-flex__item">
@@ -201,31 +210,14 @@
                         </div>
                     </div>
                     <div class="weui-flex__item"><div class="placeholder" style="text-align: right">
-                        <a class="btn btn-default btn-xs"  href="/page/index?id=50">
+                        <a class="btn btn-default btn-xs"  href="/invent/edit/principal_model_id/<%=id%>">
                             申请
                         </a>
                     </div></div>
                 </div>
                 <%}%>
 
-                    <div class="weui-flex">
-                        <div class="weui-flex__item">
-                            <div class="placeholder" style="text-align: left">专利申请</div>
-                        </div>
-                        <div class="weui-flex__item">
-                            <div class="placeholder"style="text-align:center">
-                            </div>
-                        </div>
-                        <div class="weui-flex__item">
-                            <div class="placeholder" style="text-align: right">
-                                <a class="btn btn-default btn-xs"  href="/invent/edit/principal_model_id/<%=id%>">
-                                    申请
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <%for (var i=0;i<actualizes.length;i++) {%>
+                <%for (var i=0;i<actualizes.length;i++) {%>
                 <div class="weui-flex">
                     <div class="weui-flex__item">
                         <div class="placeholder" style="text-align: left"><%=actualizes[i].policy.name%></div>

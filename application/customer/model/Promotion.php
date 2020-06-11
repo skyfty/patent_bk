@@ -11,7 +11,8 @@ class Promotion Extends \app\common\model\Promotion
 {
     // 追加属性
     protected $append = [
-        "species"
+        "species",
+        'procedure'
     ];
 
     protected static function init()
