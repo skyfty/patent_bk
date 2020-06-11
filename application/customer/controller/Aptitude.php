@@ -49,8 +49,7 @@ class Aptitude extends Customer
                 }
                 $company->save(['aptitude_state'=>'process']);
                 $db->commit();
-                $this->model->produceDocument(model("procedure")->where("relevance_model_type","aptitude")->find());
-
+                $this->model->find($this->model['id'])->produceDocument(model("procedure")->where("relevance_model_type","aptitude")->find());
                 $this->success("成功", "/principal/index?id=".$company['principal_model_id']);
             } catch (\think\exception\PDOException $e) {
                 $db->rollback();

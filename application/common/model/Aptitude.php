@@ -27,7 +27,7 @@ class Aptitude extends Professional
                     ->update(['principal_model_id'=>$row['company']['principal_model_id']]);
             }
             if (isset($changeData['business_licence'])) {
-                $row->company->save(['business_licence'=>$row['business_licence']]);
+                $row->company->save(['business_licence'=>$changeData['business_licence']]);
             }
         });
     }
