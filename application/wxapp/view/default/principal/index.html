@@ -1,0 +1,241 @@
+
+<style>
+
+    .wrapper-scroller {position:relative;height: 1rem;width: 100%;overflow: hidden;margin:0 auto;margin: 9px 0px;}
+    .wrapper-scroller .scroller {position:absolute}
+    .wrapper-scroller .scroller li {height: 1rem;color:#333;float: left;line-height: 1rem;font-size: 12px;text-align: center}
+    .wrapper-scroller .scroller li a{color:#333;display:block;margin:0 .6rem}
+    .wrapper-scroller .scroller li.cur a{color:#1cbb9b;}
+    .weui-flex {
+        padding-top: 9px;
+    }
+</style>
+<div class="aui-tab" data-ydui-tab>
+    <div class="wrapper-scroller" id="retr">
+        <div class="scroller">
+            <ul class="clearfix">
+                {volist name="list" id="vo"}
+                <li>
+                    <a href="javascript:void(0)"  class="btn-scroller" data-id="{$vo.id}" data-type="{$vo.substance_type}">
+                        <span>{$vo.name}</span>
+                    </a>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+    </div>
+    <div class="tab-panel">
+        <div class="tab-panel-item tab-active">
+            <section class="aui-scrollView">
+                <div class="aui-head-user">
+                    <div class="aui-head-user-bd" id="principal-body">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<div id="principal-class" class="weui-popup__container popup-bottom">
+    <div class="weui-popup__overlay"></div>
+    <div class="weui-popup__modal">
+        <div class="weui-cells__title">选择主体类型</div>
+        <div class="weui-cells">
+            {volist name='principal_class' id='cls'}
+            <a class="weui-cell weui-cell_access" href="{:url('principal/add',['principalclass_model_id'=>$cls.id])}">
+                <div class="weui-cell__bd">
+                    <p>{$cls.name}</p>
+                </div>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+            {/volist}
+        </div>
+    </div>
+</div>
+
+
+<script id="principal-tmpl-persion" type="text/html">
+    <div class="page__bd">
+        <div class="weui-form-preview">
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">姓名</label>
+                    <em class="weui-form-preview__value"><%=substance.name%></em>
+                </div>
+            </div>
+            <div class="weui-form-preview__bd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">生日</label>
+                    <span class="weui-form-preview__value"><%=substance.birthday_text%></span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">身份证</label>
+                    <span class="weui-form-preview__value"><%=substance.idcard%></span>
+                </div>
+
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">性别</label>
+                    <span class="weui-form-preview__value"><%=substance.sex_text%></span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">学历</label>
+                    <span class="weui-form-preview__value"><%=substance.educational_text%></span>
+                </div>
+            </div>
+            <div class="weui-form-preview__ft">
+                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="/principal/edit/ids/<%=id%>">编辑</a>
+
+            </div>
+        </div>
+    </div>
+</script>
+
+
+
+<script id="principal-tmpl-company" type="text/html">
+    <div class="page__bd">
+        <div class="weui-form-preview">
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">名称</label>
+                    <em class="weui-form-preview__value"><%=substance.name%></em>
+                </div>
+            </div>
+            <div class="weui-form-preview__bd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">注册日期</label>
+                    <span class="weui-form-preview__value"><%=substance.registerdate_text%></span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">注册资金</label>
+                    <span class="weui-form-preview__value"><%=substance.registerfund%>万元</span>
+                </div>
+
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">信用代码</label>
+                    <span class="weui-form-preview__value"><%=substance.credit_code%></span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">类型</label>
+                    <span class="weui-form-preview__value"><%=substance.type_text%></span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">注册地址</label>
+                    <span class="weui-form-preview__value"><%=substance.registeraddress%></span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">已受理发明专利</label>
+                    <span class="weui-form-preview__value"><%=substance.accept_invent_count%>件</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">已授权发明专利</label>
+                    <span class="weui-form-preview__value"><%=substance.authorize_patent_count%>件</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">已受理实用新型专利</label>
+                    <span class="weui-form-preview__value"><%=substance.accept_new_patent_count%>件</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">已授权实用新型专利</label>
+                    <span class="weui-form-preview__value"><%=substance.authorize_new_patent_count%>件</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">已登记软件著作权</label>
+                    <span class="weui-form-preview__value"><%=substance.register_bookmaking_count%>件</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">已申请软件著作权</label>
+                    <span class="weui-form-preview__value"><%=substance.apply_bookmaking_count%>件</span>
+                </div>
+
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">知识产权贯标</label>
+                    <span class="weui-form-preview__value">
+                        <%if (substance.aptitude_state =='yes'){%>
+                        已获得
+                         <%}else if (substance.aptitude_state =='process'){%>
+                        审核中
+                        <%}else{%>
+                        <a class="btn btn-default btn-xs" href="/aptitude/edit/ids/<%=substance.id%>">
+                            未获得 (获取)
+                        </a>
+                        <%}%>
+
+                    </span>
+                </div>
+            </div>
+            <div class="weui-form-preview__ft">
+                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="/principal/edit/ids/<%=id%>">编辑</a>
+                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="/user/adviser">认证</a>
+                <a class="weui-form-preview__btn weui-form-preview__btn_warn principal-delete" data-id="<%=id%>" style="color: red" href="javascript:">删除</a>
+            </div>
+        </div>
+        <div class="weui-form-preview">
+            <div class="weui-form-preview__bd">
+                <%if (promotions.length){%>
+
+                <%for (var i=0;i<promotions.length;i++) {%>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <div class="placeholder" style="text-align: left"><%=promotions[i].species.name%></div>
+                    </div>
+                    <div class="weui-flex__item">
+                        <div class="placeholder"style="text-align:center">
+                            <%=promotions[i].procedure_complate_count+1%>/<%=promotions[i].species.procedure_count%>
+                        </div>
+                    </div>
+                    <div class="weui-flex__item">
+                        <div class="placeholder" style="text-align: right">
+                            <%if (promotions[i]['procedure'].tickling == "yes"){%>
+                            <a class="btn btn-default btn-xs" href="/procshutter/edit/relevance/<%=promotions[i].relevance_model_type%>/id/<%=promotions[i].relevance_model_id%>">
+                                反馈文档
+                            </a>
+                            <%}else{%>
+                            <a class="btn btn-default btn-xs" href="">
+                                详情
+                            </a>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+                <%}%>
+
+                <%}else{%>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <div class="placeholder" style="text-align: left">专利申请</div>
+                    </div>
+                    <div class="weui-flex__item">
+                        <div class="placeholder"style="text-align:center">
+                        </div>
+                    </div>
+                    <div class="weui-flex__item"><div class="placeholder" style="text-align: right">
+                        <a class="btn btn-default btn-xs"  href="/invent/edit/principal_model_id/<%=id%>">
+                            申请
+                        </a>
+                    </div></div>
+                </div>
+                <%}%>
+
+                <%for (var i=0;i<actualizes.length;i++) {%>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <div class="placeholder" style="text-align: left"><%=actualizes[i].policy.name%></div>
+                    </div>
+                    <div class="weui-flex__item">
+                        <div class="placeholder"style="text-align:center">
+                            <%=actualizes[i].policy.location%>
+                        </div>
+                    </div>
+                    <div class="weui-flex__item"><div class="placeholder" style="text-align: right">
+                        <a class="btn btn-default btn-xs" href="">
+                            详情
+                        </a>
+                    </div></div>
+                </div>
+                <%}%>
+
+            </div>
+        </div>
+    </div>
+</script>

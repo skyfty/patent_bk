@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    {include file="common/meta" /}
+    <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.2/skins/default/aliplayer-min.css" />
+    <link href="__CDN__/assets/css/customer/provider.css?v={$site.version}" rel="stylesheet">
+
+    <style>
+        .aui-scrollView{
+            padding: 5px;
+        }
+        .evaluate-title {
+            margin-bottom: 10px;
+            margin-top: 10px;
+            border-top-width: thin;
+            text-align: center;
+            border-top-style: outset;
+        }
+        .lore-label {
+            float: left;
+            padding-top: 2px;
+            padding-right: 4px;
+        }
+        .aui-list-theme {
+            overflow: hidden;
+            position: relative;
+            padding: 0px 0px 0;
+        }
+        .aui-list-theme-item {
+            padding: 2px;
+            margin: 0 1% 1% 1%;
+        }
+        .aui-list-theme-item {
+            width: 98%;
+        }
+        .background-state-1 {
+        }
+        .aui-list-theme-item {
+            width: 48%;
+            float: left;
+            padding: 10px;
+            margin: 0 1% 2% 1%;
+            background: #fff;
+            border-radius: 5px;
+        }
+        .aui-list-img {
+            padding: 3px 0;
+        }
+
+        .aui-list-img {
+            height: auto;
+            width: 100%;
+            overflow: hidden;
+            background-image: -webkit-gradient(linear,left top,bottom top,from(#f8b591),to(#fb8a78));
+            background-image: -webkit-linear-gradient(left,#f8b591,#fb8a78);
+            background-image: -moz-linear-gradient(left,#f8b591,#fb8a78);
+            background-image: linear-gradient(to bottom,#f8b591,#fb8a78);
+            background-color: #fb8a78;
+            text-align: center;
+            color: #fff;
+            padding: 1rem 0;
+            border-radius: 5px;
+        }
+        .background-state-0 {
+            background-image: linear-gradient(to bottom,#dbdbdb,#7c7a7a);
+            color: #fff;
+        }
+        .aui-list-img.state-0 {
+            background-image: linear-gradient(to bottom,#d5d0ce,#5f5d5c);
+            background-color: #ecdfdd;
+        }
+        .aui-list-theme-item {
+            width: 98%;
+        }
+        .aui-list-img {
+            padding: 3px 0;
+        }
+        .aui-list-theme-item {
+            padding: 5px;
+            margin: 0 1% 1% 1%;
+        }
+    </style>
+</head>
+<body ontouchstart>
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="javascript:void(0);" onclick="window.history.go(-1)" target="_self" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <a href="/" target="_self"><span class="aui-center-title">{$row->name}</span></a>
+        </div>
+    </header>
+    <section class="aui-scrollView" style="    margin-bottom: 50px;">
+        <div class="aui-tab" data-ydui-tab>
+            <section class="zyw-container">
+                <div class="wy-media-box weui-media-box_text">
+                    <div class="weui-media-box__bd">
+                        <div class="weui-media-box_appmsg ord-pro-list">
+                            <div class="weui-media-box__bd">
+                                <div class="evaluate-label evaluate-title">知识点</div>
+                                <div class="aui-list-theme">
+                                    {volist name="row['lores']" id="lore"}
+                                    <a href="javascript:;" class="aui-list-theme-item  background-state-1">
+                                        <div class="aui-list-img state-1">
+                                            <div style="width: 40%;float: left;text-align: left;padding-left: 5px">{$lore['knowledge']['lorerange_name'][1]}</div>
+                                            <div style="width: 30%;float: left">???</div>
+                                            <div style="width: 30%;float: left">???</div>
+
+                                        </div>
+                                    </a>
+                                    {/volist}
+                                </div>
+                            </div>
+                        </div>
+                        {if condition="count($row['inductions'])"}
+                        <div class="weui-media-box_appmsg ord-pro-list">
+                            <div class="weui-media-box__bd">
+                                <div class="evaluate-label evaluate-title">课程专家</div>
+                                <div class="aui-list-theme">
+                                    {volist name="row['inductions']" id="induction"}
+                                    <a href="javascript:;" class="aui-list-theme-item  background-state-1">
+                                        <div class="aui-list-img state-1">
+                                            <div style="width: 15%;float: left;text-align: left;padding-left: 5px">{$induction['proficient']['category_text']}</div>
+                                            <div style="width: 15%;float: left">{$induction['proficient']['name']}</div>
+                                        </div>
+                                        <div style="float: left;    padding-top: 7px;">{$induction['proficient']['repute']}</div>
+
+                                    </a>
+
+                                    {/volist}
+                                </div>
+                            </div>
+                        </div>
+                        {/if}
+                        {if condition="$row['description']"}
+                        <div class="weui-media-box_appmsg ord-pro-list">
+                            <div class="weui-media-box__bd">
+                                <div class="evaluate-label evaluate-title">课程介绍</div>
+                                <div class="aui-list-theme">
+                                    {$row['description']}
+                                </div>
+                            </div>
+                        </div>
+                        {/if}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</section>
+{include file="common/script" /}
+
+</body>
+</html>

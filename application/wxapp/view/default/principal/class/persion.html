@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    {include file="common/meta" /}
+    <link href="__CDN__/assets/css/customer/principal.css?v={$site.version}" rel="stylesheet">
+    <style type="text/css">
+        .weui-label {
+            width: 135px;
+            font-size: 14px;
+
+        }
+    </style>
+</head>
+<body ontouchstart>
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="javascript:void(0);" onclick="window.history.go(-1)" target="_self" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <a href="/" target="_self"><span class="aui-center-title">增加新的主体</span></a>
+        </div>
+    </header>
+    <section class="aui-scrollView" style="    margin-bottom: 50px;">
+        <div class="aui-tab" data-ydui-tab>
+            <form id="form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell ">
+                    <div class="weui-cell__hd"><label for="name" class="weui-label">姓名</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" id="name"  name="row[name]"
+                               data-tip="Please fill in at least eight characters"  data-rule="required;" data-msg-required="姓名不可以为空" value="{$row['name']|default=''}" placeholder="请输入姓名">
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label for="birthday" class="weui-label">生日</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" id="birthday" name="row[birthday]" data-rule="required;"  data-msg-required="生日不可以为空"  type="date" value="{$row['birthday']|default=''}">
+                    </div>
+                </div>
+                <div class="weui-cell ">
+                    <div class="weui-cell__hd"><label for="idcard" class="weui-label">身份证</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" id="idcard"  name="row[idcard]" data-rule="required;idcard" data-msg-required="身份证不可以为空"  value="{$row['idcard']|default=''}" placeholder="请输入身份证">
+                    </div>
+                </div>
+                <div class="weui-cell weui-cell_select weui-cell_select-after">
+                    <div class="weui-cell__hd">
+                        <label for="sex" class="weui-label">性别</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <select class="weui-select" id="sex"  name="row[sex]" >
+                            <option value="man" {eq name="row['sex']|default=''" value="man"}selected{/eq}>男</option>
+                            <option value="woman" {eq name="row['sex']|default=''" value="woman"}selected{/eq}>女</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="weui-cell weui-cell_select weui-cell_select-after">
+                    <div class="weui-cell__hd">
+                        <label for="educational" class="weui-label">学历</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <select class="weui-select" id="educational"  name="row[educational]">
+                            <option value="middle" {eq name="row['educational']|default=''" value="middle"}selected{/eq}>高中</option>
+                            <option value="training" {eq name="row['educational']|default=''" value="training"}selected{/eq}>专科</option>
+                            <option value="undergraduate" {eq name="row['educational']|default=''" value="undergraduate"}selected{/eq}>本科</option>
+                            <option value="master" {eq name="row['educational']|default=''" value="master"}selected{/eq}>硕士</option>
+                            <option value="doctor" {eq name="row['educational']|default=''" value="doctor"}selected{/eq}>博士</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="weui-btn-area">
+                    <button class="weui-btn weui-btn_primary" type="submit" id="showTooltips">确定</button>
+                </div>
+            </div>
+                </form>
+        </div>
+    </section>
+</section>
+{include file="common/script" /}
+
+</body>
+</html>

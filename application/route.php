@@ -17,6 +17,7 @@ return [
         'i'      => 'admin',
         'j'      => 'customer',
         'l'      => 'api',
+        'wxapp'      => 'wxapp',
 
     ],
     '__alias__'   => [

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    {include file="common/meta" /}
+    <link href="__CDN__/assets/css/customer/principal.css?v={$site.version}" rel="stylesheet">
+    <style type="text/css">
+        .weui-label {
+            width: 135px;
+            font-size: 14px;
+
+        }
+    </style>
+
+</head>
+<body ontouchstart>
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="javascript:void(0);" onclick="window.history.go(-1)" target="_self" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <a href="/" target="_self"><span class="aui-center-title">发明专利</span></a>
+        </div>
+    </header>
+    <section class="aui-scrollView" style="    margin-bottom: 50px;">
+        <div class="aui-tab" data-ydui-tab>
+            <form id="form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+                <input type="hidden" name="id" value="{$id}"/>
+                <input type="hidden" name="principal_model_id" value="{$Request.param.principal_model_id}"/>
+                <input type="hidden" name="row[principal_model_id]" value="{$principal['id']}"/>
+                <input type="hidden" name="row[branch_model_id]" value="0"/>
+                <input type="hidden" name="row[patentclass_cascader_id]" value="0"/>
+                <input type="hidden" name="step" value="{$step + 1}"/>
+                <input type="hidden" name="refere_url" value="{$refere_url}"/>
+
+                <div class="weui-cells weui-cells_form">
+                    {if condition="$Request.param.step"}
+                    {volist name="procedures" id="procedure"}
+                    {if condition="$step == $procedure['order']"}
+                    <div class="weui-form__control-area">
+                        <div class="weui-cells__group weui-cells__group_form">
+                            <div class="weui-cells__title">{$procedure['name']}</div>
+                            <div class="weui-cells weui-cells_form">
+                                <div class="weui-cell ">
+                                    <div class="weui-cell__bd">
+                                        <textarea class="weui-textarea" placeholder="{$procedure['description']}"  name="row[{$procedure['extend']}]" value="{$row[$procedure['extend']]|default=''}" rows="16"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/if}
+                    {/volist}
+                    {else /}
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="name" class="weui-label">专利名称</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" id="name" data-rule="required;"  data-msg="专利名称不可以为空" name="row[name]" value="{$row['name']|default=''}" placeholder="请输入专利名称">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="申请人" class="weui-label">申请人</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" id="申请人" name="row[proposer]" data-msg="申请人不可以为空" data-rule="required;"  type="text" value="{$row['proposer']|default=''}" placeholder="请输入申请人">
+                        </div>
+                    </div>
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="申请人" class="weui-label">申报类型</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" id="row_type" type="text" value="" readonly="" data-values="{$row['type']|default=''}">
+                            <input  type="hidden" name="row[type]" value="{$row['type']|default=''}" />
+                        </div>
+                    </div>
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="penster" class="weui-label">发明人</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" id="penster"  data-rule="required;"  data-msg-required="发明人不可以为空"  name="row[penster]" value="{$row['penster']|default=''}" placeholder="请输入发明人">
+                        </div>
+                    </div>
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="contact" class="weui-label">技术联系人</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" id="contact" data-rule="required;" data-msg-required="技术联系人不可以为空"   name="row[contact]" value="{$row['contact']|default=''}" placeholder="请输入技术联系人">
+                        </div>
+                    </div>
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="telephone" class="weui-label">联系人电话</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" id="telephone" data-rule="required;telephone" data-msg-required="联系人电话不可以为空"   name="row[telephone]" value="{$row['telephone']|default=''}" placeholder="请输入联系人电话">
+                        </div>
+                    </div>
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="Email" class="weui-label">联系邮箱</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" id="Email" data-rule="email"  name="row[Email]" value="{$row['Email']|default=''}" placeholder="联系邮箱">
+                        </div>
+                    </div>
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd"><label for="keywords" class="weui-label">关键词</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" id="keywords"  name="row[keywords]" value="{$row['keywords']|default=''}" placeholder="关键词">
+                        </div>
+                    </div>
+                    {/if}
+                    <div class="weui-btn-area">
+                        <button class="weui-btn weui-btn_primary" type="submit" id="showTooltips">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</section>
+{include file="common/script" /}
+
+</body>
+</html>

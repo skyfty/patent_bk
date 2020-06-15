@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>{$title|default=''}</title>
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <link rel="shortcut icon" href="__CDN__/assets/img/favicon.ico" />
+
+    <!--[if lt IE 9]>
+    <script src="__CDN__/assets/js/html5shiv.js"></script>
+    <script src="__CDN__/assets/js/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        var require = {
+            config:  {$config|json_encode}
+        };
+    </script>
+
+    <link href="__CDN__/assets/css/customer/archive.css?v={$site.version}" rel="stylesheet">
+</head>
+<body ontouchstart>
+<section class="aui-flexView" id="navHead" style="height:auto">
+    <header class="aui-navBar aui-navBar-fixed" id="nav-wrap">
+        <a href="javascript:;"  onclick="javascript:window.history.back();return false;" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <span class="aui-center-title">{cms:page name="title" /}</span>
+        </div>
+        <a href="/" class="aui-navBar-item">
+            <i class="icon icon-home"></i>
+        </a>
+    </header>
+    <section class="aui-scrollView">
+
+        <div class="divHeight"></div>
+        <div class="aui-flex b-line" style="    padding-top: 0px;
+    padding-bottom: 0px;">
+        </div>
+        <div class="aui-flex">
+            <div class="aui-flex-box">
+                {cms:page name="content" /}
+            </div>
+        </div>
+        <div style="height:60px;"></div>
+    </section>
+</section>
+
+{include file="common/script" /}
+
+</body>
+</html>

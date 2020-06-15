@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    {include file="common/meta" /}
+    <link href="__CDN__/assets/css/customer/principal.css?v={$site.version}" rel="stylesheet">
+    <style type="text/css">
+        .weui-label {
+            width: 135px;
+            font-size: 14px;
+
+        }
+    </style>
+
+</head>
+<body ontouchstart>
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="javascript:void(0);" onclick="window.history.go(-1)" target="_self" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <a href="/" target="_self"><span class="aui-center-title">反馈文档</span></a>
+        </div>
+    </header>
+    <section class="aui-scrollView" style="    margin-bottom: 50px;">
+        <div class="aui-tab" data-ydui-tab>
+            <form id="form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+                <input type="hidden" name="id" value="{$Request.param.id}"/>
+                <input type="hidden" name="relevance" value="{$Request.param.relevance}"/>
+                <div class="weui-cells weui-cells_form">
+                    {volist name='rows' id='row'}
+                    <div class="weui-cell ">
+                        <div class="weui-cell__hd">
+                            <div class="input-group">
+                                <div class="input-group-addon no-border no-padding">
+                                    <button type="button" class="btn btn-btn-primary plupload" id="plupload-{$row.id}" data-input-id="c-{$row.id}" data-preview-id="p-{$row.id}">
+                                        <i class="fa fa-upload"></i> {$row.name}
+                                    </button>
+                                    <input type="hidden" id="c-{$row.id}" value="{$row.file}" name="rows[{$row.idcode}][file]"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/volist}
+
+                    <div class="weui-btn-area">
+                        <button class="weui-btn weui-btn_primary" type="submit" id="showTooltips">确定</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</section>
+{include file="common/script" /}
+
+</body>
+</html>

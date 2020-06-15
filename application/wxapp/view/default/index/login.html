@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    {include file="common/meta" /}
+    <link href="__CDN__/assets/css/customer/login.css?v={$site.version}" rel="stylesheet">
+    <script type="text/javascript">
+        var redirect_url ="{$redirect_url}";
+        if (navigator.userAgent.toLowerCase().indexOf('micromessenger') != -1) {
+            location.href = "/index/wxoauth?url=" + (redirect_url?redirect_url:"/provider/index");
+        }
+    </script>
+</head>
+<body ontouchstart>
+<div  id="logining">正在打开...</div>
+<div id="login"  style="display: none">
+    <header class="zyw-header">
+        <div class="zyw-container white-color">
+            <div class="head-l"></div>
+            <h1>登录</h1>
+            <div class="head-r"><a href=""></a></div>
+        </div>
+    </header>
+    <section class="zyw-container">
+        <form action="" method="post" id="form">
+            <div id="errtips" class="hide" style="display: none"></div>
+            <div class="login-img"><img src="__CDN__/assets/img/mylogo.png" alt=""></div>
+            <div class="weui-cells">
+                <div class="weui-cell weui-cell_select weui-cell_select-before">
+                    <div class="weui-cell__hd">
+                        <select class="weui-select" name="select2">
+                            <option value="1">+86</option>
+                            <option value="2">+80</option>
+                            <option value="3">+84</option>
+                            <option value="4">+87</option>
+                        </select>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" name="username" autocomplete="off" data-target="#errtips" value=""  type="number" data-rule="手机号:required:telephone"   placeholder="请输入手机号">
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="password"  data-target="#errtips" placeholder="密码" name="password" autocomplete="off" value="" data-rule="密码:required;password">
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells__tips text-right"><a href="">忘记密码？</a></div>
+            <div class="login-btn"><button type="submit" class="weui-btn weui-btn_warn theme-bgcolor">登录</button></div>
+        </form>
+    </section>
+</div>
+
+{include file="common/script" /}
+
+</body>
+</html>

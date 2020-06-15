@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html lang="zh-cn">
+<head>
+    {include file="common/meta" /}
+
+    <link href="__CDN__/assets/css/customer/provider.css?v={$site.version}" rel="stylesheet">
+    <style>
+        .checkwork-state-1{
+            color: red;
+        }
+        .checkwork-state-2{
+
+        }
+        .checkwork-state-3{
+
+        }
+        .checkwork-state-4{
+
+        }
+        .checkwork-state-0{
+
+        }
+        .aui-operator {
+            float: right;
+            padding-top: 10px;
+            padding-right: 10px;
+
+        }
+    </style>
+</head>
+<body ontouchstart>
+{include file="common/footer" /}
+
+<section class="aui-flexView">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="/student" target="_self" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <a href="/" target="_self"><span class="aui-center-title">我的课程</span></a>
+        </div>
+        <a href="javascript:;" class="aui-navBar-item">
+            <i class="icon icon-sys"></i>
+        </a>
+    </header>
+    <section class="aui-scrollView" style="    margin-bottom: 50px;">
+        <div class="aui-tab" data-ydui-tab>
+            <ul class="tab-nav">
+                {volist name='state_list' id='vo'}
+                <li class="tab-nav-item {eq name='Request.param.state' value='$key'}tab-active{/eq}">
+                    <a href="/provider/index/state/{$key}/id/{$Request.param.id}">
+                        <span>{$vo}</span>
+                    </a>
+                </li>
+                {/volist}
+            </ul>
+            <div class="tab-panel">
+                <div class="tab-panel-item tab-active">
+                    <div class="aui-list-theme">
+                    {cms:providerlist id="row"}
+                        <div href="javascript:;" class="aui-list-theme-item" >
+                            <div class="aui-list-img">
+                                <h2>【{$row.package.name}】</h2>
+                                <h3 style="font-size: 13px;padding-top: 2px">{$row.promotion.name} </h3>
+                                <h4>{$row.staff.nickname}</h4>
+                            </div>
+                            <div class="aui-list-title" style="float: left">
+                                <h3 class="title-bottom"><i class="fa fa-clock-o"></i> {$row.appoint_time} {$row.appoint_course}</h3>
+                                <h3 class="title-bottom"><i class="fa  fa-institution"></i>{$row.classroom.branch.name}  {$row.classroom.name}
+                                    <span class="checkwork-state-{$row.checkwork}">{$row.checkwork_text}</span>
+                                    {if condition="($Request.param.state == 5)"}
+                                    <span>{eq name='row.state' value='6'}已结课{else/}未结课{/eq}</span>
+                                    {/if}
+                                </h3>
+                            </div>
+                            <div class="aui-operator">
+                                {if condition="($row.checkwork == 3) OR ($row.checkwork == 4) and (!in_array($row.state,[5,6]))"}
+                                <div style="float: left" class="pre-signin">
+                                    <a class="btn btn-success btn-pre-signin btn-sm" data-id="{$row.id}" href="javascript:void(0);">预签到</a>
+                                </div>　
+                                {/if}
+                                {if condition="($row.customer.leave_off_count != 0) and $row.checkwork == 3 and !in_array($row.state,[5,6])"}
+                                <a class="btn btn-warning btn-leave btn-sm" data-id="{$row.id}" data-leave-off-count="{$row.customer.leave_off_count}"  href="javascript:void(0);">请假</a>
+                                {/if}
+                                {if condition="($Request.param.state == 5)"}
+                                {if condition="($row.state == 6) and ($row.checkwork == 2)"}
+                                <a class="btn btn-warning btn-sm" data-id="{$row.id}" href="/provider/evaluate/id/{$row.id}">授课报告</a>
+                                {else/}
+                                <a class="btn btn-warning btn-sm btn-unstate" href="javascript:void(0)">授课报告</a>
+                                {/if}
+                                {/if}
+                            </div>
+                        </div>
+                    {/cms:providerlist}
+                    </div>
+                </div>
+            </div>
+            <!-- S 分页栏 -->
+            <div class="text-center">
+                {cms:pageinfo type="full" /}
+            </div>
+            <!-- E 分页栏 -->
+        </div>
+    </section>
+</section>
+{include file="common/script" /}
+
+</body>
+</html>

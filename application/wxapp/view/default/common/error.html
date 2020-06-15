@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{__NOLAYOUT__}
+<html>
+<head>
+    <title>{:__('Warning')}</title>
+    {include file="common/meta" /}
+</head>
+
+<body ontouchstart>
+{php}$codeText=$code == 1 ? 'success' : ($code == 0 ? 'error' : 'info');{/php}
+
+<div class="weui-msg" class="system-message {$codeText}">
+    <div class="weui-msg__icon-area"><img src="__CDN__/assets/img/dialogue.png" style="width: 200px"/> </div>
+    <div class="weui-msg__text-area">
+        <h2 class="weui-msg__title">操作失败</h2>
+        <p class="weui-msg__desc">{$msg}</p>
+        <p class="weui-msg__desc">
+            {if $url}
+        <p class="jump">
+            {:__('This page will be re-directed in %s seconds', '<span id="wait">' . $wait . '</span>')}
+        </p>
+        {/if}
+        </p>
+
+    </div>
+    <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+            <a href="__PUBLIC__" class="weui-btn weui-btn_primary">{:__('Go back')}</a>
+            {if $url}
+            <a href="{$url}" class="weui-btn weui-btn_default">{:__('Jump now')}</a>
+            {/if}
+
+        </p>
+    </div>
+    <div class="weui-msg__extra-area">
+        <div class="weui-footer">
+            <p class="weui-footer__links">
+                <a href="javascript:void(0);" class="weui-footer__link"></a>
+            </p>
+            <p class="weui-footer__text">Copyright © 2008-2019 touchmagic.cn</p>
+        </div>
+    </div>
+</div>
+{if $url}
+<script type="text/javascript">
+    (function () {
+        var wait = document.getElementById('wait');
+        var interval = setInterval(function () {
+            var time = --wait.innerHTML;
+            if (time <= 0) {
+                location.href = "{$url}";
+                clearInterval(interval);
+            }
+        }, 1000);
+    })();
+</script>
+{/if}
+<script>
+    $(function() {
+        FastClick.attach(document.body);
+    });
+</script>
+{include file="common/script" /}
+
+</body>
+</html>

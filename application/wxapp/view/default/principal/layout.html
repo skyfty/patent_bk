@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    {include file="common/meta" /}
+    <script type="text/javascript">
+        var customer = {$user->customer|json_encode};
+    </script>
+    <link href="__CDN__/assets/css/customer/principal.css?v={$site.version}" rel="stylesheet">
+</head>
+<body ontouchstart>
+<section class="aui-flexView" style="background-color: white">
+    <header class="aui-navBar aui-navBar-fixed b-line">
+        <a href="/principal/index" target="_self" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <span class="aui-center-title" >您的主体</span>
+        </div>
+        <a href="javascript:void(0);" target="_self" id="add-principal" class="aui-navBar-item">
+            <i class="icon icon-plug" ></i>
+        </a>
+    </header>
+    <section class="aui-scrollView" style="    margin-bottom: 40px;">
+        {__CONTENT__}
+    </section>
+</section>
+{include file="common/script" /}
+
+</body>
+</html>
