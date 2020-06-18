@@ -1,20 +1,13 @@
 <?php
 
 namespace app\wxapp\controller;
-
-use app\customer\library\Auth;
 use Symfony\Component\HttpFoundation\Session\Session;
 use think\Config;
 use think\Controller;
+use think\exception\HttpResponseException;
 use think\Hook;
-use app\common\model\WechatAutoreply;
-use app\common\model\WechatContext;
-use app\common\model\WechatResponse;
-use app\common\model\WechatConfig;
-use EasyWeChat\Foundation\Application;
-use app\common\library\Wechat as WechatService;
-use think\Log;
 use think\Request;
+use think\Response;
 
 /**
  * CMS首页控制器
@@ -27,8 +20,6 @@ class Wxapp extends Controller
     protected $model = null;
     protected $relationSearch = null;
 
-    protected $layout = 'layout/default';
-
     protected $noNeedLogin = [];
 
     protected $noNeedRight = [];
@@ -39,8 +30,11 @@ class Wxapp extends Controller
 
     protected $searchFields = [];
 
-    use \app\common\library\traits\Buildparam;
-    use \app\common\library\traits\Backend;
+    /**
+     * 默认响应输出类型,支持json/xml
+     * @var string
+     */
+    protected $responseType = 'json';
 
     // 初始化
     public function __construct()
@@ -52,11 +46,6 @@ class Wxapp extends Controller
         $modulename = $this->request->module();
         $controllername = strtolower($this->request->controller());
         $actionname = strtolower($this->request->action());
-
-        // 如果有使用模板布局
-        if ($this->layout) {
-            $this->view->engine->layout($this->layout);
-        }
 
         // 语言检测
         $lang = strip_tags($this->request->langset());
@@ -82,8 +71,68 @@ class Wxapp extends Controller
 
         // 配置信息后
         Hook::listen("config_init", $config);
+
     }
 
+
+    /**
+     * 操作成功返回的数据
+     * @param string $msg    提示信息
+     * @param mixed  $data   要返回的数据
+     * @param int    $code   错误码，默认为1
+     * @param string $type   输出类型
+     * @param array  $header 发送的 Header 信息
+     */
+    protected function success($msg = '', $data = null, $code = 1, $type = null, array $header = [])
+    {
+        $this->result($msg, $data, $code, $type, $header);
+    }
+
+    /**
+     * 操作失败返回的数据
+     * @param string $msg    提示信息
+     * @param mixed  $data   要返回的数据
+     * @param int    $code   错误码，默认为0
+     * @param string $type   输出类型
+     * @param array  $header 发送的 Header 信息
+     */
+    protected function error($msg = '', $data = null, $code = 0, $type = null, array $header = [])
+    {
+        $this->result($msg, $data, $code, $type, $header);
+    }
+
+    /**
+     * 返回封装后的 API 数据到客户端
+     * @access protected
+     * @param mixed  $msg    提示信息
+     * @param mixed  $data   要返回的数据
+     * @param int    $code   错误码，默认为0
+     * @param string $type   输出类型，支持json/xml/jsonp
+     * @param array  $header 发送的 Header 信息
+     * @return void
+     * @throws HttpResponseException
+     */
+    protected function result($msg, $data = null, $code = 0, $type = null, array $header = [])
+    {
+        $result = [
+            'code' => $code,
+            'msg'  => $msg,
+            'time' => Request::instance()->server('REQUEST_TIME'),
+            'data' => $data,
+        ];
+        // 如果未设置类型则自动判断
+        $type = $type ? $type : ($this->request->param(config('var_jsonp_handler')) ? 'jsonp' : $this->responseType);
+
+        if (isset($header['statuscode'])) {
+            $code = $header['statuscode'];
+            unset($header['statuscode']);
+        } else {
+            //未设置状态码,根据code值判断
+            $code = $code >= 1000 || $code < 200 ? 200 : $code;
+        }
+        $response = Response::create($result, $type, $code)->header($header);
+        throw new HttpResponseException($response);
+    }
 
     /**
      * 获取数据限制的管理员ID

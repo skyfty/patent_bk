@@ -1,19 +1,10 @@
 <?php
 
 namespace app\wxapp\controller;
-use app\common\model\Fields;
 use think\Request;
 
-
-/**
- * CMS首页控制器
- * Class Index
- * @package app\wechat\controller
- */
 class Principal extends Wxapp
 {
-    protected $layout = 'principal/layout';
-
     // 初始化
     public function __construct()
     {
@@ -23,8 +14,13 @@ class Principal extends Wxapp
 
     public function index() {
         $list = $this->model->with($this->relationSearch)->where("id","in", function($query){
-            $query->table("__CLAIM__")->where("customer_model_id", $this->user->customer->id)->field("principal_model_id");
-        })->order("principalclass_model_id asc")->select();
+            $query->table("__CLAIM__")->where("customer_model_id", 12)->field("principal_model_id");
+        })->order("principalclass_model_id asc")->where(function($query){
+            $substance_type = Request::instance()->param('substance_type');
+            if (!$substance_type || $substance_type != "all") {
+                $query->where('substance_type',  $substance_type);
+            }
+        })->select();
 
         $principallclass = model("Principalclass");
         foreach($list as $v) {
@@ -32,11 +28,10 @@ class Principal extends Wxapp
                 $principallclass->where("model_type", "neq", "persion");
                 break;
             }
-        }
-        $this->view->assign("list", $list);
-        $this->view->assign("principal_class", $principallclass->select());
+            $v->append(["substance"]);
 
-        return $this->view->fetch();
+        }
+        $this->success(__('Login successful'), ["list"=>$list, "principal_class"=>$principallclass->select()]);
     }
 
     public function view() {

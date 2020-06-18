@@ -23,6 +23,21 @@ class Index extends Wxapp
         return $this->view->fetch();
     }
 
+    public function page() {
+        $this->success(__('Login successful'), ["wxapp"=>"sldkjfl"]);
+
+    }
+
+    public function base() {
+        $wxapp_id = $this->request->param("wxapp_id");
+
+        $wxappbar = model("WxappNavbar")->where("id", $wxapp_id)->find();
+        if (!$wxappbar) {
+            $this->error(__('No Results were found'));
+        }
+        $this->success(__('Login successful'), ["wxapp"=>$wxappbar]);
+    }
+
     public function login() {
         $url = $this->request->get('url', 'index/index');
         if ($this->auth->isLogin()) $this->redirect($url);
