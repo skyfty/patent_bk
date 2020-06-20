@@ -23,6 +23,7 @@ Page({
    */
   onShow: function () {
     // 获取订单列表
+    wx.removeStorage({key:"principal"});
     this.getList(this.data.substance_type);
   },
 
@@ -53,19 +54,10 @@ Page({
   /**
    * 取消订单
    */
-  cancelOrder: function (e) {
+  addPrincipal: function (e) {
     let _this = this;
-    let order_id = e.currentTarget.dataset.id;
-    wx.showModal({
-      title: "提示",
-      content: "确认取消订单？",
-      success: function (o) {
-        if (o.confirm) {
-          App._post_form('user.order/cancel', { order_id }, function (result) {
-            _this.getList(_this.data.dataType);
-          });
-        }
-      }
+    wx.navigateTo({
+      url: '../principal/edit'
     });
   },
 
