@@ -8,6 +8,7 @@ Page({
   data: {
     substance_type: 'all',
     list: [],
+    isShow:false
   },
 
   /**
@@ -24,6 +25,9 @@ Page({
   onShow: function () {
     // 获取订单列表
     wx.removeStorage({key:"principal"});
+    this.setData({
+      isShow: false,
+    });
     this.getList(this.data.substance_type);
   },
 
@@ -56,8 +60,9 @@ Page({
    */
   addPrincipal: function (e) {
     let _this = this;
+    let principalclass = e.currentTarget.dataset.principalclass;
     wx.navigateTo({
-      url: '../principal/edit'
+      url: '../principal/edit?principalclass=' + principalclass
     });
   },
 
@@ -126,7 +131,14 @@ Page({
 
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
-  }
+  },
 
-
+   /**
+     * 导航菜单切换事件
+     */
+  _onToggleShow: function(e) {
+    this.setData({
+      isShow: !this.data.isShow,
+    });
+  },
 });

@@ -42,10 +42,23 @@
 
 <!-- 快捷导航 -->
 <view class="shortcut">
+  <!-- 购物车 -->
+  <form bindsubmit="addPrincipal" data-principalclass="2" >
+    <button formType="submit" data-index="2" class="nav-item btn-normal {{ isShow ? 'show_40' : (transparent ? '' : 'hide_40') }}">
+      <text class="iconfont icon-cart"></text>
+    </button>
+  </form>
+
+  <!-- 个人中心 -->
+  <form bindsubmit="addPrincipal" data-principalclass="1" >
+    <button formType="submit" data-index="3" class="nav-item btn-normal {{ isShow ? 'show_20' : (transparent ? '' : 'hide_20') }}">
+      <text class="iconfont icon-profile"></text>
+    </button>
+  </form>
 
   <!-- 显示隐藏开关 -->
-  <form bindsubmit="addPrincipal">
-    <button formType="submit" class="nav-item nav-item__switch btn-normal">
+  <form bindsubmit="_onToggleShow">
+    <button formType="submit" class="nav-item nav-item__switch btn-normal {{ isShow ? 'shortcut_click_show' : '' }}">
       <text class='iconfont icon-daohang'></text>
     </button>
   </form>
