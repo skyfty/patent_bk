@@ -6,54 +6,68 @@ Page({
    * 页面的初始数据
    */
   data: {
-    order_id: null,
-    order: {},
+    id: null,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.data.order_id = options.order_id;
-    this.getOrderDetail(options.order_id);
+    this.data.id = options.id;
+    this.getDetail(options.id);
   },
 
   /**
    * 获取订单详情
    */
-  getOrderDetail: function (order_id) {
+  getDetail: function (id) {
     let _this = this;
-    App._get('user.order/detail', { order_id }, function (result) {
+    App._get('principal/view', { id }, function (result) {
       _this.setData(result.data);
+      wx.setStorage({//存储到本地
+        key:"principal",
+        data:result.data
+      });
     });
   },
 
   /**
    * 跳转到商品详情
    */
-  goodsDetail: function (e) {
-    let goods_id = e.currentTarget.dataset.id;
+  editAptitude: function (e) {
+    let id = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '../goods/index?goods_id=' + goods_id
+      url: '../aptitude/edit?id=' + id
     });
   },
 
   /**
    * 取消订单
    */
-  cancelOrder: function (e) {
+  delPrincipal: function (e) {
     let _this = this;
-    let order_id = _this.data.order_id;
+    let id = _this.data.id;
     wx.showModal({
       title: "提示",
-      content: "确认取消订单？",
+      content: "确认删除主体吗？",
       success: function (o) {
         if (o.confirm) {
-          App._post_form('user.order/cancel', { order_id }, function (result) {
+          App._post_form('principal/del', { id }, function (result) {
             wx.navigateBack();
           });
         }
       }
+    });
+  },
+
+
+  /**
+   * 跳转到商品详情
+   */
+  editPrincipal: function (e) {
+    let id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '../principal/edit?id=' + id
     });
   },
 

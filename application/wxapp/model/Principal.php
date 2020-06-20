@@ -17,5 +17,4 @@ class Principal extends  \app\common\model\Principal
         parent::init();
     }
 
-
 }

@@ -39,12 +39,12 @@ class Company extends \app\common\model\Company
     public function getRegisteraddressAttr($value, $data)
     {
         $value = $value ? $value : (isset($data['registeraddress']) ? $data['registeraddress'] : '');
-        return str_replace("/", " ", $value);
+        return $value?explode("/", $value):$value;
     }
 
     public function setRegisteraddressAttr($value)
     {
-        return str_replace(" ", "/", $value);
+        return str_replace(",", "/", $value);
     }
 
 }

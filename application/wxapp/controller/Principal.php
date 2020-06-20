@@ -12,6 +12,14 @@ class Principal extends Wxapp
         $this->model = model('principal');
     }
 
+    public function editfields() {
+        $data = [
+            "types"=>pickerfield('company','type'),
+            "criterions"=>pickerfield('company','criterion'),
+        ];
+        $this->success(__('Login successful'), $data);
+    }
+
     public function index() {
         $list = $this->model->with($this->relationSearch)->where("id","in", function($query){
             $query->table("__CLAIM__")->where("customer_model_id", 12)->field("principal_model_id");
@@ -43,39 +51,32 @@ class Principal extends Wxapp
         if (!$row)
             $this->error(__('No Results were found'));
         $row->append(["substance","promotions","actualizes"]);
-        $this->success("OK","/",$row);
+        $this->success(__('Login successful'), $row);
     }
+
     public function edit($ids = null) {
         $principal = $this->model->get($ids);
         if (!$principal) {
             $this->error(__('No Results were found'));
         }
+        $params = $this->request->param("row/a");
 
-        if ($this->request->isPost()) {
-            $params = $this->request->param("row/a");
-
-            $db = $this->model->getQuery();
-            $db->startTrans();
-            try {
-                $substance = $principal->substance->save($params);
-                if ($substance === false) {
-                    throw new \think\Exception($this->model->getError());
-                }
-                $db->commit();
-                $this->success("成功", "/principal/index?id=".$principal->id);
-
-            } catch (\think\exception\PDOException $e) {
-                $db->rollback();
-                $this->error($e->getMessage());
-            }catch(\think\Exception $e) {
-                $db->rollback();
-                $this->error($e->getMessage());
+        $db = $this->model->getQuery();
+        $db->startTrans();
+        try {
+            $substance = $principal->substance->allowField(true)->save($params);
+            if ($substance === false) {
+                throw new \think\Exception($this->model->getError());
             }
+            $db->commit();
+            $this->success("成功");
+        } catch (\think\exception\PDOException $e) {
+            $db->rollback();
+            $this->error($e->getMessage());
+        }catch(\think\Exception $e) {
+            $db->rollback();
+            $this->error($e->getMessage());
         }
-        $this->view->assign("row", $principal['substance']);
-        $template = "principal/class/".$principal['substance_type'];
-        $this->view->assign('refere_url', Request::instance()->server('HTTP_REFERER'));
-        return $this->view->fetch($template);
     }
 
     public function add() {
@@ -88,50 +89,44 @@ class Principal extends Wxapp
             $this->error(__('No Results were found'));
         }
 
-        if ($this->request->isPost()) {
-            $params = $this->request->param("row/a");
-            if ($principalclass['id'] ==2) {
-                $principal = model("principal")->where("name",$params['name'])->find();
-                if ($principal) {
-                    $this->error("主体名称重复");
-                }
-            }
-
-            $db = $this->model->getQuery();
-            $db->startTrans();
-            try {
-                $principal = model("principal")->create([
-                    "name"=>$params['name'],
-                    "principalclass_model_id"=>$principalclass_model_id
-                ]);
-                if ($principal === false) {
-                    throw new \think\Exception($this->model->getError());
-                }
-                $substance = $principal->substance->save($params);
-                if ($substance === false) {
-                    throw new \think\Exception($this->model->getError());
-                }
-                $claim = model("claim")->create([
-                    "customer_model_id"=>$this->user->customer->id,
-                    "principal_model_id"=>$principal['id']
-
-                ]);
-                if ($claim !== false) {
-                    $db->commit();
-                    $this->success("主体添加成功", "/principal/index?id=".$principal->id);
-                }
-            } catch (\think\exception\PDOException $e) {
-                $db->rollback();
-                $this->error($e->getMessage());
-            }catch(\think\Exception $e) {
-                $db->rollback();
-                $this->error($e->getMessage());
+        $params = $this->request->param("row/a");
+        if ($principalclass['id'] ==2) {
+            $principal = model("principal")->where("name",$params['name'])->find();
+            if ($principal) {
+                $this->error("主体名称重复");
             }
         }
-        $this->view->assign("principal_class", $principalclass);
-        $template = "principal/class/".$principalclass['model_type'];
-        $this->view->assign('refere_url', Request::instance()->server('HTTP_REFERER'));
-        $this->view->assign("row", []);
-        return $this->view->fetch($template);
+
+        $db = $this->model->getQuery();
+        $db->startTrans();
+        try {
+            $principal = model("principal")->create([
+                "name"=>$params['name'],
+                "principalclass_model_id"=>$principalclass_model_id
+            ]);
+            if ($principal === false) {
+                throw new \think\Exception($this->model->getError());
+            }
+            $substance = $principal->substance->allowField(true)->save($params);
+            if ($substance === false) {
+                throw new \think\Exception($this->model->getError());
+            }
+            $claim = model("claim")->create([
+                "customer_model_id"=>$this->user->customer->id,
+                "principal_model_id"=>$principal['id']
+
+            ]);
+            if ($claim !== false) {
+                $db->commit();
+                $this->success("主体添加成功", "/principal/index?id=".$principal->id);
+            }
+        } catch (\think\exception\PDOException $e) {
+            $db->rollback();
+            $this->error($e->getMessage());
+        }catch(\think\Exception $e) {
+            $db->rollback();
+            $this->error($e->getMessage());
+        }
+
     }
 }
