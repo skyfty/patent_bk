@@ -1,6 +1,7 @@
 <?php
 
 namespace app\wxapp\controller;
+use think\Log;
 use think\Request;
 
 class Principal extends Wxapp
@@ -112,7 +113,7 @@ class Principal extends Wxapp
                 throw new \think\Exception($this->model->getError());
             }
             $claim = model("claim")->create([
-                "customer_model_id"=>$this->user->customer->id,
+                "customer_model_id"=>12,
                 "principal_model_id"=>$principal['id']
 
             ]);

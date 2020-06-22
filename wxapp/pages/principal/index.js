@@ -61,9 +61,11 @@ Page({
   addPrincipal: function (e) {
     let _this = this;
     let principalclass = e.currentTarget.dataset.principalclass;
-    wx.navigateTo({
-      url: '../principal/edit?principalclass=' + principalclass
-    });
+    let url = '../principal/company/edit?principalclass='+ principalclass;
+    if (principalclass ==1) {
+      url = '../principal/persion/edit?principalclass='+ principalclass;
+    }
+    wx.navigateTo({url: url});
   },
 
   /**
@@ -124,9 +126,12 @@ Page({
    */
   detail: function (e) {
     let id = e.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: '../principal/detail?id=' + id
-    });
+    let principalclass = e.currentTarget.dataset.principalclass;
+    let url = '../principal/company/detail?id='+ id;
+    if (principalclass ==1) {
+      url = '../principal/persion/detail?id='+ id;
+    }
+    wx.navigateTo({url: url});
   },
 
   onPullDownRefresh: function () {

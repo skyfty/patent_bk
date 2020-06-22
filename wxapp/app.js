@@ -275,14 +275,14 @@ App({
    */
   setNavigationBar() {
     let App = this;
-    // 获取小程序基础信息
-    App.getWxappBase(wxapp => {
-      // 设置navbar标题、颜色
-      wx.setNavigationBarColor({
-        frontColor: wxapp.top_text_color,
-        backgroundColor: wxapp.top_background_color
-      })
-    });
+    // // 获取小程序基础信息
+    // App.getWxappBase(wxapp => {
+    //   // 设置navbar标题、颜色
+    //   wx.setNavigationBarColor({
+    //     frontColor: wxapp.top_text_color,
+    //     backgroundColor: wxapp.top_background_color
+    //   })
+    // });
   },
 
   /**

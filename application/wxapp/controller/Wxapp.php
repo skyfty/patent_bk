@@ -36,6 +36,8 @@ class Wxapp extends Controller
      */
     protected $responseType = 'json';
 
+    use \app\common\library\traits\Backend;
+
     // 初始化
     public function __construct()
     {

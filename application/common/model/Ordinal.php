@@ -20,10 +20,10 @@ class Ordinal extends Cosmetic
         });
 
         $updatepolicy = function($row){
+            $row->policy->updateCondition();
             $row->policy->match();
         };
         self::afterDelete($updatepolicy); self::afterUpdate($updatepolicy); self::afterInsert($updatepolicy);
-
     }
 
     static public function getConditionList() {
