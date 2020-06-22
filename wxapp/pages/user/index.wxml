@@ -71,19 +71,6 @@
   </view>
   <!-- 菜单列表 -->
   <view class="menus-list m-top20">
-    <form bindsubmit="onTargetMenus" data-url="pages/address/index">
-      <button formType="submit" class="btn-normal">
-        <view class="menus-item dis-flex b-f">
-          <view class="menus-item__left flex-box dis-flex flex-y-center">
-            <text class="iconfont icon-map f-34"></text>
-            <text class="menus-item__name f-30">收货地址</text>
-          </view>
-          <view class="menus-item__right flex-box dis-flex flex-x-end flex-y-center">
-            <text class="iconfont icon-xiangyoujiantou f-26 col-7"></text>
-          </view>
-        </view>
-      </button>
-    </form>
     <form bindsubmit="onTargetMenus" data-url="pages/user/help">
       <button formType="submit" class="btn-normal">
         <view class="menus-item dis-flex b-f">
