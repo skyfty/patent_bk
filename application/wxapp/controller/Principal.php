@@ -23,7 +23,7 @@ class Principal extends Wxapp
 
     public function index() {
         $list = $this->model->with($this->relationSearch)->where("id","in", function($query){
-            $query->table("__CLAIM__")->where("customer_model_id", 12)->field("principal_model_id");
+            $query->table("__CLAIM__")->where("customer_model_id", $this->user->customer->id)->field("principal_model_id");
         })->order("principalclass_model_id asc")->where(function($query){
             $substance_type = Request::instance()->param('substance_type');
             if (!$substance_type || $substance_type != "all") {
@@ -38,7 +38,6 @@ class Principal extends Wxapp
                 break;
             }
             $v->append(["substance"]);
-
         }
         $this->success(__('Login successful'), ["list"=>$list, "principal_class"=>$principallclass->select()]);
     }
@@ -113,7 +112,7 @@ class Principal extends Wxapp
                 throw new \think\Exception($this->model->getError());
             }
             $claim = model("claim")->create([
-                "customer_model_id"=>12,
+                "customer_model_id"=>$this->user->customer->id,
                 "principal_model_id"=>$principal['id']
 
             ]);
