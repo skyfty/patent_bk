@@ -45,7 +45,7 @@
   <!-- 购物车 -->
   <form bindsubmit="addPrincipal" data-principalclass="2" >
     <button formType="submit" data-index="2" class="nav-item btn-normal {{ isShow ? 'show_40' : (transparent ? '' : 'hide_40') }}">
-      <text class="iconfont icon-cart"></text>
+      <text class="iconfont icon-daishouhuo"></text>
     </button>
   </form>
 

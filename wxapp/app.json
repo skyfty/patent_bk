@@ -15,6 +15,7 @@
     "pages/principal/company/edit",
     "pages/principal/persion/detail",
     "pages/principal/persion/edit",
+    "pages/procshutter/edit",
     "pages/address/index",
     "pages/address/create",
     "pages/address/detail",
