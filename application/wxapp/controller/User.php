@@ -43,6 +43,8 @@ class User extends Wxapp
     }
 
     public function adviser() {
+        $this->success();
+
         $adviser = $this->user->customer->adviser;
         if (!$adviser || $adviser->persionalqrcode == "") {
             $branch_model_id = $this->user->customer->branch_model_id;

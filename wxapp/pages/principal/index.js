@@ -67,60 +67,7 @@ Page({
     }
     wx.navigateTo({url: url});
   },
-
-  /**
-   * 确认收货
-   */
-  receipt: function (e) {
-    let _this = this;
-    let order_id = e.currentTarget.dataset.id;
-    wx.showModal({
-      title: "提示",
-      content: "确认收到商品？",
-      success: function (o) {
-        if (o.confirm) {
-          App._post_form('user.order/receipt', { order_id }, function (result) {
-            _this.getList(_this.data.dataType);
-          });
-        }
-      }
-    });
-  },
-
-  /**
-   * 发起付款
-   */
-  payOrder: function (e) {
-    let _this = this;
-    let order_id = e.currentTarget.dataset.id;
-
-    // 显示loading
-    wx.showLoading({ title: '正在处理...', });
-    App._post_form('user.order/pay', { order_id }, function (result) {
-      if (result.code === -10) {
-        App.showError(result.msg);
-        return false;
-      }
-      // 发起微信支付
-      wx.requestPayment({
-        timeStamp: result.data.timeStamp,
-        nonceStr: result.data.nonceStr,
-        package: 'prepay_id=' + result.data.prepay_id,
-        signType: 'MD5',
-        paySign: result.data.paySign,
-        success: function (res) {
-          // 跳转到已付款订单
-          wx.navigateTo({
-            url: '../order/detail?order_id=' + order_id
-          });
-        },
-        fail: function () {
-          App.showError('订单未支付');
-        },
-      });
-    });
-  },
-
+  
   /**
    * 跳转订单详情页
    */

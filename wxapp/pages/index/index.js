@@ -7,6 +7,9 @@ Page({
   },
 
   onLoad: function() {
+    _this.setData({
+      isLogin: App.checkIsLogin()
+    });
     // 设置页面标题
     App.setTitle();
     // 设置navbar标题、颜色
