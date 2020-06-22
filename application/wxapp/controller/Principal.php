@@ -18,7 +18,7 @@ class Principal extends Wxapp
             "types"=>pickerfield('company','type'),
             "criterions"=>pickerfield('company','criterion'),
         ];
-        $this->success(__('Login successful'), $data);
+        $this->success(__('Ok'), $data);
     }
 
     public function index() {
@@ -51,7 +51,7 @@ class Principal extends Wxapp
         if (!$row)
             $this->error(__('No Results were found'));
         $row->append(["substance","promotions","actualizes"]);
-        $this->success(__('Login successful'), $row);
+        $this->success(__('Ok'), $row);
     }
 
     public function edit($ids = null) {
