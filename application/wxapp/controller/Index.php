@@ -39,41 +39,25 @@ class Index extends Wxapp
     }
 
     public function login() {
-        $url = $this->request->get('url', 'index/index');
-        if ($this->auth->isLogin()) $this->redirect($url);
-
-        if ($this->request->isPost()) {
-            $username = $this->request->post('username');
-            $password = $this->request->post('password');
-            $keeplogin = $this->request->post('keeplogin');
-            $token = $this->request->post('__token__');
-            $rule = [
-                'username'  => 'require|length:3,30',
-                'password'  => 'require|length:3,30',
-                '__token__' => 'token',
-            ];
-            $data = [
-                'username'  => $username,
-                'password'  => $password,
-                '__token__' => $token,
-            ];
-
-            $validate = new Validate($rule, [], ['username' => __('Username'), 'password' => __('Password')]);
-            $result = $validate->check($data);
-            if (!$result) {
-                $this->error($validate->getError(), $url, ['token' => $this->request->token()]);
-            }
-            $result = $this->auth->login($username, $password, $keeplogin ? 86400 : 0);
-            if ($result === true) {
-                $this->success(__('Login successful'), $url, ['url' => $url, 'id' => $this->auth->id, 'username' => $username, 'avatar' => $this->auth->avatar]);
-            } else {
-                $msg = $this->auth->getError();
-                $msg = $msg ? $msg : __('Username or password is incorrect');
-                $this->error($msg, $url, ['token' => $this->request->token()]);
-            }
+        if ($this->auth->isLogin()) {
+            $this->success(__('Login successful'), ['user_id' => $this->auth->id,'token' => $this->auth->getToken()]);
         }
-        $this->view->assign('redirect_url', $url);
-        $this->view->assign('title', __('Login'));
-        return $this->view->fetch();
+        if ($this->request->has("code")) {
+            $session_key = $this->app->sns->getSessionKey($this->request->param("code"));
+            if (!$session_key) {
+                $this->error(__('You have no permission'));
+            }
+            $openid = $session_key->getId();
+            $result = $this->auth->wxlogin($openid);
+            if ($result !== true) {
+                $this->register($openid);
+                $result = $this->auth->wxlogin($openid);
+            }
+            if ($result === true) {
+                $this->success(__('Login successful'), ['user_id' => $this->auth->id,'token' => $this->auth->getToken()]);
+            }
+        } else {
+            $this->error(__('You have no permission'));
+        }
     }
 }

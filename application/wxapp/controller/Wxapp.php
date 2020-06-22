@@ -1,6 +1,8 @@
 <?php
 
 namespace app\wxapp\controller;
+use app\wxapp\library\Auth;
+use EasyWeChat\Foundation\Application;
 use Symfony\Component\HttpFoundation\Session\Session;
 use think\Config;
 use think\Controller;
@@ -43,11 +45,73 @@ class Wxapp extends Controller
     {
         parent::__construct();
 
+        $wechat_config = Config::get('wechat');
+        $wechat_config['debug'] = \think\Config::get('app_debug');
+        $appconfig['log'] = [
+            'level' => 'debug',
+            'file'  => 'easywechat.log',
+        ];
+        $this->app = new Application($wechat_config);
+
         //移除HTML标签
         $this->request->filter('strip_tags');
         $modulename = $this->request->module();
         $controllername = strtolower($this->request->controller());
         $actionname = strtolower($this->request->action());
+
+        // 如果有使用模板布局
+        if ($this->layout) {
+            $this->view->engine->layout($this->layout);
+        }
+        $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', \think\Session::get('token')));
+
+        $path = str_replace('.', '/', $controllername) . '/' . $actionname;
+
+        $this->auth = Auth::instance();
+
+        // 设置当前请求的URI
+        $this->auth->setRequestUri($path);
+        $this->auth->keeptime(3600);
+
+        // 检测是否需要验证登录
+        if (!$this->auth->match($this->noNeedLogin)) {
+            //初始化
+            $this->auth->init($token);
+
+            //检测是否登录
+            if (!$this->auth->isLogin()) {
+                if ($this->request->has("code")) {
+                    $session_key = $this->app->sns->getSessionKey($this->request->param("code"));
+                    if (!$session_key) {
+                        $this->error(__('You have no permission'));
+                    }
+                    $openid = $session_key->getId();
+                    $result = $this->auth->wxlogin($openid);
+                    if ($result !== true) {
+                        $this->register($openid);
+                        $this->auth->wxlogin($openid);
+                    }
+                } else {
+                    $this->error(__('You have no permission'));
+                }
+            }
+            // 判断是否需要验证权限
+            if (!$this->auth->match($this->noNeedRight)) {
+                // 判断控制器和方法判断是否有对应权限
+                if (!$this->auth->check($path)) {
+                    $this->error(__('You have no permission'));
+                }
+            }
+        } else {
+            // 如果有传递token才验证是否登录状态
+            if ($token) {
+                $this->auth->init($token);
+            }
+        }
+
+        if ($this->auth->isLogin()) {
+            $this->user = $this->auth->getUser();
+        }
 
         // 语言检测
         $lang = strip_tags($this->request->langset());
@@ -74,6 +138,23 @@ class Wxapp extends Controller
         // 配置信息后
         Hook::listen("config_init", $config);
 
+    }
+
+    public function register($openid) {
+        $customer = model("customer");
+        $wxuser = $this->app->user->get($openid);
+        if ($wxuser) {
+            $customer->name = $wxuser->nickname;
+            $customer->sex = $wxuser->sex;
+//            $customer->avatar = $this->downloadheadimgurl($wxuser->headimgurl);
+        } else {
+            $customer->name = "匿名";
+        }
+        $customer->wxopenid = $openid;
+        $customer->subscribe = "yes";
+        $customer->branch_model_id = 0;
+        $customer->owners_model_id =$customer->creator_model_id = 2;
+        $customer->save();
     }
 
 

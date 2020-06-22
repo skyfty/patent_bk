@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "个人中心",
-  "navigationBarBackgroundColor": "#ffdd00"
+  "navigationBarBackgroundColor": "#ffdd00",
+  "usingComponents": {
+    "i-message": "/components/message/index"
+  }
 }
