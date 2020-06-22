@@ -38,19 +38,38 @@ class Index extends Wxapp
         $this->success(__('Login successful'), ["wxapp"=>$wxappbar]);
     }
 
+    public function register($openid, $user_info) {
+        $customer = model("customer");
+        $wxuser = $this->app->user->get($openid);
+        if ($wxuser) {
+            $customer->name = $wxuser->nickname;
+            $customer->sex = $wxuser->sex;
+//            $customer->avatar = $this->downloadheadimgurl($wxuser->headimgurl);
+        } else {
+            $customer->name = "匿名";
+        }
+        $customer->wxapp_openid = $openid;
+        $customer->branch_model_id = 0;
+        $customer->owners_model_id =$customer->creator_model_id = 2;
+        $customer->save();
+    }
+
     public function login() {
         if ($this->auth->isLogin()) {
             $this->success(__('Login successful'), ['user_id' => $this->auth->id,'token' => $this->auth->getToken()]);
         }
-        if ($this->request->has("code")) {
-            $session_key = $this->app->sns->getSessionKey($this->request->param("code"));
+        if ($this->request->has("code") && $this->request->has("user_info")) {
+            $session_key = $this->app->mini_program->sns->getSessionKey($this->request->param("code"));
             if (!$session_key) {
                 $this->error(__('You have no permission'));
             }
-            $openid = $session_key->getId();
+            $openid = $session_key->openid;
+
             $result = $this->auth->wxlogin($openid);
             if ($result !== true) {
-                $this->register($openid);
+                $user_info = json_decode($this->request->param("user_info"), true);
+                Log::info($user_info);
+                $this->register2($openid, $user_info);
                 $result = $this->auth->wxlogin($openid);
             }
             if ($result === true) {

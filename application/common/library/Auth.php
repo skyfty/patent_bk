@@ -232,7 +232,7 @@ class Auth
 
     public function wxlogin($openid)
     {
-        $user = model("user")->hasWhere('customer',['wxopenid'=>$openid])->find();
+        $user = model("user")->hasWhere('customer',['wxopenid|wxapp_openid'=>$openid])->find();
         if (!$user)
         {
             $this->setError('Account is incorrect');
