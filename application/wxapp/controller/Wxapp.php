@@ -81,7 +81,7 @@ class Wxapp extends Controller
         if (!$this->auth->match($this->noNeedLogin)) {
             //初始化
             $this->auth->init($token);
-
+            Log::info($token);
             //检测是否登录
             if (!$this->auth->isLogin()) {
                 $this->error(__('Please login first'), -1);

@@ -39,7 +39,7 @@ class Principal extends Wxapp
             }
             $v->append(["substance"]);
         }
-        $this->success(__('Login successful'), ["list"=>$list, "principal_class"=>$principallclass->select()]);
+        $this->success(__('Ok'), ["list"=>$list, "principal_class"=>$principallclass->select()]);
     }
 
     public function view() {
