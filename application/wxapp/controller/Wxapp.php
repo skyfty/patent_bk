@@ -8,6 +8,7 @@ use think\Config;
 use think\Controller;
 use think\exception\HttpResponseException;
 use think\Hook;
+use think\Log;
 use think\Request;
 use think\Response;
 
