@@ -7,6 +7,7 @@ Page({
   },
 
   onLoad: function() {
+    let _this = this;
     _this.setData({
       isLogin: App.checkIsLogin()
     });
