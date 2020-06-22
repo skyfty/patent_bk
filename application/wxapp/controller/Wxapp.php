@@ -83,7 +83,7 @@ class Wxapp extends Controller
 
             //检测是否登录
             if (!$this->auth->isLogin()) {
-                $this->error(__('You have no permission'), -1);
+                $this->error(__('Please login first'), -1);
             }
             // 判断是否需要验证权限
             if (!$this->auth->match($this->noNeedRight)) {
@@ -118,7 +118,6 @@ class Wxapp extends Controller
             'modulename'     => $modulename,
             'controllername' => $controllername,
             'actionname'     => $actionname,
-            'jsname'         => $modulename.'/' . str_replace('.', '/', $controllername),
             'moduleurl'      => rtrim(url("/{$modulename}", '', false), '/'),
             'language'       => $lang,
         ];

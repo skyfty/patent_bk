@@ -19,6 +19,19 @@ class Index extends Wxapp
     protected $noNeedLogin = ['login','index'];
     protected $layout = 'index/layout';
 
+
+    private function downloadheadimgurl($url) {
+        $client = new \GuzzleHttp\Client();
+        $res = $client->request('GET', $url);
+        if (!$res || $res->getStatusCode() != "200") {
+            return false;
+        }
+        $tempPath = tempnam(sys_get_temp_dir(), 'kindle_img');
+        file_put_contents($tempPath, $res->getBody());
+        return $this->upload_file($tempPath);
+    }
+
+
     public function index() {
         return $this->view->fetch();
     }
@@ -38,20 +51,26 @@ class Index extends Wxapp
         $this->success(__('Login successful'), ["wxapp"=>$wxappbar]);
     }
 
+    private function updateuser($row, $user_info) {
+        $row->name = $user_info['nickName'];
+        $row->sex = $user_info['gender'];
+        $row->avatar = $this->downloadheadimgurl($user_info['avatarUrl']);
+        $row->branch_model_id = 0;
+        $row->owners_model_id =$row->creator_model_id = 2;
+        return $row;
+    }
+
     public function register($openid, $user_info) {
         $customer = model("customer");
-        $wxuser = $this->app->user->get($openid);
-        if ($wxuser) {
-            $customer->name = $wxuser->nickname;
-            $customer->sex = $wxuser->sex;
-//            $customer->avatar = $this->downloadheadimgurl($wxuser->headimgurl);
+        $row = $customer->where("wxapp_openid", $openid)->find();
+        if ($row) {
+            $this->updateuser($row, $user_info);
+            $row->create();
         } else {
-            $customer->name = "匿名";
+            $this->updateuser($customer, $user_info);
+            $customer->wxapp_openid = $openid;
+            $customer->save();
         }
-        $customer->wxapp_openid = $openid;
-        $customer->branch_model_id = 0;
-        $customer->owners_model_id =$customer->creator_model_id = 2;
-        $customer->save();
     }
 
     public function login() {
@@ -68,8 +87,7 @@ class Index extends Wxapp
             $result = $this->auth->wxlogin($openid);
             if ($result !== true) {
                 $user_info = json_decode($this->request->param("user_info"), true);
-                Log::info($user_info);
-                $this->register2($openid, $user_info);
+                $this->register($openid, $user_info);
                 $result = $this->auth->wxlogin($openid);
             }
             if ($result === true) {

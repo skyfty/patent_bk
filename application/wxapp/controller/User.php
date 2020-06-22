@@ -15,18 +15,6 @@ use app\common\library\Sms as Smslib;
  */
 class User extends Wxapp
 {
-    protected $layout = 'user/layout';
-
-    public function agreement()
-    {
-        $content = WechatResponse::get(3,[],true)->content;
-        if ($content) {
-            $content = json_decode($content);
-            $this->view->assign("content", $content->content);
-        }
-        return $this->view->fetch();
-    }
-
     public function edit($id = null)
     {
         $params = $this->request->post("row/a");
@@ -39,27 +27,16 @@ class User extends Wxapp
         } else {
             $this->error($this->user->customer->getError());
         }
+    }
 
+    public function view() {
+        if (!$this->user) {
+            $this->error(__('Please login first'), -1);
+        }
+        $this->success("OK", $this->user->customer);
     }
 
     public function adviser() {
         $this->success();
-
-        $adviser = $this->user->customer->adviser;
-        if (!$adviser || $adviser->persionalqrcode == "") {
-            $branch_model_id = $this->user->customer->branch_model_id;
-            $authGroup = model("AuthGroup")->where("branch_id", $branch_model_id)->where("name",'客户顾问')->find();
-            if (!$authGroup) {
-                $this->redirect(url("page/index",['id'=>49]));
-            }
-            $advisers = model("staff")->where("branch_model_id", $this->user->customer->branch_model_id)->where("persionalqrcode","neq", "")->where($authGroup->id, "exp", "FIND_IN_SET(".$authGroup->id.",quarters)")->select();
-            if (!$advisers || count($advisers) == 0) {
-                $this->redirect(url("page/index",['id'=>49]));
-            }
-            $adviser = $advisers[rand(0, count($advisers) -1)];
-            $this->user->customer->save(['adviser_model_id'=>$adviser->id]);
-        }
-        $this->view->assign("adviser", $adviser);
-        return $this->view->fetch();
     }
 }
