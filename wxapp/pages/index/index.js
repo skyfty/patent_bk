@@ -8,14 +8,6 @@ Page({
 
   onLoad: function() {
     let _this = this;
-    _this.setData({
-      isLogin: App.checkIsLogin()
-    });
-    // 设置页面标题
-    App.setTitle();
-    // 设置navbar标题、颜色
-    App.setNavigationBar();
-    // 获取首页数据
     this.getIndexData();
   },
 
@@ -24,9 +16,9 @@ Page({
    */
   getIndexData: function() {
     let _this = this;
-    App._get('index/page', {}, function(result) {
-      _this.setData(result.data);
-    });
+    // App._get('index/page', {}, function(result) {
+    //   _this.setData(result.data);
+    // });
   },
 
   onShareAppMessage: function() {

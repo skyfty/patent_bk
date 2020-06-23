@@ -1,14 +1,3 @@
-/**
- * tabBar页面路径列表 (用于链接跳转时判断)
- * tabBarLinks为常量, 无需修改
- */
-const tabBarLinks = [
-  'pages/index/index',
-  'pages/category/index',
-  'pages/flow/index',
-  'pages/user/index'
-];
-
 // 站点信息
 import siteInfo from 'siteinfo.js';
 
@@ -36,7 +25,6 @@ App({
    * 当小程序启动，或从后台进入前台显示，会触发 onShow
    */
   onShow(options) {
-    
 
   },
 
@@ -45,21 +33,7 @@ App({
    */
   setApiRoot() {
     let App = this;
-    // App.api_root = `${siteInfo.siteroot}index.php?s=/api/`;
     App.api_root = `${siteInfo.siteroot}/`;
-
-  },
-
-  /**
-   * 获取小程序基础信息
-   */
-  getWxappBase(callback) {
-    let App = this;
-    App._get('index/base', {}, result => {
-      // 记录小程序基础信息
-      wx.setStorageSync('wxapp', result.data.wxapp);
-      callback && callback(result.data.wxapp);
-    }, false, false);
   },
 
   /**
@@ -110,9 +84,6 @@ App({
       content: msg,
       showCancel: false,
       success(res) {
-        // callback && (setTimeout(() => {
-        //   callback();
-        // }, 1500));
         callback && callback();
       }
     });
@@ -131,9 +102,6 @@ App({
       token: wx.getStorageSync('token')
     }, data);
 
-    // if (typeof check_login === 'undefined')
-    //   check_login = true;
-
     // 构造get请求
     let request = () => {
       data.token = wx.getStorageSync('token');
@@ -145,7 +113,6 @@ App({
         data,
         success(res) {
           if (res.statusCode !== 200 || typeof res.data !== 'object') {
-            console.log(res);
             App.showError('网络请求出错');
             return false;
           }
@@ -161,7 +128,6 @@ App({
           }
         },
         fail(res) {
-          // console.log(res);
           App.showError(res.errMsg, () => {
             fail && fail(res);
           });
@@ -214,7 +180,6 @@ App({
         success && success(res.data);
       },
       fail(res) {
-        // console.log(res);
         App.showError(res.errMsg, () => {
           fail && fail(res);
         });
@@ -251,45 +216,6 @@ App({
       }
     }
     return _result.join('&');
-  },
-
-  /**
-   * 设置当前页面标题
-   */
-  setTitle() {
-    let App = this,
-      wxapp;
-    if (wxapp = wx.getStorageSync('wxapp')) {
-      wx.setNavigationBarTitle({
-        title: wxapp.title
-      });
-    } else {
-      App.getWxappBase(() => {
-        App.setTitle();
-      });
-    }
-  },
-
-  /**
-   * 设置navbar标题、颜色
-   */
-  setNavigationBar() {
-    let App = this;
-    // // 获取小程序基础信息
-    // App.getWxappBase(wxapp => {
-    //   // 设置navbar标题、颜色
-    //   wx.setNavigationBarColor({
-    //     frontColor: wxapp.top_text_color,
-    //     backgroundColor: wxapp.top_background_color
-    //   })
-    // });
-  },
-
-  /**
-   * 获取tabBar页面路径列表
-   */
-  getTabBarLinks() {
-    return tabBarLinks;
   },
 
   /**
