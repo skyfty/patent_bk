@@ -1,10 +1,10 @@
 <?php
 
 return array (
-  'name' => '科技管理平台',
+  'name' => '中联国智科技管理平台',
   'beian' => '京ICP备11016091号-1',
   'cdnurl' => '',
-  'version' => '2.0.1.155',
+  'version' => '2.0.0.140',
   'timezone' => 'Asia/Shanghai',
   'forbiddenip' => '',
   'fixedpage' => 'dashboard',
