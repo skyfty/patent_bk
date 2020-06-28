@@ -31,8 +31,6 @@ class Branch extends Cosmetic
             "reckon_model_id"=>$this->id
         ];
         $data = [];
-        $data['salaryamount'] = Account::where('cheque_model_id',42)->where($where)->sum("money");
-        $data['partneramount'] = Account::where('cheque_model_id',45)->where($where)->sum("money");
         $data['payamount'] = Account::hasWhere('cheque',['mold'=>-1])->where($where)->sum("money");
         $data['incomeamount'] = Account::hasWhere('cheque',['mold'=>1])->where($where)->sum("money");
         $data['balance'] = $data['incomeamount'] - $data['payamount'];

@@ -79,6 +79,85 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             };
         },
         scenery: {
+            account:function($scope, $compile,$timeout, data){
+                $scope.reckonIds = [];
+                $scope.wecont = true;
+                $scope.$watch("wecont", function(n,o){
+                    if (n!=o) {
+                        $scope.$broadcast("refurbish");
+                    }
+                });
+
+                $scope.chequeChanged = function(data) {
+                    var reckonIds = [];
+                    angular.forEach(data.selected, function(id){
+                        if ($.isNumeric(id))
+                            reckonIds.push(id);
+                    });
+                    $scope.reckonIds = reckonIds;
+                    $scope.$broadcast("refurbish");
+                };
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {
+                        "reckon_type":"principal",
+                        "reckon_model_id":$scope.row.id,
+                    };
+                    if ($scope.reckonIds.length > 0) {
+                        param.custom['cheque_model_id'] = ["in",$scope.reckonIds];
+                    }
+                    var types = $("#type").val();
+                    if (types) {
+                        param.custom['type'] = ["in",types];
+                    }
+
+                    if (!$scope.wecont) {
+                        param.custom['weshow'] = 1;
+                    }
+                    return param;
+                };
+
+                Table.api.init({
+                    extend: {
+                        index_url: 'account/index',
+                        multi_url: 'account/multi',
+                        summation_url: 'account/summation/reckon_type/principal',
+                        table: 'account',
+                    },
+                    buttons : [
+                        {
+                            name: 'view',
+                            title: function(row, j){
+                                return __(' %s', row.name);
+                            },
+                            classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                            icon: 'fa fa-folder-o',
+                            url: 'account/view'
+                        }
+                    ]
+                });
+                $scope.fields = data.fields;
+                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
+                $scope.$broadcast("shownTable");
+
+                var table = $("#table-account");
+                table.on('post-body.bs.table', function (e, settings, json, xhr) {
+                    $('a[data-field="weshow"]', table).data("success", function(){
+                        $scope.refreshRow();
+                    });
+                });
+
+                var refresh = function(){
+                    $scope.refreshRow();
+                };
+                $(".btn-add-account").data("callback", refresh);$(".btn-refresh").click(refresh);
+
+                require(['bootstrap-select', 'bootstrap-select-lang'], function () {
+                    $('.selectpicker').selectpicker().on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                        $scope.$broadcast("refurbish");
+                    }).selectpicker('val', "main");;
+                });
+            },
+
             quarters:function($scope, $compile,$timeout, data) {
                 $scope.searchFieldsParams = function(param) {
                     param.custom = {principal_model_id:$scope.row.id};

@@ -304,4 +304,8 @@ class Account extends Cosmetic
     public function branch() {
         return $this->hasOne('branch','id','reckon_model_id')->setEagerlyType(0)->joinType("LEFT");
     }
+
+    public function inflow() {
+        return $this->hasOne('inflow','id','inflow_model_id')->setEagerlyType(0)->joinType("LEFT");
+    }
 }

@@ -23,6 +23,22 @@ class Principal extends Cosmetic
         $this->model = new \app\admin\model\Principal;
     }
 
+    public function account($ids) {
+        $row = $this->model->with($this->relationSearch)->find($ids);
+        if (!$row)
+            $this->error(__('No Results were found'));
+        $this->view->assign("row", $row);
+
+        $scenery = Scenery::get(['model_table' => 'account', 'name'=>"principal"],[],true);
+        $where =array(
+            'scenery_id'=>$scenery['id'],
+            "fields.name"=>array("not in", array("weigh",'reckon','reckon_type'))
+        );
+        $fields =  Sight::with('fields')->where($where)->order("weigh", "DESC")->cache(true)->select();;
+        $content = $this->view->fetch();
+        return array("content"=>$content, "fields"=>$fields);
+    }
+
     protected function mergerow(&$row) {
         $scenery = Scenery::where(["model_table"=>$row['substance_type'],"pos"=>'view'])->cache(!App::$debug)->find();
         $fields = Sight::with('fields')->cache(!App::$debug)->where(['scenery_id'=>$scenery['id']])->column("fields.name");

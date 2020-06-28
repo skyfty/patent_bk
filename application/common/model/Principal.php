@@ -102,4 +102,21 @@ class Principal extends  Cosmetic
         }
         model("actualize")->saveAll($data);
     }
+
+
+    public function amount() {
+        //支出
+        $where = [
+            "reckon_type"=>$this->name,
+            "reckon_model_id"=>$this->id
+        ];
+        $data = [];
+        $data['payamount'] = Account::hasWhere('cheque',['mold'=>-1])->where($where)->sum("money");
+        $data['incomeamount'] = Account::hasWhere('cheque',['mold'=>1])->where($where)->sum("money");
+        $data['balance'] = $data['incomeamount'] - $data['payamount'];
+        $data['cash'] = $data['balance'];
+
+        $this->isUpdate(true)->allowField(true)->save($data);
+    }
+
 }

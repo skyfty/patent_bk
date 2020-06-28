@@ -43,9 +43,6 @@ class Account extends Cosmetic
             try {
                 $result = $this->model->allowField(true)->validate("account.add")->add($params);
                 if ($result !== false) {
-                    if ($this->model->cheque_model_id == 18 && isset($params['extra']) && $params['extra'] > 0) {
-                        $this->model->addextra($params['extra'] );
-                    }
                     $db->commit();
                     $this->success();
                 } else {
@@ -352,5 +349,26 @@ class Account extends Cosmetic
         }
 
         return $model;
+    }
+
+
+    protected function getRelationSearch($cosmeticModel) {
+        $relationFields = [];
+//        $modelFields = model("fields")->where(array("model_id"=>$cosmeticModel['id']))->where("type","in", ["model","cascader","mztree"] )->where("name", "not in",['group'])->cache(!App::$debug)->order("id", "ASC")->select();
+//        foreach($modelFields as $v) {
+//            if ($v['relevance']) {
+//                $idx =array_search($v['relevance'],$relationFields);
+//                if ($idx !== false && is_string($relationFields[$idx])) {
+//                    unset($relationFields[$idx]);
+//                }
+//                $relationFields[$v['relevance']][] =  $v['name'];
+//            } else {
+//                $idx =array_search($v['name'],$relationFields);
+//                if ($idx === false) {
+//                    $relationFields[] = $v['name'];
+//                }
+//            }
+//        }
+        return $relationFields;
     }
 }
