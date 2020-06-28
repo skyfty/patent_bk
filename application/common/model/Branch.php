@@ -34,7 +34,6 @@ class Branch extends Cosmetic
         $data['payamount'] = Account::hasWhere('cheque',['mold'=>-1])->where($where)->sum("money");
         $data['incomeamount'] = Account::hasWhere('cheque',['mold'=>1])->where($where)->sum("money");
         $data['balance'] = $data['incomeamount'] - $data['payamount'];
-        $data['cash'] = $data['balance'];
 
         $this->isUpdate(true)->allowField(true)->save($data);
     }
