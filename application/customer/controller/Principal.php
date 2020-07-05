@@ -26,16 +26,19 @@ class Principal extends Customer
             $query->table("__CLAIM__")->where("customer_model_id", $this->user->customer->id)->field("principal_model_id");
         })->order("principalclass_model_id asc")->select();
 
+        $model_type = ['persion','company'];
         $principallclass = model("Principalclass");
         foreach($list as $v) {
             if ($v['substance_type'] == "persion") {
-                $principallclass->where("model_type", "neq", "persion");
-                break;
+                unset($model_type[0]);
+            }else if ($v['substance_type'] == "company") {
+                if ($v->company->signed == "no") {
+                    unset($model_type[1]);
+                }
             }
         }
+        $this->view->assign("principal_class", $principallclass->where("model_type", "in", $model_type)->select());
         $this->view->assign("list", $list);
-        $this->view->assign("principal_class", $principallclass->select());
-
         return $this->view->fetch();
     }
 

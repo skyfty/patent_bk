@@ -23,7 +23,7 @@ class Persion extends \app\common\model\Persion
     public function getBirthdayTextAttr($value, $data)
     {
         $value = $value ? $value : (isset($data['birthday']) ? $data['birthday'] : '');
-        return date("Y-m-d",$value);
+        return $value?date("Y-m-d",$value):"";
     }
 
     private function getSelectFieldText($value, $field_name) {
