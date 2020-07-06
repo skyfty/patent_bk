@@ -41,7 +41,10 @@ class Provider extends Cosmetic
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("PV%06d", $maxid);
             if (isset($row['name'])) {
-                $row['slug'] = \fast\Pinyin::get($row['name']);
+                try {
+                    $row['slug'] = \fast\Pinyin::get($row['name']);
+                } catch(\Exception $e) {
+                }
             }
         });
 

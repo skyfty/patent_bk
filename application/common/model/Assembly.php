@@ -17,7 +17,10 @@ class Assembly extends Cosmetic
 
         $beforeupdate = function($row){
             if (isset($row['name'])) {
-                $row['slug'] = \fast\Pinyin::get($row['name']);
+                try {
+                    $row['slug'] = \fast\Pinyin::get($row['name']);
+                } catch(\Exception $e) {
+                }
             }
         };
         self::beforeInsert($beforeupdate);self::beforeUpdate($beforeupdate);
