@@ -11,6 +11,8 @@ use app\common\controller\Backend;
  */
 class Company extends Cosmetic
 {
+    protected $selectpageFields = ['name', 'idcode', 'id', 'status','business_licence','aptitude_state'];
+
     public function _initialize()
     {
         parent::_initialize();

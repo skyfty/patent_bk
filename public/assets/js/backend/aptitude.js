@@ -126,6 +126,29 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
             }
         },
 
+        add: function () {
+            var self = this;
+            AngularApp.controller("add", function($scope,$sce, $compile,$timeout) {
+                $scope.fields = Config.scenery.fields;
+                $scope.row = {};
+                $scope.row['owners_model_id'] = Config.admin_id;
+                $scope.row['branch_model_id'] = Config.staff?Config.staff.branch_model_id:0;
+
+                var html = Template("edit-tmpl",{state:"add",'fields':"fields"});
+                $timeout(function(){
+                    $("#data-view").html($compile(html)($scope));
+                    $timeout(function(){
+                        $('[name="row[company_model_id]"]').data("e-selected",function(data){
+                            if (data && data.row && data.row.business_licence) {
+                                $('[name="row[business_licence]"]').val(data.row.business_licence).trigger("change");
+                            }
+                        });
+
+                        self.bindevent($scope);
+                    });
+                });
+            });
+        },
         bindevent:function($scope) {
             $('[name="row[species_model_id]"]').data("e-params",function(){
                 var param = {};
