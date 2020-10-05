@@ -123,6 +123,10 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     ]
                 });
                 $scope.$broadcast("shownTable");
+            },
+            progress:function($scope, $compile,$timeout, data) {
+                $scope.fields = data.fields;
+                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
             }
         },
 

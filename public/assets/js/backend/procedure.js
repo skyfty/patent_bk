@@ -400,6 +400,15 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
             alternating: function($scope, $compile,$timeout, data){
                 $scope.fieldFormatter =Controller.api.fieldFormatter;
 
+                $scope.formaterColumn = function(j, data) {
+                    if (data.field == "field") {
+                        data.formatter = function (value, row, index) {
+                            return row['field_name']?row['field_name']:row['field']['name'];
+                        }
+                    }
+                    return data;
+                };
+
                 $scope.searchFieldsParams = function(param) {
                     param.custom = {procedure_model_id:$scope.row.id};
                     return param;
