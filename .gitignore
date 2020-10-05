@@ -3,3 +3,6 @@
 .phpintel/
 runtime/
 public/uploads/
+public/snapshots/
+public/easywechat.log
+public/pdfs/

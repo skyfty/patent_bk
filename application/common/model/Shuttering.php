@@ -83,8 +83,14 @@ class Shuttering extends Cosmetic
                 }
                 if (isset($relevance[$field['name']])) {
                     $val = $relevance[$field['name']];
+                    $val=str_replace('&','&amp;',$val);
+                    $val=str_replace('<','&lt;',$val);
+                    $val=str_replace('>','&gt;',$val);
+                    $val=str_replace('\'','&quot;',$val);
+                    $val=str_replace('"','&apos;',$val);
                     $val = str_replace([PHP_EOL, "\n"], '<w:br />', $val);
                     $val = substr_replace($val, "<w:t xml:space='preserve'>", 0, 0)."</w:t>";
+
                     $templWord->setValue(trim($field['title']), $val);
                 }
             }
