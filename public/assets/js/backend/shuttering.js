@@ -3,6 +3,19 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         //for index
         lands:{
             index:function($scope, $compile,$timeout, data) {
+                var species_cascader_id = Fast.api.query("species_cascader_id");
+                $scope.speciesModelIds = [];
+                $scope.classChanged = function(data) {
+                    var typeIds = [];
+                    angular.forEach(data.selected, function(id){
+                        if ($.isNumeric(id))
+                            typeIds.push(id);
+                    });
+                    $scope.speciesModelIds = typeIds;
+                    $scope.$broadcast("refurbish");
+                };
+
+
                 $scope.searchFieldsParams = function(param) {
                     param.custom = {};
                     var branchSelect = $('[name="branch_select"]');
@@ -11,6 +24,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                         if (branchIds && branchIds.length > 0) {
                             param.custom['branch_model_id'] = ["in", branchIds];
                         }
+                    }
+                    if (species_cascader_id) {
+                        param.custom['species_cascader_id'] = species_cascader_id;
                     }
                     return param;
                 };

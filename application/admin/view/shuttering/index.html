@@ -20,6 +20,10 @@
                 {eq name="vo.type" value="default"}
                 <div class="widget-body no-padding  table-cosmetic">
                     <div id="toolbar-{$vo['name']}" class="toolbar">
+                        {if condition="(input('?get.species_cascader_id'))"}
+                        {else/}
+                        <classify-tree data-config="species/classtree" data-change="classChanged"></classify-tree>
+                        {/if}
                         {:build_toolbar(['refresh', 'add', 'del'],['add'=>[url('shuttering/add'), 'btn btn-default btn-dialog', 'fa fa-plus',  __(''), __('添加流程文档')]])}
                     </div>
                     <table id="table-{$vo['name']}" ui-formidable="fields"
