@@ -2,10 +2,12 @@
 
 namespace app\admin\validate;
 
-use think\Validate;
+use app\common\validate\Cosmetic;
 
-class Persion extends Validate
+class Persion extends Cosmetic
 {
+    protected $name = "persion";
+
     /**
      * 验证规则
      */

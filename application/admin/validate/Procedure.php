@@ -2,10 +2,12 @@
 
 namespace app\admin\validate;
 
-use think\Validate;
+use app\common\validate\Cosmetic;
 
-class Procedure extends Validate
+class Procedure extends Cosmetic
 {
+    protected $name = "procedure";
+
     /**
      * 验证规则
      */

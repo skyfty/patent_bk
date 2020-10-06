@@ -3,6 +3,7 @@
 namespace app\admin\model;
 
 use app\admin\library\Auth;
+use think\Log;
 use think\Model;
 use traits\model\SoftDelete;
 
@@ -21,7 +22,7 @@ class Shuttering extends   \app\common\model\Shuttering
     }
 
     public function getDownloadTextAttr($value,$data) {
-        if (!$value && !isset($data['file'])) {
+        if (!$value && !(isset($data['file']) && $data['file'])) {
             return "";
         }
         if ($data['type'] == "image") {

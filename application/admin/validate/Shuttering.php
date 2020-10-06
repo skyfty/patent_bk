@@ -2,26 +2,18 @@
 
 namespace app\admin\validate;
 
-use think\Validate;
+use app\common\validate\Cosmetic;
 
-class Shuttering extends Validate
+class Shuttering extends Cosmetic
 {
-    /**
-     * 验证规则
-     */
+    protected $name = "shuttering";
+
     protected $rule = [
+        'name'  =>  'require',
     ];
-    /**
-     * 提示消息
-     */
-    protected $message = [
-    ];
-    /**
-     * 验证场景
-     */
     protected $scene = [
-        'add'  => [],
-        'edit' => [],
+        'add'  => [
+            'name',
+        ]
     ];
-    
 }
