@@ -3,57 +3,60 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         //for index
         lands:{
             index:function($scope, $compile,$timeout, data) {
-                var species_cascader_id = Fast.api.query("species_cascader_id");
-                $scope.speciesModelIds = [];
-                $scope.classChanged = function(data) {
-                    var typeIds = [];
-                    angular.forEach(data.selected, function(id){
-                        if ($.isNumeric(id))
-                            typeIds.push(id);
-                    });
-                    $scope.speciesModelIds = typeIds;
-                    $scope.$broadcast("refurbish");
-                };
 
-
-                $scope.searchFieldsParams = function(param) {
-                    param.custom = {};
-                    var branchSelect = $('[name="branch_select"]');
-                    if (branchSelect.data("selectpicker")) {
-                        var branchIds = branchSelect.selectpicker('val');
-                        if (branchIds && branchIds.length > 0) {
-                            param.custom['branch_model_id'] = ["in", branchIds];
-                        }
-                    }
-                    if (species_cascader_id) {
-                        param.custom['species_cascader_id'] = species_cascader_id;
-                    }
-                    return param;
-                };
-                var options = {
-                    extend: {
-                        index_url: 'shuttering/index',
-                        add_url: 'shuttering/add',
-                        del_url: 'shuttering/del',
-                        multi_url: 'shuttering/multi',
-                        summation_url: 'shuttering/summation',
-                        table: 'shuttering',
-                    },
-                    buttons : [
-                        {
-                            name: 'view',
-                            title: function(row, j){
-                                return __(' %s', row.name);
-                            },
-                            classname: 'btn btn-xs  btn-success btn-magic btn-dialog btn-view',
-                            icon: 'fa fa-folder-o',
-                            url: 'shuttering/view'
-                        }
-                    ]
-                };
-                Table.api.init(options);
-                Form.api.bindevent($("div[ng-controller='index']"));
             }
+        },
+        indexscape:function($scope, $compile,$timeout){
+            var species_cascader_id = Fast.api.query("species_cascader_id");
+            $scope.speciesModelIds = [];
+            $scope.classChanged = function(data) {
+                var typeIds = [];
+                angular.forEach(data.selected, function(id){
+                    if ($.isNumeric(id))
+                        typeIds.push(id);
+                });
+                $scope.speciesModelIds = typeIds;
+                $scope.$broadcast("refurbish");
+            };
+
+
+            $scope.searchFieldsParams = function(param) {
+                param.custom = {};
+                var branchSelect = $('[name="branch_select"]');
+                if (branchSelect.data("selectpicker")) {
+                    var branchIds = branchSelect.selectpicker('val');
+                    if (branchIds && branchIds.length > 0) {
+                        param.custom['branch_model_id'] = ["in", branchIds];
+                    }
+                }
+                if (species_cascader_id) {
+                    param.custom['species_cascader_id'] = species_cascader_id;
+                }
+                return param;
+            };
+            var options = {
+                extend: {
+                    index_url: 'shuttering/index',
+                    add_url: 'shuttering/add',
+                    del_url: 'shuttering/del',
+                    multi_url: 'shuttering/multi',
+                    summation_url: 'shuttering/summation',
+                    table: 'shuttering',
+                },
+                buttons : [
+                    {
+                        name: 'view',
+                        title: function(row, j){
+                            return __(' %s', row.name);
+                        },
+                        classname: 'btn btn-xs  btn-success btn-magic btn-dialog btn-view',
+                        icon: 'fa fa-folder-o',
+                        url: 'shuttering/view'
+                    }
+                ]
+            };
+            Table.api.init(options);
+            Form.api.bindevent($("div[ng-controller='index']"));
         },
         viewscape:function($scope, $compile,$parse, $timeout){
             $scope.refreshRow = function(){
