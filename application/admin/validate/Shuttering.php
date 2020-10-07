@@ -11,7 +11,6 @@ class Shuttering extends Cosmetic
     protected $rule = [
         'name'  =>  'require',
         'procedure_model_id'=>'require',
-        'file'=>'require',
 
     ];
     protected $scene = [
