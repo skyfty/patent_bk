@@ -71,7 +71,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     );
                 };
 
-
                 $scope.formaterColumn = function(j, data) {
                     if (data.field == "file") {
                         data.formatter = function (value, row, index) {

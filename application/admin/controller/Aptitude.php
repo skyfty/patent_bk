@@ -4,6 +4,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Modelx;
 use app\common\controller\Backend;
+use PclZip;
 use think\App;
 
 /**
@@ -21,7 +22,7 @@ class Aptitude extends Cosmetic
 
     use \app\admin\library\traits\Produce;
 
-    public function downloada($id) {
+    public function download($id) {
         $row = $this->model->where("id",$id)->find();
         if (!$row)
             $this->error(__('No Results were found'));
@@ -33,19 +34,27 @@ class Aptitude extends Cosmetic
         ])->select();
         $tempPath = TEMP_PATH .\fast\Random::build("unique");
         mkdir($tempPath);
+
+        $procshutterdir = '/procshutter/'.\fast\Random::build("unique").".zip";
+        $destFileDir =ROOT_PATH . '/public' . $procshutterdir;
+        $zip = new PclZip($destFileDir);
         foreach($procshutters as $procshutter) {
             $file = $procshutter['file'];
             if ($file == null)
                 continue;
-            $srcfile = ROOT_PATH . '/public' .$file;
+            $srcfile = ROOT_PATH . 'public' .$file;
             if (!file_exists($srcfile)) {
                 continue;
             }
             $pi = pathinfo($file);
             $newfile = $tempPath."//".$procshutter['name'].".".$pi['extension'];
-            copy($srcfile,$newfile);
-        }
+            $newfile = iconv('utf-8','gb2312',$newfile);
 
+            copy($srcfile,$newfile);
+            $zip->add($newfile,PCLZIP_OPT_REMOVE_ALL_PATH);
+        }
+        rmdirs($tempPath, true);
+        $this->redirect($procshutterdir);
     }
 
     protected function spectacle($model) {
