@@ -35,7 +35,7 @@ class Professional extends Cosmetic
         }
         model("procshutter")->where("procedure_model_id", $procedure['id'])->where("status", "normal")->delete();
 
-        $fields = model("fields")->where("model_table", $procedure['relevance_model_type'])->where("alternating", 1)->select();
+        $fields = model("fields")->where("model_table", $procedure['relevance_model_type'])->where("alternating", 1)->cache(true)->select();
 
         $alternatings_global = model("alternating")->where("relevance_model_type", $model_name)->where("scope", "global")->where("type", "custom")->select();
         $alternatings = $procedure->alternatings()->where("type", "custom")->where("scope", "procedure")->select();
@@ -56,16 +56,18 @@ class Professional extends Cosmetic
 
         $shutterings = model("shuttering")->where("procedure_model_id", $procedure['id'])->select();
         foreach($shutterings as $shuttering) {
-            $filename = $shuttering->produce($this, $fields);
-            if ($filename) {
-                model("procshutter")->create([
-                    "relevance_model_type"=> $procedure['relevance_model_type'],
-                    "relevance_model_id"=> $this['id'],
-                    "procedure_model_id"=> $procedure['id'],
-                    "file"=> $filename,
-                    "name"=> $shuttering['name'],
-                    "status"=> "normal",
-                ]);
+            if ($shuttering['file']) {
+                $filename = $shuttering->produce($this, $fields);
+                if ($filename) {
+                    model("procshutter")->create([
+                        "relevance_model_type"=> $procedure['relevance_model_type'],
+                        "relevance_model_id"=> $this['id'],
+                        "procedure_model_id"=> $procedure['id'],
+                        "file"=> $filename,
+                        "name"=> $shuttering['name'],
+                        "status"=> "normal",
+                    ]);
+                }
             }
         }
     }

@@ -70,6 +70,9 @@ class Shuttering extends Cosmetic
             $writer->save($destFileDir.$filename);
         } elseif($this['type'] == "image"){
             $file_field = model("fields")->get($this['file']);
+            if (!$file_field) {
+                return "";
+            }
             if ($file_field['relevance']) {
                 $data = $data[$file_field['relevance']];
             }
