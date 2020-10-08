@@ -14,7 +14,6 @@ use think\App;
 
 trait Produce
 {
-
     protected function getModelRow($ids) {
         $cosmeticModel = Modelx::get(['table' => $this->model->raw_name],[],!App::$debug);
         $row = $this->model->with($this->getRelationSearch($cosmeticModel))->find($ids);

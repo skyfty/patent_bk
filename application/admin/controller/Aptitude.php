@@ -21,6 +21,32 @@ class Aptitude extends Cosmetic
 
     use \app\admin\library\traits\Produce;
 
+    public function downloada($id) {
+        $row = $this->model->where("id",$id)->find();
+        if (!$row)
+            $this->error(__('No Results were found'));
+
+        $procshutters = model("procshutter")->where([
+            "relevance_model_type"=>strtolower($this->model->raw_name),
+            "relevance_model_id"=> $row['id'],
+            "status"=> "normal",
+        ])->select();
+        $tempPath = TEMP_PATH .\fast\Random::build("unique");
+        mkdir($tempPath);
+        foreach($procshutters as $procshutter) {
+            $file = $procshutter['file'];
+            if ($file == null)
+                continue;
+            $srcfile = ROOT_PATH . '/public' .$file;
+            if (!file_exists($srcfile)) {
+                continue;
+            }
+            $pi = pathinfo($file);
+            $newfile = $tempPath."//".$procshutter['name'].".".$pi['extension'];
+            copy($srcfile,$newfile);
+        }
+
+    }
 
     protected function spectacle($model) {
         $branch_model_id = $this->request->param("branch_model_id");
