@@ -1,6 +1,7 @@
 <?php
 
 namespace app\admin\controller;
+ini_set("error_reporting","E_ALL & ~E_NOTICE");
 
 use app\admin\model\Modelx;
 use app\common\controller\Backend;
