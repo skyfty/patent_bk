@@ -37,4 +37,13 @@ class Shuttering extends   \app\common\model\Shuttering
         $info = pathinfo($data['file']);
         return $data['name'].".".$info['extension'];
     }
+    public function getFileAttr($value,$data) {
+        if (!$value && !(isset($data['file']) && $data['file'])) {
+            return "";
+        }
+        if ($data['type'] == "image") {
+            return "";
+        }
+        return $data['file'];
+    }
 }
