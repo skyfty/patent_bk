@@ -23,7 +23,8 @@ class Alternating extends Cosmetic
             if ($row['type'] == "custom") {
                 $row['field_name'] =  \fast\Pinyin::get($row['name']);
             } else {
-                $row['field_name'] = $row->field->name;
+                $field = model("fields")->get($row['field_model_id']);
+                $row['field_name'] = $field->name;
             }
             $row['relevance_model_type'] =  $row->procedure->relevance_model_type;
         };
