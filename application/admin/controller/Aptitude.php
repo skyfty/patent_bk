@@ -7,6 +7,7 @@ use app\admin\model\Modelx;
 use app\common\controller\Backend;
 use PclZip;
 use think\App;
+use think\Log;
 
 /**
  * 资质管理
@@ -38,7 +39,6 @@ class Aptitude extends Cosmetic
 
         $procshutterdir = '/procshutter/'.\fast\Random::build("unique").".zip";
         $destFileDir =ROOT_PATH . '/public' . $procshutterdir;
-        $zip = new PclZip($destFileDir);
         foreach($procshutters as $procshutter) {
             $file = $procshutter['file'];
             if ($file == null)
@@ -50,10 +50,9 @@ class Aptitude extends Cosmetic
             $pi = pathinfo($file);
             $newfile = $tempPath."//".$procshutter['name'].".".$pi['extension'];
             $newfile = iconv('utf-8','gb2312',$newfile);
-
             copy($srcfile,$newfile);
-            $zip->add($newfile,PCLZIP_OPT_REMOVE_ALL_PATH);
         }
+        system(sprintf("zip -rj %s %s", $destFileDir, $tempPath), $status);
         rmdirs($tempPath, true);
         $this->redirect($procshutterdir);
     }
