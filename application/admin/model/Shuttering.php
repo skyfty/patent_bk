@@ -10,7 +10,7 @@ use traits\model\SoftDelete;
 class Shuttering extends   \app\common\model\Shuttering
 {
 // 追加属性
-    public $append=['download_text'];
+    public $append=['download_text','file_text'];
 
     protected static function init()
     {
@@ -41,8 +41,15 @@ class Shuttering extends   \app\common\model\Shuttering
         if (!$value && !(isset($data['file']) && $data['file'])) {
             return "";
         }
-        if ($data['type'] == "image") {
+        return $data['file'];
+    }
+
+    public function getFileTextAttr($value,$data) {
+        if (!$value && !(isset($data['file']) && $data['file'])) {
             return "";
+        }
+        if ($data['type'] == "image") {
+            return model("fields")->get($data['file'],[], true)->title;
         }
         return $data['file'];
     }

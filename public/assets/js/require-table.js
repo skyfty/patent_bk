@@ -597,7 +597,8 @@ define(['jquery', 'bootstrap', 'moment', 'moment/locale/zh-cn', 'bootstrap-table
                             value = value ? value : '';
                             var exticon =  Table.api.formatter.mapfileicon.call(this, value);
                             html.push('<a download="'+(row['download_text']?row['download_text']:'')+'" href="' + Fast.api.cdnurl(value) + '" target="_blank" alt="' + Fast.api.cdnurl(value) + '"><i class="fa ' + exticon + '"></i></a>');
-                        });
+
+                       });
                     }
                     return html.join(' ');
                 },

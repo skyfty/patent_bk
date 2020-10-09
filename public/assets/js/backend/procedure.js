@@ -83,6 +83,19 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                         return param;
                     };
 
+                    $scope.formaterColumn = function(j, data) {
+                        if (data.field == "file") {
+                            data.formatter = function (value, row, index) {
+                                if (row['type'] == "image") {
+                                    return row['file_text'];
+                                } else {
+                                    return Table.api.formatter['file'].call(this, value, row, index);
+                                }
+                            }
+                        }
+                        return data;
+                    };
+
                     Table.api.init({
                         extend: {
                             index_url: 'shuttering/index',
