@@ -29,29 +29,40 @@ class Aptitude extends Cosmetic
         if (!$row)
             $this->error(__('No Results were found'));
 
-        $procshutters = model("procshutter")->where([
-            "relevance_model_type"=>strtolower($this->model->raw_name),
-            "relevance_model_id"=> $row['id'],
-            "status"=> "normal",
-        ])->select();
         $tempPath = TEMP_PATH .\fast\Random::build("unique");
         mkdir($tempPath);
 
+        $procedures = model("procedure")->where([
+            "relevance_model_type"=>strtolower($this->model->raw_name),
+        ])->select();
+        foreach($procedures as $procedure) {
+            $procedurePath = $tempPath."/".$procedure['name'];
+            mkdir($procedurePath);
+
+            $procshutters = model("procshutter")->where([
+                "procedure_model_id"=> $procedure['id'],
+                "relevance_model_type"=>strtolower($this->model->raw_name),
+                "relevance_model_id"=> $row['id'],
+                "status"=> "normal",
+            ])->select();
+
+            foreach($procshutters as $procshutter) {
+                $file = $procshutter['file'];
+                if ($file == null)
+                    continue;
+                $srcfile = ROOT_PATH . 'public' .$file;
+                if (!file_exists($srcfile)) {
+                    continue;
+                }
+                $pi = pathinfo($file);
+                $newfile = $procedurePath."//".$procshutter['name'].".".$pi['extension'];
+                $newfile = iconv('utf-8','gb2312',$newfile);
+                copy($srcfile,$newfile);
+            }
+        }
+
         $procshutterdir = '/procshutter/'.\fast\Random::build("unique").".zip";
         $destFileDir =ROOT_PATH . '/public' . $procshutterdir;
-        foreach($procshutters as $procshutter) {
-            $file = $procshutter['file'];
-            if ($file == null)
-                continue;
-            $srcfile = ROOT_PATH . 'public' .$file;
-            if (!file_exists($srcfile)) {
-                continue;
-            }
-            $pi = pathinfo($file);
-            $newfile = $tempPath."//".$procshutter['name'].".".$pi['extension'];
-            $newfile = iconv('utf-8','gb2312',$newfile);
-            copy($srcfile,$newfile);
-        }
         system(sprintf("zip -rj %s %s", $destFileDir, $tempPath), $status);
         rmdirs($tempPath, true);
         $this->redirect($procshutterdir);
