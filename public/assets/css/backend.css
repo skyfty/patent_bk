@@ -16,6 +16,8 @@
 @import url("../libs/cascader/css/cascader.css");
 @import url("../libs/jquery-jsoneditor/jsoneditor.css");
 @import url("../libs/jquery-treegrid/css/jquery.treegrid.css");
+@import url("../libs/bootstrap-directional-buttons/bootstrap-directional-buttons.css");
+
 html,
 body {
   height: 100%;

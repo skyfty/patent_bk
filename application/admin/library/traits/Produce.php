@@ -65,6 +65,7 @@ trait Produce
         if ($this->request->isAjax()) {
             return parent::view();
         } else {
+            $datefmt = ['date'=>'YYYY年MM月DD日','datetime'=>'YYYY年MM月DD日 HH:mm:ss','time'=>'HH:mm:ss'];
             $sceneryList = [];
             $scenerys = model("scenery")->where(['model_table' => $model_name, 'pos' => "view"])->cache(!App::$debug)->order("weigh", "ASC")->select();
             foreach ($scenerys as $k=>$v) {
@@ -79,6 +80,9 @@ trait Produce
                 foreach($alternatings as $alternating) {
                     $field = model("fields")->where("name", "name")->where("model_table", "procedure")->find();
                     $field["type"] = $alternating['field_model_id'];
+                    if (array_key_exists($field['type'], $datefmt)) {
+                        $field["content"] = $datefmt[$field['type']];
+                    }
                     $field["title"] = $alternating['name'];
                     $field["name"] = $alternating['field_name'];
                     $fields[] = $field;
