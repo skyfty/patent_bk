@@ -29,15 +29,16 @@ class Aptitude extends Cosmetic
         if (!$row)
             $this->error(__('No Results were found'));
 
-        $tempPath = TEMP_PATH .\fast\Random::build("unique");
-        mkdir($tempPath);
+        $tempDirName = \fast\Random::build("unique");
+        $tempPath = TEMP_PATH .$tempDirName;
+        mkdir(iconv('utf-8','gb2312',$tempPath));
 
         $procedures = model("procedure")->where([
             "relevance_model_type"=>strtolower($this->model->raw_name),
         ])->select();
         foreach($procedures as $procedure) {
             $procedurePath = $tempPath."/".$procedure['name'];
-            mkdir($procedurePath);
+            mkdir(iconv('utf-8','gb2312',$procedurePath));
 
             $procshutters = model("procshutter")->where([
                 "procedure_model_id"=> $procedure['id'],
@@ -61,9 +62,9 @@ class Aptitude extends Cosmetic
             }
         }
 
-        $procshutterdir = '/procshutter/'.\fast\Random::build("unique").".zip";
+        $procshutterdir = '/procshutter/'.$tempDirName.".zip";
         $destFileDir =ROOT_PATH . '/public' . $procshutterdir;
-        system(sprintf("zip -rj %s %s", $destFileDir, $tempPath), $status);
+        system(sprintf("cd %s && zip -q -r %s .",$tempPath, $destFileDir), $status);
         rmdirs($tempPath, true);
         $this->redirect($procshutterdir);
     }
