@@ -66,6 +66,7 @@ class Professional extends Cosmetic
                         "file"=> $filename,
                         "name"=> $shuttering['name'],
                         "status"=> "normal",
+                        "shuttering_model_id"=> $shuttering['id'],
                     ]);
                 }
             }

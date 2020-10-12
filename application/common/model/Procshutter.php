@@ -36,6 +36,9 @@ class Procshutter extends Cosmetic
         return $this->hasOne('promotion','id','promotion_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
+    public function shuttering() {
+        return $this->hasOne('shuttering','id','shuttering_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
     public function procedure() {
         return $this->hasOne('procedure','id','procedure_model_id')->joinType("LEFT")->setEagerlyType(0);
     }

@@ -5,11 +5,11 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','bootstrap-treegrid'],
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
-                    index_url: 'species/index',
-                    add_url: 'species/add',
-                    edit_url: 'species/edit',
-                    del_url: 'species/del',
-                    table: 'species',
+                    index_url: 'catalog/index',
+                    add_url: 'catalog/add',
+                    edit_url: 'catalog/edit',
+                    del_url: 'catalog/del',
+                    table: 'catalog',
                 }
             });
 
@@ -35,30 +35,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','bootstrap-treegrid'],
                             table: table,
                             events: Table.api.events.operate,
                             formatter: Table.api.formatter.operate,
-                            buttons:[
-                                {
-                                    name: 'view',
-                                    title: function(row, j){
-                                        return __('%s', row.idcode);
-                                    },
-                                    classname: 'btn btn-xs btn-success btn-magic btn-addtabs btn-view',
-                                    icon: 'fa fa-folder-o',
-                                    url: function(row){
-                                        return 'procedure/index?relevance_model_type=' + row.model + "&species_cascader_id=" + row.id;
-                                    }
-                                },
-                                {
-                                    name: 'catalog',
-                                    title: function(row, j){
-                                        return __('%s', row.idcode);
-                                    },
-                                    classname: 'btn btn-xs btn-success btn-magic btn-dialog',
-                                    icon: 'fa fa-folder-open',
-                                    url: function(row){
-                                        return 'catalog/index?model=' + row.model + "&species_cascader_id=" + row.id;
-                                    }
-                                }
-                            ]
                         }
                     ]
                 ],
@@ -71,7 +47,11 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','bootstrap-treegrid'],
                             table.bootstrapTable('resetWidth');
                         }
                     });
-                }
+                },
+                queryParams: function (params) {
+                    params.custom = {'model':Fast.api.query("model")};
+                    return params;
+                },
             });
 
             // 为表格绑定事件

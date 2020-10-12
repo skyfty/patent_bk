@@ -105,6 +105,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
 
         bindevent:function($scope){
             var self = this;
+            var species = null;
 
             $('[name="row[type]"]').change(function(){
                 var type = $(this).val();
@@ -122,7 +123,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 }
                 $('[name="row[file]"]').parents("magicfield").html(html);
 
-                var species = null;
                 $.ajax({
                     async:false,
                     url:"/species/index",
@@ -152,9 +152,19 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     $('[name="row[file]"]').val($scope.row['file']);
                     $('[name="row[file]"]').selectPageRefresh();
                 }
+
+
                 Form.api.bindevent($("form[role=form]"), $scope.submit);
             });
 
+
+            $('[name="row[catalog_model_id]"]').data("e-params",function(){
+                var param = {};
+                param.custom = {
+                    model:species.model
+                };
+                return param;
+            });
             Form.api.bindevent($("form[role=form]"), $scope.submit);
             require(['selectpage'], function () {
                 for (var i in self.initParam) {

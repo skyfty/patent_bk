@@ -33,33 +33,35 @@ class Aptitude extends Cosmetic
         $tempPath = TEMP_PATH .$tempDirName;
         mkdir(iconv('utf-8','gb2312',$tempPath));
 
-        $procedures = model("procedure")->where([
+        $procshutters = model("procshutter")->where([
             "relevance_model_type"=>strtolower($this->model->raw_name),
+            "relevance_model_id"=> $row['id'],
+            "status"=> "normal",
         ])->select();
-        foreach($procedures as $procedure) {
-            $procedurePath = $tempPath."/".$procedure['name'];
-            mkdir(iconv('utf-8','gb2312',$procedurePath));
 
-            $procshutters = model("procshutter")->where([
-                "procedure_model_id"=> $procedure['id'],
-                "relevance_model_type"=>strtolower($this->model->raw_name),
-                "relevance_model_id"=> $row['id'],
-                "status"=> "normal",
-            ])->select();
-
-            foreach($procshutters as $procshutter) {
-                $file = $procshutter['file'];
-                if ($file == null)
-                    continue;
-                $srcfile = ROOT_PATH . 'public' .$file;
-                if (!file_exists($srcfile)) {
-                    continue;
-                }
-                $pi = pathinfo($file);
-                $newfile = $procedurePath."//".$procshutter['name'].".".$pi['extension'];
-                $newfile = iconv('utf-8','gb2312',$newfile);
-                copy($srcfile,$newfile);
+        foreach($procshutters as $procshutter) {
+            $file = $procshutter['file'];
+            if ($file == null)
+                continue;
+            $srcfile = ROOT_PATH . 'public' .$file;
+            if (!file_exists($srcfile)) {
+                continue;
             }
+            $outpath = $tempPath;
+            if ($procshutter->shuttering_model_id) {
+                $shuttering = $procshutter->shuttering;
+                if ($shuttering && $shuttering->catalog_model_id) {
+                    $outpath.="/".$shuttering->catalog->full_name;
+                }
+            }
+
+            if (!file_exists($outpath)) {
+                @mkdir($outpath, 0755, true);
+            }
+            $pi = pathinfo($file);
+            $newfile = $outpath."//".$procshutter['name'].".".$pi['extension'];
+            $newfile = iconv('utf-8','gb2312',$newfile);
+            copy($srcfile,$newfile);
         }
 
         $procshutterdir = '/procshutter/'.$tempDirName.".zip";

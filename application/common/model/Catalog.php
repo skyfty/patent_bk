@@ -2,12 +2,12 @@
 
 namespace app\common\model;
 
-class Species extends Cosmetic
+
+class Catalog extends Cosmetic
 {
     // 表名
-    protected $name = 'species';
+    protected $name = 'catalog';
     public $keywordsFields = ["name", "idcode"];
-
 
     // 追加属性
     protected $append = [
@@ -20,10 +20,10 @@ class Species extends Cosmetic
 
         self::beforeInsert(function($row){
             $maxid = self::max("id") + 1;
-            $row['idcode'] = sprintf("SP%06d", $maxid);
+            $row['idcode'] = sprintf("BL%06d", $maxid);
         });
-
     }
+
 
     public function getRootNameAttr($value, $data) {
         if ($data['pid'] != 0) {
@@ -43,12 +43,6 @@ class Species extends Cosmetic
 
     public function parent()
     {
-        return $this->hasOne('species','id','pid')->joinType("LEFT")->setEagerlyType(0);
+        return $this->hasOne('catalog','id','pid')->joinType("LEFT")->setEagerlyType(0);
     }
-
-    public function updateProcedureCount() {
-        $cnt = model("procedure")->where("species_cascader_id", $this['id'])->count();
-        $this->save(['procedure_count'=>$cnt]);
-    }
-
 }

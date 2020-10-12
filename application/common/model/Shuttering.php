@@ -24,6 +24,10 @@ class Shuttering extends Cosmetic
         return $this->hasOne('branch','id','branch_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
 
+    public function catalog()
+    {
+        return $this->hasOne('catalog','id','catalog_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
     public function species()
     {
         return $this->hasOne('species','id','species_cascader_id')->joinType("LEFT")->setEagerlyType(0);
