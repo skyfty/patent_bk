@@ -49,7 +49,7 @@ class Sight extends Model
     {
         $bfields = array('name','title','type','content','defaultvalue',
             'rule','msg','ok','tip','decimals','length','minimum','maximum',
-            'extend',"content_list","newstatus", "editstatus","relevance"
+            'extend',"content_list","newstatus", "editstatus","relevance","remark"
         );
         return $this->belongsTo('Fields')->setEagerlyType(0)->bind($bfields);
     }

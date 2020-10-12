@@ -191,7 +191,17 @@
     <div class="table-responsive">
         <table class="table table-striped">
             <tr  ng-repeat="f in fields"  data-field-name="{{f.name}}">
-                <td width="30%"><div class="row"><div class="col-xs-12 text-right">{{f.title}}</div></div></td>
+                <td width="30%">
+                    <div class="row">
+                        <div class="col-xs-12 text-right">
+                            {{f.title}}
+                            <div ng-show="f.remark" style="float: right;padding-left: 4px;">
+                                <a href="javascript:void(0);" class="field-remark" data-toggle="tooltip"  title="{{f.remark}}"><i class="fa fa-question-circle"/></a>
+                            </div>
+
+                        </div>
+                    </div>
+                </td>
                 <td>
                     <div class="row">
                         <div class="col-sm-8 col-xs-12" formatter data-field="f" data-model="row">

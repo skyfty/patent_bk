@@ -106,6 +106,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     field['type'] = "select";
                     field['content_list'] = Controller.api.convertFieldName();;
                     field['defaultvalue'] = "date";
+                    field['remark'] = "sdfsdfdsf";
                 } else {
                     field['defaultvalue'] = "/model/fields/index";
                 }

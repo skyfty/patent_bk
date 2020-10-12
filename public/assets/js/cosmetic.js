@@ -321,6 +321,12 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     Cosmetic.api.getHtml($scope, url, success, error);
                 };
 
+
+                $scope.showRemark = function(f){
+                    return false;
+                };
+
+
                 var block = Config.sceneryList['block'];
                 if (block) {
                     $scope.block = block[0];

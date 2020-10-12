@@ -85,6 +85,7 @@ trait Produce
                     }
                     $field["title"] = $alternating['name'];
                     $field["name"] = $alternating['field_name'];
+                    $field["remark"] = $alternating['remark'];
                     $fields[] = $field;
                 }
                 $v['fields'] =$fields;
