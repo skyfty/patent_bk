@@ -36,7 +36,7 @@ class Catalog extends Cosmetic
     {
         $name = $data['name'];
         if ($data['pid'] != 0) {
-            $name.= "/".self::get($data['pid'])->full_name;
+            $name = self::get($data['pid'])->full_name . "/".$name;
         }
         return $name;
     }
