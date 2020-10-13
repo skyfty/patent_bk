@@ -56,7 +56,7 @@ class Aptitude extends Cosmetic
             }
 
             if (!file_exists($outpath)) {
-                @mkdir($outpath, 0755, true);
+                @mkdir(iconv('utf-8','gb2312',$outpath), 0755, true);
             }
             $pi = pathinfo($file);
             $newfile = $outpath."//".$procshutter['name'].".".$pi['extension'];
