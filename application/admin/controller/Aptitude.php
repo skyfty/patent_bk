@@ -33,6 +33,14 @@ class Aptitude extends Cosmetic
         $tempPath = TEMP_PATH .$tempDirName;
         mkdir(iconv('utf-8','gb2312',$tempPath));
 
+        $catalogs = model("catalog")->where("model", strtolower($this->model->raw_name))->select();
+        foreach($catalogs as $catalog) {
+            $outpath = $tempPath;
+            $outpath.="/".$catalog->full_name;
+            if (!file_exists($outpath)) {
+                @mkdir(iconv('utf-8','gb2312',$outpath), 0755, true);
+            }
+        }
         $procshutters = model("procshutter")->where([
             "relevance_model_type"=>strtolower($this->model->raw_name),
             "relevance_model_id"=> $row['id'],
