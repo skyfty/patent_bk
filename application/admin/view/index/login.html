@@ -17,7 +17,16 @@
                 max-width:400px;
                 padding:0;
                 margin:100px auto 0 auto;
-
+                position: absolute;
+                right: 200px;
+                bottom: 72px;
+            }
+            .login-logo {
+                padding:0;
+                margin:100px auto 0 auto;
+                position: absolute;
+                right: 19px;
+                bottom: 600px;
             }
             .login-screen .well {
                 border-radius: 3px;
@@ -56,12 +65,12 @@
         </style>
     </head>
     <body>
-        <div class="container" style="bottom: 0px; position: absolute;width: 100%">
+        <div class="container" style="bottom: 0px;width: 100%">
             <div class="login-wrapper">
+                <div class="login-logo"><img src="/assets/img/zi.png"/> </div>
                 <div class="login-screen">
                     <div class="well">
                         <div class="login-form">
-                            <img id="profile-img" class="profile-img-card" src="__CDN__/assets/img/avatar.png" />
                             <p id="profile-name" class="profile-name-card"></p>
 
                             <form action="" method="post" id="login-form">
@@ -76,12 +85,7 @@
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
                                     <input type="password" class="form-control" id="pd-form-password" placeholder="{:__('Password')}" name="password" autocomplete="off" value="" data-rule="{:__('Password')}:required;password" />
                                 </div>
-                                {if $Request.param.sur == ''}
-                                <div class="input-group">
-                                    <div class="input-group-addon"><span class="fa  fa-university" aria-hidden="true"></span></div>
-                                    {:build_select('branch',$branchs,null,['class'=>'form-control']);}
-                                </div>
-                                {/if}
+
                                 {if $config.fastadmin.login_captcha}
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></div>
@@ -92,7 +96,7 @@
                                 </div>
                                 {/if}
                                 <div class="form-group">
-                                    <label class="inline" for="keeplogin">
+                                    <label class="inline" for="keeplogin" style="color: white">
                                         <input type="checkbox" name="keeplogin" id="keeplogin" value="1" />
                                         {:__('Keep login')}
                                     </label>

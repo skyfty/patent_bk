@@ -12,7 +12,7 @@ return array (
       'random' => '每次随机',
       'daily' => '每日切换',
     ),
-    'value' => 'daily',
+    'value' => 'fixed',
     'rule' => 'required',
     'msg' => '',
     'tip' => '',
@@ -27,7 +27,7 @@ return array (
     'content' => 
     array (
     ),
-    'value' => '/assets/img/loginbg.jpg',
+    'value' => '/uploads/20201021/ac58d569d1749ebed308151160eddb74.jpg',
     'rule' => 'required',
     'msg' => '',
     'tip' => '',
