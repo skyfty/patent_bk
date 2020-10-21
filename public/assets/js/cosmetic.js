@@ -1572,18 +1572,23 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                         },
                         initSearchToolbar:function(){
                             var that = this;
-                            var buttonParam = {};
-                            if ($attrs.searchButton) {
-                                buttonParam['customs'] = $attrs.searchButton;
-                            } else {
-                                buttonParam['customs'] = "";
+                            var options = dataTable.bootstrapTable('getOptions');
+                            if (options.search) {
+                                var buttonParam = {};
+                                if ($attrs.searchButton) {
+                                    buttonParam['customs'] = $attrs.searchButton;
+                                } else {
+                                    buttonParam['customs'] = "";
+                                }
+                                var buttonHtml = $compile(Template("commonsearchbtn-tmpl", buttonParam))($scope);
+                                if ($attrs.searchButtonHideGroup) {
+                                    $(".dropdown-toggle", buttonHtml).hide();
+                                    $(".dropdown-menu", buttonHtml).hide();
+                                }
+                                that.$toolbar.append(buttonHtml);
                             }
-                            var buttonHtml = $compile(Template("commonsearchbtn-tmpl", buttonParam))($scope);
-                            if ($attrs.searchButtonHideGroup) {
-                                $(".dropdown-toggle", buttonHtml).hide();
-                                $(".dropdown-menu", buttonHtml).hide();
-                            }
-                            that.$toolbar.append(buttonHtml);
+
+
                         }
                     };
                     if ($attrs.treeShowField) {

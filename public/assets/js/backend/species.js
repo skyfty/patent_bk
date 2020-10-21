@@ -50,12 +50,23 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','bootstrap-treegrid'],
                                 {
                                     name: 'catalog',
                                     title: function(row, j){
-                                        return __('%s', row.idcode);
+                                        return __('%s 文件目录', row.name);
                                     },
                                     classname: 'btn btn-xs btn-success btn-magic btn-dialog',
                                     icon: 'fa fa-folder-open',
                                     url: function(row){
                                         return 'catalog/index?model=' + row.model + "&species_cascader_id=" + row.id;
+                                    }
+                                },
+                                {
+                                    name: 'plan',
+                                    title: function(row, j){
+                                        return __('%s 流程', row.name);
+                                    },
+                                    classname: 'btn btn-xs btn-success btn-magic btn-dialog',
+                                    icon: 'fa fa-forumbee',
+                                    url: function(row){
+                                        return 'plan/index?model=' + row.model + "&species_model_id=" + row.id;
                                     }
                                 }
                             ]

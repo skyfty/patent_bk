@@ -3,78 +3,14 @@
     <div class="panel-body">
         <div class="widget-body no-padding  table-cosmetic">
             <div class="row" style="padding: 1.5em 0;">
-                <h4>Regular Buttons</h4>
-                <button type="button" class="btn btn btn-default btn-arrow-left">Default</button>
-                <button type="button" class="btn btn btn-primary btn-arrow-left">Primary</button>
-                <button type="button" class="btn btn btn-success btn-arrow-left">Success</button>
-                <button type="button" class="btn btn btn-link">Link</button>
-                <button type="button" class="btn btn-info btn-arrow-right">Info</button>
-                <button type="button" class="btn btn-warning btn-arrow-right">Warning</button>
-                <button type="button" class="btn btn-danger btn-arrow-right">Danger</button>
-                <h5>Inside .btn-group</h5>
-                <div class='btn-group'>
-                    <button type="button" class="btn btn-default btn-arrow-left">Default</button>
-                    <button type="button" class="btn btn-primary btn-arrow-left">Primary</button>
-                    <button type="button" class="btn btn-success btn-arrow-left">Success</button>
-                    <button type="button" class="btn btn-link">Link</button>
-                    <button type="button" class="btn btn-info btn-arrow-right">Info</button>
-                    <button type="button" class="btn btn-warning btn-arrow-right">Warning</button>
-                    <button type="button" class="btn btn-danger btn-arrow-right">Danger</button>
-                </div>
-                <h4>Large Buttons</h4>
-                <button type="button" class="btn btn-lg btn btn-default btn-arrow-left">Default</button>
-                <button type="button" class="btn btn-lg btn-primary btn-arrow-left">Primary</button>
-                <button type="button" class="btn btn-lg btn-success btn-arrow-left">Success</button>
-                <button type="button" class="btn btn-lg btn-link">Link</button>
-                <button type="button" class="btn btn-lg btn-info btn-arrow-right">Info</button>
-                <button type="button" class="btn btn-lg btn-warning btn-arrow-right">Warning</button>
-                <button type="button" class="btn btn-lg btn-danger btn-arrow-right">Danger</button>
-                <h5>Inside .btn-group</h5>
-                <div class='btn-group btn-group-lg'>
-                    <button type="button" class="btn btn-default btn-arrow-left">Default</button>
-                    <button type="button" class="btn btn-primary btn-arrow-left">Primary</button>
-                    <button type="button" class="btn btn-success btn-arrow-left">Success</button>
-                    <button type="button" class="btn btn-link">Link</button>
-                    <button type="button" class="btn btn-info btn-arrow-right">Info</button>
-                    <button type="button" class="btn btn-warning btn-arrow-right">Warning</button>
-                    <button type="button" class="btn btn-danger btn-arrow-right">Danger</button>
-                </div>
-                <h4>Small Buttons</h4>
-                <button type="button" class="btn btn-sm btn btn-default btn-arrow-left">Default</button>
-                <button type="button" class="btn btn-sm btn-primary btn-arrow-left">Primary</button>
-                <button type="button" class="btn btn-sm btn-success btn-arrow-left">Success</button>
-                <button type="button" class="btn btn-sm btn-link">Link</button>
-                <button type="button" class="btn btn-sm btn-info btn-arrow-right">Info</button>
-                <button type="button" class="btn btn-sm btn-warning btn-arrow-right">Warning</button>
-                <button type="button" class="btn btn-sm btn-danger btn-arrow-right">Danger</button>
-                <h5>Inside .btn-group</h5>
-                <div class='btn-group btn-group-sm'>
-                    <button type="button" class="btn btn btn-default btn-arrow-left">Default</button>
-                    <button type="button" class="btn btn-primary btn-arrow-left">Primary</button>
-                    <button type="button" class="btn btn-success btn-arrow-left">Success</button>
-                    <button type="button" class="btn btn-link">Link</button>
-                    <button type="button" class="btn btn-info btn-arrow-right">Info</button>
-                    <button type="button" class="btn btn-warning btn-arrow-right">Warning</button>
-                    <button type="button" class="btn btn-danger btn-arrow-right">Danger</button>
-                </div>
-                <h4>Extra Small Buttons</h4>
-                <button type="button" class="btn btn-xs btn btn-default btn-arrow-left">Default</button>
-                <button type="button" class="btn btn-xs btn-primary btn-arrow-left">Primary</button>
-                <button type="button" class="btn btn-xs btn-success btn-arrow-left">Success</button>
-                <button type="button" class="btn btn-xs btn-link">Link</button>
-                <button type="button" class="btn btn-xs btn-info btn-arrow-right">Info</button>
-                <button type="button" class="btn btn-xs btn-warning btn-arrow-right">Warning</button>
-                <button type="button" class="btn btn-xs btn-danger btn-arrow-right">Danger</button>
-                <h5>Inside .btn-group</h5>
-                <div class='btn-group btn-group-xs'>
-                    <button type="button" class="btn btn-default btn-arrow-left">Default</button>
-                    <button type="button" class="btn btn-primary btn-arrow-left">Primary</button>
-                    <button type="button" class="btn btn-success btn-arrow-left">Success</button>
-                    <button type="button" class="btn btn-link">Link</button>
-                    <button type="button" class="btn btn-info btn-arrow-right">Info</button>
-                    <button type="button" class="btn btn-warning btn-arrow-right">Warning</button>
-                    <button type="button" class="btn btn-danger btn-arrow-right">Danger</button>
-                </div>
+                {volist name="procedures" id="procedure"}
+                {if condition="($row.procedure_model_id == $procedure.id)"}
+                <button type="button" style="margin-top: 10px;" class="btn btn-primary btn-arrow-right">{$procedure.name}</button>
+                {else /}
+                <button type="button" style="margin-top: 10px;" class="btn btn-default btn-arrow-right">{$procedure.name}</button>
+                {/if}
+                {/volist}
+
             </div>
 
         </div>

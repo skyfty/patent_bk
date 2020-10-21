@@ -111,7 +111,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     field['defaultvalue'] = "/model/fields/index";
                 }
                 if ($scope.row.id) {
-                    var html = $(Form.formatter[field['type']]("edit",field, $scope.row['file'], $scope.row));
+                    var html = $(Form.formatter[field['type']]("edit",field, $scope.row['field_model_id'], $scope.row));
                 } else {
                     var html = $(Form.formatter[field['type']]("add",field, "", {}));
                 }

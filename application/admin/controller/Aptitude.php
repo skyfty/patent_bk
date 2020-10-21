@@ -4,6 +4,7 @@ namespace app\admin\controller;
 ini_set("error_reporting","E_ALL & ~E_NOTICE");
 
 use app\admin\model\Modelx;
+use app\admin\model\Sight;
 use app\common\controller\Backend;
 use PclZip;
 use think\App;
@@ -23,6 +24,24 @@ class Aptitude extends Cosmetic
     }
 
     use \app\admin\library\traits\Produce;
+
+    public function progress() {
+        $ids =$this->request->param("ids", null);
+        if ($ids === null)
+            $this->error(__('Params error!'));
+
+        $cosmeticModel = Modelx::get(['table' => $this->model->raw_name],[],!App::$debug);
+        if (!$cosmeticModel) {
+            $this->error('未找到对应模型');
+        }
+        $this->view->assign("row", $this->getModelRow($ids));
+        $procedures = model("procedure")->where("relevance_model_type", $this->model->raw_name)->order("order asc")->select();
+        $this->view->assign("procedures", $procedures);
+
+        $content = $this->view->fetch();
+        return array("content"=>$content, "fields"=>[]);
+
+    }
 
     public function download($id) {
         $row = $this->model->where("id",$id)->find();
