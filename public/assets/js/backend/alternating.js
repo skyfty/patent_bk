@@ -104,7 +104,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                 if (type == "custom") {
                     field['name'] = "field_model_id";
                     field['type'] = "select";
-                    field['content_list'] = Controller.api.convertFieldName();;
+                    field['content_list'] = Controller.api.convertFieldName();
                     field['defaultvalue'] = "date";
                     field['remark'] = "sdfsdfdsf";
                 } else {
