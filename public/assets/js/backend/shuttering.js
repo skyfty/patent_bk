@@ -157,11 +157,17 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 Form.api.bindevent($("form[role=form]"), $scope.submit);
             });
 
-
+            var procedure = null;
+            $('[name="row[procedure_model_id]"]').data("e-selected",function(data){
+                $('[name="row[catalog_model_id]"]').selectPageDisabled(false);
+                procedure = data.row;
+            }).data("e-clear",function(data){
+                $('[name="row[catalog_model_id]"]').selectPageDisabled(true);
+            });
             $('[name="row[catalog_model_id]"]').data("e-params",function(){
                 var param = {};
                 param.custom = {
-                    model:species.model
+                    model:(species?species.model:procedure.relevance_model_type)
                 };
                 return param;
             });
@@ -173,7 +179,14 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                         $('[name="row[' + self.initParam[i] + ']"]').selectPageDisabled(true);
                     }
                 }
-                $('[name="row[type]"]').trigger("change");
+                if ($scope.row.id) {
+                    $('[name="row[type]"]').trigger("change");
+                }
+                if ($scope.row.procedure_model_id) {
+                    $('[name="row[catalog_model_id]"]').selectPageDisabled(false);
+                } else {
+                    $('[name="row[catalog_model_id]"]').selectPageDisabled(true);
+                }
             });
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
         },
