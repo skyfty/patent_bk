@@ -8,7 +8,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         },
         indexscape:function($scope, $compile,$timeout){
             $scope.searchFieldsParams = function(param) {
-                param.custom = {'model':Fast.api.query("model")};
+                param.custom = {'plan.model':Fast.api.query("model")};
                 return param;
             };
             var options = {
