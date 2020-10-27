@@ -143,8 +143,10 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     $("#data-view").html($compile(html)($scope));
                     $timeout(function(){
                         $('[name="row[company_model_id]"]').data("e-selected",function(data){
-                            if (data && data.row && data.row.business_licence) {
-                                $('[name="row[business_licence]"]').val(data.row.business_licence).trigger("change");
+                            if (data && data.row) {
+                                if (data.row.business_licence) {
+                                    $('[name="row[business_licence]"]').val(data.row.business_licence).trigger("change");
+                                }
                             }
                         });
 
