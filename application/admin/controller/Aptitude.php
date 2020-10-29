@@ -34,9 +34,61 @@ class Aptitude extends Cosmetic
         if (!$cosmeticModel) {
             $this->error('未找到对应模型');
         }
-        $this->view->assign("row", $this->getModelRow($ids));
-        $procedures = model("procedure")->where("relevance_model_type", $this->model->raw_name)->order("order asc")->select();
-        $this->view->assign("procedures", $procedures);
+
+        $row = $this->getModelRow($ids);
+        $plans = model("plan")->where("model", $this->model->raw_name)->order("order asc")->select();
+        foreach($plans as $plan) {
+            switch ($plan['id']) {
+                case 1: { //关注服务号
+                    $plan['status'] = "light";
+                    break;
+                }
+                case 2: { //注册主体信息
+                    if ($row['company_model_id']) {
+                        $plan['status'] = "light";
+                    }
+                    break;
+                }
+                case 3: { //发起知识产权贯标服务
+
+                    break;
+                }
+                case 4: { //填写必要信息
+
+                    break;
+                }
+                case 5: { //生成全部文档
+
+                    break;
+                }
+                case 6: { //操作打印签字
+
+                    break;
+                }
+                case 7: { //生成全套资料包
+
+                    break;
+                }
+                case 8: { //评审
+
+                    break;
+                }
+                case 9: { //上传证书
+
+                    break;
+                }
+                case 10: { //查询评审结果
+
+                    break;
+                }
+                case 11: { //结算
+
+                    break;
+                }
+            }
+        }
+        $this->view->assign("plans", $plans);
+        $this->view->assign("row", $row);
 
         $content = $this->view->fetch();
         return array("content"=>$content, "fields"=>[]);

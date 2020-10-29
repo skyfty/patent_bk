@@ -22,6 +22,11 @@ class Plan extends Cosmetic
         });
     }
 
+    public function getStatusAttr($value, $data) {
+
+        return $data['status'];
+    }
+
     public function species() {
         return $this->hasOne('species','id','species_model_id')->joinType("LEFT")->field('*')->setEagerlyType(0);
     }

@@ -3,11 +3,12 @@
     <div class="panel-body">
         <div class="widget-body no-padding  table-cosmetic">
             <div class="row" style="padding: 1.5em 0;">
-                {volist name="procedures" id="procedure"}
-                {if condition="($row.procedure_model_id == $procedure.id)"}
-                <button type="button" style="margin-top: 10px;" class="btn btn-primary btn-arrow-right">{$procedure.name}</button>
+                {volist name="plans" id="plan"}
+
+                {if condition="($plan.status == 'light')"}
+                <button type="button" style="margin-top: 10px;" class="btn btn-primary btn-arrow-right">{$plan.name}</button>
                 {else /}
-                <button type="button" style="margin-top: 10px;" class="btn btn-default btn-arrow-right">{$procedure.name}</button>
+                <button type="button" style="margin-top: 10px;" class="btn btn-default btn-arrow-right">{$plan.name}</button>
                 {/if}
                 {/volist}
 
