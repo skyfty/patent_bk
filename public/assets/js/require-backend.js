@@ -64,9 +64,9 @@ require.config({
         'selectpage': '../libs/fastadmin-selectpage/selectpage',
         'citypicker': '../libs/fastadmin-citypicker/dist/js/city-picker.min',
         'citypicker-data': '../libs/fastadmin-citypicker/dist/js/city-picker.data',
-	    'bootstrap-treegrid': '../libs/bootstrap-table/dist/extensions/treegrid/bootstrap-table-treegrid',
-	    'angular': '../libs/angular/angular.min',
-	    'jquery-ui': '../libs/jquery-ui/jquery-ui.min',
+        'bootstrap-treegrid': '../libs/bootstrap-table/dist/extensions/treegrid/bootstrap-table-treegrid',
+        'angular': '../libs/angular/angular.min',
+        'jquery-ui': '../libs/jquery-ui/jquery-ui.min',
         "qtip2": '../libs/qtip2/jquery.qtip.min',
         'fullcalendar': '../libs/fullcalendar/dist/fullcalendar.min',
         'fullcalendar-lang': '../libs/fullcalendar/dist/locale/zh-cn',
@@ -133,22 +133,16 @@ require.config({
         },
         'bootstrap-datetimepicker': [
             'moment/locale/zh-cn',
-//            'css!../libs/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
         ],
-//        'bootstrap-select': ['css!../libs/bootstrap-select/dist/css/bootstrap-select.min.css',],
         'bootstrap-select-lang': ['bootstrap-select'],
-//        'toastr': ['css!../libs/toastr/toastr.min.css'],
         'jstree': ['css!../libs/jstree/dist/themes/default/style.css',],
         'plupload': {
             deps: ['../libs/plupload/js/moxie.min'],
             exports: "plupload"
         },
-//        'layer': ['css!../libs/fastadmin-layer/dist/theme/default/layer.css'],
-//        'validator-core': ['css!../libs/nice-validator/dist/jquery.validator.css'],
         'validator-lang': ['validator-core'],
-//        'selectpage': ['css!../libs/fastadmin-selectpage/selectpage.css'],
         'citypicker': ['citypicker-data', 'css!../libs/fastadmin-citypicker/dist/css/city-picker.css'],
-	'ztree': {
+        'ztree': {
             deps: [
                 'css!../libs/zTree/css/zTreeStyle/zTreeStyle.css',
             ]
@@ -159,7 +153,7 @@ require.config({
                 'css!../libs/jquery-jsoneditor/jsoneditor.css',
             ]
         },
-	'datetimepicker-lang': [
+        'datetimepicker-lang': [
             'datetimepicker',
         ],
         'bootstrap-treegrid': {

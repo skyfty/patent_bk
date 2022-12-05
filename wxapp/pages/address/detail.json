@@ -1,8 +1,6 @@
 {
     "navigationBarTitleText": "编辑收货地址",
     "usingComponents": {
-      "shortcut": "/components/shortcut/shortcut",
-        "i-row": "/components/row/index",
-        "i-col": "/components/col/index"
+  
     }
 }
