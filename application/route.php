@@ -17,7 +17,8 @@ return [
         'i'      => 'admin',
         'j'      => 'customer',
         'l'      => 'api',
-        'b'      => 'trade',
+        't'      => 'trade',
+
         'wxapp'      => 'wxapp',
 
     ],
