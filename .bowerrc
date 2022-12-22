@@ -1,5 +1,8 @@
 {
   "directory" : "public/assets/libs",
+  "proxy": "http://127.0.0.1:808",
+    "https-proxy": "http://127.0.0.1:808",
+    "strict-ssl": false,
   "ignoredDependencies": [
     "es6-promise",
     "file-saver",

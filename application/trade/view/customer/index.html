@@ -1,0 +1,46 @@
+
+<div class="container">
+    <!-- row -->
+    <div class="row">
+
+        <div class="col-12">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">客户列表</a></li>
+            </ol>
+            <div id="toolbar" class="toolbar">
+                <a href="unsafe:javascript:;" class="btn btn-primary btn-refresh" title="刷新"><i class="fa fa-refresh"></i> </a>
+                <a href="/customer/add" class="btn btn-success btn-dialog" title="添加智慧点"><i class="fa fa-plus"></i> </a>
+            </div>
+            <table id="table"  class="table table-striped">
+            </table>
+        </div>
+    </div>
+</div>
+
+<script id="customer-detail-tmpl" type="text/html">
+    <table class="table">
+        <tbody>
+        <%for (var i=0;i<claims.length;i++) {%>
+        <tr>
+            <td><%=claims[i].principal.idcode%></td>
+
+            <td><%=claims[i].principal.name%></td>
+            <td> <%=claims[i].principal.principalclass.name%></td>
+            <td style="text-align: center; vertical-align: middle; ">
+                <a href="/principal/edit/ids/<%=claims[i].principal.id%>" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+        <%}%>
+        </tbody>
+    </table>
+</script>
+
+
+<script id="customer-operate-tmpl" type="text/html">
+    <a href="/customer/edit/ids/<%=id%>" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></a>
+    <a href="/principal/add/customer_id/<%=id%>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+   <a href="javascript:;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+</script>
+

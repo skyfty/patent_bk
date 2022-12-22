@@ -13,9 +13,7 @@ use think\Validate;
  */
 class Index extends Trade
 {
-
     protected $noNeedLogin = ['login'];
-    protected $noNeedRight = ['index', 'logout'];
     protected $layout = '';
 
     public function _initialize()
@@ -24,24 +22,11 @@ class Index extends Trade
     }
 
     /**
-     * 后台首页
-     */
-    public function index()
-    {
-        $action = $this->request->request('action');
-        if ($this->request->isPost()) {
-
-        }
-        $this->view->assign('title', __('Home'));
-        return $this->view->fetch();
-    }
-
-    /**
      * 管理员登录
      */
     public function login()
     {
-        $url = $this->request->get('url', 'index/index');
+        $url = $this->request->get('url', 'policy/index');
         if ($this->auth->isLogin()) {
             $this->success(__("You've logged in, do not login again"), $url);
         }
@@ -90,8 +75,7 @@ class Index extends Trade
     /**
      * 注销登录
      */
-    public function logout()
-    {
+    public function logout() {
         $this->auth->logout();
         Hook::listen("admin_logout_after", $this->request);
         $this->success(__('Logout successful'), 'index/login');

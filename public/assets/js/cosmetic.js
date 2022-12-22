@@ -534,9 +534,9 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 var data = $parse($attrs.model)($scope);
                 var html = "";
                 if (Form.formatter[field.type]) {
-                    if (field.type == "model" || field.type == "cascader" || field.type == "mztree") {
+                    if (field.type === "model" || field.type === "cascader" || field.type === "mztree") {
                         html = Form.formatter[field.type]($attrs.scene,field, data);
-                    }else if (field.name == "idcode"){
+                    }else if (field.name === "idcode"){
                         html =  Form.formatter.idcode($attrs.scene,field, data[field.name]);
                     }else {
                         html =  Form.formatter[field.type]($attrs.scene,field, data[field.name], data);

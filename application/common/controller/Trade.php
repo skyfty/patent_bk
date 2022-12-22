@@ -28,6 +28,7 @@ class Trade extends Controller
      * @var Auth
      */
     protected $auth = null;
+    protected $noNeedLogin = [];
 
     /**
      * 模型对象
@@ -37,9 +38,23 @@ class Trade extends Controller
 
 
     /**
+     * 是否开启Validate验证
+     */
+    protected $modelValidate = false;
+
+    protected $searchFields = ['name', 'idcode'];
+
+    protected $modelSceneValidate = true;
+    protected $dataLimit = false;
+    protected $dataLimitFieldAutoFill = true;
+    protected $dataLimitField = "owners_model_id";
+
+    protected $relationSearch =[];
+    /**
      * 引入后台控制器的traits
      */
     use \app\common\library\traits\Backend;
+    use \app\common\library\traits\Buildparam;
 
     public function _initialize()
     {
@@ -60,7 +75,7 @@ class Trade extends Controller
         $this->auth->setRequestUri($path);
 
         //检测是否登录
-        if (!$this->auth->isLogin()) {
+        if (!$this->auth->match($this->noNeedLogin) && !$this->auth->isLogin()) {
             Hook::listen('admin_nologin', $this);
             $url = Session::get('referer');
             $url = $url ? $url : $this->request->url();
@@ -128,5 +143,23 @@ class Trade extends Controller
 
     protected function spectacle($model) {
         return $model;
+    }
+
+    protected function getDataLimitAdminIds() {
+        return null;
+        $filter = $this->request->get("filter", '');
+        $filter = (array)json_decode($filter, TRUE);
+        if (isset($filter['owners_model_id']) || isset($filter['creator_model_id'])) {
+            return null;
+        }
+        if ($this->auth->isSuperAdmin()) {
+            return null;
+        }
+        $adminIds = [];
+        if (in_array($this->dataLimit, ['auth', 'personal'])) {
+            $adminIds = $this->dataLimit == 'auth' ? $this->auth->getChildrenAdminIds(true) : [$this->auth->id];
+        }
+        return $adminIds;
+
     }
 }

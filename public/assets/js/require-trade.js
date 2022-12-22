@@ -10,6 +10,9 @@ require.config({
         'layer',
         'toastr',
         'fast',
+        'dragsort',
+        'drag',
+        'drop',
         'trade',
         'table',
         'form',
@@ -19,6 +22,9 @@ require.config({
         'form': 'require-form',
         'table': 'require-table',
         'upload': 'require-upload',
+
+        'drag': 'jquery.drag.min',
+        'drop': 'jquery.drop.min',
         'validator': 'require-validator',
         //
         // 以下的包从bower的libs目录加载
@@ -32,6 +38,18 @@ require.config({
         'template': '../libs/art-template/dist/template-native',
         'jquery-ui': '../libs/jquery-ui/jquery-ui.min',
         'plupload': '../libs/plupload/js/plupload.min',
+        'bootstrap-table': '../libs/bootstrap-table/dist/bootstrap-table.min',
+        'bootstrap-select-lang': '../libs/bootstrap-select/dist/js/i18n/defaults-zh_CN',
+        'bootstrap-table-export': '../libs/bootstrap-table/dist/extensions/export/bootstrap-table-export.min',
+        'bootstrap-select': '../libs/bootstrap-select/dist/js/bootstrap-select.min',
+        'bootstrap-table-lang': '../libs/bootstrap-table/dist/locale/bootstrap-table-zh-CN',
+        'bootstrap-slider': '../libs/bootstrap-slider/bootstrap-slider',
+        'bootstrap-treegrid': '../libs/bootstrap-table/dist/extensions/treegrid/bootstrap-table-treegrid',
+        'treegrid': '../libs/jquery-treegrid/js/jquery.treegrid',
+        'tableexport': '../libs/tableExport.jquery.plugin/tableExport.min',
+        'dragsort': '../libs/fastadmin-dragsort/jquery.dragsort',
+
+        'bootstrap-switch': '../libs/bootstrap-switch/dist/js/bootstrap-switch',
 
     },
     // shim依赖配置
@@ -44,6 +62,43 @@ require.config({
             deps: ['../libs/plupload/js/moxie.min'],
             exports: "plupload"
         },
+        'bootstrap-table': {
+            deps: [
+                'bootstrap',
+            ],
+            exports: '$.fn.bootstrapTable'
+        },
+        'bootstrap-table-commonsearch': {
+            deps: ['bootstrap-table'],
+            exports: '$.fn.bootstrapTable.defaults'
+        },
+        'bootstrap-table-template': {
+            deps: ['bootstrap-table', 'template'],
+            exports: '$.fn.bootstrapTable.defaults'
+        },
+        'bootstrap-datetimepicker': [
+            'moment/locale/zh-cn',
+        ],
+        'bootstrap-table-lang': {
+            deps: ['bootstrap-table'],
+            exports: '$.fn.bootstrapTable.defaults'
+        },
+        'bootstrap-table-export': {
+            deps: ['bootstrap-table', 'tableexport'],
+            exports: '$.fn.bootstrapTable.defaults'
+        },
+        'bootstrap-select-lang': ['bootstrap-select'],
+
+        'bootstrap-treegrid': {
+            deps: ['bootstrap-table', 'treegrid'],
+            exports: '$.fn.bootstrapTable.defaults'
+        },
+        'bootstrap-switch': {
+            deps: [
+                'bootstrap',
+            ],
+        },
+
     },
     baseUrl: requirejs.s.contexts._.config.config.site.cdnurl + '/assets/js/', //资源基础路径
     map: {

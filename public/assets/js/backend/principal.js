@@ -8,19 +8,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     return param;
                 };
 
-                $scope.detailFormater = function(idx, row) {
-                    if (typeof row.substance != "undefined") {
-                        var field_values = [];
-                        for (var idx in row.substance_fields) {
-                            var field = row.substance_fields[idx];
-                            var data = row['substance'][field.name];
-                            var html = Cosmetic.api.formatter(field, data, row['substance']);
-                            field_values.push(field.title + " : " + html)
-                        }
-                        return field_values.join("<br/>");
-                    }
-                    return "没有关联";
-                };
                 var options = {
                     extend: {
                         index_url: 'principal/index',

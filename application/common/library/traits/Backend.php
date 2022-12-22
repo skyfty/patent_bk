@@ -369,4 +369,6 @@ trait Backend
         $this->view->assign("row", $row);
         return $this->view->fetch();
     }
+
+
 }
