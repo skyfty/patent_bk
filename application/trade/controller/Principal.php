@@ -21,13 +21,6 @@ class Principal extends Trade
         parent::_initialize();
         $this->model = model("Principal");
 
-        $principal_type_scenery = Scenery::where(["model_table" => "company", "pos" => 'view'])->cache(true)->order("weigh", "ASC")->find();
-        $where = array(
-            'scenery_id' => $principal_type_scenery['id'],
-            "name"=>["not in","signed,type,aptitude_state,hightech,ms_enterprises"]
-        );
-        $fields = Sight::with('fields')->cache(true)->where($where)->order("weigh", "asc")->select();
-        $this->view->assign('fields', $fields);
     }
 
     protected function spectacle($model) {

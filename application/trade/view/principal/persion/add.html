@@ -1,0 +1,93 @@
+
+<form id="form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+    <input type="hidden" value="{:input('param.customer_id')}" name="customer_id" />
+    <input type="hidden" value="persion" name="row[substance_type]" />
+    <input type="hidden" value="1" name="row[principalclass_model_id]" />
+
+    <div class="row">
+        <div class="col-md-9 col-sm-12">
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">名称:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[name]" type="text" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">生日:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control datetimepicker" data-date-format="YYYY-MM-DD" name="row[birthday]" type="date" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">身份证:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[idcard]" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">性别:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[sex]',get_field('sex', 'persion'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">学历:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[educational]',get_field('educational', 'persion'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">创新创业服务领军人才:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[service_talents]',get_field('service_talents', 'persion'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">投资家:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[investor]',get_field('investor', 'persion'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">创业领军人才:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[entrepreneurial_talents]',get_field('entrepreneurial_talents', 'persion'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">领军企业家:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[leading_entrepreneurs]',get_field('leading_entrepreneurs', 'persion'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">外籍创新人才:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[foreign_talents]',get_field('foreign_talents', 'persion'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">企业创新领军人才:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[talents]',get_field('talents', 'persion'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">企业首席科学家:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[scientist]',get_field('scientist', 'persion'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+            <div id="extend"></div>
+            <div class="form-group normal-footer">
+                <label class="control-label col-xs-12 col-sm-2"></label>
+                <div class="col-xs-12 col-sm-8">
+                    <button type="submit" class="btn btn-success btn-embossed disabled">OK</button>
+                    <button type="reset" class="btn btn-default btn-embossed">Reset</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</form>

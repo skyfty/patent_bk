@@ -1,0 +1,143 @@
+
+<form id="form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+    <input type="hidden" value="{:input('param.customer_id')}" name="customer_id" />
+    <input type="hidden" value="company" name="row[substance_type]" />
+    <input type="hidden" value="2" name="row[principalclass_model_id]" />
+
+    <div class="row">
+        <div class="col-md-9 col-sm-12">
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">名称:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[name]" type="text" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">中文简称:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[chinese_name]" type="text" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">英文简称:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[english_name]" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">行业:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[industry]" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">电话号码:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[phone]" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">手机号码:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[telephone]" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">注册日期:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[registerdate]" type="date" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">注册区域:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[registeraddress]" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">注册资金:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[registerfund]" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">统一信用代码:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[credit_code]" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">办公面积:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[acreage]" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">简介:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <textarea id="c-title" class="form-control" name="row[summary]"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">营业执照副本:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[business_licence]" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">员工数:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[scale]" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-title" class="control-label col-xs-12 col-sm-2">注册地址:</label>
+                <div class="col-xs-12 col-sm-8">
+                    <input id="c-title" class="form-control" name="row[enrolladdress]" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">企业性质:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[type]',get_field('type', 'company'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">知识产权贯标:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[aptitude_state]',get_field('aptitude_state', 'company'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">知识产权贯标:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[aptitude_state]',get_field('aptitude_state', 'company'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">高新企业:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[hightech]',get_field('hightech', 'company'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-tags" class="control-label col-xs-12 col-sm-2">中小微企业:</label>
+                <div class="col-xs-12 col-sm-8">
+                    {:build_select('row[ms_enterprises]',get_field('ms_enterprises', 'company'), null, ['class'=>'form-control'])}
+                </div>
+            </div>
+            <div id="extend"></div>
+            <div class="form-group normal-footer">
+                <label class="control-label col-xs-12 col-sm-2"></label>
+                <div class="col-xs-12 col-sm-8">
+                    <button type="submit" class="btn btn-success btn-embossed disabled">OK</button>
+                    <button type="reset" class="btn btn-default btn-embossed">Reset</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</form>

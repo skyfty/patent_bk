@@ -28,7 +28,7 @@
             <td><%=claims[i].principal.name%></td>
             <td> <%=claims[i].principal.principalclass.name%></td>
             <td style="text-align: center; vertical-align: middle; ">
-                <a href="/principal/edit/ids/<%=claims[i].principal.id%>" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></a>
+                <a target="_blank" href="/principal/edit/ids/<%=claims[i].principal.id%>" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></a>
                 <a href="javascript:;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
             </td>
         </tr>
@@ -39,8 +39,12 @@
 
 
 <script id="customer-operate-tmpl" type="text/html">
-    <a href="/customer/edit/ids/<%=id%>" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></a>
-    <a href="/principal/add/customer_id/<%=id%>" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
-   <a href="javascript:;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+    <a target="_blank" href="/customer/edit/ids/<%=id%>" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></a>
+    <a target="_blank" href="/principal/add/customer_id/<%=id%>/substance_type/company" class="btn btn-xs btn-default dropdown-toggle"><i class="fa fa-plus"></i></a>
+
+
+    <a target="_blank" href="/principal/add/customer_id/<%=id%>/substance_type/persion" class="btn btn-xs btn-default"><i class="fa fa-plus"></i></a>
+
+    <a href="javascript:;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
 </script>
 
