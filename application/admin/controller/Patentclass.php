@@ -11,7 +11,7 @@ use app\common\controller\Backend;
  */
 class Patentclass extends Backend
 {
-    use \app\admin\library\traits\Cascader;
+    use \app\common\library\traits\Cascader;
     protected $noNeedRight = ['selectpage','cascader'];
 
     public function _initialize()

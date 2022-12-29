@@ -5,6 +5,7 @@ namespace app\trade\controller;
 use app\admin\model\Scenery;
 use app\admin\model\Sight;
 use app\common\controller\Trade;
+use app\trade\model\Fields;
 use think\App;
 use think\Exception;
 
@@ -20,7 +21,13 @@ class Principal extends Trade
     {
         parent::_initialize();
         $this->model = model("Principal");
+    }
 
+
+    protected function assignFields($substance_type) {
+        $scenery = Scenery::get(['model_table' => $substance_type,'pos'=>'view'],[],true);
+        $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->order("weigh", "asc")->cache(true)->select();;
+        $this->view->assign('fields', $fields);
     }
 
     protected function spectacle($model) {
@@ -69,6 +76,7 @@ class Principal extends Trade
                 $this->error($e->getMessage());
             }
         }
+        $this->assignFields(input('param.substance_type'));
         return $this->view->fetch();
     }
     /**
@@ -82,6 +90,7 @@ class Principal extends Trade
         if ($this->request->isPost()) {
             parent::edit($ids);
         }
+        $this->assignFields( $row['substance_type']);
         $this->view->assign("row", $row);
         return $this->view->fetch();
     }

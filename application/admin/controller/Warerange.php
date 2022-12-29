@@ -12,7 +12,7 @@ use fast\Tree;
  */
 class Warerange extends Backend
 {
-    use \app\admin\library\traits\Cascader;
+    use \app\common\library\traits\Cascader;
 
     /**
      * Lorerange模型对象

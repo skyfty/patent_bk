@@ -5,6 +5,7 @@ namespace app\trade\controller;
 use app\admin\model\Scenery;
 use app\admin\model\Sight;
 use app\common\controller\Trade;
+use app\trade\model\Fields;
 
 /**
  * 客户管理
@@ -22,6 +23,21 @@ class Customer extends Trade
     {
         parent::_initialize();
         $this->model = model("customer");
+        $this->assignFields();
+    }
+
+    protected function assignFields() {
+        $scenery = Scenery::get(['model_table' => "customer",'pos'=>'view'],[],true);
+        $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->where("fields.name", "in",[
+            "name",
+            "membership",
+            "birthday",
+            "sex",
+            "telephone",
+        ])->order("weigh", "asc")->cache(true)->select();;
+
+
+        $this->view->assign('fields', $fields);
     }
 
     protected function spectacle($model) {

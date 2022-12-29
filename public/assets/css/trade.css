@@ -1,9 +1,23 @@
 @import url("../libs/bootstrap/dist/css/bootstrap.min.css");
-@import url("../libs/bootstrap-table/dist/bootstrap-table.min.css");
-@import url("../libs/nice-validator/dist/jquery.validator.css");
-@import url("../libs/bootstrap-directional-buttons/bootstrap-directional-buttons.css");
-@import url("../libs/bootstrap-slider/slider.css");
-@import url("../libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css");
-@import url("../libs/bootstrap-select/dist/css/bootstrap-select.min.css");
+@import url("../css/fastadmin.css");
+@import url("../css/skins/skin-white.css");
 @import url("../css/iconfont.css");
 @import url("../libs/font-awesome/css/font-awesome.min.css");
+@import url("../libs/toastr/toastr.min.css");
+@import url("../libs/fastadmin-layer/dist/theme/default/layer.css");
+@import url("../libs/bootstrap-table/dist/bootstrap-table.min.css");
+@import url("../libs/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css");
+@import url("../libs/bootstrap-daterangepicker/daterangepicker.css");
+@import url("../libs/nice-validator/dist/jquery.validator.css");
+@import url("../libs/bootstrap-select/dist/css/bootstrap-select.min.css");
+@import url("../libs/fastadmin-selectpage/selectpage.css");
+@import url("../libs/bootstrap-slider/slider.css");
+@import url("../libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css");
+@import url("../libs/cascader/css/cascader.css");
+@import url("../libs/jquery-jsoneditor/jsoneditor.css");
+@import url("../libs/jquery-treegrid/css/jquery.treegrid.css");
+@import url("../libs/bootstrap-directional-buttons/bootstrap-directional-buttons.css");
+
+body.is-dialog .nav-header {
+    display: none;
+}

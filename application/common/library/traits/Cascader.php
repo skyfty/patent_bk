@@ -6,7 +6,7 @@
  * Time: 17:31
  */
 
-namespace app\admin\library\traits;
+namespace app\common\library\traits;
 
 use fast\Tree;
 

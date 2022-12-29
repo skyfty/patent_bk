@@ -1,23 +1,37 @@
+<div class="page"  ng-controller="index"  ng-init="sceneryInit()">
 
-<div class="container">
-    <!-- row -->
-    <div class="row">
+    <div class="container">
+        <!-- row -->
+        <div class="row">
 
-        <div class="col-12">
-            <ol class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">客户列表</a></li>
-            </ol>
-            <div id="toolbar" class="toolbar">
-                <a href="unsafe:javascript:;" class="btn btn-primary btn-refresh" title="刷新"><i class="fa fa-refresh"></i> </a>
-                <a href="/customer/add" class="btn btn-success btn-dialog" title="添加智慧点"><i class="fa fa-plus"></i> </a>
+            <div class="col-12">
+                <ol class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">客户列表</a></li>
+                </ol>
+
+                <div class="table-responsive">
+                    <div id="toolbar-index" class="toolbar">
+                        <a href="unsafe:javascript:;" class="btn btn-primary btn-refresh" title="刷新"><i class="fa fa-refresh"></i> </a>
+                        <a href="/customer/add" class="btn btn-success btn-dialog" title="添加客户"><i class="fa fa-plus"></i> </a>
+                        <a href="unsafe:javascript:;" class="btn btn-danger btn-del btn-disabled disabled" title="删除"><i class="fa fa-trash"></i> </a>
+                    </div>
+                    <table id="table-index"
+                           data-fields="fields"
+                           ui-formidable="fields"
+                           data-url="customer/index"
+                           data-toolbar="toolbar-index"
+                           data-detail-formatter="detailFormater"
+                           class="table table-striped table-bordered table-hover  text-nowrap" width="100%">
+                    </table>
+                </div>
+
             </div>
-            <table id="table"  class="table table-striped">
-            </table>
         </div>
     </div>
 </div>
 
+<script type="text/javascript">var fields ={$fields|json_encode};</script>
 <script id="customer-detail-tmpl" type="text/html">
     <table class="table">
         <tbody>
@@ -28,8 +42,8 @@
             <td><%=claims[i].principal.name%></td>
             <td> <%=claims[i].principal.principalclass.name%></td>
             <td style="text-align: center; vertical-align: middle; ">
-                <a target="_blank" href="/principal/edit/ids/<%=claims[i].principal.id%>" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+                <a href="/principal/edit/ids/<%=claims[i].principal.id%>" class="btn btn-xs btn-success btn-dialog"  title="编辑客户"><i class="fa fa-pencil"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-danger btn-delone"><i class="fa fa-trash"></i></a>
             </td>
         </tr>
         <%}%>
@@ -39,12 +53,9 @@
 
 
 <script id="customer-operate-tmpl" type="text/html">
-    <a target="_blank" href="/customer/edit/ids/<%=id%>" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></a>
-    <a target="_blank" href="/principal/add/customer_id/<%=id%>/substance_type/company" class="btn btn-xs btn-default dropdown-toggle"><i class="fa fa-plus"></i></a>
-
-
-    <a target="_blank" href="/principal/add/customer_id/<%=id%>/substance_type/persion" class="btn btn-xs btn-default"><i class="fa fa-plus"></i></a>
-
-    <a href="javascript:;" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+    <a href="/customer/edit/ids/<%=id%>" class="btn btn-xs btn-success btn-dialog"  title="添加智慧点"><i class="fa fa-pencil"></i></a>
+    <a href="/principal/add/customer_id/<%=id%>/substance_type/company" class="btn btn-xs btn-default btn-dialog"  title="编辑客户"><i class="fa fa-plus"></i></a>
+    <a href="/principal/add/customer_id/<%=id%>/substance_type/persion" class="btn btn-xs btn-default btn-dialog"  title="编辑客户"><i class="fa fa-plus"></i></a>
+    <a href="javascript:;" class="btn btn-xs btn-danger btn-delone"><i class="fa fa-trash"></i></a>
 </script>
 

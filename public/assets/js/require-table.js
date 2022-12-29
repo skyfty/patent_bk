@@ -33,10 +33,10 @@ define(['jquery', 'bootstrap', 'moment', 'moment/locale/zh-cn', 'bootstrap-table
             pk: 'id',
             sortName: 'id',
             sortOrder: 'desc',
-            paginationFirstText: __("First"),
-            paginationPreText: __("Previous"),
-            paginationNextText: __("Next"),
-            paginationLastText: __("Last"),
+            paginationFirstText: "First",
+            paginationPreText: "Previous",
+            paginationNextText: "Next",
+            paginationLastText: "Last",
             cardView: false, //卡片视图
             checkOnInit: true, //是否在初始化时判断
             escape: true, //是否对内容进行转义

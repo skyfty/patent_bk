@@ -12,7 +12,7 @@ use fast\Tree;
  */
 class Genre extends Backend
 {
-    use \app\admin\library\traits\Cascader;
+    use \app\common\library\traits\Cascader;
 
     
     /**

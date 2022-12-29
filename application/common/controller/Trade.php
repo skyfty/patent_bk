@@ -64,10 +64,16 @@ class Trade extends Controller
 
         $path = str_replace('.', '/', $controllername) . '/' . $actionname;
 
+        // 定义是否Addtabs请求
+        !defined('IS_ADDTABS') && define('IS_ADDTABS', input("addtabs") ? true : false);
+
         // 定义是否AJAX请求
         !defined('IS_AJAX') && define('IS_AJAX', $this->request->isAjax());
 
         !defined('IS_IFRAME') && define('IS_IFRAME', input("iframe") ? TRUE : FALSE);
+
+        // 定义是否Dialog请求
+        !defined('IS_DIALOG') && define('IS_DIALOG', input("dialog") ? true : false);
 
         $this->auth = Auth::instance();
 
@@ -161,5 +167,15 @@ class Trade extends Controller
         }
         return $adminIds;
 
+    }
+
+    /**
+     * 渲染配置信息
+     * @param mixed $name  键名或数组
+     * @param mixed $value 值
+     */
+    protected function assignconfig($name, $value = '')
+    {
+        $this->view->config = array_merge($this->view->config ? $this->view->config : [], is_array($name) ? $name : [$name => $value]);
     }
 }

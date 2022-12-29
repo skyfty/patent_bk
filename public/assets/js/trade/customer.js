@@ -1,8 +1,18 @@
-define(['jquery', 'bootstrap', 'trade','form', 'table','template'], function ($, undefined, Trade, Form, Table, Template) {
+define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], function ($, Trade, Table, Form, Template,angular, Cosmetic) {
     var Controller = {
-        index: function () {
-            // 初始化表格参数配置
-            Table.api.init({
+        index:function() {
+            AngularApp.controller("index", function($scope, $compile,$timeout) {
+                $scope.detailFormater = function (index, row) {
+                    return Template("customer-detail-tmpl",row);
+                };
+
+                $scope.sceneryInit = function(idx) {
+                    $scope.fields = fields;
+                    $timeout(function(){$scope.$broadcast("shownTable");});
+                };
+            });
+
+            var options = {
                 showToggle: false,
                 showColumns: false,
                 showExport: false,
@@ -10,68 +20,70 @@ define(['jquery', 'bootstrap', 'trade','form', 'table','template'], function ($,
                 extend: {
                     index_url: 'customer/index',
                     add_url: 'customer/add',
+                    del_url: 'customer/del',
                     multi_url: '',
                     summation_url: '',
                     table: 'customer',
-                }
-            });
-
-            var table = $("#table");
-
-            // 初始化表格
-            table.bootstrapTable({
-                url: $.fn.bootstrapTable.defaults.extend.index_url,
-                pk: 'id',
-                sortName: 'id',
-                columns: [
-                    [
-                        {field: 'id', title: __('Id')},
-                        {field: 'name', title: "姓名"},
-                        {field: 'telephone', title: "telephone"},
-                        {field: 'sex', title: "sex"},
-                        {field: 'status', title: "状态"},
-                        {
-                            field: 'operate',
-                            title: __('Operate'),
-                            table: table,
-                            events: Table.api.events.operate,
-                            formatter: function(value, row) {
-                                return Template("customer-operate-tmpl",row);
-                            }
+                },
+                buttons : [
+                    {
+                        name: 'view',
+                        title: function(row, j){
+                            return __(' %s', row.name);
+                        },
+                        classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                        icon: 'fa fa-pencil',
+                        url: 'customer/edit'
+                    },
+                    {
+                        name: 'company_add',
+                        title: function(row, j){
+                            return __('增加公司主体');
+                        },
+                        text:function(row, j) {
+                            return __('公司主体');
+                        },
+                        classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                        icon: 'fa fa-plus',
+                        url:function(row,j) {
+                            return 'principal/add/substance_type/company/customer_id/' + row.id;
                         }
-                    ]
-                ],
-
-                detailView:true,
-                detailFormatter:function (index, row) {
-                    return Template("customer-detail-tmpl",row);
-                }
-            });
-
-            // 为表格绑定事件
-            Table.api.bindevent(table);
+                    },
+                    {
+                        name: 'persion_add',
+                        title: function(row, j){
+                            return __('增加个人主体');
+                        },
+                        text:function(row, j) {
+                            return __('个人主体');
+                        },
+                        classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                        icon: 'fa fa-plus',
+                        url:function(row,j) {
+                            return 'principal/add/substance_type/persion/customer_id/' + row.id;
+                        }
+                    }
+                ]
+            };
+            Table.api.init(options);
+            Form.api.bindevent($("div[ng-controller='index']"));
         },
+
         add: function () {
-            Form.api.bindevent($("#form"), function(data, ret){
-                setTimeout(function(){
-                    window.location.replace("/principal/add?customer_id=" + data.id);
-                    }, 1000);
-            });
+            Controller.api.assignEditView("add", {});
         },
 
         edit: function () {
-            Controller.api.bindevent();
-
+            Controller.api.assignEditView("edit", row);
         },
 
         api: {
-            bindevent: function () {
-                Form.api.bindevent($("#form"), function(data, ret){
-                    setTimeout(function(){window.location.replace(ret.url);}, 1000);
-                });
-            }
-        }
+        },
+        init: function () {
+        },
     };
+    Controller.api = $.extend(Controller.api, Trade.api);
+    Controller.init();
 
     return Controller;
 });

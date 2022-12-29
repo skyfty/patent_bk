@@ -1,102 +1,10 @@
 
-<form id="form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+<form class="form-horizontal" role="form" data-toggle="validator" method="POST" action="" ng-controller="edit" >
     <input type="hidden" value="{$row.id}" name="ids" />
 
-    <div class="row">
-        <div class="col-md-9 col-sm-12">
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">名称:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <input id="c-title" class="form-control" name="row[name]" type="text" value="{$row['company']['name']}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">中文简称:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <input id="c-title" class="form-control" name="row[chinese_name]" type="text" value="{$row['company']['chinese_name']}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">英文简称:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <input id="c-title" class="form-control" name="row[english_name]" type="text" value="{$row['company']['english_name']}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">电话号码:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <input id="c-title" class="form-control" name="row[phone]" type="text" value="{$row['company']['phone']}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">手机号码:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <input id="c-title" class="form-control" name="row[telephone]" type="text" value="{$row['company']['telephone']}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">注册日期:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <input id="c-title" class="form-control" name="row[registerdate]" type="date" value="{$row['company']['registerdate']}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">注册区域:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <input id="c-title" class="form-control" name="row[registeraddress]" type="text" value="{$row['company']['registeraddress']}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">注册资金:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <input id="c-title" class="form-control" name="row[registerfund]" type="text" value="{$row['company']['registerfund']}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">统一信用代码:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <input id="c-title" class="form-control" name="row[credit_code]" type="text" value="{$row['company']['credit_code']}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">办公面积:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <input id="c-title" class="form-control" name="row[acreage]" type="text" value="{$row['company']['acreage']}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">简介:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <textarea  class="form-control"  name="row[summary]" >{$row['company']['summary']}</textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">营业执照副本:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <input id="c-title" class="form-control" name="row[business_licence]" type="text" value="{$row['company']['business_licence']}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">员工数:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <input id="c-title" class="form-control" name="row[scale]" type="text" value="{$row['company']['scale']}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="c-title" class="control-label col-xs-12 col-sm-2">注册地址:</label>
-                <div class="col-xs-12 col-sm-8">
-                    <input id="c-title" class="form-control" name="row[enrolladdress]" type="text" value="{$row['company']['enrolladdress']}">
-                </div>
-            </div>
-
-            <div id="extend"></div>
-            <div class="form-group normal-footer">
-                <label class="control-label col-xs-12 col-sm-2"></label>
-                <div class="col-xs-12 col-sm-8">
-                    <button type="submit" class="btn btn-success btn-embossed disabled">OK</button>
-                    <button type="reset" class="btn btn-default btn-embossed">Reset</button>
-                </div>
-            </div>
+    <div class="panel panel-default panel-intro">
+        <div class="panel-body">
+            {include file="common/add" /}
         </div>
 
     </div>

@@ -20,14 +20,6 @@
     </div>
 </script>
 
-<script id="spotfields-tmpl" type="text/html">
-    <div class="form-group spotfields">
-        <select class="form-control spotfields-select"  ng-model="<%=d%>.field" onchange="angular.element(this).scope().onFieldChange(this)" ng-options="(f.title + '&nbsp;&nbsp;') for f in fields">
-        </select>
-    </div>
-    <spotcircus class="form-group"  data-field="<%=d%>.field" data-field-model="<%=d%>"></spotcircus>
-</script>
-
 
 <script id="spotcircus-condition-tmpl" type="text/html">
     <%if(type=="datetime" || type == "date" || type=="time"){%>
@@ -186,7 +178,6 @@
     </div>
 </script>
 
-
 <script id="view-tmpl" type="text/html">
     <div class="table-responsive">
         <table class="table table-striped">
@@ -213,35 +204,6 @@
             </tr>
         </table>
     </div>
-</script>
-
-
-<script id="edit-tmpl" type="text/html">
-    <div class="form-group" data-field-id="{{f.id}}" data-field-name="{{f.name}}" validator-observe="f" ng-repeat="f in <%=fields%>|availableFields:'<%=state%>'" ng-show="f|visibleField:'<%=state%>'" >
-        <div class="control-label col-xs-12 col-sm-2">{{f.title}}</div>
-        <div class="col-xs-12 col-sm-8">
-            <magicfield data-field="f" data-model="row" data-scene="<%=state%>" ></magicfield>
-        </div>
-    </div>
-</script>
-
-
-<script id="classifytree-tmpl" type="text/html">
-<div class="dropdown btn-group">
-    <a href="javascript:;" class="btn btn-default btn-classify hidden-xs hidden-sm  dropdown-toggle"  data-toggle="dropdown"><i class="fa fa-bars"></i><span class="spot"></span></a>
-    <ul class="dropdown-menu" style="box-shadow: 2px 2px 5px #888888;border:1px dotted #008888;;">
-        <li class="user-header">
-            <div class="panel-body">
-                <span class="text-muted"><input type="checkbox" name="" class="classifytree-checkall" /> <label for="checkall"><small>{:__('Check all')}</small></label></span>
-                <span class="text-muted"><input type="checkbox" name="" class="classifytree-expandall" checked="" /> <label for="expandall"><small>{:__('Expand all')}</small></label></span>
-                <div class="classifytree"></div>
-            </div>
-        </li>
-        <li class="user-footer">
-
-        </li>
-    </ul>
-</div>
 </script>
 
 <script id="echarts-tmpl" type="text/html">
@@ -292,3 +254,5 @@
         <span style="float: right"><%=starttime%></span>
     </li>
 </script>
+
+{include file="../application/common/view/tmpl.html" /}

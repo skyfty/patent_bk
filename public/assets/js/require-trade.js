@@ -10,6 +10,8 @@ require.config({
         'layer',
         'toastr',
         'fast',
+        'cosmetic',
+        'backend',
         'dragsort',
         'drag',
         'drop',
@@ -38,6 +40,7 @@ require.config({
         'template': '../libs/art-template/dist/template-native',
         'jquery-ui': '../libs/jquery-ui/jquery-ui.min',
         'plupload': '../libs/plupload/js/plupload.min',
+        "qtip2": '../libs/qtip2/jquery.qtip.min',
         'bootstrap-table': '../libs/bootstrap-table/dist/bootstrap-table.min',
         'bootstrap-select-lang': '../libs/bootstrap-select/dist/js/i18n/defaults-zh_CN',
         'bootstrap-table-export': '../libs/bootstrap-table/dist/extensions/export/bootstrap-table-export.min',
@@ -45,22 +48,38 @@ require.config({
         'bootstrap-table-lang': '../libs/bootstrap-table/dist/locale/bootstrap-table-zh-CN',
         'bootstrap-slider': '../libs/bootstrap-slider/bootstrap-slider',
         'bootstrap-treegrid': '../libs/bootstrap-table/dist/extensions/treegrid/bootstrap-table-treegrid',
+        'datetimepicker': '../libs/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min',
+        'datetimepicker-lang': '../libs/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN',
+        'selectpage': '../libs/fastadmin-selectpage/selectpage',
+        'citypicker': '../libs/fastadmin-citypicker/dist/js/city-picker.min',
+        'citypicker-data': '../libs/fastadmin-citypicker/dist/js/city-picker.data',
         'treegrid': '../libs/jquery-treegrid/js/jquery.treegrid',
         'tableexport': '../libs/tableExport.jquery.plugin/tableExport.min',
         'dragsort': '../libs/fastadmin-dragsort/jquery.dragsort',
-
         'bootstrap-switch': '../libs/bootstrap-switch/dist/js/bootstrap-switch',
-
+        'slimscroll': '../libs/jquery-slimscroll/jquery.slimscroll',
+        'angular': '../libs/angular/angular.min',
+        'sortable': '../libs/Sortable/Sortable.min',
+        'jstree': '../libs/jstree/dist/jstree.min',
+        'ztree': '../libs/zTree/js/jquery.ztree.all',
+        'cxselect': '../libs/fastadmin-cxselect/js/jquery.cxselect',
+        'colorpicker': '../libs/bootstrap-colorpicker/dist/js/bootstrap-colorpicker',
+        'bootstrap-datetimepicker': '../libs/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min',
+        'bootstrap-daterangepicker': '../libs/bootstrap-daterangepicker/daterangepicker',
     },
     // shim依赖配置
     shim: {
-        'addons': ['trade'],
+        'addons': ['backend','trade'],
         'bootstrap': ['jquery'],
         'validator-lang': ['validator-core'],
         'qtip2': ['css!../libs/qtip2/jquery.qtip.css',],
         'plupload': {
             deps: ['../libs/plupload/js/moxie.min'],
             exports: "plupload"
+        },
+        'slimscroll': {
+            deps: ['jquery'],
+            exports: '$.fn.extend'
         },
         'bootstrap-table': {
             deps: [
@@ -98,6 +117,18 @@ require.config({
                 'bootstrap',
             ],
         },
+        'citypicker': ['citypicker-data', 'css!../libs/fastadmin-citypicker/dist/css/city-picker.css'],
+        'ztree': {
+            deps: [
+                'css!../libs/zTree/css/zTreeStyle/zTreeStyle.css',
+            ]
+        },
+        'datetimepicker-lang': [
+            'datetimepicker',
+        ],
+        'angular': {
+            exports: 'angular'
+        },
 
     },
     baseUrl: requirejs.s.contexts._.config.config.site.cdnurl + '/assets/js/', //资源基础路径
@@ -124,7 +155,7 @@ require(['jquery', 'bootstrap'], function ($, undefined) {
 
     // 初始化
     $(function () {
-        require(['fast', 'trade'], function (Fast, Trade) {
+        require(['fast','backend', 'trade','cosmetic'], function (Fast,Backend, Trade, undefined) {
             //加载相应模块
             if (Config.jsname) {
                 require([Config.jsname], function (Controller) {
@@ -134,6 +165,7 @@ require(['jquery', 'bootstrap'], function ($, undefined) {
                     } else if (Controller["defaultAction"]) {
                         Controller["defaultAction"]();
                     }
+                    Angular.bootstrap(document, ['app']);
                 }, function (e) {
                     console.error(e);
                 });

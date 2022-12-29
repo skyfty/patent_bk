@@ -6,7 +6,7 @@ use app\admin\model\Modelx;
 
 class Warehouse extends Cosmetic
 {
-    use \app\admin\library\traits\Cascader;
+    use \app\common\library\traits\Cascader;
 
     /**
      * Package模型对象

@@ -39,8 +39,24 @@ define(['jquery', 'bootstrap', 'trade','form', 'table'], function ($, undefined,
             Table.api.bindevent(table);
 
 
-        }
+        },
+
+
+        add: function () {
+            Controller.api.assignEditView("add");
+        },
+
+        edit: function () {
+            Controller.api.assignEditView("edit");
+        },
+
+        api: {
+        },
+        init: function () {
+        },
     };
+    Controller.api = $.extend(Controller.api, Trade.api);
+    Controller.init();
 
     return Controller;
 });

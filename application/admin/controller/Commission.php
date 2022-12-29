@@ -11,7 +11,7 @@ use fast\Tree;
  */
 class Commission extends Backend
 {
-    use \app\admin\library\traits\Cascader;
+    use \app\common\library\traits\Cascader;
     protected $noNeedRight = ['selectpage','cascader','ztreelist'];
 
     public function _initialize()

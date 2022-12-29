@@ -1,21 +1,9 @@
-<div class="row">
-    <div class="col-12">
 
-        <ol class="breadcrumb">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">客户列表</a></li>
-            <li><a href="#">增加客户</a></li>
-            <li><a href="#">增加实体</a></li>
+{if condition="$Request.param.substance_type eq 'persion'"}
+    {include file="principal/persion/add" /}
+{else /}
+    {include file="principal/company/add" /}
+{/if}
 
-        </ol>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        {if condition="$Request.param.substance_type eq 'persion'"}
-            {include file="principal/persion/add" /}
-        {else /}
-            {include file="principal/company/add" /}
-        {/if}
-    </div>
-</div>
+<script type="text/javascript">var fields ={$fields|json_encode};</script>
+{include file="common/tmpl" /}

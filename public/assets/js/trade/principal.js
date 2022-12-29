@@ -1,9 +1,18 @@
-define(['jquery', 'bootstrap', 'trade','form', 'table'], function ($, undefined, Trade, Form, Table) {
+define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], function ($, Trade, Table, Form, Template,angular, Cosmetic) {
     var Controller = {
         index: function () {
-            // 初始化表格参数配置
-            Table.api.init({
+            AngularApp.controller("index", function($scope, $compile,$timeout) {
+                $scope.detailFormater = function (index, row) {
+                    return Template("customer-detail-tmpl",row);
+                };
 
+                $scope.sceneryInit = function(idx) {
+                    $scope.fields = fields;
+                    $timeout(function(){$scope.$broadcast("shownTable");});
+                };
+            });
+
+            var options = {
                 showToggle: false,
                 showColumns: false,
                 showExport: false,
@@ -11,46 +20,39 @@ define(['jquery', 'bootstrap', 'trade','form', 'table'], function ($, undefined,
                 extend: {
                     index_url: 'principal/index',
                     add_url: 'principal/add',
-                    edit_url: 'principal/edit',
                     del_url: 'principal/del',
-                    multi_url: 'principal/multi',
-                    summation_url: 'principal/summation',
+                    multi_url: '',
+                    summation_url: '',
                     table: 'principal',
-                }
-            });
-
-            var table = $("#table");
-
-            // 初始化表格
-            table.bootstrapTable({
-                url: $.fn.bootstrapTable.defaults.extend.index_url,
-                pk: 'id',
-                sortName: 'id',
-                columns: [
-                    [
-                        {field: 'id', title: __('Id')},
-                        {field: 'name', title: __('Name')},
-                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
-                    ]
+                },
+                buttons : [
+                    {
+                        name: 'view',
+                        title: function(row, j){
+                            return __(' %s', row.name);
+                        },
+                        classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                        icon: 'fa fa-pencil',
+                        url: 'customer/edit'
+                    }
                 ]
-            });
-
-            // 为表格绑定事件
-            Table.api.bindevent(table);
-
-
+            };
+            Table.api.init(options);
+            Form.api.bindevent($("div[ng-controller='index']"));
         },
 
         add: function () {
-            Controller.api.bindevent();
+            Controller.api.assignEditView("add", {});
 
         },
 
         edit: function () {
-            Controller.api.bindevent();
+            Controller.api.assignEditView("edit", row[row['substance_type']]);
 
         },
 
+        init: function () {
+        },
         api: {
             bindevent: function () {
                 Form.api.bindevent($("#form"), function(data, ret){
@@ -59,6 +61,7 @@ define(['jquery', 'bootstrap', 'trade','form', 'table'], function ($, undefined,
             }
         }
     };
-
+    Controller.api = $.extend(Controller.api, Trade.api);
+    Controller.init();
     return Controller;
 });
