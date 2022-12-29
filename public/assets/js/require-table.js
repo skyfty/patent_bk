@@ -373,12 +373,20 @@ define(['jquery', 'bootstrap', 'moment', 'moment/locale/zh-cn', 'bootstrap-table
                     Fast.api.open(url, __('View'), $(this).data() || {});
                 });
                 $(table).on("click", "[data-id].btn-del", function (e) {
-                    e.preventDefault();
-                    var id = $(this).data("id");
                     var that = this;
+                    e.preventDefault();
+                    var top = $(that).offset().top - $(window).scrollTop();
+                    var left = $(that).offset().left - $(window).scrollLeft() - 260;
+                    if (top + 154 > $(window).height()) {
+                        top = top - 154;
+                    }
+                    if ($(window).width() < 480) {
+                        top = left = undefined;
+                    }
+                    var id = $(this).data("id");
                     Layer.confirm(
                         __('Are you sure you want to delete this item?'),
-                        {icon: 3, title: __('Warning'), shadeClose: true},
+                        {icon: 3, title: __('Warning'), offset: [top, left], shadeClose: true},
                         function (index) {
                             Table.api.multi("del", id, table, that);
                             Layer.close(index);

@@ -43,7 +43,7 @@
             <td> <%=claims[i].principal.principalclass.name%></td>
             <td style="text-align: center; vertical-align: middle; ">
                 <a href="/principal/edit/ids/<%=claims[i].principal.id%>" class="btn btn-xs btn-success btn-dialog"  title="编辑客户"><i class="fa fa-pencil"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-danger btn-delone"><i class="fa fa-trash"></i></a>
+                <a href="javascript:;" data-id="<%=claims[i].principal.id%>" class="btn btn-xs btn-danger btn-del"><i class="fa fa-trash"></i></a>
             </td>
         </tr>
         <%}%>

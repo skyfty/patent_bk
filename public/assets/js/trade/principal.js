@@ -54,11 +54,6 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
         init: function () {
         },
         api: {
-            bindevent: function () {
-                Form.api.bindevent($("#form"), function(data, ret){
-                    setTimeout(function(){window.location.replace(ret.url);}, 1000);
-                });
-            }
         }
     };
     Controller.api = $.extend(Controller.api, Trade.api);

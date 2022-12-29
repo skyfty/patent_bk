@@ -87,9 +87,34 @@ class Principal extends Trade
         $row = $this->model->get($ids);
         if (!$row)
             $this->error(__('No Results were found'));
+
         if ($this->request->isPost()) {
-            parent::edit($ids);
+            $params = $this->request->post("row/a");
+            if ($params) {
+                $db = $this->model->getQuery();
+                $db->startTrans();
+                try {
+                    $result = $row->allowField(true)->save($params);
+                    if (!$result) {
+                        throw new Exception("error");
+                    }
+                    $result = model($row['substance_type'])->allowField(true)->save($params, ['id'=>$row['substance_id']]);
+                    if ($result !== false) {
+                        $db->commit();
+                        $this->success("", null, $row->toArray());
+                    } else {
+                        throw new Exception($row->getError());
+                    }
+                } catch (\think\exception\PDOException $e) {
+                    $db->rollback();
+                    $this->error($e->getMessage());
+                } catch (\think\Exception $e) {
+                    $db->rollback();
+                    $this->error($e->getMessage());
+                }
+            }
         }
+
         $this->assignFields( $row['substance_type']);
         $this->view->assign("row", $row);
         return $this->view->fetch();
