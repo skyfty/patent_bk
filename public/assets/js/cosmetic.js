@@ -690,17 +690,17 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 var fieldFormatter = $parse("fieldFormatter")($scope);
 
                 var fieldName  = "row." + field.name;
-                if (field.type == "model" || field.type == "mztree") {
+                if (field.type === "model" || field.type === "mztree") {
                     fieldName += "_model_id";
-                }else if (field.type == "cascader") {
+                }else if (field.type === "cascader") {
                     fieldName += "_cascader_id";
                 }
                 $scope.$watch(fieldName, function(){
                     var row = $parse($attrs.model)($scope);
-                    if (field.type == "model" || field.type == "cascader") {
+                    if (field.type === "model" || field.type === "cascader") {
                         var data = row;
                     } else {
-                        if (field.relevance != "") {
+                        if (field.relevance !== "") {
                             var data = row[field.relevance][field.name];
                         } else {
                             var data = row[field.name];
@@ -1620,11 +1620,11 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     // 为表格1绑定事件
                     Table.api.bindevent(dataTable);
 
-
-                    //当双击单元格时
-                    dataTable.on('dbl-click-row.bs.table', function (e, row, element, field) {
-                        $(".btn-view", element).trigger("click");
-                    });
+                    //
+                    // //当双击单元格时
+                    // dataTable.on('dbl-click-row.bs.table', function (e, row, element, field) {
+                    //     $(".btn-view", element).trigger("click");
+                    // });
                     var options = dataTable.bootstrapTable('getOptions');
                     if (options.extend['summation_url']) {
                         dataTable.bootstrapTable('resetTableTips');

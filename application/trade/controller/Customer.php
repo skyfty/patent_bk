@@ -35,9 +35,27 @@ class Customer extends Trade
             "sex",
             "telephone",
         ])->order("weigh", "asc")->cache(true)->select();;
-
-
         $this->view->assign('fields', $fields);
+    }
+
+    /**
+     * 查看
+     */
+    public function index()
+    {
+        if ($this->request->isAjax()) {
+            return parent::index();
+        }
+
+        $scenery = Scenery::get(['model_table' => "persion",'pos'=>'index'],[],true);
+        $personal_fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->order("weigh", "asc")->cache(true)->select();;
+        $this->view->assign('personal_fields', $personal_fields);
+
+        $scenery = Scenery::get(['model_table' => "company",'pos'=>'index'],[],true);
+        $company_fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->order("weigh", "asc")->cache(true)->select();;
+        $this->view->assign('company_fields', $company_fields);
+
+        return $this->view->fetch();
     }
 
     protected function spectacle($model) {

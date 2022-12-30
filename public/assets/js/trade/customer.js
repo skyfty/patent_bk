@@ -3,11 +3,25 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
         index:function() {
             AngularApp.controller("index", function($scope, $compile,$timeout) {
                 $scope.detailFormater = function (index, row) {
-                    return Template("customer-detail-tmpl",row);
+                    var html = $("<div/>");
+                    for(var i = 0; i < row.claims.length; ++i) {
+                        var principal = row.claims[i].principal;
+                        if (principal.persion) {
+                            $scope.row = principal.persion;
+                            html.append($compile(Template("detail-tmpl", {"fields":"personal_fields", principal:principal}))($scope));
+                        } else {
+                            $scope.row = principal.company;
+                            html.append($compile(Template("detail-tmpl", {"fields":"company_fields", principal:principal}))($scope));
+                        }
+                    }
+                    $scope.$apply();
+                    return html.html();
                 };
 
                 $scope.sceneryInit = function(idx) {
                     $scope.fields = fields;
+                    $scope.personal_fields = personal_fields;
+                    $scope.company_fields = company_fields;
                     $timeout(function(){$scope.$broadcast("shownTable");});
                 };
             });
@@ -43,7 +57,7 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
                         text:function(row, j) {
                             return __('公司主体');
                         },
-                        classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                        classname: 'btn btn-xs btn-default btn-magic btn-dialog btn-view',
                         icon: 'fa fa-plus',
                         url:function(row,j) {
                             return 'principal/add/substance_type/company/customer_id/' + row.id;
@@ -57,7 +71,7 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
                         text:function(row, j) {
                             return __('个人主体');
                         },
-                        classname: 'btn btn-xs btn-success btn-magic btn-dialog btn-view',
+                        classname: 'btn btn-xs btn-default btn-magic btn-dialog btn-view',
                         icon: 'fa fa-plus',
                         url:function(row,j) {
                             return 'principal/add/substance_type/persion/customer_id/' + row.id;

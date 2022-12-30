@@ -25,28 +25,27 @@
                            class="table table-striped table-bordered table-hover  text-nowrap" width="100%">
                     </table>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">var fields ={$fields|json_encode};</script>
-<script id="customer-detail-tmpl" type="text/html">
+<script type="text/javascript">var personal_fields ={$personal_fields|json_encode};</script>
+<script type="text/javascript">var company_fields ={$company_fields|json_encode};</script>
+
+<script id="detail-tmpl" type="text/html">
     <table class="table">
         <tbody>
-        <%for (var i=0;i<claims.length;i++) {%>
         <tr>
-            <td><%=claims[i].principal.idcode%></td>
-
-            <td><%=claims[i].principal.name%></td>
-            <td> <%=claims[i].principal.principalclass.name%></td>
+            <td  ng-repeat="f in <%=fields%>"  data-field-name="{{f.name}}">
+                <div class="col-sm-8 col-xs-12" formatter data-field="f" data-model="row"></div>
+            </td>
             <td style="text-align: center; vertical-align: middle; ">
-                <a href="/principal/edit/ids/<%=claims[i].principal.id%>" class="btn btn-xs btn-success btn-dialog"  title="编辑客户"><i class="fa fa-pencil"></i></a>
-                <a href="javascript:;" data-id="<%=claims[i].principal.id%>" class="btn btn-xs btn-danger btn-del"><i class="fa fa-trash"></i></a>
+                <a href="/principal/edit/ids/<%=principal.id%>" class="btn btn-xs btn-success btn-dialog"  title="编辑客户"><i class="fa fa-pencil"></i></a>
+                <a href="javascript:;" data-id="<%=principal.id%>" class="btn btn-xs btn-danger btn-del"><i class="fa fa-trash"></i></a>
             </td>
         </tr>
-        <%}%>
         </tbody>
     </table>
 </script>
