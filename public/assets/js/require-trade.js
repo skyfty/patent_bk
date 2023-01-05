@@ -47,7 +47,6 @@ require.config({
         'bootstrap-select': '../libs/bootstrap-select/dist/js/bootstrap-select.min',
         'bootstrap-table-lang': '../libs/bootstrap-table/dist/locale/bootstrap-table-zh-CN',
         'bootstrap-slider': '../libs/bootstrap-slider/bootstrap-slider',
-        'bootstrap-treegrid': '../libs/bootstrap-table/dist/extensions/treegrid/bootstrap-table-treegrid',
         'datetimepicker': '../libs/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min',
         'datetimepicker-lang': '../libs/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN',
         'selectpage': '../libs/fastadmin-selectpage/selectpage',
@@ -63,9 +62,10 @@ require.config({
         'jstree': '../libs/jstree/dist/jstree.min',
         'ztree': '../libs/zTree/js/jquery.ztree.all',
         'cxselect': '../libs/fastadmin-cxselect/js/jquery.cxselect',
-        'colorpicker': '../libs/bootstrap-colorpicker/dist/js/bootstrap-colorpicker',
+        'masonry-layout': '../libs/masonry-layout/dist/masonry.pkgd.min',
         'bootstrap-datetimepicker': '../libs/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min',
         'bootstrap-daterangepicker': '../libs/bootstrap-daterangepicker/daterangepicker',
+        'bootstrap-treegrid': '../libs/bootstrap-table/dist/extensions/treegrid/bootstrap-table-treegrid',
     },
     // shim依赖配置
     shim: {

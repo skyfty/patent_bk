@@ -34,6 +34,12 @@
     "fastadmin-dragsort": "~1.0.0",
     "fastadmin-addtabs": "~1.0.3",
     "fastadmin-selectpage": "~1.0.0",
-    "fastadmin-layer": "~3.1.2"
+    "fastadmin-layer": "~3.1.2",
+    "masonry-layout": "masonry#^4.2.2"
+  },
+  "resolutions": {
+    "jquery": ">=1.7",
+    "moment": ">=2.10.5",
+    "ev-emitter": "^2.1.2"
   }
 }

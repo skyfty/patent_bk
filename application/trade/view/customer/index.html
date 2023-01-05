@@ -35,19 +35,12 @@
 <script type="text/javascript">var company_fields ={$company_fields|json_encode};</script>
 
 <script id="detail-tmpl" type="text/html">
-    <table class="table">
-        <tbody>
-        <tr>
-            <td  ng-repeat="f in <%=fields%>"  data-field-name="{{f.name}}">
-                <div class="col-sm-8 col-xs-12" formatter data-field="f" data-model="row"></div>
-            </td>
-            <td style="text-align: center; vertical-align: middle; ">
-                <a href="/principal/edit/ids/<%=principal.id%>" class="btn btn-xs btn-success btn-dialog"  title="编辑客户"><i class="fa fa-pencil"></i></a>
-                <a href="javascript:;" data-id="<%=principal.id%>" class="btn btn-xs btn-danger btn-del"><i class="fa fa-trash"></i></a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+
+    <div class="grid"  data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'>
+        <div class="grid-item">...</div>
+        <div class="grid-item grid-item--width2">...</div>
+        <div class="grid-item">...</div>
+    </div>
 </script>
 
 

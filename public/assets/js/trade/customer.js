@@ -1,4 +1,4 @@
-define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], function ($, Trade, Table, Form, Template,angular, Cosmetic) {
+define(['jquery', 'trade', 'table', 'form','template','angular','masonry-layout', 'cosmetic'], function ($, Trade, Table, Form, Template,angular, undefined, Cosmetic) {
     var Controller = {
         index:function() {
             AngularApp.controller("index", function($scope, $compile,$timeout) {
