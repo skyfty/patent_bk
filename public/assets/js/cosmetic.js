@@ -69,8 +69,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
             },
             formatter:function(field, data, row) {
                 var self = this;
-                if (field.type == 'radio' || field.type == 'checkbox' || field.type == 'select' || field.type == 'selects') {
-                    if (field.extend == "member" && field.content) {
+                if (field.type === 'radio' || field.type === 'checkbox' || field.type === 'select' || field.type === 'selects') {
+                    if (field.extend === "member" && field.content) {
                         data = row[field.content];
                     } else {
                         var titles = [];
@@ -81,7 +81,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                         data = Table.api.formatter.label.call(this, titles,field);
                     }
 
-                } else if (field.type=="model") {
+                } else if (field.type==="model") {
                     if (field.relevance) {
                         data = data[field.relevance];
                     }
@@ -89,7 +89,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     if (modelKeyword) {
                         var showData = [];
                         showData.push(self.formatModelKeyword(field, data, modelKeyword));
-                        if (showData.length == 1) {
+                        if (showData.length === 1) {
                             data = showData[0];
                         } else {
                             data = showData.join("<br/>");
@@ -97,11 +97,11 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     } else {
                         data = "-";
                     }
-                } else if (field.type=="mztree") {
+                } else if (field.type==="mztree") {
                     if (data) {
                         var showData = [];
                         showData.push(self.formatMZtreeKeyword(field, row, data));
-                        if (showData.length == 1) {
+                        if (showData.length === 1) {
                             data = showData[0];
                         } else {
                             data = showData.join("<br/>");
@@ -109,7 +109,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     } else {
                         data = "-";
                     }
-                } else if (field.type=="cascader") {
+                } else if (field.type==="cascader") {
                     if (field.relevance) {
                         data = data[field.relevance];
                     }
@@ -127,6 +127,23 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     }
                 }
                 return data;
+            },
+            formatRow:function(field, row, fieldFormatter) {
+                if (field.type === "model" || field.type === "cascader") {
+                    var data = row;
+                } else {
+                    if (field.relevance !== "") {
+                        var data = row[field.relevance][field.name];
+                    } else {
+                        var data = row[field.name];
+                    }
+                }
+                if (typeof fieldFormatter != "undefined") {
+                    var html = fieldFormatter(field, data, row);
+                } else {
+                    var html = Cosmetic.api.formatter(field, data, row);
+                }
+                return html;
             },
             getHtml:function(scope, url, success, error) {
                 var index = Layer.load();
@@ -697,20 +714,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 }
                 $scope.$watch(fieldName, function(){
                     var row = $parse($attrs.model)($scope);
-                    if (field.type === "model" || field.type === "cascader") {
-                        var data = row;
-                    } else {
-                        if (field.relevance !== "") {
-                            var data = row[field.relevance][field.name];
-                        } else {
-                            var data = row[field.name];
-                        }
-                    }
-                    if (typeof fieldFormatter != "undefined") {
-                        var html = fieldFormatter(field, data, row);
-                    } else {
-                        var html = Cosmetic.api.formatter(field, data, row);
-                    }
+                    var html = Cosmetic.api.formatRow(field, row, fieldFormatter);
                     $element.html(html?html:"-");
                 });
             }

@@ -62,7 +62,7 @@ require.config({
         'jstree': '../libs/jstree/dist/jstree.min',
         'ztree': '../libs/zTree/js/jquery.ztree.all',
         'cxselect': '../libs/fastadmin-cxselect/js/jquery.cxselect',
-        'masonry-layout': '../libs/masonry-layout/dist/masonry.pkgd.min',
+        'masonry': '../libs/masonry-layout/dist/masonry.pkgd',
         'bootstrap-datetimepicker': '../libs/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min',
         'bootstrap-daterangepicker': '../libs/bootstrap-daterangepicker/daterangepicker',
         'bootstrap-treegrid': '../libs/bootstrap-table/dist/extensions/treegrid/bootstrap-table-treegrid',
@@ -78,6 +78,10 @@ require.config({
             exports: "plupload"
         },
         'slimscroll': {
+            deps: ['jquery'],
+            exports: '$.fn.extend'
+        },
+        'masonry-layout': {
             deps: ['jquery'],
             exports: '$.fn.extend'
         },

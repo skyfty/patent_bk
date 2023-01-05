@@ -35,14 +35,36 @@
 <script type="text/javascript">var company_fields ={$company_fields|json_encode};</script>
 
 <script id="detail-tmpl" type="text/html">
+    <div class="card grid-item" >
+        <div class="card-header">
+            <div class="card-title">
+               <%=row.name%>
+            </div>
+            <div class="card-tools">
+                <a href="/principal/edit/ids/<%=row.id%>" class="btn btn-xs btn-default btn-dialog"  title="编辑客户"><i class="fa fa-pencil"></i></a>
+                <a href="javascript:;" data-id="<%=row.id%>" class="btn btn-xs btn-default  btn-del"><i class="fa fa-trash"></i></a>
 
-    <div class="grid"  data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'>
-        <div class="grid-item">...</div>
-        <div class="grid-item grid-item--width2">...</div>
-        <div class="grid-item">...</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table  table-striped table-hover" style="table-layout: fixed;word-break:break-all;white-space: normal;">
+                <tbody>
+                <%for (var i=0;i<fields.length;i++) {%>
+                <tr>
+                    <td style="text-align: right">
+                        <%=fields[i].title%>
+                    </td>
+                    <td>
+                            <%=#fields[i].data%>
+                    </td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+
+        </div>
     </div>
 </script>
-
 
 <script id="customer-operate-tmpl" type="text/html">
     <a href="/customer/edit/ids/<%=id%>" class="btn btn-xs btn-success btn-dialog"  title="添加智慧点"><i class="fa fa-pencil"></i></a>

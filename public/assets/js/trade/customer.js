@@ -1,27 +1,31 @@
-define(['jquery', 'trade', 'table', 'form','template','angular','masonry-layout', 'cosmetic'], function ($, Trade, Table, Form, Template,angular, undefined, Cosmetic) {
+define(['jquery', 'trade', 'table', 'form','template','angular', 'cosmetic'], function ($, Trade, Table, Form, Template,angular, Cosmetic) {
     var Controller = {
         index:function() {
             AngularApp.controller("index", function($scope, $compile,$timeout) {
                 $scope.detailFormater = function (index, row) {
-                    var html = $("<div/>");
+                    var html = $("<div class='grid'  data-masonry='{ \"itemSelector\": \".grid-item\", \"columnWidth\": 350 }'></div>");
                     for(var i = 0; i < row.claims.length; ++i) {
                         var principal = row.claims[i].principal;
                         if (principal.persion) {
-                            $scope.row = principal.persion;
-                            html.append($compile(Template("detail-tmpl", {"fields":"personal_fields", principal:principal}))($scope));
+                            var fields = Controller.api.formatFields(personal_fields, principal.persion);
                         } else {
-                            $scope.row = principal.company;
-                            html.append($compile(Template("detail-tmpl", {"fields":"company_fields", principal:principal}))($scope));
+                            var fields = Controller.api.formatFields(company_fields, principal.company);
                         }
+                        html.append(Template("detail-tmpl", {"fields":fields, row:principal}));
                     }
-                    $scope.$apply();
-                    return html.html();
+                    require(['masonry'], function(Masonry){
+                        // init with selector
+                        new Masonry( '.grid',{
+                            // options
+                            itemSelector: '.grid-item',
+                            columnWidth: 360
+                        });
+                    });
+                    return html;
                 };
 
                 $scope.sceneryInit = function(idx) {
                     $scope.fields = fields;
-                    $scope.personal_fields = personal_fields;
-                    $scope.company_fields = company_fields;
                     $timeout(function(){$scope.$broadcast("shownTable");});
                 };
             });
@@ -92,6 +96,12 @@ define(['jquery', 'trade', 'table', 'form','template','angular','masonry-layout'
         },
 
         api: {
+            formatFields:function(fields, row) {
+                for(var j = 0; j < fields.length; ++j) {
+                    fields[j].data = Cosmetic.api.formatRow(fields[j], row);
+                }
+                return fields;
+            },
         },
         init: function () {
         },
