@@ -204,24 +204,25 @@ class Backend extends Controller
             'modulename'     => $modulename,
             'controllername' => $controllername,
             'actionname'     => $actionname,
-            'jsname'         => 'backend/' . str_replace('.', '/', $controllername),
+            'jsname'         => $modulename.'/' . str_replace('.', '/', $controllername),
             'moduleurl'      => rtrim(url("/{$modulename}", '', false), '/'),
             'language'       => $lang,
             'fastadmin'      => Config::get('fastadmin'),
             'referer'        => Session::get("referer")
         ];
         $config = array_merge($config, Config::get("view_replace_str"));
+        // 配置信息后
+        Hook::listen("config_init", $config);
+        //渲染配置信息
+        $this->assign('config', $config);      //加载当前控制器语言包
+
 
         Config::set('upload', array_merge(Config::get('upload'), $upload));
 
-        // 配置信息后
-        Hook::listen("config_init", $config);
-        //加载当前控制器语言包
         $this->loadlang($controllername);
         //渲染站点配置
         $this->assign('site', $site);
-        //渲染配置信息
-        $this->assign('config', $config);
+
         //渲染权限对象
         $this->assign('auth', $this->auth);
         //渲染管理员对象

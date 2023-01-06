@@ -3,7 +3,6 @@
 namespace app\trade\controller;
 
 use app\common\controller\Backend;
-use app\common\controller\Trade;
 use fast\Tree;
 
 /**

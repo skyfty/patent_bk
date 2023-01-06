@@ -4,13 +4,17 @@
     <!-- 加载样式及META信息 -->
     {include file="common/meta" /}
 </head>
-<body   class="inside-header inside-aside {:defined('IS_DIALOG') && IS_DIALOG ? 'is-dialog' : ''}">
-<div class="nav-header">
+<body   class=" {:defined('IS_DIALOG') && IS_DIALOG ? 'is-dialog' : ''}">
+
+<div class="top-nav-header">
     {include file="common/header" /}
 </div>
 
-<div>
-    {__CONTENT__}
+
+<div class="container-fluid">
+    <div class="row">
+        {__CONTENT__}
+    </div>
 </div>
 
 <!-- 加载JS脚本 -->

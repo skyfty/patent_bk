@@ -2,7 +2,6 @@
 
 namespace app\trade\controller;
 
-use app\common\controller\Trade;
 use think\Lang;
 
 /**

@@ -4,7 +4,6 @@ namespace app\trade\controller;
 
 use app\admin\model\Scenery;
 use app\admin\model\Sight;
-use app\common\controller\Trade;
 use app\trade\model\Fields;
 use think\App;
 use think\Exception;

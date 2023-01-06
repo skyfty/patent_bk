@@ -4,7 +4,6 @@ namespace app\trade\controller;
 
 use app\admin\model\Scenery;
 use app\admin\model\Sight;
-use app\trade\model\Fields;
 
 /**
  * 客户管理
@@ -12,7 +11,7 @@ use app\trade\model\Fields;
  * @icon fa fa-circle-o
  */
 
-class Customer extends Trade
+class Aptitude extends Trade
 {
     protected $selectpageFields = ['name', 'idcode', 'slug', 'id', 'status'];
     protected $searchFields = ['name', 'idcode', 'slug'];
@@ -21,18 +20,14 @@ class Customer extends Trade
     public function _initialize()
     {
         parent::_initialize();
-        $this->model = model("customer");
+        $this->model = model("aptitude");
         $this->assignFields();
     }
 
     protected function assignFields() {
-        $scenery = Scenery::get(['model_table' => "customer",'pos'=>'view'],[],true);
-        $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->where("fields.name", "in",[
-            "name",
-            "membership",
-            "birthday",
-            "sex",
-            "telephone",
+        $scenery = Scenery::get(['model_table' => "aptitude",'pos'=>'view'],[],true);
+        $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->where("fields.name", "not in",[
+            "branch",
         ])->order("weigh", "asc")->cache(true)->select();;
         $this->view->assign('fields', $fields);
     }
@@ -45,15 +40,6 @@ class Customer extends Trade
         if ($this->request->isAjax()) {
             return parent::index();
         }
-
-        $scenery = Scenery::get(['model_table' => "persion",'pos'=>'index'],[],true);
-        $personal_fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->order("weigh", "asc")->cache(true)->select();;
-        $this->view->assign('personal_fields', $personal_fields);
-
-        $scenery = Scenery::get(['model_table' => "company",'pos'=>'index'],[],true);
-        $company_fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->order("weigh", "asc")->cache(true)->select();;
-        $this->view->assign('company_fields', $company_fields);
-
         return $this->view->fetch();
     }
 

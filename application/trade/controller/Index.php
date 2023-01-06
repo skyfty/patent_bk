@@ -3,7 +3,6 @@
 namespace app\trade\controller;
 
 use app\admin\model\AdminLog;
-use app\common\controller\Trade;
 use think\Hook;
 use think\Validate;
 
