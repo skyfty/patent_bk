@@ -2,7 +2,6 @@ define(['jquery', 'trade', 'table', 'form','template','angular', 'cosmetic'], fu
     var Controller = {
         index:function() {
             AngularApp.controller("index", function($scope, $compile,$timeout) {
-
                 $scope.sceneryInit = function(idx) {
                     $scope.fields = fields;
                     $timeout(function(){$scope.$broadcast("shownTable");});
@@ -39,7 +38,7 @@ define(['jquery', 'trade', 'table', 'form','template','angular', 'cosmetic'], fu
         },
 
         add: function () {
-            Controller.api.assignEditView("add", {});
+            Controller.api.assignEditView("add", row);
         },
 
         edit: function () {

@@ -33,14 +33,14 @@ class Aptitude extends Trade
     }
 
     /**
-     * 查看
+     * 添加
      */
-    public function index()
-    {
-        if ($this->request->isAjax()) {
-            return parent::index();
+    public function add() {
+        if (!$this->request->isPost()) {
+            $row['company_model_id'] = input("param.company_model_id");
+            $this->view->assign("row", $row);
         }
-        return $this->view->fetch();
+        return parent::add();
     }
 
     protected function spectacle($model) {

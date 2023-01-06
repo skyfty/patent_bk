@@ -39,6 +39,18 @@
                 <%=row.name%>
             </div>
             <div class="card-tools">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-xs btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <%if (row.substance_type == "company"){%>
+                        <li><a href="/aptitude/add?company_model_id=<%=row.substance_id%>" class=" btn-dialog"  title="知识产权贯标">知识产权贯标</a></li>
+                        <%}%>
+                        <li><a href="#">发明专利</a></li>
+                        <li><a href="#">著作权</a></li>
+                    </ul>
+                </div>
                 <a href="/principal/edit/ids/<%=row.id%>" class="btn btn-xs btn-default btn-dialog"  title="编辑客户"><i class="fa fa-pencil"></i></a>
                 <a href="javascript:;" data-id="<%=row.id%>" class="btn btn-xs btn-default  btn-del"><i class="fa fa-trash"></i></a>
 

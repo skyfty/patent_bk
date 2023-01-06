@@ -197,6 +197,7 @@ class Backend extends Controller
         // 上传信息配置后
         Hook::listen("upload_config_init", $upload);
 
+        $jsname = ($modulename == "admin"?"backend":$modulename);
         // 配置信息
         $config = [
             'site'           => array_intersect_key($site, array_flip(['name', 'indexurl', 'cdnurl', 'version', 'timezone', 'languages'])),
@@ -204,7 +205,7 @@ class Backend extends Controller
             'modulename'     => $modulename,
             'controllername' => $controllername,
             'actionname'     => $actionname,
-            'jsname'         => $modulename.'/' . str_replace('.', '/', $controllername),
+            'jsname'         => $jsname.'/' . str_replace('.', '/', $controllername),
             'moduleurl'      => rtrim(url("/{$modulename}", '', false), '/'),
             'language'       => $lang,
             'fastadmin'      => Config::get('fastadmin'),
