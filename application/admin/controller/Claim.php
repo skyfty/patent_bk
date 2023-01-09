@@ -14,7 +14,6 @@ class Claim extends Cosmetic
      * Claim模型对象
      * @var \app\admin\model\Claim
      */
-    protected $model = null;
     protected $selectpageShowFields = ['name', 'idcode'];
 
     public function _initialize()

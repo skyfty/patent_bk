@@ -28,6 +28,10 @@ class Business extends Cosmetic
     }
 
 
+    public function promotion() {
+        return $this->hasOne('promotion','id','promotion_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
+
     public function relevance()
     {
         return $this->morphOne('promotion', 'relevance_model');
