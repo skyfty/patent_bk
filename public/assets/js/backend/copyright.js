@@ -45,7 +45,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                         custom: {"copyright.id":$scope.row.id}
                     },
                     success: function (data) {
-                        if (data && data.rows && data.rows.length == 1) {
+                        if (data && data.rows && data.rows.length === 1) {
                             $scope.$apply(function(){
                                 $parse("row").assign($scope, data.rows[0]);
                             });
@@ -54,7 +54,22 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 });
             };
         },
-        
+        scenery: {
+            code:function($scope, $compile,$timeout, data) {
+                $scope.generate = function(){
+                    Fast.api.ajax({
+                        url: "ajax/generateCode?ids=" + $scope.row.dlanguage_model_id
+                    }, function () {
+
+                        return false;
+                    });
+                }
+                angular.element("#tab-" +$scope.scenery.name).html($compile(data)($scope));
+            },
+            procshutter:function($scope, $compile,$timeout, data) {
+
+            }
+        },
         bindevent:function($scope){
             if (Config.staff) $('[data-field-name="branch"]').hide().trigger("rate");
             Form.api.bindevent($("form[role=form]"), $scope.submit);

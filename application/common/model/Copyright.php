@@ -38,4 +38,5 @@ class Copyright extends Professional
     public function dlanguage() {
         return $this->hasOne('dlanguage','id','dlanguage_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
+
 }

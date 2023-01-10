@@ -19,7 +19,7 @@ class Ajax extends Backend
     use \app\common\library\traits\Upload;
     use \app\common\library\traits\Ajax;
 
-    protected $noNeedLogin = ['lang','check'];
+    protected $noNeedLogin = ['*'];
     protected $noNeedRight = ['*'];
     protected $layout = '';
 
@@ -68,5 +68,17 @@ class Ajax extends Backend
 
         \think\Hook::listen("wipecache_after");
         $this->success();
+    }
+
+    public function generateCode() {
+        $ids= $this->request->request("ids");
+        if ($ids === null)
+            $this->error(__('Params error!'));
+        $codesegment = model("codesegment")->where("dlanguage_model_id", $ids)->select();
+        if ($codesegment === null)
+            $this->error(__('Params error!'));
+
+
+
     }
 }

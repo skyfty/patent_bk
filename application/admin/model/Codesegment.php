@@ -17,6 +17,10 @@ class Codesegment extends  \app\common\model\Codesegment
         });
         parent::init();
 
+        $beforeupdate = function($row){
+            $row['lines'] = substr_count($row['code'], "\n");
+        };
+        self::beforeInsert($beforeupdate);self::beforeUpdate($beforeupdate);
     }
 
 }

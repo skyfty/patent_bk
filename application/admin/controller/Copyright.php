@@ -2,7 +2,12 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\Modelx;
+use app\admin\model\Scenery;
+use app\admin\model\Sight;
 use app\common\controller\Backend;
+use think\App;
+use think\Hook;
 
 /**
  * 著作权
@@ -11,13 +16,6 @@ use app\common\controller\Backend;
  */
 class Copyright extends Cosmetic
 {
-    
-    /**
-     * Copyright模型对象
-     * @var \app\admin\model\Copyright
-     */
-    protected $model = null;
-
     public function _initialize()
     {
         parent::_initialize();
@@ -36,5 +34,24 @@ class Copyright extends Cosmetic
         $model->where("copyright.branch_model_id", $branch_model_id);
 
         return $model;
+    }
+
+
+    public function code() {
+        if (!$this->auth->check("copyright/code")) {
+            Hook::listen('admin_nopermission', $this);
+            $this->error(__('You have no permission'), '');
+        }
+        $ids =$this->request->param("ids", null);
+        if ($ids === null)
+            $this->error(__('Params error!'));
+        $this->view->assign("row", $this->getModelRow($ids));
+
+        if ($this->request->isPost()) {
+            $params = $this->request->post("row/a");
+
+        } else {
+            return $this->view->fetch();
+        }
     }
 }
