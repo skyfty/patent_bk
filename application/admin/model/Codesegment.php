@@ -20,7 +20,7 @@ class Codesegment extends  \app\common\model\Codesegment
         $beforeupdate = function($row){
             $row['code'] = trim($row['code']);
             $arr = explode("\n", $row['code']);
-            $row['lines'] = count($arr);
+            $row['lines_cnt'] = count($arr);
             $row['name'] = substr($row['code'], 0, 300);
         };
         self::beforeInsert($beforeupdate);self::beforeUpdate($beforeupdate);
