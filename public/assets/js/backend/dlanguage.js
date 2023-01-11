@@ -68,6 +68,14 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         scenery: {
 
             codesegment:function($scope, $compile,$timeout, data){
+
+                $scope.searchFieldsParams = function(params) {
+                    params.custom = {
+                        'dlanguage_model_id':$scope.row.id
+                    };
+                    return params;
+                };
+
                 Table.api.init({
                     extend: {
                         del_url: 'codesegment/del',
@@ -88,8 +96,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 });
                 $scope.fields = data.fields;
                 angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
-                var dataTable = $("#table-codesegment");
-
                 $scope.$broadcast("shownTable");
             },
         },
