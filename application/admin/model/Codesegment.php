@@ -26,6 +26,7 @@ class Codesegment extends  \app\common\model\Codesegment
         self::beforeInsert($beforeupdate);self::beforeUpdate($beforeupdate);
 
         $updateStatistics = function($row){
+
             $row->dlanguage->updateStatistics();
         };
         self::afterInsert($updateStatistics);self::afterUpdate($updateStatistics);self::afterDelete($updateStatistics);

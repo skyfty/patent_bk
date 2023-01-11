@@ -20,12 +20,22 @@ class Index extends Backend
 {
 
     protected $noNeedLogin = ['login','manage','ggg','player','layercontrol'];
-    protected $noNeedRight = ['index', 'logout'];
+    protected $noNeedRight = ['index', 'logout', 'ggg'];
     protected $layout = '';
 
     public function _initialize()
     {
         parent::_initialize();
+    }
+
+    public function ggg() {
+
+        $codesegment = model("codesegment")->select();
+        foreach ($codesegment as $k=>$v ) {
+            $arr = explode("\n", $v['code']);
+            $v->save(['lines_cnt'=>count($arr)]);
+        }
+
     }
 
     /**
