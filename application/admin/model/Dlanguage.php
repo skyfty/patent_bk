@@ -19,5 +19,10 @@ class Dlanguage extends  \app\common\model\Dlanguage
 
     }
 
+    public function updateStatistics() {
+        $cnt = model("codesegment")->where("dlanguage_model_id", $this['dlanguage_model_id'])->count();
+        $lines = model("codesegment")->where("dlanguage_model_id", $this['dlanguage_model_id'])->sum("lines");
+        $this->save(["codesegment_count"=>$cnt,"total_lines"=>$lines]);
+    }
 
 }

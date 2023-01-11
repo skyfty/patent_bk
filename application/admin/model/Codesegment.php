@@ -18,9 +18,18 @@ class Codesegment extends  \app\common\model\Codesegment
         parent::init();
 
         $beforeupdate = function($row){
-            $row['lines'] = substr_count($row['code'], "\n");
+            $row['code'] = trim($row['code']);
+            $arr = explode("\n", $row['code']);
+            $row['lines'] = count($arr);
+            $row['name'] = substr($row['code'], 0, 300);
         };
         self::beforeInsert($beforeupdate);self::beforeUpdate($beforeupdate);
+
+        $updateStatistics = function($row){
+            $row->dlanguage->updateStatistics();
+        };
+        self::afterInsert($updateStatistics);self::afterUpdate($updateStatistics);self::afterDelete($updateStatistics);
+
     }
 
 }
