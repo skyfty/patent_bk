@@ -29,8 +29,11 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                         param.custom['branch_model_id'] = ["in", branchIds];
                     }
                 }
+                if ($scope.speciesModelIds.length > 0) {
+                    param.custom['shuttering.species_cascader_id'] = ["in",$scope.speciesModelIds];
+                }
                 if (species_cascader_id) {
-                    param.custom['species_cascader_id'] = species_cascader_id;
+                    param.custom['shuttering.species_cascader_id'] = species_cascader_id;
                 }
                 return param;
             };
