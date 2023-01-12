@@ -1,0 +1,34 @@
+{__NOLAYOUT__}
+<form class="form-horizontal" role="form" data-toggle="validator" method="POST" action="copyright/edit/ids/{$row['id']}" >
+    <input type="hidden" name="scenery" value="{$vo.name}"/>
+    <input type="hidden" name="row[id]" value="{$row.id}"/>
+    <div class="box-header with-border">
+    </div>
+    <div class="box-body no-padding">
+        <div class="mailbox-controls">
+            <div class="btn-group">
+                <div ng-hide="viewstate.editing" >
+                    <button type="button" class="btn btn-default btn-inline-edit btn-sm {:$auth->check('copyright/edit')?'':'hide'}" ng-click="edit()" data-toggle="tooltip" data-container="body" title="{:__('Edit')}">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="refreshRow()" data-toggle="tooltip" data-container="body" title="刷新">
+                        <i class="fa  fa-refresh"></i>
+                    </button>
+                </div>
+                <div  ng-show="viewstate.editing">
+                    <button type="submit" class="btn btn-success btn-sm" data-toggle="tooltip" data-container="body" title="{:__('Submit')}">
+                        <i class="fa fa-check"></i>
+                    </button>
+                    <a  class="btn btn-default btn-sm" ng-click="repeal()" data-toggle="tooltip" data-container="body" title="{:__('Close')}">
+                        <i class="fa fa-close "></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <div class="mailbox-messages" ng-hide="viewstate.editing" id="data-view-{$vo['name']}">
+        </div>
+        <div class="mailbox-messages" ng-show="viewstate.editing" id="data-edit-{$vo['name']}">
+        </div>
+    </div>
+</form>

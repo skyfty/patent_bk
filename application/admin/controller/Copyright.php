@@ -21,6 +21,7 @@ class Copyright extends Cosmetic
         parent::_initialize();
         $this->model = new \app\admin\model\Copyright;
     }
+    use \app\admin\library\traits\Produce;
 
     protected function spectacle($model) {
         $branch_model_id = $this->request->param("branch_model_id");
