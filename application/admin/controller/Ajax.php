@@ -70,15 +70,4 @@ class Ajax extends Backend
         $this->success();
     }
 
-    public function generateCode() {
-        $ids= $this->request->request("ids");
-        if ($ids === null)
-            $this->error(__('Params error!'));
-        $codesegment = model("codesegment")->where("dlanguage_model_id", $ids)->select();
-        if ($codesegment === null)
-            $this->error(__('Params error!'));
-
-
-
-    }
 }

@@ -58,13 +58,23 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             code:function($scope, $compile,$timeout, data) {
                 $scope.generate = function(){
                     Fast.api.ajax({
-                        url: "ajax/generateCode?ids=" + $scope.row.dlanguage_model_id
-                    }, function () {
-
+                        url: "dlanguage/generateCode?ids=" + $scope.row.dlanguage_model_id
+                    }, function (data, ret) {
+                        $scope.$apply(function(){
+                            $scope.row.code = data.code;
+                        });
                         return false;
                     });
                 }
                 angular.element("#tab-" +$scope.scenery.name).html($compile(data)($scope));
+                $timeout(function(){
+                    var roleForm = $("form[role=form]");
+                    var validator = roleForm.data("validator");
+                    if (validator) {
+                        validator.reset();
+                    }
+                    Controller.bindevent($scope,$timeout,$compile);
+                });
             },
             procshutter:function($scope, $compile,$timeout, data) {
 

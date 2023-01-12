@@ -85,35 +85,6 @@ class Cosmetic extends Model
             }
         };
         self::beforeInsert($prepareModelField);self::beforeUpdate($prepareModelField);
-
-        $recordLog = function($row) {
-            if ($row->origin && count($row->origin) > 0 && isset($row['id'])) {
-                $content = [];
-                $changeData = $row->readonly("updatetime")->getChangedData();
-                foreach($changeData as $k=>$v) {
-                    if (isset($row->origin[$k])) {
-                        $content[$k] = array($row->origin[$k], $v);
-                    }
-                }
-                ModelLog::setContent($content);
-                ModelLog::setModel($row->name, $row->id);
-                ModelLog::record(__(request()->action()), 'active', 'locked');
-            }
-        };
-        self::afterUpdate($recordLog);
-
-        self::afterInsert(function($row) {
-            $content = [];
-            $changeData = $row->readonly("updatetime")->getChangedData();
-            foreach($changeData as $k=>$v) {
-                if (isset($row->origin[$k])) {
-                    $content[$k] = array($row->origin[$k], $v);
-                }
-            }
-            ModelLog::setContent($content);
-            ModelLog::setModel($row->name, $row->id);
-            ModelLog::record(__(request()->action()), 'active', 'locked');
-        });
     }
     public function getStatusList()
     {
