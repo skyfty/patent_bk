@@ -50,7 +50,7 @@ class Copyright extends Cosmetic
     }
 
     public function applicant() {
-        if (!$this->auth->check("copyright/code")) {
+        if (!$this->auth->check("copyright/applicant")) {
             Hook::listen('admin_nopermission', $this);
             $this->error(__('You have no permission'), '');
         }

@@ -55,6 +55,10 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             };
         },
         scenery: {
+            applicant:function($scope, $compile,$timeout, data) {
+                var tabscope = angular.element("#tab-applicant").scope();
+                $("#data-view-applicant").html($compile(Template("view-tmpl", {}))(tabscope));
+            },
             code:function($scope, $compile,$timeout, data) {
                 $scope.generate = function(){
                     Fast.api.ajax({

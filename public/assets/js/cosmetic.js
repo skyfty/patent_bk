@@ -457,16 +457,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     $scope.sceneryInit = function(idx) {
                         $scope.scenery = $scope.scenerys[idx];
                         $scope.fields = $scope.scenery.fields;
-
-                        switch ($scope.scenery.type ) {
-                            case "url": {
-                                break;
-                            }
-                            default: {
-                                initDefaultScenery(idx, $scope, $compile, $parse, $timeout);
-                                break;
-                            }
-                        }
+                        initDefaultScenery(idx, $scope, $compile, $parse, $timeout);
                         $scope.$on('shownTab', function(event,data) {
                             if (self['scenery'] && typeof self['scenery'][$scope.scenery.name] == "function") {
                                 self['scenery'][$scope.scenery.name]($scope, $compile,$timeout, data);

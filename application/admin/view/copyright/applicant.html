@@ -1,6 +1,6 @@
 {__NOLAYOUT__}
 <form class="form-horizontal" role="form" data-toggle="validator" method="POST" action="copyright/edit/ids/{$row['id']}" >
-    <input type="hidden" name="scenery" value="{$vo.name}"/>
+    <input type="hidden" name="scenery" value="applicant"/>
     <input type="hidden" name="row[id]" value="{$row.id}"/>
     <div class="box-header with-border">
     </div>
@@ -26,9 +26,9 @@
 
             </div>
         </div>
-        <div class="mailbox-messages" ng-hide="viewstate.editing" id="data-view-{$vo['name']}">
+        <div class="mailbox-messages" ng-hide="viewstate.editing" id="data-view-applicant">
         </div>
-        <div class="mailbox-messages" ng-show="viewstate.editing" id="data-edit-{$vo['name']}">
+        <div class="mailbox-messages" ng-show="viewstate.editing" id="data-edit-applicant">
         </div>
     </div>
 </form>
