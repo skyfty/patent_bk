@@ -26,14 +26,8 @@ class Customer extends Trade
     }
 
     protected function assignFields() {
-        $scenery = Scenery::get(['model_table' => "customer",'pos'=>'view'],[],true);
-        $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->where("fields.name", "in",[
-            "name",
-            "membership",
-            "birthday",
-            "sex",
-            "telephone",
-        ])->order("weigh", "asc")->cache(true)->select();;
+        $scenery = Scenery::get(['model_table' => "customer",'pos'=>'index'],[],true);
+        $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->order("weigh", "asc")->cache(true)->select();;
         $this->view->assign('fields', $fields);
     }
 
