@@ -380,7 +380,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     switch(scenery.type) {
                         case "url": {
                             var url = Table.api.replaceurl( Config.controllername + "/" + scenery.name, {ids: $scope.row.id});
-                            if (scenery['extend'] != '') {
+                            if (scenery['extend'] !== '') {
                                 url += "/" + scenery['extend'];
                             }
                             $scope.getHtml(Fast.api.fixurl(url), function(data){

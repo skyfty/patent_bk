@@ -38,10 +38,6 @@ class Copyright extends Cosmetic
     }
 
     public function code() {
-        if (!$this->auth->check("copyright/code")) {
-            Hook::listen('admin_nopermission', $this);
-            $this->error(__('You have no permission'), '');
-        }
         $ids =$this->request->param("ids", null);
         if ($ids === null)
             $this->error(__('Params error!'));
@@ -50,14 +46,24 @@ class Copyright extends Cosmetic
     }
 
     public function applicant() {
-        if (!$this->auth->check("copyright/applicant")) {
-            Hook::listen('admin_nopermission', $this);
-            $this->error(__('You have no permission'), '');
-        }
         $ids =$this->request->param("ids", null);
         if ($ids === null)
             $this->error(__('Params error!'));
         $this->view->assign("row", $this->getModelRow($ids));
         return $this->view->fetch();
+    }
+
+    public function syncCompany() {
+        $ids =$this->request->param("ids", null);
+        if ($ids === null)
+            $this->error(__('Params error!'));
+        $row = $this->model->get($ids);
+
+        $companyInfo = $row->company;
+        $claim = model("claim")->where("principal_model_id", $row->company->principal_model_id)->find();
+        if ($claim != null) {
+            $companyInfo['customer'] = $claim->customer;
+        }
+        $this->result($companyInfo, 1);
     }
 }

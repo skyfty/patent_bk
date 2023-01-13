@@ -21,7 +21,6 @@ class Company extends Cosmetic
         });
     }
 
-
     public function industry() {
         return $this->hasManyComma('industry','id','industry_model_id');
     }

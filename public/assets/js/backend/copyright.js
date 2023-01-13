@@ -57,7 +57,31 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
         scenery: {
             applicant:function($scope, $compile,$timeout, data) {
                 var tabscope = angular.element("#tab-applicant").scope();
-                $("#data-view-applicant").html($compile(Template("view-tmpl", {}))(tabscope));
+                $scope.syncCompany = function(){
+                    Fast.api.ajax({
+                        url: "copyright/syncCompany?ids=" + $scope.row.id
+                    }, function (data, ret) {
+                        $scope.$apply(function(){
+                            $scope.row.found_date = data.found_date;
+                            $scope.row.business_licence_code = data.business_licence_code;
+                            $scope.row.applicant_name = data.name;
+                            if (data.customer != null) {
+                                $scope.row.fax = data.customer.fax;
+                                $scope.row.telephone = data.customer.telephone;
+                                $scope.row.email = data.customer.email;
+                                $scope.row.zip_code = data.customer.zip_code;
+                                $scope.row.contact = data.customer.name;
+                                $scope.row.phone = data.customer.phone_number;
+                                $scope.row.mailing_address = data.customer.address + data.customer.detailed_address;
+                            }
+                        });
+                        return false;
+                    });
+                };
+                angular.element("#tab-applicant").html($compile(data)($scope));
+                $timeout(function(){
+                    angular.element("#data-view-applicant").html($compile(Template("view-tmpl", {}))(tabscope));
+                });
             },
             code:function($scope, $compile,$timeout, data) {
                 $scope.generate = function(){
@@ -69,7 +93,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                         });
                         return false;
                     });
-                }
+                };
                 angular.element("#tab-" +$scope.scenery.name).html($compile(data)($scope));
                 $timeout(function(){
                     var roleForm = $("form[role=form]");
