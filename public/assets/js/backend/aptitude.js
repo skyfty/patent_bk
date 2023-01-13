@@ -23,8 +23,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     ]
                 };
                 Table.api.init(options);
-                var table = $("#table-index");
-
                 $scope.searchFieldsParams = function(param) {
                     param.custom = {};
 
@@ -52,8 +50,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
         },
         scenery: {
             procshutter:function($scope, $compile,$timeout, data) {
-                var dataTable = $("#table-procshutter");
-
                 $scope.produceDocument = function() {
                     Layer.confirm(
                         __('确认要重新生成所有文档吗?'), {icon: 3, title: __('Warning'), offset: 0, shadeClose: true},
@@ -72,11 +68,11 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                 };
 
                 $scope.formaterColumn = function(j, data) {
-                    if (data.field == "file") {
+                    if (data.field === "file") {
                         data.formatter = function (value, row, index) {
                             var html = Table.api.formatter.files.call(this, value, row, index);
                             var exticon =  Table.api.formatter.mapfileicon.call(this, value);
-                            if (exticon == "fa-file-word-o") {
+                            if (exticon === "fa-file-word-o") {
                                 html += " <a target='_blank'  download='"+row.name+".pdf' href='/procshutter/topdf?id="+row.id+"' alt='下载PDF格式'><i  class='fa fa-file-pdf-o'></i></a>";
                             }
                             return html;
