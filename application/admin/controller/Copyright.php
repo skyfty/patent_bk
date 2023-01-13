@@ -6,6 +6,7 @@ use app\admin\model\Modelx;
 use app\admin\model\Scenery;
 use app\admin\model\Sight;
 use app\common\controller\Backend;
+use fast\Random;
 use think\App;
 use think\Hook;
 
@@ -41,7 +42,23 @@ class Copyright extends Cosmetic
         $ids =$this->request->param("ids", null);
         if ($ids === null)
             $this->error(__('Params error!'));
-        $this->view->assign("row", $this->getModelRow($ids));
+        $row = $this->model->get($ids);
+        if (!$row) {
+            $this->error('未找到对应模型');
+        }
+        if ($this->request->isPost()) {
+            $params = $this->request->post("row/a");
+            if ($params) {
+                $result = $row->saveCodeFile($params['code']);
+                if ($result !== false) {
+                    $this->result($this->getModelRow($ids),1);
+                } else {
+                    $this->error($row->getError());
+                }
+            }
+            $this->error(__('Parameter %s can not be empty', ''));
+        }
+        $this->view->assign("row", $row);
         return $this->view->fetch();
     }
 

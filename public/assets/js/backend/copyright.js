@@ -161,6 +161,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 $scope.fields = data.fields;
                 angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
                 Table.api.init({
+
                     buttons : [
                         {
                             name: 'view',

@@ -3,6 +3,7 @@
 namespace app\common\model;
 
 use fast\Random;
+use think\Loader;
 use think\Model;
 
 class Shuttering extends Cosmetic
@@ -88,8 +89,23 @@ class Shuttering extends Cosmetic
                 if (isset($field['relevance']) && $field['relevance']) {
                     $relevance = $relevance[$field['relevance']];
                 }
+
                 if (isset($relevance[$field['name']])) {
-                    $val = $relevance[$field['name']];
+                    if ($field['type'] == "model") {
+                        $val = $relevance[$field['name']]['name'];
+                    } else {
+                        $method = 'get' . Loader::parseName($field['name'], 1) . 'AttrText';
+                        if (method_exists($relevance, $method)) {
+                            $val = $relevance->$method($relevance, $this->data, $this->relation);
+                        } else {
+                            $val = $relevance[$field['name']];
+                            if ($field['type'] == "select") {
+                                $content_list = $field->content_list;
+                                $val = $content_list[$val];
+                            }
+                        }
+                    }
+
                     $val=str_replace('&','&amp;',$val);
                     $val=str_replace('<','&lt;',$val);
                     $val=str_replace('>','&gt;',$val);

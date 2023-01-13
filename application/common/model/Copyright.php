@@ -20,7 +20,6 @@ class Copyright extends Professional
         });
     }
 
-
     public function company() {
         return $this->hasOne('company','id','company_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
@@ -45,6 +44,38 @@ class Copyright extends Professional
     }
     public function dlanguage() {
         return $this->hasOne('dlanguage','id','dlanguage_model_id')->joinType("LEFT")->setEagerlyType(0);
+    }
+
+    public function getPublishAttrText() {
+        $data = $this->getData();
+        if ($data['publish'] == 0) {
+            return "未发表";
+        } else {
+            return "发表时间：".$this['publish_date'].PHP_EOL."发表地点：".$this['publish_address'];
+        }
+    }
+
+    public function getCodeAttr() {
+        $code = "";
+        $data = $this->getData();
+        if ($data['code'] != "" && file_exists($data['code'])) {
+            $code = file_get_contents($data['code']);
+        }
+        return $code;
+    }
+    public function saveCodeFile($code) {
+        $replaceArr = [
+            '{year}'     => date("Y"),
+            '{mon}'      => date("m"),
+            '{day}'      => date("d"),
+        ];
+        $destFileDir =ROOT_PATH . '/public/uploads/' . str_replace(array_keys($replaceArr), array_values($replaceArr), "{year}{mon}{day}");
+        if (!file_exists($destFileDir))
+            mkdir($destFileDir);
+        $fileName = \fast\Random::build("unique");
+        $destFileName = $destFileDir."/".$fileName;
+        file_put_contents($destFileName, $code);
+        return $this->save(['code'=>$destFileName]);
     }
 
 }

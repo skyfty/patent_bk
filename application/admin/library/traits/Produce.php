@@ -125,7 +125,7 @@ trait Produce
             }
             $params['extend'] = json_encode($extend, JSON_UNESCAPED_UNICODE);
 
-            $result = $row->allowField(true)->validate("Aptitude.view")->save($params);
+            $result = $row->allowField(true)->save($params);
             if ($result !== false) {
                 $db->commit();
                 $this->result($this->getModelRow($ids),1);

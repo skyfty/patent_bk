@@ -99,6 +99,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                     Table.api.init({
                         extend: {
                             index_url: 'shuttering/index',
+                            del_url: 'shuttering/del',
                             summation_url: 'shuttering/summation',
                             table: 'shuttering',
                         },
