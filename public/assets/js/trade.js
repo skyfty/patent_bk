@@ -1,12 +1,16 @@
 define(['fast','backend', 'template', 'moment', 'slimscroll', 'form','template','angular','cosmetic'], function (Fast,Backend, Template, Moment, undefined, Form, Template,angular, Cosmetic) {
     var Trade = {
         api: {
-            assignEditView:function(op, row) {
+            assignEditView:function(op, row, cb) {
                 AngularApp.controller("edit", function($scope,$sce, $compile,$timeout) {
                     $scope.fields = fields;
                     $scope.row = row;
                     $scope.submit = function(data, ret){
-                        Trade.api.close(data);
+                        if (typeof cb !== "function") {
+                            Trade.api.close(data);
+                        } else {
+                            cb(data, ret);
+                        }
                     };
                     var html = Template("edit-tmpl",{state:op,'fields':"fields"});
                     $timeout(function(){

@@ -46,7 +46,7 @@ class Copyright extends Cosmetic
         if ($this->request->isPost()) {
             $params = $this->request->post("row/a");
             if ($params) {
-                $result = $row->saveCodeFile($params['code']);
+                $result = $row->saveCode($params['code']);
                 if ($result !== false) {
                     $this->result($this->getModelRow($ids),1);
                 } else {

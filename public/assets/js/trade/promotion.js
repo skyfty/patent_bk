@@ -6,6 +6,17 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
                     $scope.fields = fields;
                     $timeout(function(){$scope.$broadcast("shownTable");});
                 };
+
+
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {};
+                    var principal_model_id = Fast.api.query("principal_model_id");
+                    if (principal_model_id) {
+                        param.custom['principal_model_id'] = principal_model_id;
+                    }
+                    return param;
+                };
+
             });
 
             var options = {

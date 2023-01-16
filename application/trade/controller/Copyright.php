@@ -43,7 +43,6 @@ class Copyright extends Trade
         return parent::add();
     }
 
-
     public function code($ids = null) {
         $row = $this->model->get($ids);
         if (!$row) {
@@ -52,7 +51,7 @@ class Copyright extends Trade
         if ($this->request->isPost()) {
             $params = $this->request->post("row/a");
             if ($params) {
-                $result = $row->saveCodeFile($params['code']);
+                $result = $row->saveCode($params['code']);
                 if ($result !== false) {
                     $this->success();
                 } else {

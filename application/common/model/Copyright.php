@@ -75,7 +75,8 @@ class Copyright extends Professional
         }
         return $code;
     }
-    public function saveCodeFile($code) {
+
+    public static function saveCodeFile($code) {
         $replaceArr = [
             '{year}'     => date("Y"),
             '{mon}'      => date("m"),
@@ -88,7 +89,12 @@ class Copyright extends Professional
         $destFileName = $destFileDir."/".$fileName;
         file_put_contents($destFileName, $code);
         $lines = count(explode("\n", $code));
-        return $this->save(['code'=>$destFileName, 'lines'=>$lines]);
+        return ['code'=>$destFileName, 'lines'=>$lines];
+    }
+
+    public function saveCode($code) {
+        $result = Copyright::saveCodeFile($code);
+        return $this->save($result);
     }
 
 }

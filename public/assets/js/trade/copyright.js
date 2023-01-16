@@ -57,7 +57,19 @@ define(['jquery', 'trade', 'table', 'form','template','angular', 'cosmetic'], fu
         },
 
         add: function () {
-            Controller.api.assignEditView("add", row);
+            AngularApp.controller("edit", function($scope,$sce, $compile,$timeout) {
+                $scope.fields = fields;
+                $scope.row = row;
+                $scope.submit = function(data, ret){
+                    Fast.api.close(data);
+                    if (ret.code === 1) {
+                        parent.Fast.api.open('copyright/code?ids=' + data.id,data.name);
+                    }
+                    return false;
+                };
+                $("#data-view").html($compile(Template("edit-tmpl",{state:"add",'fields':"fields"}))($scope));
+                $timeout(function(){Form.api.bindevent($("form[role=form]"), $scope.submit);});
+            });
         },
 
         edit: function () {
@@ -76,6 +88,7 @@ define(['jquery', 'trade', 'table', 'form','template','angular', 'cosmetic'], fu
                     }, function (data, ret) {
                         $scope.$apply(function(){
                             $scope.row.code = data.code;
+                            $scope.row.lines = data.lines;
                         });
                         return false;
                     });
