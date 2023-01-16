@@ -90,6 +90,8 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                     }, function (data, ret) {
                         $scope.$apply(function(){
                             $scope.row.code = data.code;
+                            $scope.row.lines = data.lines;
+
                         });
                         return false;
                     });

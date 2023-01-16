@@ -1,0 +1,31 @@
+<script type="text/javascript">var row ={$row|json_encode};</script>
+
+<form class="form-horizontal" role="form" data-toggle="validator" method="POST" action="copyright/code/ids/{$row['id']}"  ng-controller="edit">
+    <input type="hidden" name="row[__token__]" value="{$Request.token}" />
+    <div class="box-body">
+        <div class="form-group">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        语言：{$row['dlanguage']['name']}， 行数：{$row['codeline']}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <textarea name="row[code]" class="form-control" rows="20" ng-model="row.code" value=""></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-5 col-xs-offset-2">
+                    <button type="button" class="btn btn-default" ng-click="generate()">生成代码</button>
+                    <button type="submit" class="btn btn-success disabled">{:__('OK')}</button>
+                    <button type="reset" class="btn btn-default">{:__('Reset')}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

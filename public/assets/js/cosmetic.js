@@ -88,7 +88,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     var modelKeyword = data[field.name];
                     if (modelKeyword) {
                         var showData = [];
-                        showData.push(self.formatModelKeyword(field, data, modelKeyword));
+                        showData.push(Cosmetic.api.formatModelKeyword(field, data, modelKeyword));
                         if (showData.length === 1) {
                             data = showData[0];
                         } else {
@@ -100,7 +100,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 } else if (field.type==="mztree") {
                     if (data) {
                         var showData = [];
-                        showData.push(self.formatMZtreeKeyword(field, row, data));
+                        showData.push(Cosmetic.api.formatMZtreeKeyword(field, row, data));
                         if (showData.length === 1) {
                             data = showData[0];
                         } else {
@@ -534,6 +534,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
         defaultAction:function(){
         }
     };
+    Cosmetic.api = $.extend(Fast.api, Cosmetic.api);
 
     window.AngularApp.directive("magicfield", function() {
         return {

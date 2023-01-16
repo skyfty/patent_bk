@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller;
+namespace app\trade\controller;
 
 use app\common\controller\Backend;
 
@@ -9,7 +9,7 @@ use app\common\controller\Backend;
  *
  * @icon fa fa-circle-o
  */
-class Dlanguage extends Cosmetic
+class Dlanguage extends Trade
 {
     protected $selectpageShowFields = ['name'];
 
@@ -17,10 +17,7 @@ class Dlanguage extends Cosmetic
     public function _initialize()
     {
         parent::_initialize();
-        $this->model = new \app\admin\model\Dlanguage;
+        $this->model = new \app\trade\model\Dlanguage;
     }
-
     use \app\common\library\traits\GeneralCode;
-
-
 }

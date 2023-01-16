@@ -18,6 +18,18 @@ class Copyright extends Professional
             $maxid = self::max("id") + 1;
             $row['idcode'] = sprintf("CO%06d", $maxid);
         });
+
+        self::afterDelete(function($row){
+            unlink($row['code']);
+        });
+    }
+
+    public function getInitPromotionData($species) {
+        $data = [];
+        if (isset($this['company_model_id'])) {
+            $data["principal_model_id"]=$this['company']['principal_model_id'];
+        }
+        return $data;
     }
 
     public function company() {
@@ -75,7 +87,8 @@ class Copyright extends Professional
         $fileName = \fast\Random::build("unique");
         $destFileName = $destFileDir."/".$fileName;
         file_put_contents($destFileName, $code);
-        return $this->save(['code'=>$destFileName]);
+        $lines = count(explode("\n", $code));
+        return $this->save(['code'=>$destFileName, 'lines'=>$lines]);
     }
 
 }

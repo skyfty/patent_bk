@@ -1,17 +1,18 @@
 <?php
 
 namespace app\trade\model;
+
 use app\admin\library\Auth;
-
 use think\Model;
+use traits\model\SoftDelete;
 
-class Principalclass extends  \app\common\model\Principalclass
+class Dtool extends  \app\common\model\Dtool
 {
-    // 追加属性
+
     protected static function init()
     {
         parent::init();
-    }
 
+    }
 
 }

@@ -1,6 +1,8 @@
 {__NOLAYOUT__}
 <form class="form-horizontal" role="form" data-toggle="validator" method="POST" action="copyright/code/ids/{$row['id']}" >
     <input type="hidden" name="row[id]" value="{$row.id}"/>
+    <input type="hidden" name="row[lines]" value="{$row.lines}"  ng-model="row.lines"/>
+
     <div class="box-header with-border">
     </div>
     <div class="box-body no-padding">
@@ -17,7 +19,8 @@
             </div>
         </div>
         <div class="mailbox-messages" id="data-edit-view">
-            <div class="form-group ng-scope">
+            <div class="row">
+
                 <div class="col-xs-12 col-sm-12">
                     <textarea name="row[code]" class="form-control" rows="20" ng-model="row.code" value=""></textarea>
                 </div>

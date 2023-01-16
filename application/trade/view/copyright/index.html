@@ -1,0 +1,31 @@
+<div ng-controller="index"  ng-init="sceneryInit()">
+
+    <!-- row -->
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12 main">
+            <ol class="breadcrumb">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">知识产权贯标</a></li>
+            </ol>
+
+            <div class="table-responsive">
+                <div id="toolbar-index" class="toolbar">
+                    <a href="unsafe:javascript:;" class="btn btn-primary btn-refresh" title="刷新"><i class="fa fa-refresh"></i> </a>
+                    <a href="/aptitude/add" class="btn btn-success btn-dialog" title="知识产权贯标"><i class="fa fa-plus"></i> </a>
+                    <a href="unsafe:javascript:;" class="btn btn-danger btn-del btn-disabled disabled" title="删除"><i class="fa fa-trash"></i> </a>
+                </div>
+                <table id="table-index"
+                       data-fields="fields"
+                       ui-formidable="fields"
+                       data-url="copyright/index"
+                       data-toolbar="toolbar-index"
+                       data-query-params="searchFieldsParams"
+                       class="table table-striped table-bordered table-hover  text-nowrap" width="100%">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">var fields ={$fields|json_encode};</script>

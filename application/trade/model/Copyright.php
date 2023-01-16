@@ -2,16 +2,19 @@
 
 namespace app\trade\model;
 
+use think\Model;
 use app\admin\library\Auth;
 
-class Promotion extends  \app\common\model\Promotion
+class Copyright extends   \app\common\model\Copyright
 {
     // 追加属性
     protected $append = [
-        "species",
-        "principal",
-        "procedure",
-        "relevance"
+        "develop_os",
+        "develop_tool",
+        "auxiliary_software",
+        "running_software",
+        "dlanguage",
+        "company"
     ];
 
     protected static function init()
@@ -22,4 +25,6 @@ class Promotion extends  \app\common\model\Promotion
         });
         parent::init();
     }
+
+
 }

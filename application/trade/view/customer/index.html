@@ -45,12 +45,13 @@
                     </button>
                     <ul class="dropdown-menu">
                         <%if (row.substance_type == "company"){%>
-                        <li><a href="/aptitude/add?company_model_id=<%=row.substance_id%>" class=" btn-dialog"  title="知识产权贯标">知识产权贯标</a></li>
+                        <li><a href="/copyright/add?company_model_id=<%=row.substance_id%>" class="dialogit" title="增加著作权">著作权</a></li>
+                        <li><a href="/aptitude/add?company_model_id=<%=row.substance_id%>" class="dialogit"  title="增加知识产权贯标">知识产权贯标</a></li>
                         <%}%>
                         <li><a href="#">发明专利</a></li>
-                        <li><a href="#">著作权</a></li>
                     </ul>
                 </div>
+                <a href="/promotion/index/principal_model_id/<%=row.id%>" data-id="<%=row.id%>" class="btn btn-xs btn-default btn-dialog"  title="项目列表"><i class="fa fa-list"></i></a>
                 <a href="/principal/edit/ids/<%=row.id%>" class="btn btn-xs btn-default btn-dialog"  title="编辑客户"><i class="fa fa-pencil"></i></a>
                 <a href="javascript:;" data-id="<%=row.id%>" class="btn btn-xs btn-default  btn-del"><i class="fa fa-trash"></i></a>
 

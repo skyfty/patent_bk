@@ -1,13 +1,14 @@
 <?php
 
 namespace app\trade\model;
-use app\admin\library\Auth;
 
 use think\Model;
+use app\admin\library\Auth;
 
-class Principalclass extends  \app\common\model\Principalclass
+class Species extends   \app\common\model\Species
 {
     // 追加属性
+
     protected static function init()
     {
         parent::init();

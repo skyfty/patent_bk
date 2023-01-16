@@ -38,10 +38,7 @@ class Copyright extends Cosmetic
         return $model;
     }
 
-    public function code() {
-        $ids =$this->request->param("ids", null);
-        if ($ids === null)
-            $this->error(__('Params error!'));
+    public function code($ids) {
         $row = $this->model->get($ids);
         if (!$row) {
             $this->error('未找到对应模型');
