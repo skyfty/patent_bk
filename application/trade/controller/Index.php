@@ -25,7 +25,7 @@ class Index extends Trade
      */
     public function login()
     {
-        $url = $this->request->get('url', 'policy/index');
+        $url = $this->request->get('url', 'customer/index');
         if ($this->auth->isLogin()) {
             $this->success(__("You've logged in, do not login again"), $url);
         }
