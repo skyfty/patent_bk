@@ -14,6 +14,7 @@ class Alternating extends  \app\common\model\Alternating
     {
         self::beforeInsert(function($row){
             $auth = Auth::instance();
+            $row['branch_model_id'] = 0;
             $row['owners_model_id'] = $row['creator_model_id'] = $auth->isLogin() ? $auth->id : 1;
         });
         parent::init();

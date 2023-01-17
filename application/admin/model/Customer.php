@@ -17,7 +17,7 @@ class Customer extends \app\common\model\Customer
     {
         self::beforeInsert(function($row){
             $auth = Auth::instance();
-            $row['creator_model_id'] = $auth->isLogin() ? $auth->id : 1;
+            $row['owners_model_id'] = $row['creator_model_id'] = $auth->isLogin() ? $auth->id : 1;
         });
         parent::init();
 
