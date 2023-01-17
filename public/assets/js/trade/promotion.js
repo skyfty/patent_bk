@@ -7,6 +7,10 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
                     $timeout(function(){$scope.$broadcast("shownTable");});
                 };
 
+                $scope.detailFormater = function (index, row) {
+                    var html = Template("detail-tmpl", {row:row});
+                    return html;
+                };
 
                 $scope.searchFieldsParams = function(param) {
                     param.custom = {};
@@ -33,6 +37,43 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
                     table: 'promotion',
                 },
                 buttons : [
+                    {
+                        name: 'view',
+                        title: function(row, j){
+                            return __(' %s', row.name);
+                        },
+                        classname: 'btn btn-xs btn-success',
+                        icon: 'fa fa-list',
+                        url: function(row, j){
+                            return "/" + row.relevance_model_type + "/index/principal_model_id/" + row.relevance_model_id;
+                        },
+                        extend:'target="_blank" '
+                    },
+                    {
+                        name: 'produce',
+                        title: function(row, j){
+                            return __(' %s', row.name);
+                        },
+                        classname: 'btn btn-xs btn-success btn-ajax',
+                        icon: 'fa fa-creative-commons',
+                        confirm:function(row, j) {
+                            return "lskdfjl";
+                        },
+                        url: function(row, j){
+                            return "/" + row.relevance_model_type + "/produce/ids/" + row.relevance_model_id;
+                        },
+                    },
+                    {
+                        name: 'download',
+                        title: function(row, j){
+                            return __(' %s', row.name);
+                        },
+                        classname: 'btn btn-xs btn-success',
+                        icon: 'fa fa-download',
+                        url: function(row, j){
+                            return "/" + row.relevance_model_type + "/download/ids/" + row.relevance_model_id;
+                        },
+                    }
                 ]
             };
             Table.api.init(options);

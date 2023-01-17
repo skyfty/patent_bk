@@ -14,7 +14,8 @@ class Copyright extends   \app\common\model\Copyright
         "auxiliary_software",
         "running_software",
         "dlanguage",
-        "company"
+        "company",
+        "format_info"
     ];
 
     protected static function init()
@@ -26,5 +27,13 @@ class Copyright extends   \app\common\model\Copyright
         parent::init();
     }
 
-
+    public function getFormatInfoAttr() {
+        $result = [];
+        $fields = model("fields")->where("name", "in", ["name","simple_name","version","category","purpose"])->where("model_table", "copyright")->select();
+        foreach ($fields as $k=>$field) {
+            $result[] = ["value"=>$this[$field['name']], "title"=>$field['title']];
+        }
+        $result[] = ['value'=>$this->getPublishAttrText(), "title"=>'是否发表'];
+        return $result;
+    }
 }

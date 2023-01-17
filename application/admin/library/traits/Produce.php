@@ -33,24 +33,6 @@ trait Produce
     }
 
 
-
-    public function produce() {
-        $row = $this->model->where("id",$this->request->param("id"))->find();
-        if (!$row)
-            $this->error(__('No Results were found'));
-
-        $where = [];
-        $procedure_ids = $this->request->param("procedure_ids/a");
-        if ($procedure_ids) {
-            $where['id']=["in",$procedure_ids ];
-        }
-        $procedures = model("procedure")->where("relevance_model_type",strtolower($this->model->raw_name))->where($where)->select();
-        foreach($procedures as $procedure) {
-            $row->produceDocument($procedure);
-        }
-        $this->success();
-    }
-
     public function view() {
         $ids =$this->request->param("ids", null);
         if ($ids === null)

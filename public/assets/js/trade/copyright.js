@@ -49,6 +49,24 @@ define(['jquery', 'trade', 'table', 'form','template','angular', 'cosmetic'], fu
                         classname: 'btn btn-xs btn-success btn-magic btn-dialog',
                         icon: 'fa fa-code',
                         url: 'copyright/code'
+                    },
+                    {
+                        name: 'produce',
+                        title: function(row, j){
+                            return __(' %s', row.name);
+                        },
+                        classname: 'btn btn-xs btn-success',
+                        icon: 'fa fa-creative-commons',
+                        url: 'copyright/produce'
+                    },
+                    {
+                        name: 'download',
+                        title: function(row, j){
+                            return __(' %s', row.name);
+                        },
+                        classname: 'btn btn-xs btn-success',
+                        icon: 'fa fa-download',
+                        url: 'copyright/download'
                     }
                 ]
             };

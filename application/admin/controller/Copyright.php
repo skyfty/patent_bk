@@ -23,6 +23,8 @@ class Copyright extends Cosmetic
         $this->model = new \app\admin\model\Copyright;
     }
     use \app\admin\library\traits\Produce;
+    use \app\common\library\traits\Procshutter;
+    use \app\common\library\traits\Produce;
 
     protected function spectacle($model) {
         $branch_model_id = $this->request->param("branch_model_id");

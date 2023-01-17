@@ -42,6 +42,8 @@ class Copyright extends Trade
         }
         return parent::add();
     }
+    use \app\common\library\traits\Procshutter;
+    use \app\common\library\traits\Produce;
 
     public function code($ids = null) {
         $row = $this->model->get($ids);

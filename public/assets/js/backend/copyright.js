@@ -114,7 +114,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                             Fast.api.ajax({
                                 url:"/copyright/produce",
                                 data:{
-                                    id:$scope.row.id
+                                    ids:$scope.row.id
                                 }
                             }, function(){
                                 $scope.$broadcast("refurbish");

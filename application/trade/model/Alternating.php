@@ -2,17 +2,13 @@
 
 namespace app\trade\model;
 
+use think\Model;
+use traits\model\SoftDelete;
 use app\admin\library\Auth;
 
-class Promotion extends  \app\common\model\Promotion
+class Alternating extends  \app\common\model\Alternating
 {
     // 追加属性
-    protected $append = [
-        "species",
-        "principal",
-        "procedure",
-        "relevance",
-    ];
 
     protected static function init()
     {
@@ -22,5 +18,6 @@ class Promotion extends  \app\common\model\Promotion
         });
         parent::init();
     }
+
 
 }

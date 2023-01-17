@@ -57,7 +57,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic','zt
                             Fast.api.ajax({
                                 url:"/aptitude/produce",
                                 data:{
-                                    id:$scope.row.id
+                                    ids:$scope.row.id
                                 }
                             }, function(){
                                 $scope.$broadcast("refurbish");
