@@ -27,7 +27,7 @@ class Aptitude extends Trade
     protected function assignFields() {
         $scenery = Scenery::get(['model_table' => "aptitude",'pos'=>'view'],[],true);
         $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->where("fields.name", "not in",[
-            "branch",
+            "branch","creator","owners",
         ])->order("weigh", "asc")->cache(true)->select();;
         $this->view->assign('fields', $fields);
     }
