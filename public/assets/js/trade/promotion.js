@@ -57,7 +57,7 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
                         classname: 'btn btn-xs btn-success btn-ajax',
                         icon: 'fa fa-creative-commons',
                         confirm:function(row, j) {
-                            return "lskdfjl";
+                            return "重新生成文档？";
                         },
                         url: function(row, j){
                             return "/" + row.relevance_model_type + "/produce/ids/" + row.relevance_model_id;
