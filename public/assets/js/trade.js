@@ -43,8 +43,10 @@ define(['fast','backend', 'template', 'moment', 'slimscroll', 'form','template',
             },
         },
         init: function () {
+            $(".navbar-nav-main .nav-link").removeClass("active");
+            var el = ".navbar-nav-main [href='/"+Config.controllername+"/index']";
+            $(el).parent().addClass("active");
         },
-
     };
     Trade.api = $.extend(Cosmetic.api, Trade.api);
     window.Trade = Trade;
