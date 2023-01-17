@@ -55,7 +55,7 @@ class Copyright extends Trade
             if ($params) {
                 $result = $row->saveCode($params['code']);
                 if ($result !== false) {
-                    $this->success();
+                    $this->result($row, 1);
                 } else {
                     $this->error($row->getError());
                 }

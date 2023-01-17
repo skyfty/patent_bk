@@ -113,6 +113,9 @@ body.is-dialog {
     font-size: 14px;
     font-weight: 400;
     margin: 0;
+    text-overflow: ellipsis;
+    width: 220px;
+    overflow: hidden;
 }
 
 .card-header>.card-tools {
@@ -135,4 +138,18 @@ body.is-dialog {
 
 .card-body table td {
     width: 100px;
+}
+
+
+.layui-layer-fast .layui-layer-footer {
+    padding: 8px 20px;
+    background-color: #ecf0f1;
+    height: auto;
+    text-align: inherit !important;
+}
+.is-dialog #main {
+    background: #fff;
+}
+.is-dialog .layer-footer {
+    display: none;
 }

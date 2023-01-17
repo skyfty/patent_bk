@@ -79,7 +79,7 @@ define(['jquery', 'trade', 'table', 'form','template','angular', 'cosmetic'], fu
                 $scope.fields = fields;
                 $scope.row = row;
                 $scope.submit = function(data, ret){
-                    Fast.api.close(data);
+                    Trade.api.close(data);
                     if (ret.code === 1) {
                         parent.Fast.api.open('copyright/code?ids=' + data.id,data.name);
                     }
@@ -99,6 +99,10 @@ define(['jquery', 'trade', 'table', 'form','template','angular', 'cosmetic'], fu
                 $scope.row = row;
                 $scope.submit = function(data, ret){
                     Trade.api.close(data);
+                    if (ret.code === 1) {
+                        parent.Fast.api.open('/promotion/index?principal_model_id=' + data.company.principal_model_id,"服务项目");
+                    }
+                    return false;
                 };
                 $scope.generate = function(){
                     Fast.api.ajax({

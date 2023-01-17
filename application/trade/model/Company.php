@@ -12,14 +12,9 @@ class Company extends \app\common\model\Company
     public $append = [
         'industry'
     ];
-
     protected static function init()
     {
         parent::init();
-
-        self::afterInsert(function($row){
-
-        });
     }
 }
 

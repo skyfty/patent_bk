@@ -29,7 +29,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                 return '<a href="' + url + '" class="dialogit" data-value="' + showData + '" title="' + showData + '">' + showData + '</a>';
             },
             formatMZtreeKeyword:function(field, data, model) {
-                if (model == null || model.id == null) {
+                if (model == null) {
                     return "-";
                 }
                 var showData = [];
