@@ -193,7 +193,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','fast', 'toast
                     "number": "年份",
                 };
                 return typeof field_name == "undefined" ? fields:fields[field_name];
-            }
+            },
         },
 
         bindevent:function($scope){

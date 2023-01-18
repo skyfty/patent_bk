@@ -21,15 +21,7 @@ class Copyright extends Trade
     {
         parent::_initialize();
         $this->model = model("copyright");
-        $this->assignFields();
-    }
-
-    protected function assignFields() {
-        $scenery = Scenery::get(['model_table' => "copyright",'pos'=>'view'],[],true);
-        $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->where("fields.name", "not in",[
-            "branch","creator","owners",
-        ])->order("weigh", "asc")->cache(true)->select();;
-        $this->view->assign('fields', $fields);
+        $this->assignFields("copyright",'view');
     }
 
     /**
@@ -66,6 +58,18 @@ class Copyright extends Trade
         return $this->view->fetch();
     }
 
+    public function applicant($ids = null) {
+        $row = $this->model->get($ids);
+        if (!$row) {
+            $this->error('未找到对应模型');
+        }
+        if ($this->request->isPost()) {
+            return parent::edit($ids);
+        }
+        $this->assignFields("copyright",'applicant');
+        $this->view->assign("row", $row);
+        return $this->view->fetch();
+    }
     protected function spectacle($model) {
         $branch_model_id = $this->request->param("branch_model_id");
         if ($branch_model_id == null) {
@@ -79,4 +83,7 @@ class Copyright extends Trade
 
         return $model;
     }
+
+    use \app\common\library\traits\SyncCompany;
+
 }

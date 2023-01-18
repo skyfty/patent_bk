@@ -4,6 +4,8 @@ namespace app\trade\controller;
 
 use app\admin\library\Auth;
 use app\common\controller\Backend;
+use app\trade\model\Scenery;
+use app\trade\model\Sight;
 
 
 /**
@@ -37,6 +39,14 @@ class Trade extends Backend
     protected function getDataLimitAdminIds() {
         return null;
 
+    }
+
+    protected function assignFields($model, $name) {
+        $scenery = Scenery::get(['model_table' => $model,'name'=>$name],[],true);
+        $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->where("fields.name", "not in",[
+            "branch","creator","owners",
+        ])->order("weigh", "asc")->cache(true)->select();;
+        $this->view->assign('fields', $fields);
     }
 
 }

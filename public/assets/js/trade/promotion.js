@@ -8,7 +8,17 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
                 };
 
                 $scope.detailFormater = function (index, row) {
-                    var html = Template("detail-tmpl", {row:row});
+                    var html = $("<div class='grid'  data-masonry='{ \"itemSelector\": \".grid-item\", \"columnWidth\": 350 }'></div>");
+                    html.append(Template("detail-tmpl", {row:row}));
+
+                    require(['masonry'], function(Masonry){
+                        // init with selector
+                        new Masonry( '.grid',{
+                            // options
+                            itemSelector: '.grid-item',
+                            columnWidth: 360
+                        });
+                    });
                     return html;
                 };
 
@@ -32,6 +42,7 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
                     index_url: 'promotion/index',
                     add_url: 'promotion/add',
                     del_url: 'promotion/del',
+                    edit_url: 'promotion/edit',
                     multi_url: '',
                     summation_url: '',
                     table: 'promotion',
@@ -48,6 +59,28 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
                             return "/" + row.relevance_model_type + "/index/principal_model_id/" + row.relevance_model_id;
                         },
                         extend:'target="_blank" '
+                    },
+                    {
+                        name: 'edit',
+                        title: function(row, j){
+                            return __(' %s', row.name);
+                        },
+                        classname: 'btn btn-xs btn-success  btn-dialog',
+                        icon: 'fa fa-pencil',
+                        url: function(row, j){
+                            return "/" + row.relevance_model_type + "/edit/ids/" + row.relevance_model_id;
+                        },
+                    },
+                    {
+                        name: 'company',
+                        title: function(row, j){
+                            return __(' %s', row.name);
+                        },
+                        classname: 'btn btn-xs btn-success  btn-dialog',
+                        icon: 'fa fa-address-card',
+                        url: function(row, j){
+                            return "/" + row.relevance_model_type + "/applicant/ids/" + row.relevance_model_id;
+                        },
                     },
                     {
                         name: 'produce',

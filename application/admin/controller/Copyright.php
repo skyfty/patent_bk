@@ -69,17 +69,6 @@ class Copyright extends Cosmetic
         return $this->view->fetch();
     }
 
-    public function syncCompany() {
-        $ids =$this->request->param("ids", null);
-        if ($ids === null)
-            $this->error(__('Params error!'));
-        $row = $this->model->get($ids);
+    use \app\common\library\traits\SyncCompany;
 
-        $companyInfo = $row->company;
-        $claim = model("claim")->where("principal_model_id", $row->company->principal_model_id)->find();
-        if ($claim != null) {
-            $companyInfo['customer'] = $claim->customer;
-        }
-        $this->result($companyInfo, 1);
-    }
 }

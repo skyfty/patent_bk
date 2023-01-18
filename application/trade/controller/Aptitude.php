@@ -21,17 +21,8 @@ class Aptitude extends Trade
     {
         parent::_initialize();
         $this->model = model("aptitude");
-        $this->assignFields();
+        $this->assignFields("aptitude",'view');
     }
-
-    protected function assignFields() {
-        $scenery = Scenery::get(['model_table' => "aptitude",'pos'=>'view'],[],true);
-        $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->where("fields.name", "not in",[
-            "branch","creator","owners",
-        ])->order("weigh", "asc")->cache(true)->select();;
-        $this->view->assign('fields', $fields);
-    }
-
     /**
      * 添加
      */

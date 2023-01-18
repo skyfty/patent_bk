@@ -22,13 +22,6 @@ class Principal extends Trade
         $this->model = model("Principal");
     }
 
-
-    protected function assignFields($substance_type) {
-        $scenery = Scenery::get(['model_table' => $substance_type,'pos'=>'view'],[],true);
-        $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->order("weigh", "asc")->cache(true)->select();;
-        $this->view->assign('fields', $fields);
-    }
-
     protected function spectacle($model) {
         $branch_model_id = $this->request->param("branch_model_id");
         if ($branch_model_id == null) {
@@ -75,7 +68,7 @@ class Principal extends Trade
                 $this->error($e->getMessage());
             }
         }
-        $this->assignFields(input('param.substance_type'));
+        $this->assignFields(input('param.substance_type'),'view');
         return $this->view->fetch();
     }
     /**
@@ -114,7 +107,7 @@ class Principal extends Trade
             }
         }
 
-        $this->assignFields( $row['substance_type']);
+        $this->assignFields( $row['substance_type'],'view');
         $this->view->assign("row", $row);
         return $this->view->fetch();
     }

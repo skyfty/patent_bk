@@ -22,14 +22,9 @@ class Customer extends Trade
     {
         parent::_initialize();
         $this->model = model("customer");
-        $this->assignFields();
+        $this->assignFields("customer",'index');
     }
 
-    protected function assignFields() {
-        $scenery = Scenery::get(['model_table' => "customer",'pos'=>'index'],[],true);
-        $fields =  Sight::with('fields')->where(['scenery_id'=>$scenery['id']])->order("weigh", "asc")->cache(true)->select();;
-        $this->view->assign('fields', $fields);
-    }
 
     /**
      * 查看

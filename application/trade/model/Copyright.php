@@ -30,7 +30,9 @@ class Copyright extends   \app\common\model\Copyright
 
     public function getFormatInfoAttr() {
         $result = [];
-        $fields = model("fields")->where("name", "in", ["name","simple_name","version","category","purpose"])->where("model_table", "copyright")->select();
+        $fields = model("fields")->where("name", "not in",
+            ["createtime","updatetime","idcode","creator","owners","group","branch","promotion", "code"])
+            ->where("model_table", "copyright")->select();
         foreach ($fields as $k=>$field) {
             $result[] = ["value"=>$this[$field['name']], "title"=>$field['title']];
         }

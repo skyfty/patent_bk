@@ -93,7 +93,36 @@ define(['jquery', 'trade', 'table', 'form','template','angular', 'cosmetic'], fu
         edit: function () {
             Controller.api.assignEditView("edit", row);
         },
-
+        applicant: function () {
+            AngularApp.controller("edit", function($scope,$sce, $compile,$timeout) {
+                $scope.fields = fields;
+                $scope.row = row;
+                $scope.syncCompany = function(data, ret){
+                    Fast.api.ajax({
+                        url: "copyright/syncCompany?ids=" + $scope.row.id
+                    }, function (data, ret) {
+                        $scope.$apply(function(){
+                            $scope.row.found_date = data.found_date;
+                            $scope.row.business_licence_code = data.business_licence_code;
+                            $scope.row.applicant_name = data.name;
+                            if (data.customer != null) {
+                                $scope.row.fax = data.customer.fax;
+                                $scope.row.telephone = data.customer.telephone;
+                                $scope.row.email = data.customer.email;
+                                $scope.row.zip_code = data.customer.zip_code;
+                                $scope.row.contact = data.customer.name;
+                                $scope.row.phone = data.customer.phone_number;
+                                $scope.row.mailing_address = data.customer.address + data.customer.detailed_address;
+                            }
+                        });
+                        return false;
+                    });
+                    return false;
+                };
+                $("#data-view").html($compile(Template("edit-tmpl",{state:"add",'fields':"fields"}))($scope));
+                $timeout(function(){Form.api.bindevent($("form[role=form]"), $scope.submit);});
+            });
+        },
         code: function () {
             AngularApp.controller("edit", function($scope,$sce, $compile,$timeout) {
                 $scope.row = row;

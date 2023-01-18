@@ -1,0 +1,20 @@
+<script type="text/javascript">var row ={$row|json_encode};</script>
+<form class="form-horizontal" role="form" data-toggle="validator" method="POST" action="" ng-controller="edit" >
+    <input type="hidden" name="row[__token__]" value="{$Request.token}" />
+    <div class="box-body no-padding">
+        <div class="mailbox-messages" id="data-view">
+        </div>
+        <div class="layer-footer">
+            <div class="row">
+                <div class="col-xs-5 col-xs-offset-2">
+                    <button type="button" class="btn btn-default" ng-click="syncCompany();">同步联系人</button>
+                    <button type="submit" class="btn btn-success disabled">{:__('OK')}</button>
+                    <button type="reset" class="btn btn-default">{:__('Reset')}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+<script type="text/javascript">var fields ={$fields|json_encode};</script>
+{include file="common/tmpl" /}

@@ -24,27 +24,20 @@
 </div>
 <script type="text/javascript">var fields ={$fields|json_encode};</script>
 
+
 <script id="detail-tmpl" type="text/html">
-
-    <table class="table " style="table-layout: fixed;word-break:break-all;white-space: normal;">
-        <thead>
-        <tr>
-            <%for (var i=0;i<row.relevance.format_info.length;i++) {%>
-            <td>
+    <%for (var i=0;i<row.relevance.format_info.length;i++) {%>
+    <div class="card grid-item" >
+        <div class="card-header">
+            <div class="card-title" title=" <%=row.name%>">
                 <%=row.relevance.format_info[i].title%>
-            </td>
-            <%}%>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <%for (var i=0;i<row.relevance.format_info.length;i++) {%>
-            <td>
-                <%=#row.relevance.format_info[i].value%>
-            </td>
-            <%}%>
-        </tr>
-        </tbody>
-    </table>
-
+            </div>
+            <div class="card-tools">
+            </div>
+        </div>
+        <div class="card-body">
+            <%=#row.relevance.format_info[i].value%>
+        </div>
+    </div>
+    <%}%>
 </script>

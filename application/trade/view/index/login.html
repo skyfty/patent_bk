@@ -16,26 +16,26 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-12">
-                        <form action="/index/login" method="post" class="tm-login-form">
+                        <form action="/index/login" method="post" id="login-form">
+                            <div id="errtips" class="hide"></div>
+
                             {:token()}
 
                             <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" id="pd-form-username" placeholder="{:__('Username')}" name="username" autocomplete="off" value="" data-rule="{:__('Username')}:required;username" />
-
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+                                    <input type="text" class="form-control" id="pd-form-username" placeholder="{:__('Username')}" name="username" autocomplete="off" value="" data-rule="{:__('Username')}:required;username" />
+                                </div>
                             </div>
                             <div class="form-group mt-3">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="pd-form-password" placeholder="{:__('Password')}" name="password" autocomplete="off" value="" data-rule="{:__('Password')}:required;password" />
-
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
+                                    <input type="password" class="form-control" id="pd-form-password" placeholder="{:__('Password')}" name="password" autocomplete="off" value="" data-rule="{:__('Password')}:required;password" />
+                                </div>
                             </div>
                             <div class="form-group mt-4">
-                                <button
-                                        type="submit"
-                                        class="btn btn-primary btn-block text-uppercase"
-                                >
-                                    Login
-                                </button>
+                                <button type="submit" class="btn btn-success btn-lg btn-block">{:__('Sign in')}</button>
+
                             </div>
                         </form>
                     </div>
