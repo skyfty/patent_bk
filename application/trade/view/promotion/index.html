@@ -26,18 +26,20 @@
 
 
 <script id="detail-tmpl" type="text/html">
-    <%for (var i=0;i<row.relevance.format_info.length;i++) {%>
-    <div class="card grid-item" >
-        <div class="card-header">
-            <div class="card-title" title=" <%=row.name%>">
-                <%=row.relevance.format_info[i].title%>
+    <div class='grid'  data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 350 }'>
+        <%for (var i=0;i<row.relevance.format_info.length;i++) {%>
+        <div class="card grid-item" >
+            <div class="card-header">
+                <div class="card-title" title=" <%=row.name%>">
+                    <%=row.relevance.format_info[i].title%>
+                </div>
+                <div class="card-tools">
+                </div>
             </div>
-            <div class="card-tools">
+            <div class="card-body">
+                <%=#row.relevance.format_info[i].value%>
             </div>
         </div>
-        <div class="card-body">
-            <%=#row.relevance.format_info[i].value%>
-        </div>
+        <%}%>
     </div>
-    <%}%>
 </script>

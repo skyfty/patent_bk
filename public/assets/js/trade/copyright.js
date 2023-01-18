@@ -156,6 +156,8 @@ define(['jquery', 'trade', 'table', 'form','template','angular', 'cosmetic'], fu
             },
         },
         init: function () {
+            $(".nav-tabs-edit [role]").removeClass("active");
+            $(".nav-tabs-edit [role='"+Config.actionname+"']").addClass("active");
         },
     };
     Controller.api = $.extend(Controller.api, Trade.api);

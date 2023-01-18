@@ -1,4 +1,4 @@
-<?php
+zh-cn.php<?php
 
 return [
     'Status'           => '状态标志',

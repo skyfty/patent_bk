@@ -148,11 +148,20 @@ define(['fast', 'template', 'moment'], function (Fast, Template, Moment) {
                 }
                 if (typeof options.confirm !== 'undefined') {
                     Layer.confirm(options.confirm, function (index) {
-                        Backend.api.open(url, title, options);
+                        if (options.parent) {
+                            parent.Backend.api.open(url, title, options);
+                        } else {
+                            Backend.api.open(url, title, options);
+                        }
                         Layer.close(index);
                     });
                 } else {
-                    Backend.api.open(url, title, options);
+                    if (options.parent) {
+                        parent.Backend.api.open(url, title, options);
+                    } else {
+                        Backend.api.open(url, title, options);
+
+                    }
                 }
                 return false;
             });

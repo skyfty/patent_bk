@@ -3,6 +3,7 @@
 <form class="form-horizontal" role="form" data-toggle="validator" method="POST" action="copyright/code/ids/{$row['id']}"  ng-controller="edit">
     <input type="hidden" name="row[__token__]" value="{$Request.token}" />
     <input type="hidden" name="row[lines]" value="{$row.lines}"  ng-model="row.lines"/>
+    {include file="copyright/navbar"  active="code"/}
 
     <div class="box-body">
         <div class="form-group">

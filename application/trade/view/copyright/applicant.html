@@ -1,7 +1,9 @@
 <script type="text/javascript">var row ={$row|json_encode};</script>
 <form class="form-horizontal" role="form" data-toggle="validator" method="POST" action="" ng-controller="edit" >
     <input type="hidden" name="row[__token__]" value="{$Request.token}" />
-    <div class="box-body no-padding">
+    {include file="copyright/navbar" active="applicant" /}
+
+    <div class="box-body">
         <div class="mailbox-messages" id="data-view">
         </div>
         <div class="layer-footer">

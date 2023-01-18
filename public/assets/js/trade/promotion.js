@@ -8,9 +8,7 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
                 };
 
                 $scope.detailFormater = function (index, row) {
-                    var html = $("<div class='grid'  data-masonry='{ \"itemSelector\": \".grid-item\", \"columnWidth\": 350 }'></div>");
-                    html.append(Template("detail-tmpl", {row:row}));
-
+                    var html = Template("detail-tmpl", {row:row});
                     require(['masonry'], function(Masonry){
                         // init with selector
                         new Masonry( '.grid',{
@@ -63,7 +61,7 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
                     {
                         name: 'edit',
                         title: function(row, j){
-                            return __(' %s', row.name);
+                            return "编辑";
                         },
                         classname: 'btn btn-xs btn-success  btn-dialog',
                         icon: 'fa fa-pencil',
@@ -72,20 +70,9 @@ define(['jquery', 'trade', 'table', 'form','template','angular','cosmetic'], fun
                         },
                     },
                     {
-                        name: 'company',
-                        title: function(row, j){
-                            return __(' %s', row.name);
-                        },
-                        classname: 'btn btn-xs btn-success  btn-dialog',
-                        icon: 'fa fa-address-card',
-                        url: function(row, j){
-                            return "/" + row.relevance_model_type + "/applicant/ids/" + row.relevance_model_id;
-                        },
-                    },
-                    {
                         name: 'produce',
                         title: function(row, j){
-                            return __(' %s', row.name);
+                            return "生成文档";
                         },
                         classname: 'btn btn-xs btn-success btn-ajax',
                         icon: 'fa fa-creative-commons',
