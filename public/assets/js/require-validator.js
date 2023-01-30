@@ -186,6 +186,18 @@ define(['validator-core', 'validator-lang'], function (Validator, undefined) {
                 }
                 return isValid || "请填写正确的公司简称";
             },
+            softname: function(element) {
+                var value = element.value,
+                    isValid = true,
+                    rFormat = /^.*(软件|系统|平台|APP)$/;
+                if (!value) {
+                    return isValid;
+                }
+                if (!rFormat.test(value)) {
+                    isValid = false;
+                }
+                return isValid || "软件全称结尾只能以软件，系统，平台，APP.结尾";
+            },
         }
     });
     return Validator;

@@ -21,7 +21,22 @@ class Copyright extends Professional
 
         self::afterDelete(function($row){
             unlink($row['code']);
+            model('crlanguage')->where("copyright_model_id", $row['id'])->delete();
         });
+
+        $updatecrlanguage = function($row) {
+            if (isset($row['language'])) {
+                $languages = [];
+                $dlanguages = model("dlanguage")->where("id", "in", $row['language'])->column("id");
+                foreach ($dlanguages as $v) {
+                    array_push($languages, ["dlanguage_model_id"=>$v, "copyright_model_id"=>$row['id']]);
+                }
+                $crlanguage = model('crlanguage');
+                $crlanguage->where("copyright_model_id", $row['id'])->delete();
+                $crlanguage->saveAll($languages);
+            }
+        };
+        self::afterInsert($updatecrlanguage);self::afterUpdate($updatecrlanguage);
     }
 
     public function getInitPromotionData($species) {

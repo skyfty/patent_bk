@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\Fields;
 use app\admin\model\Modelx;
 use app\admin\model\Scenery;
 use app\admin\model\Sight;

@@ -81,8 +81,8 @@ class Config extends Model
             'username' => '用户名',
             'password' => '密码',
             'bankcard' => '银行卡号',
-            'abbrevi' => '公司简称'
-
+            'abbrevi' => '公司简称',
+            'softname'   => '软件名称',
         ];
         return $regexList;
     }

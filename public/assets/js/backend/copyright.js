@@ -163,7 +163,6 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                 $scope.fields = data.fields;
                 angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
                 Table.api.init({
-
                     buttons : [
                         {
                             name: 'view',
@@ -173,6 +172,55 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
                             classname: 'btn btn-xs  btn-success btn-magic btn-dialog btn-view',
                             icon: 'fa fa-folder-o',
                             url: 'procshutter/view'
+                        }
+                    ]
+                });
+                $scope.$broadcast("shownTable");
+            },
+            crlanguage:function($scope, $compile,$timeout, data) {
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {
+                        "copyright_model_id":$scope.row.id,
+                    };
+                    return param;
+                };
+                $scope.fields = data.fields;
+
+                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
+                Table.api.init({
+                    buttons : [
+                    ]
+                });
+                $scope.$broadcast("shownTable");
+            },
+            crproposer:function($scope, $compile,$timeout, data) {
+                $scope.searchFieldsParams = function(param) {
+                    param.custom = {
+                        "copyright_model_id":$scope.row.id,
+                    };
+                    return param;
+                };
+                $scope.fields = data.fields;
+
+                angular.element("#tab-" +$scope.scenery.name).html($compile(data.content)($scope));
+                Table.api.init({
+                    extend: {
+                        index_url: 'crproposer/index',
+                        add_url: 'crproposer/add',
+                        del_url: 'crproposer/del',
+                        multi_url: 'crproposer/multi',
+                        summation_url: 'crproposer/summation',
+                        table: 'crproposer',
+                    },
+                    buttons : [
+                        {
+                            name: 'view',
+                            title: function(row, j){
+                                return __('%s', row.idcode);
+                            },
+                            classname: 'btn btn-xs  btn-success btn-magic btn-dialog btn-view',
+                            icon: 'fa fa-folder-o',
+                            url: 'crproposer/view'
                         }
                     ]
                 });

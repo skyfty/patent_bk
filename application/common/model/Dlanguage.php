@@ -21,11 +21,6 @@ class Dlanguage extends  Cosmetic
         });
 
 
-        self::afterDelete(function ($row){
-            model("codesegment")->where("dlanguage_model_id", $row['id'])->delete();
-        });
-
-
     }
 
     public function generateCode() {
