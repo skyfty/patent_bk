@@ -86,7 +86,7 @@ define(['jquery', 'backend', 'table', 'form','template','angular','cosmetic'], f
             code:function($scope, $compile,$timeout, data) {
                 $scope.generate = function(){
                     Fast.api.ajax({
-                        url: "dlanguage/generateCode?ids=" + $scope.row.dlanguage_model_id
+                        url: "dlanguage/generateCode?ids=" + $scope.row.language
                     }, function (data, ret) {
                         $scope.$apply(function(){
                             $scope.row.code = data.code;

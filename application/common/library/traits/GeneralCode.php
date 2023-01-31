@@ -11,11 +11,12 @@ namespace app\common\library\traits;
 trait GeneralCode
 {
     public function generateCode($ids) {
-        $row = $this->model->get($ids);
-        if ($row === null)
-            $this->error(__('Params error!'));
+        $code_result = ['code'=>"", 'lines'=>0];
+        $rows = $this->model->where("id", "in", $ids)->where("total_lines", "neq", 0)->order("total_lines desc")->select();
+        if ($rows === null || count($rows) == 0)
+            $this->result($code_result, 1);
 
-        $code = $row->generateCode();
-        $this->result($code, 1);
+        $code_result = $rows[0]->generateCode(3000);
+        $this->result($code_result, 1);
     }
 }

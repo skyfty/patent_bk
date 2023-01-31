@@ -22,9 +22,11 @@ class Crlanguage extends  Cosmetic
 
     }
 
-    public function copyright() {
-        return $this->hasOne('copyright','id','copyright_model_id')->joinType("LEFT")->setEagerlyType(0);
+    public function copyright()
+    {
+        return $this->belongsTo('copyright', 'copyright_model_id')->setEagerlyType(0);
     }
+
     public function dlanguage() {
         return $this->hasOne('dlanguage','id','dlanguage_model_id')->joinType("LEFT")->setEagerlyType(0);
     }

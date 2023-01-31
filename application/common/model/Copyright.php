@@ -21,22 +21,7 @@ class Copyright extends Professional
 
         self::afterDelete(function($row){
             unlink($row['code']);
-            model('crlanguage')->where("copyright_model_id", $row['id'])->delete();
         });
-
-        $updatecrlanguage = function($row) {
-            if (isset($row['language'])) {
-                $languages = [];
-                $dlanguages = model("dlanguage")->where("id", "in", $row['language'])->column("id");
-                foreach ($dlanguages as $v) {
-                    array_push($languages, ["dlanguage_model_id"=>$v, "copyright_model_id"=>$row['id']]);
-                }
-                $crlanguage = model('crlanguage');
-                $crlanguage->where("copyright_model_id", $row['id'])->delete();
-                $crlanguage->saveAll($languages);
-            }
-        };
-        self::afterInsert($updatecrlanguage);self::afterUpdate($updatecrlanguage);
     }
 
     public function getInitPromotionData($species) {
@@ -69,9 +54,6 @@ class Copyright extends Professional
     public function auxiliarySoftware() {
         return $this->hasOne('osystem','id','auxiliary_software_model_id')->joinType("LEFT")->setEagerlyType(0);
     }
-    public function dlanguage() {
-        return $this->hasOne('dlanguage','id','dlanguage_model_id')->joinType("LEFT")->setEagerlyType(0);
-    }
 
     public function getPublishAttrText() {
         $data = $this->getData();
@@ -89,6 +71,12 @@ class Copyright extends Professional
             $code = file_get_contents($data['code']);
         }
         return $code;
+    }
+
+
+    public function getLanguageAttrText() {
+        $dlanguages = model("dlanguage")->where("id", "in", $this['language'])->column("name");
+        return implode(",", $dlanguages);
     }
 
     public static function saveCodeFile($code) {

@@ -13,7 +13,6 @@ class Copyright extends   \app\common\model\Copyright
         "develop_tool",
         "auxiliary_software",
         "running_software",
-        "dlanguage",
         "company",
         "format_info"
     ];
@@ -31,12 +30,13 @@ class Copyright extends   \app\common\model\Copyright
     public function getFormatInfoAttr() {
         $result = [];
         $fields = model("fields")->where("name", "not in",
-            ["createtime","updatetime","idcode","creator","owners","group","branch","promotion", "code"])
+            ["createtime","updatetime","idcode","creator","owners","group","branch","promotion", "code", "language"])
             ->where("model_table", "copyright")->select();
         foreach ($fields as $k=>$field) {
             $result[] = ["value"=>$this[$field['name']], "title"=>$field['title']];
         }
         $result[] = ['value'=>$this->getPublishAttrText(), "title"=>'是否发表'];
+        $result[] = ['value'=>$this->getLanguageAttrText(), "title"=>'开发语言'];
         return $result;
     }
 }
